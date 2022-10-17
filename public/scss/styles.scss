@@ -1,7 +1,6 @@
 $screenBreakpoint: 768px; // iPads, Tablets
 $screenBreakpointMobile: 480px; // Mobile devices
 $screenBreakpointExtra: 1200px; // For product filter
-
 $containerWidth: 1600px;
 
 $colorYellow: #FFE600; // original color used in logo
@@ -10,14 +9,19 @@ $colorNavigationHover: #00BE31; //
 // $colorGoldLight: #e1d2b8;
 
 $fontFamily: 'Heebo', sans-serif;
-// $fontFamily: 'Roboto', sans-serif;
-// $fontFamilyHeaders: 'Playfair Display', serif;
+// $fontFamilyHeaders: 'EB Garamond', serif;
 // $fontFamilyMenu: 'Barlow Condensed', sans-serif;
 
-// $sideBarWidth: 350px;
-
-// @import 'inc/burger-menu.adapter';
+@import 'inc/burger-menu.adapter';
 // @import 'inc/contact-form';
+@import 'inc/productList.scss';
+@import 'inc/productDetail.scss';
+@import 'inc/filters.scss';
+@import 'inc/crumbs.scss';
+@import 'inc/cart.scss';
+@import 'inc/nav.scss';
+@import 'inc/account.scss';
+@import 'inc/elementTiles.scss';
 
 html, body {
     margin: 0;
@@ -27,6 +31,8 @@ html {
     box-sizing: border-box;
     font-family: $fontFamily;
     font-size: 16px;
+    scroll-behavior: smooth;
+
     background-color: #DDD;
     padding: 20px;
     @media (max-width: $screenBreakpoint) {
@@ -36,7 +42,10 @@ html {
 *, *:before, *:after {
     box-sizing: inherit;
 }
-input, textarea, select {
+img {
+    vertical-align: middle; // removes bottom 3px margin.
+}
+input, textarea, select, button {
     font-family: $fontFamily;
     font-size: 16px;
 }
@@ -55,7 +64,7 @@ a {
     margin: 0 auto;
     display: grid;
     grid-template-areas:
-        'logo breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket basket'
+        'logo breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket'
         'account content content content content content content content'
         'navigation content content content content content content content'
         'info content content content content content content content'
@@ -66,10 +75,10 @@ a {
     @media (max-width: $screenBreakpoint) {
         grid-template-areas:
             'logo logo logo logo logo logo logo logo'
-            'basket basket basket basket basket basket basket basket'
-            'breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs'
-            'account account account account account account account account'
             'navigation navigation navigation navigation navigation navigation navigation navigation'
+            'breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket'
+            // 'breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs'
+            'account account account account account account account account'
             'content content content content content content content content'
             'info info info info info info info info'
             'footer footer footer footer footer footer footer footer'
@@ -95,36 +104,14 @@ a {
     text-align: center;
     padding: 10px 0 0 0;
     min-height: 55px;
+    img {
+        vertical-align: middle; // removes space at bottom
+    }
 }
 .breadcrumbsCell {
     grid-area: breadcrumbs;
     background-color: #F0F2F4;
     min-height: 55px;
-    ul {
-        padding: 0;
-        display: flex;
-        list-style-type: none;
-        @media (max-width: $screenBreakpoint) {
-            justify-content: center;
-        }
-        li {
-            a {
-                text-decoration: none;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-            &:before {
-                font-family: hulshoff;
-                font-size: 16px;
-                content: '\e801';
-                padding: 0 10px 0 10px;
-            }
-            &:first-of-type:before {
-                content: '';
-            }
-    }
-    }
 }
 .basketCell {
     grid-area: basket;
@@ -133,62 +120,33 @@ a {
     padding-top: 15px;
     padding-right: 25px;
     min-height: 55px;
-    .cart {
-        position: relative;
-        &:before {
-            font-family: hulshoff;
-            font-size: 26px;
-            content: '\e807';
-        }
-        span {
-            position: absolute;
-            top: -14px;
-            right: -10px;
-            background-color: $colorCart;
-            border: 1px solid #000;
-            border-radius: 50%;
-            width: 17px;
-            height: 17px;
-            line-height: 17px;
-            font-size: 11px;
-            font-weight: bold;
-            text-align: center;
-        }
-    }
 }
 .accountCell {
     grid-area: account;
     background-color: #333333;
+    color: #FFF;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .navigationCell {
     grid-area: navigation;
-    background-color: #333333;
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-        li {
-            a {
-                display: block;
-                color: #FFF;
-                text-decoration: none;
-                border-left: 10px solid #333;
-                padding-left: 40px;
-                line-height: 47px;
-                &:hover {
-                    border-left: 10px solid $colorNavigationHover;
-                    background-color: #555555;
-                    background-image: url('../statics/nav-arrow.png');
-                    background-repeat: no-repeat;
-                    background-position: top right;
-                }
-            }
-        }
-    }
+    background-color: #FFF;
 }
 .infoCell {
     grid-area: info;
     background-color: #333333;
+    padding-top: 140px;
+    p {
+        color: #FFF;
+        font-size: 1.3em;
+        font-style: italic;
+        // text-decoration: underline;
+        // padding: 0 20px;
+        width: 80%;
+        border-bottom: 1px solid #FFF;
+        text-align: center;
+        margin: 0 auto;
+    }
 }
 .contentCell {
     grid-area: content;
@@ -196,7 +154,6 @@ a {
     // border-right: 3px solid #F0F2F4;
     .textContent {
         max-width: 1100px;
-        // margin: 0 auto;
         padding: 20px;
         @media (max-width: $screenBreakpoint) { padding: 5px; }
     }
@@ -208,109 +165,8 @@ a {
         @media (max-width: $screenBreakpointExtra) {
             display: block;
         }
-
-        // display: grid;
-        // grid-template-areas:
-        //     'productList productList productList filterWrap'
-        // ;
-        // grid-template-columns: 1fr 1fr 1fr 300px;
-        // @media (max-width: $screenBreakpoint) {
-        //     grid-template-areas:
-        //         'filterWrap filterWrap filterWrap filterWrap'
-        //         'productList productList productList productList'
-        //     ;
-        // }
-        .productList {
-            // grid-area: productList;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-
-            @media (max-width: $screenBreakpoint) {
-                justify-content: center;
-            }
-
-            .product {
-                width: 200px;
-                @media (max-width: ($screenBreakpointMobile+50)) {
-                    width: 100%;
-                }
-                border: 1px solid #CCC;
-                .prodInnerWrap {
-                    padding: 5px;
-                    .prodImgHolder {
-                        img {
-                            width: 100%;
-                            aspect-ratio: 1/1;
-                            object-fit: cover;
-                        }
-                    }
-                    .prodInfo {
-                        p {
-                            margin: 1px;
-                        }
-                    }
-                }
-                .prodToDetail {
-                    text-align: right;
-                    a {
-                        text-decoration: none;
-                        background-color: #CCC;
-                        display: inline-block;
-                        padding: 5px 7px 3px 12px;
-                        color: #000;
-                        &:before {
-                            font-family: hulshoff;
-                            font-size: 24px;
-                            content: ' \e801';
-                        }
-                        &:hover {
-                            background-color: #000;
-                            &:before {
-                                color: #CCC;
-                            }
-                        }
-                    }
-                }
-            }
-        }
         .filterWrap {
             flex: 0 0 350px;
-            // grid-area: filterWrap;
-            .filters {
-                background-color: #EEEEEE;
-                padding: 10px;
-                select {
-                    width: 100%;
-                    padding: 3px;
-                    margin-bottom: 5px;
-                }
-                .activeFilter {
-                    margin: 5px 5px 0 0;
-                    padding: 0px 6px;
-                    display: inline-flex;
-                    align-items: center;
-                    background-color: #333;
-                    -webkit-border-radius: 5px;
-                    -moz-border-radius: 5px;
-                    border-radius: 5px;
-                    span {
-                        color: #FFF;
-                        text-transform: uppercase;
-                        font-size: 12px;
-                    }
-                    a {
-                        color: $colorYellow;
-                        text-decoration: none;
-                        padding-left: 8px;
-                        &:before {
-                            font-family: hulshoff;
-                            font-size: 24px;
-                            content: ' \e800';
-                        }
-                    }
-                }
-            }
         }
     }
 }

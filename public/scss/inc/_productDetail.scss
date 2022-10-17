@@ -1,0 +1,52 @@
+.productDetailContent {
+    padding: 20px;
+    .prodDetTopWrap {
+        display: flex;
+        @media (max-width: $screenBreakpoint) { flex-direction: column; }
+        gap: 20px;
+        div {
+            flex: 1 1 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                display: block;
+                width: 100%;
+                max-width: 400px;
+                max-height: 400px;
+                object-fit: contain;
+                background-color: #EEE;
+                aspect-ratio: 1/1;
+            }
+            div {
+                display: block;
+                .prodReserveWrap {
+                    display: block;
+                    @media (max-width: $screenBreakpoint) { width: 100%; max-width: 400px; }
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+    .prodDetPropertiesWrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px 0;
+        .prodDetProp {
+            // outline: 1px solid orange;
+            background-color: #EEE;
+            h3 {
+                margin: 0;
+                font-size: 1em;
+                background-color: #000;
+                color: #FFF;
+                padding: 5px 10px;
+            }
+            p {
+                margin: 0;
+                padding: 10px;
+            }
+        }
+    }
+}

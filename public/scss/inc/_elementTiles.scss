@@ -1,0 +1,29 @@
+.elementTilesContent {
+    padding: 20px;
+    .eTilesWrap {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .eTile {
+            cursor: pointer;
+            border: 3px solid $colorNavigationHover;
+            padding: 10px;
+            text-align: center;
+            img {
+                width: 150px;
+                height: 150px;
+            }
+            p {
+                margin: 0;
+                font-size: 1.3em;
+                text-transform: uppercase;
+                a {
+                    text-decoration: none;
+                }
+            }
+            &:hover {
+                background-color: #CCC;
+            }
+        }
+    }
+}

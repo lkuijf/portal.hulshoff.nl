@@ -1,0 +1,61 @@
+.filters {
+    background-color: #EEEEEE;
+    padding: 10px;
+    // position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    select, input {
+        width: 100%;
+        padding: 3px;
+        margin-bottom: 5px;
+        background-color: #FFF;
+        border: 1px solid #666;
+    }
+    button {
+        border: 1px solid #FFF;
+        background-color: #333;
+        color: $colorYellow;
+        cursor: pointer;
+        padding: 5px 10px;
+    }
+    .searchInputWrap {
+        position: relative;
+        span {
+            position: absolute;
+            top: 2px;
+            right: 3px;
+            font-size: 0;
+            &:before {
+                font-size: 24px;
+                font-family: hulshoff;
+                content: '\f50d';
+                color: #666;
+            }
+        }
+    }
+    .activeFilter {
+        margin: 5px 5px 0 0;
+        padding: 0px 6px;
+        display: inline-flex;
+        align-items: center;
+        background-color: #333;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        span {
+            color: #FFF;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        a {
+            color: $colorYellow;
+            text-decoration: none;
+            padding-left: 8px;
+            &:before {
+                font-family: hulshoff;
+                font-size: 24px;
+                content: ' \e800';
+            }
+        }
+    }
+}

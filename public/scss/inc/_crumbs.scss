@@ -1,0 +1,25 @@
+ul.crumbs {
+    padding: 0;
+    padding-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    li {
+        a {
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        &:before {
+            font-family: hulshoff;
+            font-size: 16px;
+            content: '\e801';
+            padding: 0 10px 0 10px;
+        }
+        &:first-of-type:before {
+            content: '';
+            padding: 0;
+        }
+    }
+}

@@ -1,0 +1,1 @@
+<p class="activeFilter"><span>{{ $filter_name }}:&nbsp;{{ $filter_selected_option }}</span><a href="#">&nbsp;</a></p>
