@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\xmlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ Route::get('/', function () {
 Route::get('/front', function () {
     return view('templates.portal');
 });
+Route::get('/parsexml', [xmlController::class, 'parseXml']);
