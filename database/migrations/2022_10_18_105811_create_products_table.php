@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('klantCode');
-            $table->integer('artikelCode');
-            $table->string('omschrijving', 200);
+            $table->string('klantCode', 30);
+            $table->string('artikelCode', 30);
+            $table->string('omschrijving', 100);
             $table->unsignedBigInteger('productgroup_id');
             $table->foreign('productgroup_id')->references('id')->on('productgroups')->onDelete('cascade');
             $table->integer('stuksPerBundel');
