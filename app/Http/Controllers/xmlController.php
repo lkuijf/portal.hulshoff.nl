@@ -5,12 +5,13 @@ use App\Models\Product;
 use App\Models\Productbrand;
 use App\Models\Productgroup;
 use App\Models\Producttype;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class xmlController extends Controller
 {
     public function parseXml() {
-        $xmlFile = file_get_contents(public_path('xml/artikel.xml'));
+        $xmlFile = file_get_contents(public_path('xml/artikelen.xml'));
 
         $xmlObject = simplexml_load_string($xmlFile);
 
@@ -39,6 +40,9 @@ class xmlController extends Controller
             $producttype = Producttype::firstOrCreate([
                 'type' => $prod->{'art-type'}
             ]);
+            $customer = Customer::firstOrCreate([
+                'klantCode' => $prod->{'art-klant-code'}
+            ]);
             $product = Product::updateOrCreate(
                 ['klantCode' => $prod->{'art-klant-code'}, 'artikelCode' => $prod->{'art-artikel-code'}],
                 [
@@ -61,36 +65,35 @@ class xmlController extends Controller
        echo '-end of upserting-';
     }
 
-    public function saveProducts($products) {
-        // dd($products);
-        foreach($products as $prod) {
-            $product = new Product;
-            $productbrand = new Productbrand;
-            $productgroup = new Productgroup;
-            $producttype = new Producttype;
+    // public function saveProducts($products) {
+    //     foreach($products as $prod) {
+    //         $product = new Product;
+    //         $productbrand = new Productbrand;
+    //         $productgroup = new Productgroup;
+    //         $producttype = new Producttype;
 
-            $pgId = $productgroup->insertGetId(['code' => $prod->{'art-artikelgroep-code'}]);
-            $pbId = $productbrand->insertGetId(['brand' => $prod->{'art-merk'}]);
-            $ptId = $producttype->insertGetId(['type' => $prod->{'art-type'}]);
+    //         $pgId = $productgroup->insertGetId(['code' => $prod->{'art-artikelgroep-code'}]);
+    //         $pbId = $productbrand->insertGetId(['brand' => $prod->{'art-merk'}]);
+    //         $ptId = $producttype->insertGetId(['type' => $prod->{'art-type'}]);
 
-            $product->klantCode = $prod->{'art-klant-code'};
-            $product->artikelCode = $prod->{'art-artikel-code'};
-            $product->omschrijving = $prod->{'art-omschrijving'};
-            $product->stuksPerBundel = $prod->{'art-stuks-per-bundel'};
-            $product->prijs = $prod->{'art-prijs'};
-            $product->minimaleVoorraad = $prod->{'art-minimale-voorraad'};
-            $product->bijzonderheden = $prod->{'art-bijzonderheden'};
-            $product->kleur = $prod->{'art-kleur'};
-            $product->lengte = $prod->{'art-lengte'};
-            $product->breedte = $prod->{'art-breedte'};
-            $product->hoogte = $prod->{'art-hoogte'};
+    //         $product->klantCode = $prod->{'art-klant-code'};
+    //         $product->artikelCode = $prod->{'art-artikel-code'};
+    //         $product->omschrijving = $prod->{'art-omschrijving'};
+    //         $product->stuksPerBundel = $prod->{'art-stuks-per-bundel'};
+    //         $product->prijs = $prod->{'art-prijs'};
+    //         $product->minimaleVoorraad = $prod->{'art-minimale-voorraad'};
+    //         $product->bijzonderheden = $prod->{'art-bijzonderheden'};
+    //         $product->kleur = $prod->{'art-kleur'};
+    //         $product->lengte = $prod->{'art-lengte'};
+    //         $product->breedte = $prod->{'art-breedte'};
+    //         $product->hoogte = $prod->{'art-hoogte'};
 
-            $product->productgroup_id = $pgId;
-            $product->productbrand_id = $pbId;
-            $product->producttype_id = $ptId;
+    //         $product->productgroup_id = $pgId;
+    //         $product->productbrand_id = $pbId;
+    //         $product->producttype_id = $ptId;
 
-            $product->save();
-        }
-        echo '-end of saving-';
-    }
+    //         $product->save();
+    //     }
+    //     echo '-end of saving-';
+    // }
 }
