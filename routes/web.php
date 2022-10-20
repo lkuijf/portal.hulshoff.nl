@@ -15,9 +15,15 @@ use App\Http\Controllers\xmlController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome_hulshoff');
 });
 Route::get('/front', function () {
     return view('templates.portal');
 });
-Route::get('/parsexml', [xmlController::class, 'parseXml']);
+Route::get('/parsexml', function () {
+    return view('templates.parseXml_index');
+});
+Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten');
+Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten');
+Route::get('/parsexml/voorraden', [xmlController::class, 'importXml'])->defaults('type', 'voorraden')->name('parseXmlVoorraden');
+Route::get('/parsexml/wmsorders', [xmlController::class, 'importXml'])->defaults('type', 'wmsorders')->name('parseXmlWmsorders');

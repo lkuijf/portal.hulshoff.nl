@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             // $table->id();
+            // $table->tinyInteger('id')->nullable();
             $table->string('klantCode', 30)->unique();
             $table->string('naam', 50)->default('');
             $table->string('straat', 50)->default('');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->string('eMailadres', 100)->default('');
             $table->string('website', 100)->default('');
             $table->timestamps();
+            // $table->primary('klantCode');
         });
     }
 

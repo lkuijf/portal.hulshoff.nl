@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bericht>
+<bericht-type>IFC-ORDER-UIT</bericht-type>
+<bericht-id>4</bericht-id>
+<orders>
+    <order>
+        <ord-klant-code>DNB</ord-klant-code>
+        <ord-order-code-klant>ORDER123</ord-order-code-klant>
+        <ord-order-code-aflever>BESTELLING123</ord-order-code-aflever>
+        <ord-order-nr>5</ord-order-nr>
+        <ord-ata-afleveren-datum>20230209</ord-ata-afleveren-datum>
+        <ord-ata-afleveren-tijd>1254</ord-ata-afleveren-tijd>
+        <details>
+            <detail>
+                <odt-klant-regel-code>100</odt-klant-regel-code>
+                <odt-artikel-code>ARTIKEL123</odt-artikel-code>
+                <odt-stuks-uitgeleverd>3</odt-stuks-uitgeleverd>
+            </detail>
+            <detail>
+                <odt-klant-regel-code>200</odt-klant-regel-code>
+                <odt-artikel-code>ARTIKEL456</odt-artikel-code>
+                <odt-stuks-uitgeleverd>75</odt-stuks-uitgeleverd>
+            </detail>
+        <details/>
+    </order>
+</orders>
+</bericht>

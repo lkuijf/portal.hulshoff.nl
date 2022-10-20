@@ -4,7 +4,31 @@
     <bericht-id>1</bericht-id>
     <klanten>
         <klant>
+            <kla-klant-code>55057</kla-klant-code>
+            <kla-naam>FFFFFFF</kla-naam>
+            <kla-straat>Dorpsstraat</kla-straat>
+            <kla-huisnummer>42</kla-huisnummer>
+            <kla-postcode>1234 AA</kla-postcode>
+            <kla-land-code>NL</kla-land-code>
+            <kla-contactpersoon>Mevr. Pieterse</kla-contactpersoon>
+            <kla-telefoon>+31 (0) 492 327 2222</kla-telefoon>
+            <kla-e-mailadres>pieterse@nlbank.nl</kla-e-mailadres>
+            <kla-website>https://nlbankjes.nl/</kla-website>
+        </klant>
+        <klant>
             <kla-klant-code>55058</kla-klant-code>
+            <kla-naam>NL BANK</kla-naam>
+            <kla-straat>Dorpsstraat</kla-straat>
+            <kla-huisnummer>42</kla-huisnummer>
+            <kla-postcode>1234 AA</kla-postcode>
+            <kla-land-code>NL</kla-land-code>
+            <kla-contactpersoon>Mevr. Pieterse</kla-contactpersoon>
+            <kla-telefoon>+31 (0) 492 327 2222</kla-telefoon>
+            <kla-e-mailadres>pieterse@nlbank.nl</kla-e-mailadres>
+            <kla-website>https://nlbankjes.nl/</kla-website>
+        </klant>
+        <klant>
+            <kla-klant-code>55059</kla-klant-code>
             <kla-naam>ABN Amro</kla-naam>
             <kla-straat>Kerkstraat</kla-straat>
             <kla-huisnummer>4</kla-huisnummer>
@@ -16,13 +40,13 @@
             <kla-website>https://abnamro.nl/</kla-website>
         </klant>
         <klant>
-            <kla-klant-code>55059</kla-klant-code>
-            <kla-naam>NL BANK</kla-naam>
-            <kla-straat>Dorpsstraat</kla-straat>
+            <kla-klant-code>55060</kla-klant-code>
+            <kla-naam>oooh</kla-naam>
+            <kla-straat>dddddddddd</kla-straat>
             <kla-huisnummer>42</kla-huisnummer>
             <kla-postcode>1234 AA</kla-postcode>
             <kla-land-code>NL</kla-land-code>
-            <kla-contactpersoon>Mevr. Pieterse</kla-contactpersoon>
+            <kla-contactpersoon>Mevr. cccccccc</kla-contactpersoon>
             <kla-telefoon>+31 (0) 492 327 2222</kla-telefoon>
             <kla-e-mailadres>pieterse@nlbank.nl</kla-e-mailadres>
             <kla-website>https://nlbankjes.nl/</kla-website>

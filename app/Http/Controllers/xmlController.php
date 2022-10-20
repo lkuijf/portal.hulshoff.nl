@@ -10,27 +10,127 @@ use Illuminate\Http\Request;
 
 class xmlController extends Controller
 {
-    public function parseXml() {
-        $xmlFile = file_get_contents(public_path('xml/artikelen.xml'));
-
-        $xmlObject = simplexml_load_string($xmlFile);
-
-        $jsonFormattedData = json_encode($xmlObject);
-        // $result = json_decode($jsonFormattedData, true); 
-        $result = json_decode($jsonFormattedData); 
-
-// dd($result);
-
-        if(isset($result->artikelen->artikel) && count($result->artikelen->artikel)) {
-            // $this->saveProducts($result->artikelen->artikel);
-            $this->upsertProducts($result->artikelen->artikel);
+    public function getObjectFromXml($file) {
+        $data = new \stdClass();
+        try {
+            $xmlFile = file_get_contents(public_path($file));
+            $xmlObject = simplexml_load_string($xmlFile);
+            $jsonFormattedData = json_encode($xmlObject);
+            $data->xmldata = json_decode($jsonFormattedData);
+        } catch (\Exception $e) {
+            $data->error = $e->getMessage();
         }
+        return $data;
+    }
+    public function importXml($type) {
+        // if($type == 'klanten') $xmlFile = file_get_contents(public_path('xml/klanten.xml'));
+
+        if($type == 'wmsorders') {
+
+        }
+
+        if($type == 'producten') {
+            $xmlLocation = 'xml/artikelen.xml';
+            $data = $this->getObjectFromXml($xmlLocation);
+            if(isset($data->xmldata)) {
+                if(isset($data->xmldata->artikelen->artikel) && count($data->xmldata->artikelen->artikel)) {
+                    $result = $this->upsertProducts($data->xmldata->artikelen->artikel);
+                    $data = [
+                        'result' => 'result message: ' . $result->msg,
+                    ];
+                    return view('templates.parseXml_index')->with('data', $data);
+                } else {
+                    // write to db
+                    // display message geen nodes gevonden.
+                }
+            }
+            if(isset($data->error)) {
+                // write to db
+                // display message
+            }
+        }
+        
+        if($type == 'klanten') {
+            $xmlLocation = 'xml/klanten.xml';
+            $data = $this->getObjectFromXml($xmlLocation);
+            if(isset($data->xmldata)) {
+                if(isset($data->xmldata->klanten->klant) && count($data->xmldata->klanten->klant)) {
+                    $result = $this->upsertCustomers($data->xmldata->klanten->klant);
+                    $data = [
+                        'result' => 'result message: ' . $result->msg,
+                    ];
+                    return view('templates.parseXml_index')->with('data', $data);
+                } else {
+                    // write to db
+                    // display message geen nodes gevonden.
+                }
+            }
+            if(isset($data->error)) {
+                // write to db
+                // display message
+            }
+        }
+
+        if($type == 'voorraden') {
+            $xmlLocation = 'xml/voorraden.xml';
+            $data = $this->getObjectFromXml($xmlLocation);
+            if(isset($data->xmldata)) {
+                if(isset($data->xmldata->voorraden->voorraad) && count($data->xmldata->voorraden->voorraad)) {
+                    $result = $this->updateVoorraden($data->xmldata->voorraden->voorraad);
+                    $data = [
+                        'result' => 'result message: ' . $result->msg,
+                    ];
+                    return view('templates.parseXml_index')->with('data', $data);
+                } else {
+                    // write to db
+                    // display message geen nodes gevonden.
+                }
+            }
+            if(isset($data->error)) {
+                // write to db
+                // display message
+            }
+        }
+        
+    }
+
+    public function updateVoorraden($stocks) {
+        $res = new \stdClass();
+        foreach($stocks as $stock) {
+            $totalAffected = Product::where([
+                'klantCode' => $stock->{'vrr-klant-code'},
+                'artikelCode' => $stock->{'vrr-artikel-code'}
+                ])->update(['minimaleVoorraad' => $stock->{'vrr-aantal-stuks'}]);
+        }
+        $res->msg = 'success';
+        return $res;
+    }
+
+    public function upsertCustomers($customers) {
+        $res = new \stdClass();
+        foreach($customers as $cust) {
+            Customer::updateOrCreate(
+                ['klantCode' => $cust->{'kla-klant-code'}],
+                [
+                    'naam' => $cust->{'kla-naam'},
+                    'straat' => $cust->{'kla-straat'},
+                    'huisnummer' => $cust->{'kla-huisnummer'},
+                    'postcode' => $cust->{'kla-postcode'},
+                    'landCode' => $cust->{'kla-land-code'},
+                    'contactpersoon' => $cust->{'kla-contactpersoon'},
+                    'telefoon' => $cust->{'kla-telefoon'},
+                    'eMailadres' => $cust->{'kla-e-mailadres'},
+                    'website' => $cust->{'kla-website'},
+                ]
+            );
+        }
+        $res->msg = 'success';
+        return $res;
     }
 
     public function upsertProducts($products) {
+        $res = new \stdClass();
         foreach($products as $prod) {
-// dd($prod);
-
             $productgroup = Productgroup::firstOrCreate([
                 'code' => $prod->{'art-artikelgroep-code'}
             ]);
@@ -60,40 +160,8 @@ class xmlController extends Controller
                     'producttype_id' => $producttype->id
                 ]
             );
-// var_dump($product);
-       }
-       echo '-end of upserting-';
+        }
+        $res->msg = 'success';
+        return $res;
     }
-
-    // public function saveProducts($products) {
-    //     foreach($products as $prod) {
-    //         $product = new Product;
-    //         $productbrand = new Productbrand;
-    //         $productgroup = new Productgroup;
-    //         $producttype = new Producttype;
-
-    //         $pgId = $productgroup->insertGetId(['code' => $prod->{'art-artikelgroep-code'}]);
-    //         $pbId = $productbrand->insertGetId(['brand' => $prod->{'art-merk'}]);
-    //         $ptId = $producttype->insertGetId(['type' => $prod->{'art-type'}]);
-
-    //         $product->klantCode = $prod->{'art-klant-code'};
-    //         $product->artikelCode = $prod->{'art-artikel-code'};
-    //         $product->omschrijving = $prod->{'art-omschrijving'};
-    //         $product->stuksPerBundel = $prod->{'art-stuks-per-bundel'};
-    //         $product->prijs = $prod->{'art-prijs'};
-    //         $product->minimaleVoorraad = $prod->{'art-minimale-voorraad'};
-    //         $product->bijzonderheden = $prod->{'art-bijzonderheden'};
-    //         $product->kleur = $prod->{'art-kleur'};
-    //         $product->lengte = $prod->{'art-lengte'};
-    //         $product->breedte = $prod->{'art-breedte'};
-    //         $product->hoogte = $prod->{'art-hoogte'};
-
-    //         $product->productgroup_id = $pgId;
-    //         $product->productbrand_id = $pbId;
-    //         $product->producttype_id = $ptId;
-
-    //         $product->save();
-    //     }
-    //     echo '-end of saving-';
-    // }
 }

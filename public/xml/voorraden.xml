@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bericht>
+<bericht-type>IFC-VRDSTAND-UIT</bericht-type>
+<bericht-id>5</bericht-id>
+<voorraden>
+    <voorraad>
+        <vrr-klant-code>DNB</vrr-klant-code>
+        <vrr-artikel-code>ARTIKEL123</vrr-artikel-code>
+        <vrr-aantal-stuks>56</vrr-aantal-stuks>
+    </voorraad>
+    <voorraad>
+        <vrr-klant-code>DNB</vrr-klant-code>
+        <vrr-artikel-code>ARTIKEL456</vrr-artikel-code>
+        <vrr-aantal-stuks>368</vrr-aantal-stuks>
+    </voorraad>
+    <voorraad>
+        <vrr-klant-code>55058</vrr-klant-code>
+        <vrr-artikel-code>00595</vrr-artikel-code>
+        <vrr-aantal-stuks>3456</vrr-aantal-stuks>
+    </voorraad>
+</voorraden>
+</bericht>

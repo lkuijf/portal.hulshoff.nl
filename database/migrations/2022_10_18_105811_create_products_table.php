@@ -34,6 +34,7 @@ return new class extends Migration
             $table->integer('breedte');
             $table->integer('hoogte');
             $table->timestamps();
+            $table->unique(['klantCode', 'artikelCode']);
         });
     }
 
