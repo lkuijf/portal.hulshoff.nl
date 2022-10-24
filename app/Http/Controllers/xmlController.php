@@ -10,6 +10,19 @@ use Illuminate\Http\Request;
 
 class xmlController extends Controller
 {
+
+    public function savePostedXml(Request $request) {
+        echo 'post';
+        // if($xmltype == 'klant') {
+        // }
+
+        if (request()->isXml()) {
+            // do something
+            echo 'yes is xml';
+        }
+
+    }
+
     public function getObjectFromXml($file) {
         $data = new \stdClass();
         try {
