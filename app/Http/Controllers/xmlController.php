@@ -6,6 +6,9 @@ use App\Models\Productbrand;
 use App\Models\Productgroup;
 use App\Models\Producttype;
 use App\Models\Customer;
+use App\Models\WmsOrder;
+use App\Models\WmsOrderArticle;
+use App\Models\LogXmlPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,6 +16,12 @@ class xmlController extends Controller
 {
     public function savePostedXml(Request $request, $xmltype) {
         if(!isset($xmltype) || !in_array($xmltype, ['klant','artikel','order','vrdstand'])) return abort(404);
+
+        $log = new LogXmlPost;
+        $log->ip = $_SERVER['REMOTE_ADDR'];
+        $log->userAgent = $_SERVER['HTTP_USER_AGENT'];
+        $log->requestedUrl = $_SERVER['REQUEST_URI'];
+        $log->save();
 
         if(request()->isXml()) {
             $body =  $request->getContent();
@@ -38,7 +47,34 @@ class xmlController extends Controller
         // if($type == 'klanten') $xmlFile = file_get_contents(public_path('xml/klanten.xml'));
 
         if($type == 'wmsorders') {
+            
+            $xmlLocation = 'xml/orders.xml';
+            $data = $this->getObjectFromXml($xmlLocation);
 
+            if(isset($data->xmldata)) {
+
+                if(isset($data->xmldata->orders->order)) {
+                    if(!is_array($data->xmldata->orders->order)) $data->xmldata->orders->order = array($data->xmldata->orders->order);
+                
+                    if(count($data->xmldata->orders->order)) {
+                        $result = $this->insertWmsOrders($data->xmldata->orders->order);
+                        $data = [
+                            'dev_snippet' => 'xml',
+                            'result' => 'result message: ' . $result->msg,
+                        ];
+                        return view('templates.development')->with('data', $data);
+                    } else {
+                        // write to db
+                        // display message geen nodes gevonden.
+                    }
+                }
+
+            }
+            if(isset($data->error)) {
+                echo $data->error;
+                // write to db
+                // display message
+            }
         }
 
         if($type == 'producten') {
@@ -48,9 +84,10 @@ class xmlController extends Controller
                 if(isset($data->xmldata->artikelen->artikel) && count($data->xmldata->artikelen->artikel)) {
                     $result = $this->upsertProducts($data->xmldata->artikelen->artikel);
                     $data = [
+                        'dev_snippet' => 'xml',
                         'result' => 'result message: ' . $result->msg,
                     ];
-                    return view('templates.parseXml_index')->with('data', $data);
+                    return view('templates.development')->with('data', $data);
                 } else {
                     // write to db
                     // display message geen nodes gevonden.
@@ -69,9 +106,10 @@ class xmlController extends Controller
                 if(isset($data->xmldata->klanten->klant) && count($data->xmldata->klanten->klant)) {
                     $result = $this->upsertCustomers($data->xmldata->klanten->klant);
                     $data = [
+                        'dev_snippet' => 'xml',
                         'result' => 'result message: ' . $result->msg,
                     ];
-                    return view('templates.parseXml_index')->with('data', $data);
+                    return view('templates.development')->with('data', $data);
                 } else {
                     // write to db
                     // display message geen nodes gevonden.
@@ -90,9 +128,10 @@ class xmlController extends Controller
                 if(isset($data->xmldata->voorraden->voorraad) && count($data->xmldata->voorraden->voorraad)) {
                     $result = $this->updateVoorraden($data->xmldata->voorraden->voorraad);
                     $data = [
+                        'dev_snippet' => 'xml',
                         'result' => 'result message: ' . $result->msg,
                     ];
-                    return view('templates.parseXml_index')->with('data', $data);
+                    return view('templates.development')->with('data', $data);
                 } else {
                     // write to db
                     // display message geen nodes gevonden.
@@ -104,6 +143,39 @@ class xmlController extends Controller
             }
         }
         
+    }
+
+    public function insertWmsOrders($orders) {
+        $res = new \stdClass();
+        foreach($orders as $ord) {
+            $customer = Customer::firstOrCreate([
+                'klantCode' => $ord->{'ord-klant-code'}
+            ]);
+            $wmsOrder = WmsOrder::firstOrCreate(
+                ['orderCodeKlant' => $ord->{'ord-order-code-klant'}, 'orderCodeAflever' => $ord->{'ord-order-code-aflever'}],
+                [
+                    'klantCode' => $ord->{'ord-klant-code'},
+                    'orderNr' => $ord->{'ord-order-nr'},
+                    'ataAleverenDatum' => $ord->{'ord-ata-afleveren-datum'},
+                    'ataAleverenTijd' => $ord->{'ord-ata-afleveren-tijd'}
+                ]
+            );
+            if(isset($ord->details->detail)) {
+                if(!is_array($ord->details->detail)) $ord->details->detail = array($ord->details->detail);
+                if(count($ord->details->detail)) {
+                    foreach($ord->details->detail as $det) {
+                        $wmsOrderArticle = WmsOrderArticle::firstOrCreate(
+                            ['wms_order_id' => $wmsOrder->id, 'artikelCode' => $det->{'odt-artikel-code'},],
+                            [
+                                'stuksUitgeleverd' => $det->{'odt-stuks-uitgeleverd'},
+                            ]
+                        );
+                    }
+                }
+            }
+        }
+        $res->msg = 'success';
+        return $res;
     }
 
     public function updateVoorraden($stocks) {

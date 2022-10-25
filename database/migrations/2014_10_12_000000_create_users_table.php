@@ -22,6 +22,14 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'portal',
+                'email' => 'hulshoffportal',
+                'password' => Hash::make('4UP%v6e6'),
+            )
+        );
     }
 
     /**

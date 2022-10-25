@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('ataAleverenDatum');
             $table->integer('ataAleverenTijd');
             $table->timestamps();
+            $table->unique(['orderCodeKlant', 'orderCodeAflever']);
         });
     }
 

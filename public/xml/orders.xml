@@ -21,7 +21,7 @@
                 <odt-artikel-code>ARTIKEL456</odt-artikel-code>
                 <odt-stuks-uitgeleverd>75</odt-stuks-uitgeleverd>
             </detail>
-        <details/>
+        </details>
     </order>
 </orders>
 </bericht>

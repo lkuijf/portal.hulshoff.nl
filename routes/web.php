@@ -16,34 +16,30 @@ use App\Http\Controllers\pageController;
 */
 
 Route::get('/', function () {
-    return view('welcome_hulshoff')->with(['data' => ['content' => '
-        <h1>Welkom</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor dignissim convallis aenean et tortor. Ullamcorper a lacus vestibulum sed arcu. Accumsan sit amet nulla facilisi morbi tempus iaculis urna id. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus et.</p>
-        <ul>
-            <li><a href="/front">Front-end elementen</a></li>
-            <li><a href="/parsexml">Verwerk XML</a></li>
-        </ul>
-    ']]);
-});
+    return view('templates.development')->with(['data' => ['dev_snippet' => 'index']]);
+})->middleware('auth.basic');
 Route::get('/front', function () {
     return view('templates.portal');
-});
+})->middleware('auth.basic');
+// Route::get('/parsexml', function () {
+//     return view('templates.parseXml_index');
+// });
 Route::get('/parsexml', function () {
-    return view('templates.parseXml_index');
-});
+    return view('templates.development')->with(['data' => ['dev_snippet' => 'xml']]);
+})->name('parseXml_Index')->middleware('auth.basic');
 // Route::get('/parsexml', [pageController::class, 'pageXml']);
 
-Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten');
-Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten');
-Route::get('/parsexml/voorraden', [xmlController::class, 'importXml'])->defaults('type', 'voorraden')->name('parseXmlVoorraden');
-Route::get('/parsexml/wmsorders', [xmlController::class, 'importXml'])->defaults('type', 'wmsorders')->name('parseXmlWmsorders');
+Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
+Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');
+Route::get('/parsexml/voorraden', [xmlController::class, 'importXml'])->defaults('type', 'voorraden')->name('parseXmlVoorraden')->middleware('auth.basic');
+Route::get('/parsexml/wmsorders', [xmlController::class, 'importXml'])->defaults('type', 'wmsorders')->name('parseXmlWmsorders')->middleware('auth.basic');
 
 Route::post('/post/xml/klantUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'klant');
 Route::post('/post/xml/artikelUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'artikel');
 Route::post('/post/xml/orderUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'order');
 Route::post('/post/xml/vrdstandUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'vrdstand');
 
-//TEMP GET-TEST
-// Route::get('/post/xml/klantUit', function () {
-//     return 'doet het';
-// });
+Route::get('/post/xml/klantUit', function () { return abort(404); });
+Route::get('/post/xml/artikelUit', function () { return abort(404); });
+Route::get('/post/xml/orderUit', function () { return abort(404); });
+Route::get('/post/xml/vrdstandUit', function () { return abort(404); });
