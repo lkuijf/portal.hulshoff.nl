@@ -36,6 +36,27 @@ return [
             'throw' => false,
         ],
 
+        'local_xml_klant' => [
+            'driver' => 'local',
+            'root' => storage_path('app/xml/posted/klant'),
+            'throw' => false,
+        ],
+        'local_xml_artikel' => [
+            'driver' => 'local',
+            'root' => storage_path('app/xml/posted/artikel'),
+            'throw' => false,
+        ],
+        'local_xml_order' => [
+            'driver' => 'local',
+            'root' => storage_path('app/xml/posted/order'),
+            'throw' => false,
+        ],
+        'local_xml_vrdstand' => [
+            'driver' => 'local',
+            'root' => storage_path('app/xml/posted/vrdstand'),
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

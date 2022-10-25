@@ -7,20 +7,19 @@ use App\Models\Productgroup;
 use App\Models\Producttype;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class xmlController extends Controller
 {
+    public function savePostedXml(Request $request, $xmltype) {
+        if(!isset($xmltype) || !in_array($xmltype, ['klant','artikel','order','vrdstand'])) return abort(404);
 
-    public function savePostedXml(Request $request) {
-        echo 'post';
-        // if($xmltype == 'klant') {
-        // }
-
-        if (request()->isXml()) {
-            // do something
-            echo 'yes is xml';
+        if(request()->isXml()) {
+            $body =  $request->getContent();
+            Storage::disk('local_xml_' . $xmltype)->put($xmltype . '-' . date("Ymd-His") . '-' . str_pad(rand(0,9999),4,0,STR_PAD_LEFT) . '.xml', $body); // filename like: klant-20221024-141151-4898.xml
+        } else {
+            return abort(404);
         }
-
     }
 
     public function getObjectFromXml($file) {

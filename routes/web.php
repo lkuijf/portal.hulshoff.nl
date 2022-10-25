@@ -38,13 +38,12 @@ Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('
 Route::get('/parsexml/voorraden', [xmlController::class, 'importXml'])->defaults('type', 'voorraden')->name('parseXmlVoorraden');
 Route::get('/parsexml/wmsorders', [xmlController::class, 'importXml'])->defaults('type', 'wmsorders')->name('parseXmlWmsorders');
 
-// Route::post('/post/xml/klantUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'klant');
-Route::post('/post/xml/klantUit', [xmlController::class, 'savePostedXml']);
+Route::post('/post/xml/klantUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'klant');
 Route::post('/post/xml/artikelUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'artikel');
 Route::post('/post/xml/orderUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'order');
 Route::post('/post/xml/vrdstandUit', [xmlController::class, 'savePostedXml'])->defaults('xmltype', 'vrdstand');
 
-//TEMP TEST
-Route::get('/post/xml/klantUit', function () {
-    return 'doet het';
-});
+//TEMP GET-TEST
+// Route::get('/post/xml/klantUit', function () {
+//     return 'doet het';
+// });
