@@ -13,5 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/post/xml/*',
+        // '/user/two-factor-authentication',
+        // '/user/confirmed-two-factor-authentication',
     ];
 }
