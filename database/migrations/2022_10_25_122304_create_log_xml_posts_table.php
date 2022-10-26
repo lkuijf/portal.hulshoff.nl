@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('log_xml_posts', function (Blueprint $table) {
             $table->id();
-            $table->string('ip', 20);
+            $table->ipAddress('ip');
             $table->string('userAgent', 255);
             $table->string('requestedUrl', 100);
             $table->timestamps();

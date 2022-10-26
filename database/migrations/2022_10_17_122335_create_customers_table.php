@@ -30,6 +30,12 @@ return new class extends Migration
             $table->timestamps();
             // $table->primary('klantCode');
         });
+
+        DB::table('customers')->insert(
+            array(
+                'klantCode' => 'Customer A',
+            )
+        );
     }
 
     /**

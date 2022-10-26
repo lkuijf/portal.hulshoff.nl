@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\xmlController;
 use App\Http\Controllers\pageController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,18 +17,19 @@ use App\Http\Controllers\pageController;
 */
 
 Route::get('/', function () {
-    return view('templates.development')->with(['data' => ['dev_snippet' => 'index']]);
+    return view('templates.development')->with(['data' => ['include_view' => 'development.index']]);
 })->middleware('auth.basic');
 Route::get('/front', function () {
     return view('templates.portal');
 })->middleware('auth.basic');
-// Route::get('/parsexml', function () {
-//     return view('templates.parseXml_index');
-// });
 Route::get('/parsexml', function () {
-    return view('templates.development')->with(['data' => ['dev_snippet' => 'xml']]);
+    return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
 })->name('parseXml_Index')->middleware('auth.basic');
-// Route::get('/parsexml', [pageController::class, 'pageXml']);
+
+Route::get('/login', [authController::class, 'showLogin'])->name('login');
+Route::post('/login/attempt', [authController::class, 'attemptLogin'])->name('attempt_login');
+Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware('auth:admin');
+
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

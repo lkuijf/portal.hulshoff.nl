@@ -59,7 +59,7 @@ class xmlController extends Controller
                     if(count($data->xmldata->orders->order)) {
                         $result = $this->insertWmsOrders($data->xmldata->orders->order);
                         $data = [
-                            'dev_snippet' => 'xml',
+                            'include_view' => 'development.xml',
                             'result' => 'result message: ' . $result->msg,
                         ];
                         return view('templates.development')->with('data', $data);
@@ -84,7 +84,7 @@ class xmlController extends Controller
                 if(isset($data->xmldata->artikelen->artikel) && count($data->xmldata->artikelen->artikel)) {
                     $result = $this->upsertProducts($data->xmldata->artikelen->artikel);
                     $data = [
-                        'dev_snippet' => 'xml',
+                        'include_view' => 'development.xml',
                         'result' => 'result message: ' . $result->msg,
                     ];
                     return view('templates.development')->with('data', $data);
@@ -106,7 +106,7 @@ class xmlController extends Controller
                 if(isset($data->xmldata->klanten->klant) && count($data->xmldata->klanten->klant)) {
                     $result = $this->upsertCustomers($data->xmldata->klanten->klant);
                     $data = [
-                        'dev_snippet' => 'xml',
+                        'include_view' => 'development.xml',
                         'result' => 'result message: ' . $result->msg,
                     ];
                     return view('templates.development')->with('data', $data);
@@ -128,7 +128,7 @@ class xmlController extends Controller
                 if(isset($data->xmldata->voorraden->voorraad) && count($data->xmldata->voorraden->voorraad)) {
                     $result = $this->updateVoorraden($data->xmldata->voorraden->voorraad);
                     $data = [
-                        'dev_snippet' => 'xml',
+                        'include_view' => 'development.xml',
                         'result' => 'result message: ' . $result->msg,
                     ];
                     return view('templates.development')->with('data', $data);
