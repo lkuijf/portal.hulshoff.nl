@@ -3,4 +3,5 @@
 <ul>
     <li><a href="/front" target="_blank">Template design + diverse pagina elementen</a></li>
     <li><a href="/parsexml">Overzicht verwerking XML-bestanden</a></li>
+    <li><a href="/login">Login met Two Factor Authentication</a></li>
 </ul>

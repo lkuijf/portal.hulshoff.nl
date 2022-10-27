@@ -2,7 +2,8 @@ Use:<br />
 abc@def.nl<br />
 test123<br />
 
-<form action="{{ route('attempt_login') }}" method="post">
+{{-- <form action="{{ route('attempt_login') }}" method="post"> --}}
+<form action="/login" method="post">
     @csrf
     <input type="text" name="email">
     <input type="password" name="password">

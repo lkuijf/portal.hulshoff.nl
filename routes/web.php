@@ -26,10 +26,10 @@ Route::get('/parsexml', function () {
     return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
 })->name('parseXml_Index')->middleware('auth.basic');
 
-Route::get('/login', [authController::class, 'showLogin'])->name('login');
-Route::post('/login/attempt', [authController::class, 'attemptLogin'])->name('attempt_login');
+// Route::get('/login', [authController::class, 'showLogin'])->name('login');
+// Route::post('/login/attempt', [authController::class, 'attemptLogin'])->name('attempt_login');
 Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware('auth:admin');
-
+// Route::get('/login')->name('login');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

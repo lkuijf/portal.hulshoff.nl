@@ -21,7 +21,10 @@
             @endif
             <div class="textWrap">
                 {{-- {!! $data['content'] !!} --}}
-                @include($data['include_view'])
+                @if (isset($data['include_view']))
+                    @include($data['include_view'])
+                @endif
+                @yield('content')
             </div>
         </div>
     </div>

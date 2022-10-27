@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use App\Http\Controllers\AuthController;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -46,8 +47,20 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
-        Fortify::confirmPasswordView(function () {
-            return view('auth.confirm-password');
+        Fortify::loginView(function () {
+            // return view('auth_hulshoff.login');
+            return view('auth_login');
         });
+        Fortify::twoFactorChallengeView(function () {
+            // return view('auth_hulshoff.two-factor-challenge');
+            return view('auth_two-factur-challenge');
+        });
+        // Fortify::confirmPasswordView(function () {
+        //     return view('auth_hulshoff.confirm-password');
+        // });
+        // Fortify::registerView(function () {
+        //     return view('auth_hulshoff.register');
+        // });
+        
     }
 }
