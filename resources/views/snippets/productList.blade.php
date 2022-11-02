@@ -1,7 +1,14 @@
 <div class="productList">
-    @for ($x=0;$x<12;$x++)
-    @include('snippets.product', ['product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>Categorie: WERKPLEK</p><p>Inrichtingsconcept: TAFEL</p><p>Leverancier: Gispen</p><p>Soort: VERGADERTAFEL</p>'])
-    @endfor
+    <div class="products">
+        @for ($x=0;$x<12;$x++)
+        @include('snippets.product', ['product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>Categorie: WERKPLEK</p><p>Inrichtingsconcept: TAFEL</p><p>Leverancier: Gispen</p><p>Soort: VERGADERTAFEL</p>'])
+        @endfor
+    </div>
+    {{-- Paginering --}}
+    <p style="text-decoration: underline">Pagination</p>
+    <div class="productOverviewPagination">
+        @include('snippets.pagination', ['total_pages' => 8, 'active_page' => 8])
+    </div>
 </div>
 @section('before_closing_body_tag')
     @parent

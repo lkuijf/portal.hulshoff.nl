@@ -4,8 +4,9 @@ $screenBreakpointExtra: 1200px; // For product filter
 $containerWidth: 1600px;
 
 $colorYellow: #FFE600; // original color used in logo
+$colorGreen: #00BE31; // green color used in homepage
+$colorGreenLight: #bfffcf;
 $colorCart: #9EFF00; // 
-$colorNavigationHover: #00BE31; // 
 // $colorGoldLight: #e1d2b8;
 
 $fontFamily: 'Heebo', sans-serif;
@@ -16,6 +17,7 @@ $fontFamily: 'Heebo', sans-serif;
 // @import 'inc/contact-form';
 @import 'inc/productList.scss';
 @import 'inc/productDetail.scss';
+@import 'inc/productPagination.scss';
 @import 'inc/filters.scss';
 @import 'inc/crumbs.scss';
 @import 'inc/cart.scss';

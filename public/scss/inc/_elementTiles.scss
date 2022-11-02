@@ -6,7 +6,7 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         .eTile {
             cursor: pointer;
-            border: 3px solid $colorNavigationHover;
+            border: 3px solid $colorGreen;
             padding: 10px;
             text-align: center;
             img {

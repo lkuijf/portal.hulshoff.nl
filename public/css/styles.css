@@ -2,58 +2,58 @@
     Burger-menu
     DO NOT ALTER THIS MIXIN
 */
-.productList {
+.productList .products {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
 @media (max-width: 768px) {
-  .productList {
+  .productList .products {
     justify-content: center;
   }
 }
-.productList .product {
+.productList .products .product {
   width: 200px;
   cursor: pointer;
   border: 1px solid #CCC;
 }
 @media (max-width: 530px) {
-  .productList .product {
+  .productList .products .product {
     width: 100%;
   }
 }
-.productList .product .prodInnerWrap {
+.productList .products .product .prodInnerWrap {
   padding: 5px;
 }
-.productList .product .prodInnerWrap .prodImgHolder img {
+.productList .products .product .prodInnerWrap .prodImgHolder img {
   width: 100%;
   aspect-ratio: 1/1;
   -o-object-fit: contain;
      object-fit: contain;
   background-color: #EEE;
 }
-.productList .product .prodInnerWrap .prodInfo p {
+.productList .products .product .prodInnerWrap .prodInfo p {
   margin: 1px;
 }
-.productList .product .prodToDetail {
+.productList .products .product .prodToDetail {
   text-align: right;
 }
-.productList .product .prodToDetail a {
+.productList .products .product .prodToDetail a {
   text-decoration: none;
   background-color: #CCC;
   display: inline-block;
   padding: 5px 7px 3px 12px;
   color: #000;
 }
-.productList .product .prodToDetail a:before {
+.productList .products .product .prodToDetail a:before {
   font-family: hulshoff;
   font-size: 24px;
   content: " \e801";
 }
-.productList .product .prodToDetail a:hover, .productList .product .prodToDetail a.active {
+.productList .products .product .prodToDetail a:hover, .productList .products .product .prodToDetail a.active {
   background-color: #000;
 }
-.productList .product .prodToDetail a:hover:before, .productList .product .prodToDetail a.active:before {
+.productList .products .product .prodToDetail a:hover:before, .productList .products .product .prodToDetail a.active:before {
   color: #CCC;
 }
 
@@ -117,6 +117,40 @@
 .productDetailContent .prodDetPropertiesWrap .prodDetProp p {
   margin: 0;
   padding: 10px;
+}
+
+div.productOverviewPagination ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  gap: 5px;
+  justify-content: center;
+}
+div.productOverviewPagination ul li {
+  vertical-align: middle;
+}
+div.productOverviewPagination ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 12px;
+  border: 2px solid #CCC;
+}
+div.productOverviewPagination ul li a:not(.inactive):hover, div.productOverviewPagination ul li a.active {
+  background-color: #00BE31;
+  border-color: #666;
+}
+div.productOverviewPagination ul li a.inactive {
+  color: #999;
+  cursor: default;
+}
+div.productOverviewPagination ul li form {
+  display: inline;
+}
+div.productOverviewPagination ul li form input, div.productOverviewPagination ul li form button {
+  font-size: 15px;
 }
 
 .filters {
