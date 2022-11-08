@@ -18,11 +18,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('klantCode', 30)->nullable();
             $table->foreign('klantCode')->references('klantCode')->on('customers')->nullOnDelete();
-            $table->json('extra_email');
-            $table->boolean('can_reserve');
+            $table->string('last_known_klantCode_name')->nullable();
+            $table->json('extra_email')->nullable();
+            $table->json('privileges')->nullable();
+            $table->boolean('can_reserve')->default(0);
+            $table->boolean('is_admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -30,11 +33,22 @@ return new class extends Migration
         DB::table('hulshoff_users')->insert(
             array(
                 'name' => 'TEST klant',
-                'email' => 'abc@def.nl',
-                'password' => Hash::make('test123'),
-                'klantCode' => 'Customer A',
+                'email' => 'customer_a@hulshoffportal.nl',
+                'password' => Hash::make('v482kS0Y'),
+                'klantCode' => '1',
+                'last_known_klantCode_name' => '1',
                 'extra_email' => '[{"email":"Belg@rade"},{"email":"Pa@ris"},{"email":"Madr@id"}]',
+                'privileges' => '["show_tiles","free_search","lotcode_search"]',
                 'can_reserve' => 1,
+                'is_admin' => 0,
+            )
+        );
+        DB::table('hulshoff_users')->insert(
+            array(
+                'name' => 'TEST admin',
+                'email' => 'admin@hulshoffportal.nl',
+                'password' => Hash::make('6weY9e5H'),
+                'is_admin' => 1,
             )
         );
 

@@ -15,10 +15,11 @@ class AuthController extends Controller
     }
 
     public function showAccount() {
-        $data = [
-            'include_view' => 'snippets.auth_account',
-        ];
-        return view('templates.development')->with('data', $data);
+        // $data = [
+        //     'include_view' => 'snippets.auth_account',
+        // ];
+        // return view('templates.development')->with('data', $data);
+        return view('auth_account_home');
     }
 
     public function attemptLogin(Request $request) {

@@ -5,7 +5,6 @@
 .productList .products {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
 }
 @media (max-width: 768px) {
   .productList .products {
@@ -57,9 +56,6 @@
   color: #CCC;
 }
 
-.productDetailContent {
-  padding: 20px;
-}
 .productDetailContent .prodDetTopWrap {
   display: flex;
   gap: 20px;
@@ -386,9 +382,6 @@ nav.mainNav ul li a:hover {
   content: "\e804";
 }
 
-.elementTilesContent {
-  padding: 20px;
-}
 .elementTilesContent .eTilesWrap {
   display: grid;
   gap: 20px;
@@ -414,6 +407,20 @@ nav.mainNav ul li a:hover {
 }
 .elementTilesContent .eTilesWrap .eTile:hover {
   background-color: #CCC;
+}
+
+.loginContent form {
+  display: inline-block;
+  text-align: right;
+}
+.loginContent form div {
+  padding-bottom: 5px;
+}
+.loginContent form label {
+  padding-right: 5px;
+}
+.loginContent form button {
+  cursor: pointer;
 }
 
 html, body {
@@ -461,7 +468,11 @@ h3, h4, h5 {
 }
 
 a {
-  color: #000;
+  color: #00BE31;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 .gridContainer {
@@ -551,24 +562,20 @@ a {
   grid-area: content;
   background-color: #FFF;
 }
+.contentCell > div {
+  padding: 20px;
+}
+@media (max-width: 768px) {
+  .contentCell > div {
+    padding: 5px;
+  }
+}
 .contentCell .textContent {
   max-width: 1100px;
-  padding: 20px;
-}
-@media (max-width: 768px) {
-  .contentCell .textContent {
-    padding: 5px;
-  }
 }
 .contentCell .productOverviewContent {
-  padding: 20px;
   display: flex;
   flex-direction: row-reverse;
-}
-@media (max-width: 768px) {
-  .contentCell .productOverviewContent {
-    padding: 5px;
-  }
 }
 @media (max-width: 1200px) {
   .contentCell .productOverviewContent {

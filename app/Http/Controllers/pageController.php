@@ -10,4 +10,8 @@ class pageController extends Controller
         $data = ['content' => 'content'];
         return view('templates.development')->with('data', $data);
     }
+
+    public function allContentElements() {
+        
+    }
 }

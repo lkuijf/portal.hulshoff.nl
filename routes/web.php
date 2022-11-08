@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\xmlController;
 use App\Http\Controllers\pageController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::get('/', function () {
     return view('templates.development')->with(['data' => ['include_view' => 'development.index']]);
 })->middleware('auth.basic');
 Route::get('/front', function () {
-    return view('templates.portal');
+    return view('portal-welcome');
 })->middleware('auth.basic');
 Route::get('/parsexml', function () {
     return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
@@ -28,8 +29,15 @@ Route::get('/parsexml', function () {
 
 // Route::get('/login', [authController::class, 'showLogin'])->name('login');
 // Route::post('/login/attempt', [authController::class, 'attemptLogin'])->name('attempt_login');
-Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware('auth:admin');
+Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware('auth:h_users');
 // Route::get('/login')->name('login');
+Route::get('/users', [userController::class, 'showUsers'])->name('users')->middleware('auth:h_users');
+Route::get('/users/{id}', [userController::class, 'showUser'])->where('id', '[0-9]+')->middleware('auth:h_users');
+Route::get('/users/new', [userController::class, 'newUser'])->name('new_user')->middleware('auth:h_users');
+Route::post('/user', [userController::class, 'addUser']);
+Route::put('/user', [userController::class, 'updateUser']);
+Route::delete('/user', [userController::class, 'deleteUser']);
+
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

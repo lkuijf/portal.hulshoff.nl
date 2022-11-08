@@ -1,0 +1,15 @@
+.loginContent {
+    form {
+        display: inline-block;
+        text-align: right;
+        div {
+            padding-bottom: 5px;
+        }
+        label {
+            padding-right: 5px;
+        }
+        button {
+            cursor: pointer;
+        }
+    }
+}

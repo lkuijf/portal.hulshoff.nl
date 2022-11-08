@@ -24,6 +24,9 @@ $fontFamily: 'Heebo', sans-serif;
 @import 'inc/nav.scss';
 @import 'inc/account.scss';
 @import 'inc/elementTiles.scss';
+@import 'inc/login.scss';
+@import 'inc/accountHome.scss';
+@import 'inc/login2FaChallenge.scss';
 
 html, body {
     margin: 0;
@@ -55,7 +58,11 @@ h1 { font-size: 2em; }
 h2 { font-size: 1.5em; }
 h3,h4,h5 { font-size: 1.2em; }
 a {
-    color: #000;
+    color: $colorGreen;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 .gridContainer {
     border: 20px solid #FFF;
@@ -154,14 +161,16 @@ a {
     grid-area: content;
     background-color: #FFF;
     // border-right: 3px solid #F0F2F4;
-    .textContent {
-        max-width: 1100px;
+
+    > div {
         padding: 20px;
         @media (max-width: $screenBreakpoint) { padding: 5px; }
     }
+
+    .textContent {
+        max-width: 1100px;
+    }
     .productOverviewContent {
-        padding: 20px;
-        @media (max-width: $screenBreakpoint) { padding: 5px; }
         display: flex;
         flex-direction: row-reverse;
         @media (max-width: $screenBreakpointExtra) {

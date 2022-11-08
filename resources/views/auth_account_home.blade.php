@@ -1,5 +1,5 @@
 {{-- @extends('templates.development') --}}
 @extends('templates.portal')
 @section('content')
-    @include('auth_hulshoff.two-factor-challenge')
+    @include('snippets.auth_account')
 @endsection

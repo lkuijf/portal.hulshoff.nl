@@ -40,7 +40,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'admin' => [
+        'h_users' => [
             'driver' => 'session',
             'provider' => 'hulshoff_users',
         ],
