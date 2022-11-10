@@ -38,13 +38,31 @@
                     <span></span>
                     <span></span>
                 </label>
+                @if (auth()->user())
+                @if (auth()->user()->is_admin)
                 <ul>
-                    <li><a href="#">Item</a></li>
-                    <li><a href="#">Item</a></li>
-                    <li><a href="#">Item</a></li>
-                    <li><a href="#">Item</a></li>
-                    <li><a href="#">Item</a></li>
+                    <li><a href="{{ route('users') }}">Users</a></li>
+                    <li><a href="{{ route('admins') }}">Admins</a></li>
+                    <li><a href="">Informatie</a></li>
                 </ul>
+                @else
+                <ul>
+                    <li><a href="">Geen</a></li>
+                    <li><a href="">Admin</a></li>
+                </ul>
+                @endif
+                @else
+                <ul>
+                    <li><a href="{{ route('login') }}">Login</a></li>
+                </ul>
+                @endif
+                {{-- <ul>
+                    <li><a href="#">Item</a></li>
+                    <li><a href="#">Item</a></li>
+                    <li><a href="#">Item</a></li>
+                    <li><a href="#">Item</a></li>
+                    <li><a href="#">Item</a></li>
+                </ul> --}}
             </nav>
         </div>
         <div class="infoCell"><p>Webportal</p></div>

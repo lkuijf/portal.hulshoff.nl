@@ -11,8 +11,24 @@ class UserController extends Controller
 {
     public function showUsers() {
         $users = HulshoffUser::where('is_admin', 0)->get();
+        $data = [
+            'users' => $users,
+            'type' => 'users',
+        ];
+        return view('userList')->with('data', $data);
+    }
 
-        return view('userList')->with('data', $users);
+    public function showAdmins() {
+        // if(auth()->user()->is_admin) {
+            $users = HulshoffUser::where('is_admin', 1)->get();
+            $data = [
+                'users' => $users,
+                'type' => 'admins',
+            ];
+            return view('userList')->with('data', $data);
+        // } else {
+            // return view('no-access');
+        // }
     }
 
     public function showUser($id) {
@@ -111,8 +127,9 @@ class UserController extends Controller
         $usr->email = $req->email;
         $usr->klantCode = $req->klantCode;
         $usr->last_known_klantCode_name = $req->klantCode . ',' . $cust->naam;
-        if($req->privileges) $usr->privileges = json_encode($req->privileges);
-        else $usr->privileges = null;
+        $usr->privileges = ($req->privileges?json_encode($req->privileges):null);
+        $usr->can_reserve = ($req->can_reserve?1:0);
+        $usr->is_admin = ($req->is_admin?1:0);
         return $usr;
     }
 

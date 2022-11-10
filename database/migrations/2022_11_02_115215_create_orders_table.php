@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('hulshoff_user_id');
-            $table->foreign('hulshoff_user_id')->references('id')->on('hulshoff_users')->onDelete('cascade');
+            $table->unsignedBigInteger('hulshoff_user_id')->nullable();
+            $table->foreign('hulshoff_user_id')->references('id')->on('hulshoff_users')->nullOnDelete();
             $table->boolean('is_reservation')->default(0);
             $table->string('orderCodeKlant', 30); // nog niet duidelijk wat het gebruik hiervan is, overgenomen van WMS
             $table->string('orderCodeAflever', 50); // nog niet duidelijk wat het gebruik hiervan is, overgenomen van WMS
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+    // $table->string('klantCode', 30)->nullable();
+    // $table->foreign('klantCode')->references('klantCode')->on('customers')->nullOnDelete();
 
     /**
      * Reverse the migrations.

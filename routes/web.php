@@ -30,10 +30,12 @@ Route::get('/parsexml', function () {
 // Route::get('/login', [authController::class, 'showLogin'])->name('login');
 // Route::post('/login/attempt', [authController::class, 'attemptLogin'])->name('attempt_login');
 Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware('auth:h_users');
-// Route::get('/login')->name('login');
 Route::get('/users', [userController::class, 'showUsers'])->name('users')->middleware('auth:h_users');
 Route::get('/users/{id}', [userController::class, 'showUser'])->where('id', '[0-9]+')->middleware('auth:h_users');
 Route::get('/users/new', [userController::class, 'newUser'])->name('new_user')->middleware('auth:h_users');
+Route::get('/admins', [userController::class, 'showAdmins'])->name('admins')->middleware('auth:h_users');
+// Route::get('/admins/{id}', [userController::class, 'showAdmin'])->where('id', '[0-9]+')->middleware('auth:h_users');
+// Route::get('/admins/new', [userController::class, 'newAdmin'])->name('new_user')->middleware('auth:h_users');
 Route::post('/user', [userController::class, 'addUser']);
 Route::put('/user', [userController::class, 'updateUser']);
 Route::delete('/user', [userController::class, 'deleteUser']);

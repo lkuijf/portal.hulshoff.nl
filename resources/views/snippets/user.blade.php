@@ -8,6 +8,8 @@
     $klantCode = false;
     $extra_email = false;
     $privileges = '[]';
+    $canReserve = 0;
+    $isAdmin = 0;
 @endphp
 @if ($user)
     {{-- edit --}}
@@ -20,10 +22,12 @@
         $klantCode = $user->klantCode;
         $extra_email = ($user->extra_email?$user->extra_email:'[]');
         $privileges = ($user->privileges?$user->privileges:'[]');
+        $canReserve = $user->can_reserve;
+        $isAdmin = $user->is_admin;
     @endphp
 @endif
 <h1>{{ __($title) }}</h1>
-<p><a href="{{ route('users') }}">< terug naar overzicht</a></p>
+<p><a href="{{ url()->previous() }}">< terug naar overzicht</a></p>
 <form action="{{ url('user') }}" method="post">
 @method($method)
 @csrf
@@ -76,6 +80,18 @@
             @foreach (['aaa', 'show_tiles', 'free_search', 'lotcode_search', 'yyy', 'zzz'] as $privilege)
                 <div><input type="checkbox" name="privileges[]" value="{{ $privilege }}" id="{{ $privilege }}" @if((old('privileges') && in_array($privilege, old('privileges'))) || (in_array($privilege, json_decode($privileges,true)) && !$errors->any())) checked @endif><label for="{{ $privilege }}">{{ $privilege }}</label></div>
             @endforeach
+        </td>
+    </tr>
+    <tr>
+        <td>{{ __('Can reserve?') }}</td>
+        <td>
+            <input type="checkbox" name="can_reserve" id="canreserve" @if($canReserve) checked @endif><label for="canreserve">{{ __('Yes') }}</label>
+        </td>
+    </tr>
+    <tr>
+        <td>{{ __('Is administrator?') }}</td>
+        <td>
+            <input type="checkbox" name="is_admin" id="isadmin" @if($isAdmin) checked @endif><label for="isadmin">{{ __('Yes') }}</label>
         </td>
     </tr>
     <tr>
