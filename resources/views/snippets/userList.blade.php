@@ -21,7 +21,16 @@
             {{-- @if($user->privileges !== null)@dd($user->privileges)@endif --}}
             {{-- <td>@if($user->privileges !== null){{ implode(', ', json_decode('[aasasd,66]',true)) }}@endif</td> --}}
             <td>{{ $user->can_reserve?'Ja':'Nee' }}</td>
-            <td><a href="{{ route('users') }}/{{ $user->id }}">[edit]</a><a href="">[remove]</a></td>
+            <td>
+                <a href="{{ route('users') }}/{{ $user->id }}">[edit]</a>
+                {{-- <a href="">[remove]</a> --}}
+                <form action="/user" method="post">
+                    @method('delete')
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $user->id }}">
+                    <button type="submit" onclick="return confirm('You are about to delete user {{ $user->name }} ({{ $user->email }})\n\nAre you sure?')">Delete</button>
+                </form>
+            </td>
         </tr>
     @endforeach
 </table>

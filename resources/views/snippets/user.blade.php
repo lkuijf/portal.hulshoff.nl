@@ -18,8 +18,8 @@
         $name = $user->name;
         $email = $user->email;
         $klantCode = $user->klantCode;
-        $extra_email = $user->extra_email;
-        $privileges = $user->privileges;
+        $extra_email = ($user->extra_email?$user->extra_email:'[]');
+        $privileges = ($user->privileges?$user->privileges:'[]');
     @endphp
 @endif
 <h1>{{ __($title) }}</h1>
@@ -31,11 +31,11 @@
 <table>
     <tr>
         <td>{{ __('Name') }}</td>
-        <td><input type="text" name="name" value="{{ $name }}"></td>
+        <td><input type="text" name="name" value="@if(old('name')){{ old('name') }}@else{{ $name }}@endif"></td>
     </tr>
     <tr>
         <td>{{ __('E-mail address') }}</td>
-        <td><input type="text" name="email" value="{{ $email }}"></td>
+        <td><input type="text" name="email" value="@if(old('email')){{ old('email') }}@else{{ $email }}@endif"></td>
     </tr>
     <tr>
         <td>{{ __('Customer') }}</td>
@@ -43,7 +43,7 @@
             <select name="klantCode">
                 <option value="">-selecteer-</option>
                 @foreach ($customers as $customer)
-                    <option value="{{ $customer->klantCode }}" @if($customer->klantCode == $klantCode) selected @endif>{{ $customer->naam }}({{ $customer->klantCode }})</option>
+                    <option value="{{ $customer->klantCode }}" @if((old('klantCode') && $customer->klantCode == old('klantCode')) || $customer->klantCode == $klantCode) selected @endif>{{ $customer->naam }}({{ $customer->klantCode }})</option>
                 @endforeach
             </select>
             @if($klantCode === null) Last known: {{ $user->last_known_klantCode_name }} @endif
@@ -55,10 +55,18 @@
         <td>
             <div>
                 @foreach (array_column(json_decode($extra_email,true),'email') as $email)
-                    <span>{{ $email }}<a href="">[remove]</a></span>
+                    <span>
+                        {{ $email }}
+                        <input type="hidden" name="current_extra_emails[]" value="{{ $email }}">
+                        <input type="submit" name="current_extra_emails[]" value="Remove" onclick="return confirm('You are about to delete {{ $email }}\n\nAre you sure?')" />
+                    </span>
                 @endforeach
             </div>
-            <div>{{ __('Add extra e-mail address') }}: <input type="text" name="extra_email"><button>{{ __('Add') }}</button></div>
+            <div>
+                {{ __('Add extra e-mail address') }}:
+                <input type="text" name="extra_email">
+                <input type="submit" name="add_email_btn" value="Add" />
+            </div>
         </td>
     </tr>
     @endif
@@ -66,7 +74,7 @@
         <td>{{ __('Privileges') }}</td>
         <td>
             @foreach (['aaa', 'show_tiles', 'free_search', 'lotcode_search', 'yyy', 'zzz'] as $privilege)
-                <div><input type="checkbox" name="privileges[]" value="{{ $privilege }}" id="{{ $privilege }}" @if(in_array($privilege, json_decode($privileges,true))) checked @endif><label for="{{ $privilege }}">{{ $privilege }}</label></div>
+                <div><input type="checkbox" name="privileges[]" value="{{ $privilege }}" id="{{ $privilege }}" @if((old('privileges') && in_array($privilege, old('privileges'))) || (in_array($privilege, json_decode($privileges,true)) && !$errors->any())) checked @endif><label for="{{ $privilege }}">{{ $privilege }}</label></div>
             @endforeach
         </td>
     </tr>
@@ -85,3 +93,13 @@
         </ul>
     {{-- </div> --}}
 @endif
+@section('before_closing_body_tag')
+<script>
+    document.addEventListener('keydown', (e) => {
+        if(e.keyCode === 13 || e.which === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+@endsection

@@ -4,7 +4,7 @@
     @include('auth_hulshoff.logout')
     @if (auth()->user()->is_admin)
     <ul>
-        <li><a href="">Users</a></li>
+        <li><a href="{{ route('users') }}">Users</a></li>
         <li>Meer</li>
         <li>Informatie</li>
     </ul>
