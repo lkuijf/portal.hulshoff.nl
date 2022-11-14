@@ -5,6 +5,7 @@ use App\Http\Controllers\xmlController;
 use App\Http\Controllers\pageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::post('/user', [userController::class, 'addUser']);
 Route::put('/user', [userController::class, 'updateUser']);
 Route::delete('/user', [userController::class, 'deleteUser']);
 
+Route::get('/products', [productController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
+
+Route::post('/ajax/products', [productController::class, 'getProducts'])->name('get_products')->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

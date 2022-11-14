@@ -35,5 +35,85 @@
         <art-breedte>22</art-breedte>
         <art-hoogte>32</art-hoogte>
     </artikel>
+    <artikel>
+        <art-klant-code>55059</art-klant-code>
+        <art-artikel-code>10596</art-artikel-code>
+        <art-omschrijving>c Stekkerblokken en 220 snoeren voor bureau 2</art-omschrijving>
+        <art-artikelgroep-code>ALGEMEEN 2</art-artikelgroep-code>
+        <art-stuks-per-bundel>2</art-stuks-per-bundel>
+        <art-prijs>2</art-prijs>
+        <art-type>TYPE-2</art-type>
+        <art-minimale-voorraad>52</art-minimale-voorraad>
+        <art-merk>MERK XYZ 2</art-merk>
+        <art-bijzonderheden>Dit artikel heeft verder geen speciale bijzonderheden 2</art-bijzonderheden>
+        <art-kleur>Rood met wit 2</art-kleur>
+        <art-lengte>12</art-lengte>
+        <art-breedte>22</art-breedte>
+        <art-hoogte>32</art-hoogte>
+    </artikel>
+    <artikel>
+        <art-klant-code>55059</art-klant-code>
+        <art-artikel-code>20596</art-artikel-code>
+        <art-omschrijving>2 Stekkerblokken en 220 snoeren voor bureau 2</art-omschrijving>
+        <art-artikelgroep-code>ALGEMEEN 2</art-artikelgroep-code>
+        <art-stuks-per-bundel>2</art-stuks-per-bundel>
+        <art-prijs>2</art-prijs>
+        <art-type>TYPE-2</art-type>
+        <art-minimale-voorraad>52</art-minimale-voorraad>
+        <art-merk>MERK XYZ 2</art-merk>
+        <art-bijzonderheden>Dit artikel heeft verder geen speciale bijzonderheden 2</art-bijzonderheden>
+        <art-kleur>Rood met wit 2</art-kleur>
+        <art-lengte>12</art-lengte>
+        <art-breedte>22</art-breedte>
+        <art-hoogte>32</art-hoogte>
+    </artikel>
+    <artikel>
+        <art-klant-code>55059</art-klant-code>
+        <art-artikel-code>30596</art-artikel-code>
+        <art-omschrijving>3 Stekkerblokken en 220 snoeren voor bureau 2</art-omschrijving>
+        <art-artikelgroep-code>ALGEMEEN 2</art-artikelgroep-code>
+        <art-stuks-per-bundel>2</art-stuks-per-bundel>
+        <art-prijs>2</art-prijs>
+        <art-type>TYPE-2</art-type>
+        <art-minimale-voorraad>52</art-minimale-voorraad>
+        <art-merk>MERK XYZ 2</art-merk>
+        <art-bijzonderheden>Dit artikel heeft verder geen speciale bijzonderheden 2</art-bijzonderheden>
+        <art-kleur>Rood met wit 2</art-kleur>
+        <art-lengte>12</art-lengte>
+        <art-breedte>22</art-breedte>
+        <art-hoogte>32</art-hoogte>
+    </artikel>
+    <artikel>
+        <art-klant-code>55059</art-klant-code>
+        <art-artikel-code>40596</art-artikel-code>
+        <art-omschrijving>4 Stekkerblokken en 220 snoeren voor bureau 2</art-omschrijving>
+        <art-artikelgroep-code>ALGEMEEN 2</art-artikelgroep-code>
+        <art-stuks-per-bundel>2</art-stuks-per-bundel>
+        <art-prijs>2</art-prijs>
+        <art-type>TYPE-2</art-type>
+        <art-minimale-voorraad>52</art-minimale-voorraad>
+        <art-merk>MERK XYZ 2</art-merk>
+        <art-bijzonderheden>Dit artikel heeft verder geen speciale bijzonderheden 2</art-bijzonderheden>
+        <art-kleur>Rood met wit 2</art-kleur>
+        <art-lengte>12</art-lengte>
+        <art-breedte>22</art-breedte>
+        <art-hoogte>32</art-hoogte>
+    </artikel>
+    <artikel>
+        <art-klant-code>55059</art-klant-code>
+        <art-artikel-code>50596</art-artikel-code>
+        <art-omschrijving>5 Stekkerblokken en 220 snoeren voor bureau 2</art-omschrijving>
+        <art-artikelgroep-code>ALGEMEEN 2</art-artikelgroep-code>
+        <art-stuks-per-bundel>2</art-stuks-per-bundel>
+        <art-prijs>2</art-prijs>
+        <art-type>TYPE-2</art-type>
+        <art-minimale-voorraad>52</art-minimale-voorraad>
+        <art-merk>MERK XYZ 2</art-merk>
+        <art-bijzonderheden>Dit artikel heeft verder geen speciale bijzonderheden 2</art-bijzonderheden>
+        <art-kleur>Rood met wit 2</art-kleur>
+        <art-lengte>12</art-lengte>
+        <art-breedte>22</art-breedte>
+        <art-hoogte>32</art-hoogte>
+    </artikel>
 </artikelen>
 </bericht>

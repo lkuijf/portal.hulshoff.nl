@@ -43,6 +43,7 @@
                 <ul>
                     <li><a href="{{ route('users') }}">Users</a></li>
                     <li><a href="{{ route('admins') }}">Admins</a></li>
+                    <li><a href="{{ route('products') }}">Producten</a></li>
                     <li><a href="">Informatie</a></li>
                 </ul>
                 @else

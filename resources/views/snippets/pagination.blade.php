@@ -1,5 +1,5 @@
-<ul>
-    <li><a href="#"@if($active_page == 1){!! ' class="inactive"' !!}@endif>Vorige</a></li>
+<ul class="productPagination">
+    <li><a href="#"@if($active_page == 1){!! ' class="inactive"' !!}@endif data-go-to-page-number="{{ ($active_page-1>0?$active_page-1:1) }}">Vorige</a></li>
     @php
         $start = $active_page - 3;
         $end = $active_page + 3;
@@ -14,8 +14,8 @@
         }
     @endphp
     @for ($x=$start;$x<=$end;$x++)
-        <li><a href="#"@if($x==$active_page){!! ' class="active"' !!}@endif>{{ $x }}</a></li>
+        <li><a href="#"@if($x==$active_page){!! ' class="active"' !!}@endif data-go-to-page-number="{{ $x }}">{{ $x }}</a></li>
     @endfor
-    <li><a href="#"@if($active_page==$total_pages){!! ' class="inactive"' !!}@endif>Volgende</a></li>
+    <li><a href="#"@if($active_page==$total_pages){!! ' class="inactive"' !!}@endif data-go-to-page-number="{{ ($active_page+1<=$total_pages?$active_page+1:$total_pages) }}">Volgende</a></li>
     <li>{{ $total_pages }} Pagina's in totaal @if($total_pages > 7)Ga naar pagina <form action=""><input type="text" size="4" maxlength="4"><button>Gaan</button></form>@endif</li>
 </ul>

@@ -5,6 +5,7 @@
 .productList .products {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
 }
 @media (max-width: 768px) {
   .productList .products {
@@ -584,6 +585,9 @@ a:hover {
 }
 .contentCell .productOverviewContent .filterWrap {
   flex: 0 0 350px;
+}
+.contentCell .productOverviewContent .loadProducts {
+  flex: 1 1 100%;
 }
 
 .footerCell {

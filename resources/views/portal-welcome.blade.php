@@ -78,6 +78,8 @@
                         @include('snippets.filter_active', ['filter_name' => 'Kleur', 'filter_selected_option' => 'Blauw'])
                     </div>
                 </div>
+                <div class="loadProducts">
                 @include('snippets.productList')
+                </div>
             </div>
 @endsection

@@ -1,30 +1,22 @@
 <div class="productList">
     <div class="products">
-        @for ($x=0;$x<12;$x++)
-        @include('snippets.product', ['product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>Categorie: WERKPLEK</p><p>Inrichtingsconcept: TAFEL</p><p>Leverancier: Gispen</p><p>Soort: VERGADERTAFEL</p>'])
-        @endfor
+        @if (isset($data['products']))
+            @foreach($data['products'] as $product)
+                @include('snippets.product', ['product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>' . $product['omschrijving'] . 'Categorie: WERKPLEK</p><p>Inrichtingsconcept: TAFEL</p><p>Leverancier: Gispen</p><p>Soort: VERGADERTAFEL</p>'])
+            @endforeach
+        @else
+            @for ($x=0;$x<12;$x++)
+                @include('snippets.product', ['product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>Categorie: WERKPLEK</p><p>Inrichtingsconcept: TAFEL</p><p>Leverancier: Gispen</p><p>Soort: VERGADERTAFEL</p>'])
+            @endfor
+        @endif
     </div>
     {{-- Paginering --}}
     <p style="text-decoration: underline">Pagination</p>
     <div class="productOverviewPagination">
-        @include('snippets.pagination', ['total_pages' => 8, 'active_page' => 8])
+        @if (isset($data['totalPages']))
+            @include('snippets.pagination', ['total_pages' => $data['totalPages'], 'active_page' => $data['currentPage']])
+        @else
+            @include('snippets.pagination', ['total_pages' => 8, 'active_page' => 8])
+        @endif
     </div>
 </div>
-@section('before_closing_body_tag')
-    @parent
-    <script>
-        let products = document.querySelectorAll('.productList .product');
-        products.forEach(prod => {
-            let linkEl = prod.querySelector('.prodToDetail a');
-            prod.addEventListener('mouseenter', () => {
-                linkEl.classList.add('active');
-            });
-            prod.addEventListener('mouseleave', () => {
-                linkEl.classList.remove('active');
-            });
-            prod.addEventListener('click', () => {
-                window.location.href = linkEl.href;
-            });
-        });
-    </script>
-@endsection
