@@ -216,7 +216,7 @@ class xmlController extends Controller
         $res = new \stdClass();
         foreach($products as $prod) {
             $productgroup = Productgroup::firstOrCreate([
-                'code' => $prod->{'art-artikelgroep-code'}
+                'group' => $prod->{'art-artikelgroep-code'}
             ]);
             $productbrand = Productbrand::firstOrCreate([
                 'brand' => $prod->{'art-merk'}

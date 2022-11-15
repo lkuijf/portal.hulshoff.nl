@@ -5,11 +5,11 @@
         <div class="filterWrap">
             <div class="filters">
                 <h4>Filteren</h4>
-                @include('snippets.filter_select', ['filter_name' => 'Leverancier', 'filter_options' => ['Gispen','bb'], 'filter_selected_option' => ''])
-                @include('snippets.filter_select', ['filter_name' => 'Kleur', 'filter_options' => ['Rood','Blauw'], 'filter_selected_option' => ''])
-                @include('snippets.filter_select', ['filter_name' => 'Soort', 'filter_options' => ['1','2'], 'filter_selected_option' => ''])
+                @foreach ($data['filters'] as $ref => $info)
+                    @include('snippets.filter_select', ['filter_name' => $info['name'], 'filter_reference' => $ref, 'filter_options' => $info['items'], 'filter_selected_option' => ''])
+                @endforeach
                 @include('snippets.filter_input')
-                <button>TOON RESULTATEN</button>
+                <button class="filterProductsBtn">TOON RESULTATEN</button>
                 <h4>Actieve filters</h4>
                 @include('snippets.filter_active', ['filter_name' => 'Leverancier', 'filter_selected_option' => 'Gispen'])
                 @include('snippets.filter_active', ['filter_name' => 'Kleur', 'filter_selected_option' => 'Blauw'])
@@ -25,10 +25,19 @@
 @parent
 <script>
     const content = document.querySelector('.loadProducts');
+    const filterBtn = document.querySelector('.filterProductsBtn');
+    
     displayProductPage();
 
+    filterBtn.addEventListener('click', () => {
+        displayProductPage();
+    });
+
     function displayProductPage(pageNr = 1) {
-        axios.post('{{ url('/ajax/products?page=') }}' + pageNr)
+
+        let filters = getFilters();
+console.log(filters);
+        axios.post('{{ url('/ajax/products?page=') }}' + pageNr, filters)
         .then(function (response) {
             // handle success
             // console.log(response.data);
@@ -42,6 +51,25 @@
         .then(function () {
             // always executed
         });
+    }
+
+    function getFilters() {
+        let activeFilters = {};
+        const filterTags = document.querySelectorAll('[data-filter-reference]');
+        filterTags.forEach(element => {
+            let filterReference = element.dataset.filterReference;
+            switch(element.nodeName.toLowerCase()) {
+                case 'select':
+                    // console.log(filterReference + ' : ' + element.value);
+                    activeFilters[filterReference] = element.value;
+                    break;
+                case 'input':
+                    // console.log(filterReference + ' : ' + element.value);
+                    activeFilters[filterReference] = element.value;
+                    break;
+            }
+        });
+        return activeFilters;
     }
 
     function afterXhrScript() {

@@ -33,7 +33,7 @@ return new class extends Migration
 
         DB::table('customers')->insert(
             array(
-                'klantCode' => '1',
+                'klantCode' => '1234',
                 'naam' => 'Customer A',
             )
         );

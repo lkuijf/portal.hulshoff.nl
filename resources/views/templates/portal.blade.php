@@ -25,7 +25,7 @@
                 <span>ABN AMRO</span>
             </div>
             <div class="accButtons">
-                <a href="#" class="accBtnHome">Home</a>
+                <a href="{{ route('account') }}" class="accBtnHome">Home</a>
                 <a href="#" class="accBtnProfile">Profile</a>
                 <a href="#" class="accBtnLogout">Logout</a>
             </div>
@@ -48,6 +48,7 @@
                 </ul>
                 @else
                 <ul>
+                    <li><a href="{{ route('products') }}">Producten</a></li>
                     <li><a href="">Geen</a></li>
                     <li><a href="">Admin</a></li>
                 </ul>

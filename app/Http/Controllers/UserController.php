@@ -98,13 +98,13 @@ class UserController extends Controller
         $toValidate = array(
             'email' => 'required|email',
             'name' => 'required',
-            'klantCode' => 'required',
+            // 'klantCode' => 'required',
         );
         $validationMessages = array(
             'email.required'=> 'Geef a.u.b. een e-mail adres op.',
             'email.email'=> 'Het e-mail adres is niet juist geformuleerd.',
             'name.required'=> 'Geef a.u.b. een naam op.',
-            'klantCode.required'=> 'Geef a.u.b. aan bij welke klant de gebruiker hoort.',
+            // 'klantCode.required'=> 'Geef a.u.b. aan bij welke klant de gebruiker hoort.',
         );
         $validated = $req->validate($toValidate,$validationMessages);
         return $validated;
@@ -126,7 +126,8 @@ class UserController extends Controller
         $usr->name = $req->name;
         $usr->email = $req->email;
         $usr->klantCode = $req->klantCode;
-        $usr->last_known_klantCode_name = $req->klantCode . ',' . $cust->naam;
+        if(isset($cust->naam)) $usr->last_known_klantCode_name = $req->klantCode . ',' . $cust->naam;
+        // else $usr->last_known_klantCode_name = null;
         $usr->privileges = ($req->privileges?json_encode($req->privileges):null);
         $usr->can_reserve = ($req->can_reserve?1:0);
         $usr->is_admin = ($req->is_admin?1:0);

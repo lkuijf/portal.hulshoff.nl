@@ -45,7 +45,7 @@
         <td>{{ __('Customer') }}</td>
         <td>
             <select name="klantCode">
-                <option value="">-selecteer-</option>
+                <option value="">-geen-</option>
                 @foreach ($customers as $customer)
                     <option value="{{ $customer->klantCode }}" @if((old('klantCode') && $customer->klantCode == old('klantCode')) || $customer->klantCode == $klantCode) selected @endif>{{ $customer->naam }}({{ $customer->klantCode }})</option>
                 @endforeach

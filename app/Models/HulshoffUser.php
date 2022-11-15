@@ -10,4 +10,11 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 class HulshoffUser extends Authenticatable
 {
     use HasFactory, TwoFactorAuthenticatable;
+
+    public function canDisplay() {
+        if(!$this->is_admin && !$this->klantCode) {
+            return false;
+        }
+        return true;
+    }
 }
