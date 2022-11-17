@@ -23,7 +23,7 @@ Route::get('/', function () {
 })->middleware('auth.basic');
 Route::get('/front', function () {
     return view('portal-welcome');
-})->middleware('auth.basic');
+})->name('front')->middleware('auth.basic');
 Route::get('/parsexml', function () {
     return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
 })->name('parseXml_Index')->middleware('auth.basic');
