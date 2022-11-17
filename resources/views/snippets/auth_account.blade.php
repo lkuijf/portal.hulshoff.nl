@@ -16,13 +16,13 @@
 
     <h2>Two Factor Authentication</h2>
     @if (auth()->user()->two_factor_confirmed_at)
-        <form action="/user/two-factor-authentication" method="POST">
+        <form action="{{ url('user/two-factor-authentication') }}" method="POST">
             @method('DELETE')
             @csrf
             <button type="submit">DISABLE Two Factor Authentication </button>
         </form>
     @else
-        <form action="/user/two-factor-authentication" method="POST">
+        <form action="{{ url('user/two-factor-authentication') }}" method="POST">
             @csrf
             <button type="submit">Enable Two Factor Authentication </button>
         </form>
@@ -30,7 +30,7 @@
     @if (session('status') == 'two-factor-authentication-enabled')
         <p>Please finish configuring two factor authentication below.</p>
         {!! auth()->user()->twoFactorQrCodeSvg() !!}
-        <form action="/user/confirmed-two-factor-authentication" method="POST">
+        <form action="{{ url('user/confirmed-two-factor-authentication') }}" method="POST">
             @csrf
             <input type="text" name="code">
             <button type="submit">Submit authentication code</button>
