@@ -4,7 +4,7 @@
 <bericht-id>4</bericht-id>
 <orders>
     <order>
-        <ord-klant-code>DNB</ord-klant-code>
+        <ord-klant-code>2323</ord-klant-code>
         <ord-order-code-klant>ORDER123</ord-order-code-klant>
         <ord-order-code-aflever>BESTELLING123</ord-order-code-aflever>
         <ord-order-nr>5</ord-order-nr>

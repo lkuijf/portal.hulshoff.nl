@@ -11,8 +11,10 @@
                 @include('snippets.filter_input')
                 <button class="filterProductsBtn">TOON RESULTATEN</button>
                 <h4>Actieve filters</h4>
-                @include('snippets.filter_active', ['filter_name' => 'Leverancier', 'filter_selected_option' => 'Gispen'])
-                @include('snippets.filter_active', ['filter_name' => 'Kleur', 'filter_selected_option' => 'Blauw'])
+                <div class="activeFilters">
+                    {{-- @include('snippets.filter_active', ['filter_name' => 'Leverancier', 'filter_selected_option' => 'Gispen'])
+                    @include('snippets.filter_active', ['filter_name' => 'Kleur', 'filter_selected_option' => 'Blauw']) --}}
+                </div>
             </div>
         </div>
         <div class="loadProducts"></div>
@@ -34,9 +36,9 @@
     });
 
     function displayProductPage(pageNr = 1) {
-
         let filters = getFilters();
-console.log(filters);
+        setActiveFilters(filters);
+// console.log(filters);
         axios.post('{{ url('/ajax/products?page=') }}' + pageNr, filters)
         .then(function (response) {
             // handle success
@@ -58,21 +60,56 @@ console.log(filters);
         const filterTags = document.querySelectorAll('[data-filter-reference]');
         filterTags.forEach(element => {
             let filterReference = element.dataset.filterReference;
+            let fil = {};
             switch(element.nodeName.toLowerCase()) {
                 case 'select':
-                    // console.log(filterReference + ' : ' + element.value);
-                    activeFilters[filterReference] = element.value;
+                    fil['name'] = element.name;
+                    fil['value'] = element.value;
+                    activeFilters[filterReference] = fil;
                     break;
                 case 'input':
-                    // console.log(filterReference + ' : ' + element.value);
-                    activeFilters[filterReference] = element.value;
+                    fil['name'] = element.name;
+                    fil['value'] = element.value;
+                    activeFilters[filterReference] = fil;
                     break;
             }
         });
         return activeFilters;
     }
 
+    function setActiveFilters(activeFilters) {
+        const filtersHolder = document.querySelector('.activeFilters');
+        filtersHolder.innerHTML = '';
+// console.log(activeFilters);
+        for (const key in activeFilters) {
+            if (Object.hasOwnProperty.call(activeFilters, key)) {
+                const element = activeFilters[key];
+                // console.log(element);
+                if(element.value != '') {
+                    let wrapP = document.createElement("p");
+                    wrapP.classList.add("activeFilter");
+
+                    let textSpan = document.createElement("span");
+                    let textSpanTextNode = document.createTextNode(element.name + ": " + element.value);
+                    textSpan.appendChild(textSpanTextNode);
+
+                    let btnA = document.createElement("a");
+                    btnA.href = '#';
+                    btnA.dataset.activeFilterReference = key;
+                    let btnATextNode = document.createTextNode(" ");
+                    btnA.appendChild(btnATextNode);
+
+                    wrapP.appendChild(textSpan);
+                    wrapP.appendChild(btnA);
+                    filtersHolder.appendChild(wrapP);
+                }
+
+            }
+        }
+    }
+
     function afterXhrScript() {
+        // set pagination click events
         const prodPagination = document.querySelector('.productPagination');
         const paginationLinks = prodPagination.querySelectorAll('a');
         paginationLinks.forEach(link => {
@@ -84,7 +121,8 @@ console.log(filters);
             });
         });
 
-        let products = document.querySelectorAll('.productList .product');
+        // set product list effects and click events
+        const products = document.querySelectorAll('.productList .product');
         products.forEach(prod => {
             let linkEl = prod.querySelector('.prodToDetail a');
             prod.addEventListener('mouseenter', () => {
@@ -95,6 +133,18 @@ console.log(filters);
             });
             prod.addEventListener('click', () => {
                 window.location.href = linkEl.href;
+            });
+        });
+
+        // set filter reset events on active filters
+        const allActiveFilters = document.querySelectorAll('.activeFilter');
+        allActiveFilters.forEach(aF => {
+            let aFbtn = aF.querySelector('a');
+            aFbtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let filterToReset = document.querySelector('[data-filter-reference=' + aFbtn.dataset.activeFilterReference + ']');
+                filterToReset.value = '';
+                displayProductPage();
             });
         });
     }

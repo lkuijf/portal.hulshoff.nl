@@ -16,20 +16,23 @@
     <div class="gridContainer">
         <header class="logoCell"><img src="{{ asset('statics/hulshoff-logo.png') }}" alt=""></header>
         <div class="breadcrumbsCell">
-            @include('snippets.breadcrumbs', ['breadcrumbs' => ['PRODUCTEN' => '#', 'WERKPLEK' => '#', 'TAFEL' => '#']])
+            {{-- @include('snippets.breadcrumbs', ['breadcrumbs' => ['PRODUCTEN' => '#', 'WERKPLEK' => '#', 'TAFEL' => '#']]) --}}
         </div>
-        <div class="basketCell"><span class="cart"><span>2</span></span></div>
+        <div class="basketCell"><span class="cart"><span>0</span></span></div>
+        @if (auth()->user())
         <div class="accountCell">
             <div class="accInfo">
-                <img src="https://picsum.photos/300/200" alt="">
-                <span>ABN AMRO</span>
+                {{-- <img src="https://picsum.photos/300/200" alt=""> --}}
+                <span>{{ auth()->user()->name }}</span>
             </div>
             <div class="accButtons">
-                <a href="{{ route('account') }}" class="accBtnHome">Home</a>
-                <a href="#" class="accBtnProfile">Profile</a>
-                <a href="#" class="accBtnLogout">Logout</a>
+                <a href="/" class="accBtnHome">Home</a>
+                <a href="{{ route('account') }}" class="accBtnProfile">Profile</a>
+                {{-- <a href="#" class="accBtnLogout">Logout</a> --}}
+                @include('auth_hulshoff.logout', ['buttonInside' => ''])
             </div>
         </div>
+        @endif
         <div class="navigationCell">
             <nav class="mainNav">
                 <input type="checkbox" id="burger-check">
@@ -39,24 +42,23 @@
                     <span></span>
                 </label>
                 @if (auth()->user())
-                @if (auth()->user()->is_admin)
-                <ul>
-                    <li><a href="{{ route('users') }}">Users</a></li>
-                    <li><a href="{{ route('admins') }}">Admins</a></li>
-                    <li><a href="{{ route('products') }}">Producten</a></li>
-                    <li><a href="">Informatie</a></li>
-                </ul>
-                @else
-                <ul>
-                    <li><a href="{{ route('products') }}">Producten</a></li>
-                    <li><a href="">Geen</a></li>
-                    <li><a href="">Admin</a></li>
-                </ul>
-                @endif
-                @else
+                    @if (auth()->user()->is_admin)
+                    <ul>
+                        <li><a href="{{ route('users') }}">Users</a></li>
+                        <li><a href="{{ route('admins') }}">Admins</a></li>
+                        <li><a href="{{ route('products') }}">Producten</a></li>
+                    </ul>
+                    @else
+                    <ul>
+                        <li><a href="{{ route('products') }}">Producten</a></li>
+                        {{-- <li><a href="">Geen</a></li>
+                        <li><a href="">Admin</a></li> --}}
+                    </ul>
+                    @endif
+                {{-- @else
                 <ul>
                     <li><a href="{{ route('login') }}">Login</a></li>
-                </ul>
+                </ul> --}}
                 @endif
                 {{-- <ul>
                     <li><a href="#">Item</a></li>

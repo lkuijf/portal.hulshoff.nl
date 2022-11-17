@@ -1,9 +1,11 @@
 {{-- @extends('templates.development') --}}
 @extends('templates.portal')
 @section('content')
+<div class="userListContent">
 {{-- @if (auth()->user()->is_admin) --}}
 <h1>{{ __('Overview') }} @if($data['type'] == 'users'){{ __('users') }}@elseif($data['type'] == 'admins'){{ __('administrators') }}@endif</h1>
-<p><a href="{{ route('new_user') }}">[new user]</a></p>
+{{-- <p><a href="{{ route('new_user') }}">[new user]</a></p> --}}
+<p><a href="@if($data['type'] == 'users'){{ route('new_user') }}@elseif($data['type'] == 'admins'){{ route('new_admin') }}@endif">[new {{ substr($data['type'], 0, -1) }}]</a></p>
 <table>
     <tr>
         <th>Name</th>
@@ -40,4 +42,5 @@
 {{-- @else
 GEEN TOEGANG
 @endif --}}
+</div>
 @endsection

@@ -68,9 +68,9 @@
                 <div class="filterWrap">
                     <div class="filters">
                         <h4>Filteren</h4>
-                        @include('snippets.filter_select', ['filter_name' => 'Leverancier', 'filter_options' => ['Gispen','bb'], 'filter_selected_option' => ''])
-                        @include('snippets.filter_select', ['filter_name' => 'Kleur', 'filter_options' => ['Rood','Blauw'], 'filter_selected_option' => ''])
-                        @include('snippets.filter_select', ['filter_name' => 'Soort', 'filter_options' => ['1','2'], 'filter_selected_option' => ''])
+                        @include('snippets.filter_select', ['filter_name' => 'Leverancier', 'filter_reference' => 'refff', 'filter_options' => ['Gispen','bb'], 'filter_selected_option' => ''])
+                        @include('snippets.filter_select', ['filter_name' => 'Kleur', 'filter_reference' => 'refff', 'filter_options' => ['Rood','Blauw'], 'filter_selected_option' => ''])
+                        @include('snippets.filter_select', ['filter_name' => 'Soort', 'filter_reference' => 'refff', 'filter_options' => ['1','2'], 'filter_selected_option' => ''])
                         @include('snippets.filter_input')
                         <button>TOON RESULTATEN</button>
                         <h4>Actieve filters</h4>

@@ -5,7 +5,7 @@
     <klanten>
         <klant>
             <kla-klant-code>55057</kla-klant-code>
-            <kla-naam>FFFFFFF</kla-naam>
+            <kla-naam>RABO</kla-naam>
             <kla-straat>Dorpsstraat</kla-straat>
             <kla-huisnummer>42</kla-huisnummer>
             <kla-postcode>1234 AA</kla-postcode>
@@ -41,8 +41,8 @@
         </klant>
         <klant>
             <kla-klant-code>55060</kla-klant-code>
-            <kla-naam>oooh</kla-naam>
-            <kla-straat>dddddddddd</kla-straat>
+            <kla-naam>TNT</kla-naam>
+            <kla-straat>Kerkstraat</kla-straat>
             <kla-huisnummer>42</kla-huisnummer>
             <kla-postcode>1234 AA</kla-postcode>
             <kla-land-code>NL</kla-land-code>

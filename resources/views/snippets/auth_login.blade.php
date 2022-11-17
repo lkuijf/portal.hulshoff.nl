@@ -1,11 +1,11 @@
 User:<br />
 customer_a@hulshoffportal.nl<br />
-v482kS0Y<br />
+v482kS0Y<br /><br />
 Admin:<br />
 admin@hulshoffportal.nl<br />
 6weY9e5H
 {{-- <form action="{{ route('attempt_login') }}" method="post"> --}}
-<div class="loginContent">
+{{-- <div class="loginContent"> --}}
     <h1>Login</h1>
     <p>Login met uw gegevens</p>
     <form action="/login" method="post">
@@ -27,4 +27,4 @@ admin@hulshoffportal.nl<br />
             @endforeach
         </ul>
     @endif
-</div>
+{{-- </div> --}}

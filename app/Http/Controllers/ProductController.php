@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Productbrand;
+use App\Models\Productgroup;
+use App\Models\Producttype;
 
 class ProductController extends Controller
 {
@@ -36,13 +38,21 @@ class ProductController extends Controller
     public function getProducts(Request $filters) {
         $resQry = Product::select();
         if(auth()->user()->klantCode) $resQry->where('klantCode', auth()->user()->klantCode);
-
-        if($filters->brand) {
-            $brand = Productbrand::where('brand', $filters->brand)->first();
+// dd($filters);
+        if($filters->brand['value']) {
+            $brand = Productbrand::where('brand', $filters->brand['value'])->first();
             $resQry->where('productbrand_id', $brand->id);
         }
+        if($filters->group['value']) {
+            $group = Productgroup::where('group', $filters->group['value'])->first();
+            $resQry->where('productgroup_id', $group->id);
+        }
+        if($filters->type['value']) {
+            $type = Producttype::where('type', $filters->type['value'])->first();
+            $resQry->where('producttype_id', $type->id);
+        }
 
-        $res = $resQry->paginate(3);
+        $res = $resQry->paginate(10);
 
         $data = [
             'products' => $res,
@@ -60,6 +70,14 @@ class ProductController extends Controller
         if($klantCode) $resQry->where('products.klantCode', '=', $klantCode);
         $results = $resQry->get();
         return $results;
+    }
+
+    public function showProductDetails($id) {
+        $product = Product::findOr($id, function () {
+            return abort(404);
+        });
+        // dd($product);
+        return view('productDetail')->with('product', $product);
     }
    
 }

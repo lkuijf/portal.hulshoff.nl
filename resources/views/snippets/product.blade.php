@@ -5,5 +5,5 @@
             {!! $product_info !!}
         </div>
     </div>
-    <div class="prodToDetail"><a href="#">&nbsp;</a></div>
+    <div class="prodToDetail"><a href="{{ route('products') }}/{!! $product_id !!}">&nbsp;</a></div>
 </article>

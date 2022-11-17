@@ -4,12 +4,12 @@
 <bericht-id>5</bericht-id>
 <voorraden>
     <voorraad>
-        <vrr-klant-code>DNB</vrr-klant-code>
+        <vrr-klant-code>2323</vrr-klant-code>
         <vrr-artikel-code>ARTIKEL123</vrr-artikel-code>
         <vrr-aantal-stuks>56</vrr-aantal-stuks>
     </voorraad>
     <voorraad>
-        <vrr-klant-code>DNB</vrr-klant-code>
+        <vrr-klant-code>2323</vrr-klant-code>
         <vrr-artikel-code>ARTIKEL456</vrr-artikel-code>
         <vrr-aantal-stuks>368</vrr-aantal-stuks>
     </voorraad>

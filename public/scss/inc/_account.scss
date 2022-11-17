@@ -33,4 +33,20 @@
         &.accBtnProfile:before { content: '\e803'; }
         &.accBtnLogout:before { content: '\e804'; }
     }
+    button {
+        background-color: transparent;
+        cursor: pointer;
+        outline: none;
+        border: 0;
+        color: #CCC;
+        padding: 0;
+        &:hover {
+            color: #FFF;
+        }
+        &:before {
+            font-family: hulshoff;
+            font-size: 26px;
+            content: '\e804';
+        }
+    }
 }

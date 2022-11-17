@@ -382,6 +382,22 @@ nav.mainNav ul li a:hover {
 .accButtons a.accBtnLogout:before {
   content: "\e804";
 }
+.accButtons button {
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  color: #CCC;
+  padding: 0;
+}
+.accButtons button:hover {
+  color: #FFF;
+}
+.accButtons button:before {
+  font-family: hulshoff;
+  font-size: 26px;
+  content: "\e804";
+}
 
 .elementTilesContent .eTilesWrap {
   display: grid;
@@ -422,6 +438,24 @@ nav.mainNav ul li a:hover {
 }
 .loginContent form button {
   cursor: pointer;
+}
+
+.userListContent table {
+  border: 1px solid #666;
+  border-collapse: collapse;
+}
+.userListContent table th {
+  color: #444;
+  padding: 7px;
+  background: #DDD;
+  border: 1px solid #666;
+}
+.userListContent table td {
+  padding: 7px;
+  border: 1px solid #666;
+}
+.userListContent form {
+  display: inline-block;
 }
 
 html, body {

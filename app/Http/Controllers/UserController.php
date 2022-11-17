@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\HulshoffUser;
 use App\Models\Customer;
 
@@ -48,6 +49,7 @@ class UserController extends Controller
         $user = new HulshoffUser;
         $user = $this->populateUserModel($user, $customer, $request);
         $user->save();
+        if($user->is_admin) return redirect()->route('admins');
         return redirect()->route('users');
     }
 
@@ -95,9 +97,11 @@ class UserController extends Controller
     }
 
     public function validateUserData($req) {
+        $method = strtolower($req->method());
         $toValidate = array(
             'email' => 'required|email',
             'name' => 'required',
+            // 'password' => 'required',
             // 'klantCode' => 'required',
         );
         $validationMessages = array(
@@ -106,6 +110,10 @@ class UserController extends Controller
             'name.required'=> 'Geef a.u.b. een naam op.',
             // 'klantCode.required'=> 'Geef a.u.b. aan bij welke klant de gebruiker hoort.',
         );
+        if($method == 'post') {
+            $toValidate['password'] = 'required';
+            $validationMessages['password.required'] = 'Geef a.u.b. een wachtwoord op.';
+        }
         $validated = $req->validate($toValidate,$validationMessages);
         return $validated;
     }
@@ -125,6 +133,7 @@ class UserController extends Controller
     public function populateUserModel($usr, $cust, $req) {
         $usr->name = $req->name;
         $usr->email = $req->email;
+        if(isset($req->password)) $usr->password = Hash::make($req->password);
         $usr->klantCode = $req->klantCode;
         if(isset($cust->naam)) $usr->last_known_klantCode_name = $req->klantCode . ',' . $cust->naam;
         // else $usr->last_known_klantCode_name = null;

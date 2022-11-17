@@ -1,21 +1,12 @@
 <div class="accountHomeContent">
-    <h1>Account</h1>
     <p>Welkom <em>{{ auth()->user()->name }}</em></p>
-    @include('auth_hulshoff.logout')
+    <h1>Account</h1>
+    {{-- @include('auth_hulshoff.logout', ['buttonInside' => 'Logout']) --}}
     @if (auth()->user()->is_admin)
-    <ul>
-        <li><a href="{{ route('users') }}">Users</a></li>
-        <li>Meer</li>
-        <li>Informatie</li>
-    </ul>
+    <p>Als administrator bent u gemachtigd om gebruikers te bewerken.</p>
     @else
-    no admin
+    <p>Bekijk de beschikbare producten.</p>
     @endif
-    <ul>
-        <li>Binnenkort</li>
-        <li>Meer</li>
-        <li>Informatie</li>
-    </ul>
 
     {{-- @if (auth()->user())
         yes
