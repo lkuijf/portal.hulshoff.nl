@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->ipAddress('ip');
             $table->string('userAgent', 255);
-            $table->string('requestedUrl', 100);
+            $table->string('requestedUrl', 255);
             $table->timestamps();
         });
     }
