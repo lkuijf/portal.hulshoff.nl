@@ -11,7 +11,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class HulshoffUser extends Authenticatable
 {
-    use HasFactory, TwoFactorAuthenticatable, Notifiable, MustVerifyEmail;
+    use HasFactory, TwoFactorAuthenticatable, Notifiable;
 
     public function canDisplay() {
         if(!$this->is_admin && !$this->klantCode) {
