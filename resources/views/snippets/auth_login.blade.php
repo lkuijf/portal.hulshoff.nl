@@ -20,6 +20,7 @@ admin@hulshoffportal.nl<br />
         </div>
         <button type="submit">Login</button>
     </form>
+    <p><a href="/forgot-password">Wachtwoord vergeten?</a></p>
     @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)

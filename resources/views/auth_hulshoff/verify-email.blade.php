@@ -1,7 +1,7 @@
-<div class="forgotPasswordContent">
-    <h1>Forgot password</h1>
-    <p>Please provide your e-mail address</p>
-    <form action="/forgot-password" method="POST">
+<div class="verifyEmailContent">
+    <h1>Verify e-mail address</h1>
+    <p>Please verify your e-mail address by clicking the link in the e-mail message.</p>
+    {{-- <form action="/forgot-password" method="POST">
         @csrf
         <input type="text" name="email">
         <button type="submit">Request</button>
@@ -18,5 +18,5 @@
         <ul>
             <li>{{ session('status') }}</li>
         </ul>
-    @endif
+    @endif --}}
 </div>
