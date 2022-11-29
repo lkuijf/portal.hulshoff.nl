@@ -9,7 +9,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class HulshoffUser extends Authenticatable
+class HulshoffUser extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, TwoFactorAuthenticatable, Notifiable;
 
