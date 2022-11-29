@@ -49,6 +49,7 @@ class UserController extends Controller
         $user = new HulshoffUser;
         $user = $this->populateUserModel($user, $customer, $request);
         $user->save();
+        $user->sendEmailVerificationNotification();
         if($user->is_admin) return redirect()->route('admins');
         return redirect()->route('users');
     }
