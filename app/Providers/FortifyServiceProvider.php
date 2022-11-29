@@ -61,6 +61,8 @@ class FortifyServiceProvider extends ServiceProvider
         // Fortify::registerView(function () {
         //     return view('auth_hulshoff.register');
         // });
-        
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth_forgot-password');
+        });
     }
 }
