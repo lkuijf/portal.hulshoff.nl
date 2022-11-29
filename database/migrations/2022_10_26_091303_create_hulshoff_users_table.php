@@ -38,7 +38,7 @@ return new class extends Migration
                 'klantCode' => '1234',
                 'last_known_klantCode_name' => '1234',
                 'extra_email' => '[{"email":"Belg@rade"},{"email":"Pa@ris"},{"email":"Madr@id"}]',
-                'privileges' => '["show_tiles","free_search","lotcode_search"]',
+                // 'privileges' => '["show_tiles","free_search","lotcode_search"]',
                 'can_reserve' => 1,
                 'is_admin' => 0,
             )

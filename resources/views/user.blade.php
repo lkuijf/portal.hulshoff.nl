@@ -97,7 +97,8 @@
     <tr>
         <td>{{ __('Privileges') }}</td>
         <td>
-            @foreach (['show_tiles', 'free_search', 'lotcode_search'] as $privilege)
+            {{-- @foreach (['show_tiles', 'free_search', 'lotcode_search'] as $privilege) --}}
+            @foreach (config('hulshoff.privileges') as $privilege)
                 <div><input type="checkbox" name="privileges[]" value="{{ $privilege }}" id="{{ $privilege }}" @if((old('privileges') && in_array($privilege, old('privileges'))) || (in_array($privilege, json_decode($privileges,true)) && !$errors->any())) checked @endif><label for="{{ $privilege }}">{{ $privilege }}</label></div>
             @endforeach
         </td>
