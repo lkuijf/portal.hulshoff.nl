@@ -27,4 +27,9 @@ admin@hulshoffportal.nl<br />
             @endforeach
         </ul>
     @endif
+    @if (session('status'))
+        <ul>
+            <li>{{ session('status') }}</li>
+        </ul>
+    @endif
 {{-- </div> --}}
