@@ -115,10 +115,10 @@ class UserController extends Controller
             'name.required'=> 'Geef a.u.b. een naam op.',
             // 'klantCode.required'=> 'Geef a.u.b. aan bij welke klant de gebruiker hoort.',
         );
-        if($method == 'post') {
-            $toValidate['password'] = 'required';
-            $validationMessages['password.required'] = 'Geef a.u.b. een wachtwoord op.';
-        }
+        // if($method == 'post') {
+        //     $toValidate['password'] = 'required';
+        //     $validationMessages['password.required'] = 'Geef a.u.b. een wachtwoord op.';
+        // }
         $validated = $req->validate($toValidate,$validationMessages);
         return $validated;
     }

@@ -55,12 +55,12 @@
         <td>{{ __('E-mail address') }}</td>
         <td><input type="text" name="email" value="@if(old('email')){{ old('email') }}@else{{ $email }}@endif"></td>
     </tr>
-    @if(!$id)
+    {{-- @if(!$id)
     <tr>
         <td>{{ __('Password') }}</td>
         <td><input type="password" name="password" value=""></td>
     </tr>
-    @endif
+    @endif --}}
     <tr>
         <td>{{ __('Customer') }}</td>
         <td>
