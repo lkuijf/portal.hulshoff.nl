@@ -1,5 +1,5 @@
 <div class="accountHomeContent">
-    <p>Welkom <em>{{ auth()->user()->name }}</em></p>
+    <p>Welkom <em>{{ auth()->user()->name }} (e-mail adres geverifiëerd)</em></p>
     <h1>Account</h1>
     {{-- @include('auth_hulshoff.logout', ['buttonInside' => 'Logout']) --}}
     @if (auth()->user()->is_admin)
@@ -48,8 +48,7 @@
             @endforeach
         </ul>
     @endif
-
-    @php
+    {{-- @php
         var_dump(session()->all());
     @endphp
     
@@ -57,5 +56,5 @@
         <ul>
             <li>{{ session('status') }}</li>
         </ul>
-    @endif
+    @endif --}}
 </div>
