@@ -8,7 +8,10 @@
     </form>
     <p>Please verify your e-mail address by clicking the link in the e-mail message.</p>
     <p><a href="{{ route('login') }}">< Terug</a></p>
-    @if ($errors->any())
+    @if (session('status') == 'verification-link-sent')
+        <p>A new email verification link has been emailed to you!</p>
+    @endif
+    {{-- @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -19,5 +22,5 @@
         <ul>
             <li>{{ session('status') }}</li>
         </ul>
-    @endif
+    @endif --}}
 </div>
