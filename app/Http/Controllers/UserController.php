@@ -50,6 +50,9 @@ class UserController extends Controller
         $user = $this->populateUserModel($user, $customer, $request);
         $user->save();
         $user->sendEmailVerificationNotification();
+        $token = Password::getRepository()->create($user);
+        $user->sendPasswordResetNotification($token);
+        // sendPasswordResetNotification
         if($user->is_admin) return redirect()->route('admins');
         return redirect()->route('users');
     }
