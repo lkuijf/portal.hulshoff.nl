@@ -30,7 +30,7 @@ Route::get('/parsexml', function () {
 
 // Route::get('/login', [authController::class, 'showLogin'])->name('login');
 // Route::post('/login/attempt', [authController::class, 'attemptLogin'])->name('attempt_login');
-Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware('auth:h_users');
+Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware(['auth:h_users', 'verified']);
 Route::get('/admins', [userController::class, 'showAdmins'])->name('admins')->middleware('auth:h_users');
 Route::get('/users', [userController::class, 'showUsers'])->name('users')->middleware('auth:h_users');
 Route::get('/users/{id}', [userController::class, 'showUser'])->where('id', '[0-9]+')->middleware('auth:h_users');

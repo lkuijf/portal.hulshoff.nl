@@ -50,7 +50,7 @@ class UserController extends Controller
         $user = new HulshoffUser;
         $user = $this->populateUserModel($user, $customer, $request);
         $user->save();
-        $user->sendEmailVerificationNotification();
+        // $user->sendEmailVerificationNotification();
         $token = Password::getRepository()->create($user);
         $user->sendPasswordResetNotification($token);
         // sendPasswordResetNotification

@@ -1,11 +1,12 @@
 <div class="verifyEmailContent">
     <h1>Verify e-mail address</h1>
-    <p>Please verify your e-mail address by clicking the link in the e-mail message.</p>
-    {{-- <form action="/forgot-password" method="POST">
+    <p>Send an e-mail with a verification link, click on this button:</p>
+    <form action="/email/verification-notification" method="POST">
         @csrf
-        <input type="text" name="email">
-        <button type="submit">Request</button>
+        {{-- <input type="text" name="email"> --}}
+        <button type="submit">Send e-mail</button>
     </form>
+    <p>Please verify your e-mail address by clicking the link in the e-mail message.</p>
     <p><a href="{{ route('login') }}">< Terug</a></p>
     @if ($errors->any())
         <ul>
@@ -18,5 +19,5 @@
         <ul>
             <li>{{ session('status') }}</li>
         </ul>
-    @endif --}}
+    @endif
 </div>
