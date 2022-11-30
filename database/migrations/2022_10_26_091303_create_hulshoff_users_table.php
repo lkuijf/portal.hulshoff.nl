@@ -34,6 +34,7 @@ return new class extends Migration
             array(
                 'name' => 'TEST klant',
                 'email' => 'customer_a@hulshoffportal.nl',
+                'email_verified_at' => '2022-01-01 00:00:00',
                 'password' => Hash::make('v482kS0Y'),
                 'klantCode' => '1234',
                 'last_known_klantCode_name' => '1234',
@@ -47,6 +48,7 @@ return new class extends Migration
             array(
                 'name' => 'TEST admin',
                 'email' => 'admin@hulshoffportal.nl',
+                'email_verified_at' => '2022-01-01 00:00:00',
                 'password' => Hash::make('6weY9e5H'),
                 'is_admin' => 1,
             )
