@@ -48,6 +48,11 @@
             @endforeach
         </ul>
     @endif
+
+    @php
+        var_dump(session()->all());
+    @endphp
+    
     @if (session('status'))
         <ul>
             <li>{{ session('status') }}</li>
