@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <script src="{{ asset('js/script.js') }}"></script>
     @yield('extra_head')
 </head>
 <body>
@@ -21,7 +22,9 @@
         <div class="breadcrumbsCell">
             {{-- @include('snippets.breadcrumbs', ['breadcrumbs' => ['PRODUCTEN' => '#', 'WERKPLEK' => '#', 'TAFEL' => '#']]) --}}
         </div>
-        <div class="basketCell"><span class="cart"><span>0</span></span></div>
+        <div class="basketCell">
+            @include('snippets.basket')
+        </div>
         @if (auth()->user())
         <div class="accountCell">
             <div class="accInfo">

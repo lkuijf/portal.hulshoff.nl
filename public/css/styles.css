@@ -458,6 +458,32 @@ nav.mainNav ul li a:hover {
   display: inline-block;
 }
 
+#msg {
+  transition: top 0.4s ease-out;
+  -webkit-transition: top 0.4s ease-out;
+  font-family: "Heebo", sans-serif;
+  font-size: 16px;
+  color: #FFF;
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  font-size: 1.5em;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+#msg.success {
+  background-color: #4CAF50;
+}
+#msg.error {
+  background-color: #f44336;
+}
+#msg.warning {
+  background-color: #ff9800;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -469,12 +495,6 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   background-color: #DDD;
-  padding: 20px;
-}
-@media (max-width: 768px) {
-  html {
-    padding: 10px;
-  }
 }
 
 *, *:before, *:after {

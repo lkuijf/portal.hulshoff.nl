@@ -1,0 +1,1 @@
+<span class="cart"><span>{{ $basket_total }}</span></span>

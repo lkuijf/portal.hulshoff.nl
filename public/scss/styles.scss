@@ -28,6 +28,7 @@ $fontFamily: 'Heebo', sans-serif;
 @import 'inc/accountHome.scss';
 @import 'inc/login2FaChallenge.scss';
 @import 'inc/userList.scss';
+@import 'inc/message.scss';
 
 html, body {
     margin: 0;
@@ -40,11 +41,17 @@ html {
     scroll-behavior: smooth;
 
     background-color: #DDD;
-    padding: 20px;
-    @media (max-width: $screenBreakpoint) {
-        padding: 10px;
-    }
+    // padding: 20px;
+    // @media (max-width: $screenBreakpoint) {
+        // padding: 10px;
+    // }
 }
+// body {
+//     padding: 20px;
+//     @media (max-width: $screenBreakpoint) {
+//         padding: 10px;
+//     }
+// }
 *, *:before, *:after {
     box-sizing: inherit;
 }

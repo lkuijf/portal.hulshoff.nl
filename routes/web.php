@@ -44,6 +44,7 @@ Route::delete('/user', [userController::class, 'deleteUser']);
 
 Route::get('/products', [productController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
 Route::get('/products/{id}', [productController::class, 'showProductDetails'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
+Route::post('/products/{id}', [productController::class, 'addToBasket'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
 Route::post('/ajax/products', [productController::class, 'getProducts'])->name('get_products')->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');

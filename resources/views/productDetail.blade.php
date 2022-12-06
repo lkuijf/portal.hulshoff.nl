@@ -13,7 +13,14 @@
                         Gereserveerd: 0<br />
                         Beschikbaar: 4
                     </p>
-                    <input type="aantal"><button>Reserveren</button>
+                    <form action="{{ url()->current() }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                        {{-- do not use input field for type of order, because of active code alteration --}}
+                        {{-- <input type="hidden" name="orderType" value="reserve"> --}}
+                        <input type="text" name="aantal">
+                        <button>Reserveren</button>{{-- Reserveren of Bestellen --}}
+                    </form>
                     <p>{{ $product->bijzonderheden }}</p>
                 </div>
             </div>

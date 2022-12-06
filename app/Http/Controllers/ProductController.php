@@ -51,6 +51,11 @@ class ProductController extends Controller
             $type = Producttype::where('type', $filters->type['value'])->first();
             $resQry->where('producttype_id', $type->id);
         }
+        if($filters->search['value']) {
+            $resQry
+                ->where('omschrijving', 'like', '%' . $filters->search['value'] . '%')
+                ->orWhere('bijzonderheden', 'like', '%' . $filters->search['value'] . '%');
+        }
 
         $res = $resQry->paginate(10);
 
@@ -78,6 +83,16 @@ class ProductController extends Controller
         });
         // dd($product);
         return view('productDetail')->with('product', $product);
+    }
+
+    public function addToBasket(Request $request) {
+        $basket = [];
+        if($request->session()->has('basket')) {
+            $basket = session('basket');
+        }
+        $basket[$request->id] = $request->aantal;
+        session(['basket' => $basket]);
+        return redirect()->back()->with('message', 'Product added to basket');
     }
    
 }

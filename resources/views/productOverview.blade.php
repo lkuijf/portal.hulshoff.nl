@@ -103,7 +103,6 @@
                     wrapP.appendChild(btnA);
                     filtersHolder.appendChild(wrapP);
                 }
-
             }
         }
     }
