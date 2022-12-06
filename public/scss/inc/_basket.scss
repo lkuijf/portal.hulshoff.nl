@@ -1,15 +1,17 @@
-.cart {
+.basket {
     position: relative;
     &:before {
         font-family: hulshoff;
         font-size: 26px;
         content: '\e807';
+        color: #000;
     }
     span {
         position: absolute;
         top: -14px;
         right: -10px;
-        background-color: $colorCart;
+        background-color: $colorBasket;
+        color: #000;
         border: 1px solid #000;
         border-radius: 50%;
         width: 17px;
@@ -18,5 +20,15 @@
         font-size: 11px;
         font-weight: bold;
         text-align: center;
+    }
+}
+.basketContent {
+    table {
+        form {
+            display: inline-block;
+            button {
+                cursor: pointer;
+            }
+        }
     }
 }

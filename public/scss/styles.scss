@@ -6,7 +6,7 @@ $containerWidth: 1600px;
 $colorYellow: #FFE600; // original color used in logo
 $colorGreen: #00BE31; // green color used in homepage
 $colorGreenLight: #bfffcf;
-$colorCart: #9EFF00; // 
+$colorBasket: #9EFF00; // 
 // $colorGoldLight: #e1d2b8;
 
 $fontFamily: 'Heebo', sans-serif;
@@ -20,7 +20,7 @@ $fontFamily: 'Heebo', sans-serif;
 @import 'inc/productPagination.scss';
 @import 'inc/filters.scss';
 @import 'inc/crumbs.scss';
-@import 'inc/cart.scss';
+@import 'inc/basket.scss';
 @import 'inc/nav.scss';
 @import 'inc/account.scss';
 @import 'inc/elementTiles.scss';

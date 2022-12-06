@@ -234,19 +234,21 @@ ul.crumbs li:first-of-type:before {
   padding: 0;
 }
 
-.cart {
+.basket {
   position: relative;
 }
-.cart:before {
+.basket:before {
   font-family: hulshoff;
   font-size: 26px;
   content: "\e807";
+  color: #000;
 }
-.cart span {
+.basket span {
   position: absolute;
   top: -14px;
   right: -10px;
   background-color: #9EFF00;
+  color: #000;
   border: 1px solid #000;
   border-radius: 50%;
   width: 17px;
@@ -255,6 +257,13 @@ ul.crumbs li:first-of-type:before {
   font-size: 11px;
   font-weight: bold;
   text-align: center;
+}
+
+.basketContent table form {
+  display: inline-block;
+}
+.basketContent table form button {
+  cursor: pointer;
 }
 
 #burger-check, .burger-label {

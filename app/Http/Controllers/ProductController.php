@@ -85,14 +85,4 @@ class ProductController extends Controller
         return view('productDetail')->with('product', $product);
     }
 
-    public function addToBasket(Request $request) {
-        $basket = [];
-        if($request->session()->has('basket')) {
-            $basket = session('basket');
-        }
-        $basket[$request->id] = $request->aantal;
-        session(['basket' => $basket]);
-        return redirect()->back()->with('message', 'Product added to basket');
-    }
-   
 }

@@ -84,3 +84,18 @@
     </div>
 </div>
 @endsection
+@section('before_closing_body_tag')
+@if ($errors->any())
+    @php
+        $errMsg = '<p>' . implode('</p><p>', $errors->all()) . '</p>';
+    @endphp
+    <script>
+        showMessage('error','{!! $errMsg !!}');
+    </script>
+@endif
+@if(session('message'))
+    <script>
+        showMessage('success','{!! session('message') !!}');
+    </script>
+@endif
+@endsection

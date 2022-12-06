@@ -6,6 +6,7 @@ use App\Http\Controllers\pageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BasketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,24 +29,26 @@ Route::get('/parsexml', function () {
     return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
 })->name('parseXml_Index')->middleware('auth.basic');
 
-// Route::get('/login', [authController::class, 'showLogin'])->name('login');
-// Route::post('/login/attempt', [authController::class, 'attemptLogin'])->name('attempt_login');
-Route::get('/account', [authController::class, 'showAccount'])->name('account')->middleware(['auth:h_users', 'verified']);
-Route::get('/admins', [userController::class, 'showAdmins'])->name('admins')->middleware('auth:h_users');
-Route::get('/users', [userController::class, 'showUsers'])->name('users')->middleware('auth:h_users');
-Route::get('/users/{id}', [userController::class, 'showUser'])->where('id', '[0-9]+')->middleware('auth:h_users');
-Route::get('/users/new', [userController::class, 'newUser'])->name('new_user')->middleware('auth:h_users');
-Route::get('/admins/new', [userController::class, 'newUser'])->name('new_admin')->middleware('auth:h_users');
-// Route::get('/admins/{id}', [userController::class, 'showAdmin'])->where('id', '[0-9]+')->middleware('auth:h_users');
-// Route::get('/admins/new', [userController::class, 'newAdmin'])->name('new_user')->middleware('auth:h_users');
-Route::post('/user', [userController::class, 'addUser']);
-Route::put('/user', [userController::class, 'updateUser']);
-Route::delete('/user', [userController::class, 'deleteUser']);
+// Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+// Route::post('/login/attempt', [AuthController::class, 'attemptLogin'])->name('attempt_login');
+Route::get('/account', [AuthController::class, 'showAccount'])->name('account')->middleware(['auth:h_users', 'verified']);
+Route::get('/admins', [UserController::class, 'showAdmins'])->name('admins')->middleware('auth:h_users');
+Route::get('/users', [UserController::class, 'showUsers'])->name('users')->middleware('auth:h_users');
+Route::get('/users/{id}', [UserController::class, 'showUser'])->where('id', '[0-9]+')->middleware('auth:h_users');
+Route::get('/users/new', [UserController::class, 'newUser'])->name('new_user')->middleware('auth:h_users');
+Route::get('/admins/new', [UserController::class, 'newUser'])->name('new_admin')->middleware('auth:h_users');
+// Route::get('/admins/{id}', [UserController::class, 'showAdmin'])->where('id', '[0-9]+')->middleware('auth:h_users');
+// Route::get('/admins/new', [UserController::class, 'newAdmin'])->name('new_user')->middleware('auth:h_users');
+Route::post('/user', [UserController::class, 'addUser']);
+Route::put('/user', [UserController::class, 'updateUser']);
+Route::delete('/user', [UserController::class, 'deleteUser']);
 
-Route::get('/products', [productController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
-Route::get('/products/{id}', [productController::class, 'showProductDetails'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
-Route::post('/products/{id}', [productController::class, 'addToBasket'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
-Route::post('/ajax/products', [productController::class, 'getProducts'])->name('get_products')->middleware('auth:h_users');
+Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
+Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
+Route::post('/products/{id}', [BasketController::class, 'addToBasket'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
+Route::post('/ajax/products', [ProductController::class, 'getProducts'])->name('get_products')->middleware('auth:h_users');
+Route::get('/basket', [BasketController::class, 'showBasket'])->name('basket')->middleware('auth:h_users');
+Route::delete('/basket', [BasketController::class, 'deleteBasketItem'])->name('basket')->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');
