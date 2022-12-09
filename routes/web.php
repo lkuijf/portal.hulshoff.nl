@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BasketController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,16 +40,22 @@ Route::get('/users/new', [UserController::class, 'newUser'])->name('new_user')->
 Route::get('/admins/new', [UserController::class, 'newUser'])->name('new_admin')->middleware('auth:h_users');
 // Route::get('/admins/{id}', [UserController::class, 'showAdmin'])->where('id', '[0-9]+')->middleware('auth:h_users');
 // Route::get('/admins/new', [UserController::class, 'newAdmin'])->name('new_user')->middleware('auth:h_users');
+Route::get('/orders', [OrderController::class, 'showOrders'])->name('orders')->middleware('auth:h_users');
+
 Route::post('/user', [UserController::class, 'addUser']);
 Route::put('/user', [UserController::class, 'updateUser']);
 Route::delete('/user', [UserController::class, 'deleteUser']);
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
 Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
-Route::post('/products/{id}', [BasketController::class, 'addToBasket'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
 Route::post('/ajax/products', [ProductController::class, 'getProducts'])->name('get_products')->middleware('auth:h_users');
+
 Route::get('/basket', [BasketController::class, 'showBasket'])->name('basket')->middleware('auth:h_users');
-Route::delete('/basket', [BasketController::class, 'deleteBasketItem'])->name('basket')->middleware('auth:h_users');
+Route::post('/basket', [BasketController::class, 'addToBasket'])->middleware('auth:h_users');
+Route::put('/basket', [BasketController::class, 'updateBasket'])->middleware('auth:h_users');
+Route::delete('/basket', [BasketController::class, 'deleteFromBasket'])->middleware('auth:h_users');
+
+Route::post('/order', [OrderController::class, 'newOrder'])->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

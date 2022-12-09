@@ -265,6 +265,10 @@ ul.crumbs li:first-of-type:before {
 .basketContent table form button {
   cursor: pointer;
 }
+.basketContent .deliveryTxt {
+  display: inline-block;
+  width: 150px;
+}
 
 #burger-check, .burger-label {
   display: none;
@@ -468,8 +472,8 @@ nav.mainNav ul li a:hover {
 }
 
 #msg {
-  transition: top 0.4s ease-out;
-  -webkit-transition: top 0.4s ease-out;
+  transition: bottom 0.4s ease-out;
+  -webkit-transition: bottom 0.4s ease-out;
   font-family: "Heebo", sans-serif;
   font-size: 16px;
   color: #FFF;

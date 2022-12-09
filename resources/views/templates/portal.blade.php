@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="_token" content="{{ csrf_token() }}">
     <script src="{{ asset('js/script.js') }}"></script>
     @yield('extra_head')
 </head>
@@ -71,7 +72,8 @@
                         <ul>
                             <li><a href="{{ route('users') }}">Users</a></li>
                             <li><a href="{{ route('admins') }}">Admins</a></li>
-                            <li><a href="{{ route('products') }}">Producten</a></li>
+                            <li><a href="{{ route('products') }}">Products</a></li>
+                            <li><a href="{{ route('orders') }}">Orders</a></li>
                         </ul>
                         @else
                         <ul>
@@ -96,6 +98,13 @@
             Footer
         </footer>
     </div>
-    @yield('before_closing_body_tag')
+@if ($errors->any())
+    @php $errMsg = '<p>' . implode('</p><p>', $errors->all()) . '</p>'; @endphp
+    <script>showMessage('error','{!! $errMsg !!}')</script>
+@endif
+@if(session('message'))
+    <script>showMessage('success','{!! session('message') !!}')</script>
+@endif
+@yield('before_closing_body_tag')
 </body>
 </html>
