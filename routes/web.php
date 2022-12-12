@@ -22,7 +22,7 @@ use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('templates.development')->with(['data' => ['include_view' => 'development.index']]);
-});
+})->middleware('auth.basic');
 Route::get('/front', function () {
     return view('portal-welcome');
 })->name('front')->middleware('auth.basic');
