@@ -79,7 +79,7 @@ class OrderController extends Controller
         $order->is_reservation = 0;
         $order->save();
 
-        Mail::to('franktervaarde@hotmail.com')->send(new OrderPromoted());
+        Mail::to('leon@wtmedia-events.nl')->send(new OrderPromoted());
 
         $request->session()->flash('message', '<p>Your order has been placed!</p>');
         return redirect()->route('orders');
