@@ -20,8 +20,8 @@ return new class extends Migration
             $table->boolean('is_reservation')->default(0);
             $table->string('orderCodeKlant', 30)->nullable()->default(null); // nog niet duidelijk wat het gebruik hiervan is, overgenomen van WMS
             $table->string('orderCodeAflever', 50)->nullable()->default(null); // nog niet duidelijk wat het gebruik hiervan is, overgenomen van WMS
-            $table->string('aleverenDatum', 8); // overgenomen van WMS: 20221123.
-            $table->string('aleverenTijd', 4); // overgenomen van WMS: 1330. changed to varchar because of leading zeros.
+            $table->string('afleverDatum', 8); // overgenomen van WMS: 20221123.
+            $table->string('afleverTijd', 4); // overgenomen van WMS: 1330. changed to varchar because of leading zeros.
             $table->timestamps();
         });
     }

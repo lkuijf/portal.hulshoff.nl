@@ -93,6 +93,7 @@ class UserController extends Controller
             $user = $this->populateUserModel($user, $customer, $request);
         }
         $user->save();
+        $request->session()->flash('message', '<p>User saved</p>');
         return redirect()->back();
     }
 

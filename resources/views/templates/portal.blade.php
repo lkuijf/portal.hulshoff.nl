@@ -68,24 +68,15 @@
                 </ul>
                 @else
                     @if (auth()->user())
+                    <ul>
                         @if (auth()->user()->is_admin)
-                        <ul>
                             <li><a href="{{ route('users') }}">Users</a></li>
                             <li><a href="{{ route('admins') }}">Admins</a></li>
-                            <li><a href="{{ route('products') }}">Products</a></li>
-                            <li><a href="{{ route('orders') }}">Orders</a></li>
-                        </ul>
-                        @else
-                        <ul>
-                            <li><a href="{{ route('products') }}">Producten</a></li>
-                            {{-- <li><a href="">Geen</a></li>
-                            <li><a href="">Admin</a></li> --}}
-                        </ul>
                         @endif
-                    {{-- @else
-                    <ul>
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                    </ul> --}}
+                        <li><a href="{{ route('products') }}">Products</a></li>
+                        <li><a href="{{ route('orders') }}">Orders</a></li>
+                        @if(auth()->user()->can_reserve)<li><a href="{{ route('reservations') }}">Reservations</a></li>@endif
+                    </ul>
                     @endif
                 @endif
             </nav>

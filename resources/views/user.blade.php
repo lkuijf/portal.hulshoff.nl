@@ -122,15 +122,13 @@
 </table>
 </form>
 </div>
-@if ($errors->any())
-    {{-- <div class="alert alert-danger"> --}}
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    {{-- </div> --}}
-@endif
+{{-- @if ($errors->any())
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif --}}
 @endsection
 @section('before_closing_body_tag')
 <script>

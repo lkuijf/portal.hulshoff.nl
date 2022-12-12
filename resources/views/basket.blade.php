@@ -1,22 +1,30 @@
 @extends('templates.portal')
 @section('content')
 <div class="basketContent">
+    @php
+        $totalOrderSum = 0;
+    @endphp
     <h1>Basket</h1>
     @if (count($basket))
         <table>
             <tr>
                 <th>Id</th>
                 <th>Omschrijving</th>
-                <th>Prijs</th>
                 <th>Aantal</th>
+                <th>Prijs</th>
+                <th>Totaal prijs</th>
                 <th>&nbsp;</th>
             </tr>
             @foreach ($basket as $item)
+            @php
+                $totalOrderSum += $item['product']->prijs*$item['count'];
+            @endphp
             <tr>
                 <td>{{ $item['product']->id }}</td>
                 <td>{{ $item['product']->omschrijving }}</td>
-                <td>{{ $item['product']->prijs }}</td>
                 <td><span>{{ $item['count'] }} <a href="" class="editBasketCount" data-product-id="{{ $item['product']->id }}" data-product-count="{{ $item['count'] }}">[edit]</a></span></td>
+                <td>&euro;{{ number_format($item['product']->prijs, 2, ',', '.') }}</td>
+                <td>&euro;{{ number_format($item['product']->prijs*$item['count'], 2, ',', '.') }}</td>
                 <td>
                     <form action="{{ route('basket') }}" method="post">
                         @method('delete')
@@ -28,6 +36,7 @@
             </tr>
             @endforeach
         </table>
+        <p><strong>Total value of your order: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
         <h2>Afleverdatum en -tijd</h2>
         <form action="{{ url('order') }}" method="post">
             @csrf
@@ -61,7 +70,6 @@
                     <option value="21">21</option>
                     <option value="22">22</option>
                     <option value="23">23</option>
-                    <option value="24">24</option>
                 </select>
                 :
                 <select name="deliveryMinute">
@@ -80,7 +88,12 @@
                     <option value="55">55</option>
                 </select>
             </p>
-            <button>Reservering indienen</button>
+            @if (auth()->user()->can_reserve)
+            <button>Reservering bevestigen</button>
+            @else
+            <button>Order bevestigen</button>
+            @endif
+            
         </form>
     @else
         <p>Basket is empty.</p>

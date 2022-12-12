@@ -40,7 +40,10 @@ Route::get('/users/new', [UserController::class, 'newUser'])->name('new_user')->
 Route::get('/admins/new', [UserController::class, 'newUser'])->name('new_admin')->middleware('auth:h_users');
 // Route::get('/admins/{id}', [UserController::class, 'showAdmin'])->where('id', '[0-9]+')->middleware('auth:h_users');
 // Route::get('/admins/new', [UserController::class, 'newAdmin'])->name('new_user')->middleware('auth:h_users');
-Route::get('/orders', [OrderController::class, 'showOrders'])->name('orders')->middleware('auth:h_users');
+Route::get('/orders', [OrderController::class, 'showOrders'])->defaults('type', 'confirmed')->name('orders')->middleware('auth:h_users');
+Route::get('/orders/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'confirmed')->where('id', '[0-9]+')->middleware('auth:h_users');
+Route::get('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->name('reservations')->middleware('auth:h_users');
+Route::get('/reservations/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'reserved')->where('id', '[0-9]+')->middleware('auth:h_users');
 
 Route::post('/user', [UserController::class, 'addUser']);
 Route::put('/user', [UserController::class, 'updateUser']);
@@ -56,6 +59,7 @@ Route::put('/basket', [BasketController::class, 'updateBasket'])->middleware('au
 Route::delete('/basket', [BasketController::class, 'deleteFromBasket'])->middleware('auth:h_users');
 
 Route::post('/order', [OrderController::class, 'newOrder'])->middleware('auth:h_users');
+Route::put('/order', [OrderController::class, 'updateOrder'])->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');
