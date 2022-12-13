@@ -53,6 +53,16 @@ return new class extends Migration
                 'is_admin' => 1,
             )
         );
+        DB::table('hulshoff_users')->insert(
+            array(
+                'name' => 'Leon',
+                'email' => 'leon@wtmedia-events.nl',
+                'email_verified_at' => '2022-01-01 00:00:00',
+                'password' => Hash::make('kuijf'),
+                'can_reserve' => 1,
+                'is_admin' => 1,
+            )
+        );
 
     }
 

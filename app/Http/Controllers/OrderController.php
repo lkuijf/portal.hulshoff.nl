@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderArticle;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPromoted;
+use App\Mail\OrderPlaced;
 
 class OrderController extends Controller
 {
@@ -66,10 +67,15 @@ class OrderController extends Controller
             $orderItem->save();
         }
         
+        $orderMsg = '<p>Your order has been placed</p>';
+        $redirect = 'orders';
         if(auth()->user()->can_reserve) {
-            return redirect()->route('reservations');
+            $orderMsg = '<p>Your reservation has been placed</p>';
+            $redirect = 'reservations';
         }
-        return redirect()->route('orders');
+        Mail::to(auth()->user()->email)->send(new OrderPlaced(auth()->user()->can_reserve));
+        $request->session()->flash('message', $orderMsg);
+        return redirect()->route($redirect);
     }
     public function updateOrder(Request $request) {
         $order = Order::findOr($request->id, function () {
@@ -79,8 +85,7 @@ class OrderController extends Controller
         $order->is_reservation = 0;
         $order->save();
 
-        // Mail::to(auth()->user()->email)->send(new OrderPromoted());
-        Mail::to('leon@wtmedia-events.nl')->send(new OrderPromoted());
+        Mail::to(auth()->user()->email)->send(new OrderPromoted());
 
         $request->session()->flash('message', '<p>Your order has been placed!</p>');
         return redirect()->route('orders');
