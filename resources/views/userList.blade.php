@@ -33,7 +33,9 @@
                 @method('delete')
                 @csrf
                 <input type="hidden" name="id" value="{{ $user->id }}">
-                <button type="submit" onclick="return confirm('You are about to delete user {{ $user->name }} ({{ $user->email }})\n\nAre you sure?')">Delete</button>
+                @if ($user->id != 2)
+                    <button type="submit" onclick="return confirm('You are about to delete user {{ $user->name }} ({{ $user->email }})\n\nAre you sure?')">Delete</button>
+                @endif
             </form>
         </td>
     </tr>

@@ -12,4 +12,7 @@ class OrderArticle extends Model
     public function product() {
         return $this->hasOne(Product::class, 'id', 'product_id');
     }
+    public function order() {
+        return $this->hasOne(Order::class, 'id', 'order_id');
+    }
 }

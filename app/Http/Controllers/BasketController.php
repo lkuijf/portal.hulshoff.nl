@@ -32,6 +32,12 @@ class BasketController extends Controller
         );
         $validated = $request->validate($toValidate,$validationMessages);
 
+        $product = Product::find($request->id);
+        $availableAmount = $product->availableAmount();
+        if($request->aantal > $availableAmount) {
+            return redirect()->back()->withErrors(['Cannot add ' . $request->aantal . ' to your basket, only ' . $availableAmount . ' are available.']);
+        }
+
         $basket = [];
         if($request->session()->has('basket')) {
             $basket = session('basket');

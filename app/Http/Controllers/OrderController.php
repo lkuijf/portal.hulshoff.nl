@@ -82,12 +82,17 @@ class OrderController extends Controller
             return abort(404);
         });
         if($order->hulshoff_user_id != auth()->user()->id) return abort(404); // check if order is of the current user
-        $order->is_reservation = 0;
+        if($request->type == 'confirmReservation') {
+            $order->is_reservation = 0;
+        }
         $order->save();
 
         Mail::to(auth()->user()->email)->send(new OrderPromoted());
 
         $request->session()->flash('message', '<p>Your order has been placed!</p>');
         return redirect()->route('orders');
+    }
+    public function updateOrderArticle(Request $request) {
+        
     }
 }
