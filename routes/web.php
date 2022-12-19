@@ -60,8 +60,10 @@ Route::delete('/basket', [BasketController::class, 'deleteFromBasket'])->middlew
 
 Route::post('/order', [OrderController::class, 'newOrder'])->middleware('auth:h_users');
 Route::put('/order', [OrderController::class, 'updateOrder'])->middleware('auth:h_users');
+Route::delete('/order', [OrderController::class, 'deleteOrder'])->middleware('auth:h_users');
 
 Route::put('/order-article', [OrderController::class, 'updateOrderArticle'])->middleware('auth:h_users');
+Route::delete('/order-article', [OrderController::class, 'deleteOrderArticle'])->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

@@ -32,6 +32,16 @@ return new class extends Migration
 
         DB::table('hulshoff_users')->insert(
             array(
+                'id' => 1,
+                'name' => 'admin',
+                'email' => 'admin@portal.hulshoff.nl',
+                'email_verified_at' => '2022-01-01 00:00:00',
+                'password' => Hash::make('6weY9e5H'),
+                'is_admin' => 1,
+            )
+        );
+        DB::table('hulshoff_users')->insert(
+            array(
                 'name' => 'TEST klant',
                 'email' => 'customer_a@hulshoffportal.nl',
                 'email_verified_at' => '2022-01-01 00:00:00',
@@ -42,15 +52,6 @@ return new class extends Migration
                 // 'privileges' => '["show_tiles","free_search","lotcode_search"]',
                 'can_reserve' => 1,
                 'is_admin' => 0,
-            )
-        );
-        DB::table('hulshoff_users')->insert(
-            array(
-                'name' => 'TEST admin',
-                'email' => 'admin@hulshoffportal.nl',
-                'email_verified_at' => '2022-01-01 00:00:00',
-                'password' => Hash::make('6weY9e5H'),
-                'is_admin' => 1,
             )
         );
         DB::table('hulshoff_users')->insert(

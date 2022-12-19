@@ -55,6 +55,7 @@ class BasketController extends Controller
         $basket = session('basket');
         unset($basket[$request->id]);
         session(['basket' => $basket]);
+        $request->session()->flash('flash_date', $request->deliveryDate);
         $request->session()->flash('message', '<p>Product removed from basket</p>');
         return redirect()->back();
     }
@@ -68,20 +69,18 @@ class BasketController extends Controller
             'count.numeric'=> 'Only a number is allowed',
         );
         $validated = $request->validate($toValidate,$validationMessages);
-        // $validator = Validator::make($request->all(), $toValidate, $validationMessages);
-        // if($validator->fails()) {
-        //     // return redirect('/contact')
-        //     //             ->withErrors($validator)
-        //     //             ->withInput();
-        //     // return redirect()->back()->withErrors($validator)->withInput();
-        //     $request->session()->flash('message', '<p>fail</p>');
-        //     return redirect()->back();
-        // }
+
+        $product = Product::find($request->id);
+        if($request->count > $product->availableAmount()) {
+            return redirect()->back()->withErrors(['Cannot change to ' . $request->count . ', only ' . $product->availableAmount() . ' are available.']);
+        }
+
         $basket = session('basket');
         $basket[$request->id] = $request->count;
         session(['basket' => $basket]);
-        $request->session()->flash('message', '<p>Product updated</p>');
-        return redirect('/basket');
+        $request->session()->flash('flash_date', $request->deliveryDate);
+        $request->session()->flash('message', '<p>Basket updated</p>');
+        return redirect()->back();
     }
 
 }

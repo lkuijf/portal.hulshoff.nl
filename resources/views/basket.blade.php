@@ -1,5 +1,14 @@
 @extends('templates.portal')
 @section('content')
+@php
+    $deliveryDate = date("d-m-Y");
+    if(session('flash_date')) {
+        $deliveryDate = session('flash_date');
+    }
+    if(old('deliveryDate')) {
+        $deliveryDate = old('deliveryDate');
+    }
+@endphp
 <div class="basketContent">
     @php
         $totalOrderSum = 0;
@@ -26,7 +35,7 @@
                 <td>&euro;{{ number_format($item['product']->prijs, 2, ',', '.') }}</td>
                 <td>&euro;{{ number_format($item['product']->prijs*$item['count'], 2, ',', '.') }}</td>
                 <td>
-                    <form action="{{ route('basket') }}" method="post">
+                    <form class="deleteFromBasketForm" action="{{ route('basket') }}" method="post">
                         @method('delete')
                         @csrf
                         <input type="hidden" name="id" value="{{ $item['product']->id }}">
@@ -41,9 +50,9 @@
         <form action="{{ url('order') }}" method="post">
             @csrf
             <p>
-                <span class="deliveryTxt">Afleverdatum</span><input type="input" name="deliveryDate" value="{{ date("d-m-Y") }}">
+                <span class="deliveryTxt">Afleverdatum</span><input type="input" name="deliveryDate" value="{{ $deliveryDate }}">
             </p>
-            <p>
+            {{-- <p>
                 <span class="deliveryTxt">Aflevertijd (hh:mm)</span><select name="deliveryHour">
                     <option value="">-</option>
                     <option value="00">00</option>
@@ -87,7 +96,7 @@
                     <option value="50">50</option>
                     <option value="55">55</option>
                 </select>
-            </p>
+            </p> --}}
             @if (auth()->user()->can_reserve)
             <button>Reservering bevestigen</button>
             @else
@@ -108,10 +117,30 @@
 @endsection
 @section('before_closing_body_tag')
 <script>
-    const elem = document.querySelector('input[name="deliveryDate"]');
-    const datepicker = new Datepicker(elem, {
+    const delDate = document.querySelector('input[name="deliveryDate"]');
+    const datepicker = new Datepicker(delDate, {
         format: 'dd-mm-yyyy'
     });
+    // console.log(delDate.value);
+    // delDate.addEventListener('change', () => {
+    //     console.log('aaa');
+    // });
+
+    const delForms = document.querySelectorAll('.deleteFromBasketForm');
+    delForms.forEach(formEl => {
+        // let delBtn = formEl.querySelector('button');
+        formEl.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // adding current delivery date, so the form can be repopulated
+            let deliveryDateInput = document.createElement('input');
+            deliveryDateInput.setAttribute('type', 'hidden');
+            deliveryDateInput.setAttribute('name', 'deliveryDate');
+            deliveryDateInput.setAttribute('value', delDate.value);
+            formEl.append(deliveryDateInput);
+            formEl.submit();
+        });
+    });
+
 
     const editCountBtns = document.querySelectorAll('.editBasketCount');
     editCountBtns.forEach(btn => {
@@ -130,6 +159,7 @@
             let editHiddenMethod = document.createElement('input');
             let editHiddenToken = document.createElement('input');
             let editHiddenId = document.createElement('input');
+            let editHiddenDeliveryDate = document.createElement('input');
             let editSave = document.createElement('button');
             let editCancel = document.createElement('a');
             editForm.setAttribute('action', '/basket');
@@ -147,6 +177,12 @@
             editHiddenId.setAttribute('type', 'hidden');
             editHiddenId.setAttribute('name', 'id');
             editHiddenId.setAttribute('value', pId);
+
+            // adding current delivery date, so the form can be repopulated
+            editHiddenDeliveryDate.setAttribute('type', 'hidden');
+            editHiddenDeliveryDate.setAttribute('name', 'deliveryDate');
+            editHiddenDeliveryDate.setAttribute('value', delDate.value);
+
             editSave.setAttribute('type', 'submit');
             editCancel.setAttribute('href', '');
 
@@ -155,7 +191,7 @@
             editSave.appendChild(saveBtnText);
             editCancel.appendChild(cancelText);
 
-            editForm.append(editHiddenMethod, editHiddenToken, editHiddenId, editInput, editSave, editCancel);
+            editForm.append(editHiddenMethod, editHiddenToken, editHiddenId, editHiddenDeliveryDate, editInput, editSave, editCancel);
 
             parentTd.replaceChild(editForm, originalSpan);
 

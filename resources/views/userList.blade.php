@@ -33,7 +33,7 @@
                 @method('delete')
                 @csrf
                 <input type="hidden" name="id" value="{{ $user->id }}">
-                @if ($user->id != 2)
+                @if ($user->id != 1)
                     <button type="submit" onclick="return confirm('You are about to delete user {{ $user->name }} ({{ $user->email }})\n\nAre you sure?')">Delete</button>
                 @endif
             </form>
