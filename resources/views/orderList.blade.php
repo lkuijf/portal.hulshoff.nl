@@ -6,7 +6,11 @@
     {{-- <div class="allOrders"> --}}
         <form action="{{ url()->current() }}" method="post">
             @csrf
-            <input type="text" name="search" placeholder="Search order">
+            <input type="text" name="search" placeholder="Search order" value="{{ $data['search_value'] }}">
+            @if (auth()->user()->is_admin)
+            <br /><input type="checkbox" id="only_my_orders" name="showOnlyMyOrders" value="1" @if($data['show_only_my_orders']){{ 'checked' }}@endif>
+            <label for="only_my_orders">Only my orders</label><br />
+            @endif
             <button type="submit">Find</button>
         </form>
         @if(count($data['orders']))
@@ -16,6 +20,7 @@
                     <th>id</th>
                     <th>orderCodeKlant</th>
                     <th>Aflever Datum</th>
+                    <th>User</th>
                     {{-- <th>Aflever Tijd</th> --}}
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
@@ -27,6 +32,7 @@
                     <td>{{ $order->id }}</td>
                     <td>{{ $order->orderCodeKlant }}</td>
                     <td>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}</td>
+                    <td>{{ $order->hulshoffUser->name }} ({{ $order->hulshoffUser->email }})</td>
                     {{-- <td>{{ date("H:i", strtotime($order->afleverTijd)) }}</td> --}}
                     <td><a href="{{ url()->current() }}/{{ $order->id }}">[view]</a></td>
                     <td>

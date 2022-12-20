@@ -1,5 +1,5 @@
 @php
-    $name = Route::currentRouteName();
+    $curRouteName = Route::currentRouteName();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@
         @if (auth()->user())
         <div class="accountCell">
             <div class="accInfo">
-                @if($name == 'front')
+                @if($curRouteName == 'front')
                 <img src="https://picsum.photos/300/200" alt="">
                 <span>ABN AMRO</span>
                 @else
@@ -38,7 +38,7 @@
                 @endif
             </div>
             <div class="accButtons">
-                @if($name == 'front')
+                @if($curRouteName == 'front')
                 <a href="#" class="accBtnHome">Home</a>
                 <a href="#" class="accBtnProfile">Profile</a>
                 <a href="#" class="accBtnLogout">Logout</a>
@@ -58,7 +58,7 @@
                     <span></span>
                     <span></span>
                 </label>
-                @if($name == 'front')
+                @if($curRouteName == 'front')
                 <ul>
                     <li><a href="#">Item</a></li>
                     <li><a href="#">Item</a></li>
@@ -70,12 +70,12 @@
                     @if (auth()->user())
                     <ul>
                         @if (auth()->user()->is_admin)
-                            <li><a href="{{ route('users') }}">Users</a></li>
-                            <li><a href="{{ route('admins') }}">Admins</a></li>
+                            <li><a href="{{ route('users') }}" @if($curRouteName == 'users')class="active"@endif>Users</a></li>
+                            <li><a href="{{ route('admins') }}" @if($curRouteName == 'admins')class="active"@endif>Admins</a></li>
                         @endif
-                        <li><a href="{{ route('products') }}">Products</a></li>
-                        <li><a href="{{ route('orders') }}">Orders</a></li>
-                        @if(auth()->user()->can_reserve)<li><a href="{{ route('reservations') }}">Reservations</a></li>@endif
+                        <li><a href="{{ route('products') }}" @if($curRouteName == 'products')class="active"@endif>Products</a></li>
+                        <li><a href="{{ route('orders') }}" @if($curRouteName == 'orders')class="active"@endif>Orders</a></li>
+                        @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($curRouteName == 'reservations')class="active"@endif>Reservations</a></li>@endif
                     </ul>
                     @endif
                 @endif

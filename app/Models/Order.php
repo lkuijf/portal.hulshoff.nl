@@ -12,4 +12,7 @@ class Order extends Model
     public function orderArticles() {
         return $this->hasMany(OrderArticle::class);
     }
+    public function hulshoffUser() {
+        return $this->hasOne(HulshoffUser::class, 'id', 'hulshoff_user_id');
+    }
 }

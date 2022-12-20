@@ -343,7 +343,7 @@ nav.mainNav ul li a {
   line-height: 47px;
   background-color: #333;
 }
-nav.mainNav ul li a:hover {
+nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   border-left: 10px solid #00BE31;
   background-color: #555555;
   background-image: url("../statics/nav-arrow.png");

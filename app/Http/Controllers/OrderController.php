@@ -16,20 +16,28 @@ class OrderController extends Controller
         $t = 0;
         if($type == 'confirmed') $t = 0;
         if($type == 'reserved') $t = 1;
-        $orderQry = Order::where('hulshoff_user_id', auth()->user()->id)
-            ->where('is_reservation', $t);
+        $populate_onlyMyOrders = false;
+        $populate_searchValue = '';
+
+        $orderQry = Order::where('is_reservation', $t);
+        if(!auth()->user()->is_admin || (auth()->user()->is_admin && isset($request->showOnlyMyOrders)))
+            $orderQry->where('hulshoff_user_id', auth()->user()->id);
         if($request->search) { // when searchfield has been used
             $orderQry->where(function($qry) use($request) {
                 $qry->where('id', 'like', '%' . $request->search . '%');
                 $qry->orWhere('orderCodeKlant', 'like', '%' . $request->search . '%');
             });
+            $populate_searchValue = $request->search;
         }
-
         $orders = $orderQry->get();
+
+        if(isset($request->showOnlyMyOrders)) $populate_onlyMyOrders = true;
 
         $data = [
             'orders' => $orders,
             'type' => $type,
+            'search_value' => $populate_searchValue,
+            'show_only_my_orders' => $populate_onlyMyOrders,
         ];
         return view('orderList')->with('data', $data);
     }
