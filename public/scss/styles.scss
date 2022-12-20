@@ -29,6 +29,7 @@ $fontFamily: 'Heebo', sans-serif;
 @import 'inc/login2FaChallenge.scss';
 @import 'inc/userList.scss';
 @import 'inc/message.scss';
+@import 'inc/orderList.scss';
 
 html, body {
     margin: 0;
@@ -70,6 +71,26 @@ a {
     text-decoration: none;
     &:hover {
         text-decoration: underline;
+    }
+}
+table {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    tr {
+        th,td {
+            padding: 15px;
+        }
+        &:nth-of-type(odd) {
+            td {
+                background-color: #EFEFEF;
+            }
+        }
+        &:nth-of-type(1) {
+            th {
+                background-color: #000;
+                color: #FFF;
+            }
+        }
     }
 }
 .gridContainer {

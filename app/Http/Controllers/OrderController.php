@@ -12,13 +12,21 @@ use App\Mail\OrderPlaced;
 
 class OrderController extends Controller
 {
-    public function showOrders($type) {
+    public function showOrders(Request $request, $type) {
         $t = 0;
         if($type == 'confirmed') $t = 0;
         if($type == 'reserved') $t = 1;
-        $orders = Order::where('hulshoff_user_id', auth()->user()->id)
-            ->where('is_reservation', $t)
-            ->get();
+        $orderQry = Order::where('hulshoff_user_id', auth()->user()->id)
+            ->where('is_reservation', $t);
+        if($request->search) { // when searchfield has been used
+            $orderQry->where(function($qry) use($request) {
+                $qry->where('id', 'like', '%' . $request->search . '%');
+                $qry->orWhere('orderCodeKlant', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $orders = $orderQry->get();
+
         $data = [
             'orders' => $orders,
             'type' => $type,

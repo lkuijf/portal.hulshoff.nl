@@ -2,7 +2,7 @@ User:<br />
 customer_a@hulshoffportal.nl<br />
 v482kS0Y<br /><br />
 Admin:<br />
-admin@hulshoffportal.nl<br />
+admin@portal.hulshoff.nl<br />
 6weY9e5H
 {{-- <form action="{{ route('attempt_login') }}" method="post"> --}}
 {{-- <div class="loginContent"> --}}

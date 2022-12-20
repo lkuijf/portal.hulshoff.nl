@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->id()->from(2500);
             $table->unsignedBigInteger('hulshoff_user_id')->nullable();
             $table->foreign('hulshoff_user_id')->references('id')->on('hulshoff_users')->nullOnDelete();
             $table->boolean('is_reservation')->default(0);

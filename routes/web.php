@@ -41,8 +41,10 @@ Route::get('/admins/new', [UserController::class, 'newUser'])->name('new_admin')
 // Route::get('/admins/{id}', [UserController::class, 'showAdmin'])->where('id', '[0-9]+')->middleware('auth:h_users');
 // Route::get('/admins/new', [UserController::class, 'newAdmin'])->name('new_user')->middleware('auth:h_users');
 Route::get('/orders', [OrderController::class, 'showOrders'])->defaults('type', 'confirmed')->name('orders')->middleware('auth:h_users');
+Route::post('/orders', [OrderController::class, 'showOrders'])->defaults('type', 'confirmed')->middleware('auth:h_users');
 Route::get('/orders/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'confirmed')->where('id', '[0-9]+')->middleware('auth:h_users');
 Route::get('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->name('reservations')->middleware('auth:h_users');
+Route::post('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->middleware('auth:h_users');
 Route::get('/reservations/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'reserved')->where('id', '[0-9]+')->middleware('auth:h_users');
 
 Route::post('/user', [UserController::class, 'addUser']);
