@@ -14,38 +14,42 @@
     @if (count($order->orderArticles))
         <h2>Producten</h2>
         <table>
-            <tr>
-                <th>Id</th>
-                <th>Product Id</th>
-                <th>Product Name</th>
-                <th>Amount</th>
-                <th>Price</th>
-                <th>Total price</th>
-                @if ($order->is_reservation)<th>&nbsp;</th>@endif
-            </tr>
-        @foreach ($order->orderArticles as $orderArt)
-            @php
-                $totalOrderSum += $orderArt->product->prijs*$orderArt->amount;
-            @endphp
-            <tr>
-                <td>{{ $orderArt->id }}</td>
-                <td>{{ $orderArt->product_id }}</td>
-                <td>{{ $orderArt->product->omschrijving }}</td>
-                <td><span>{{ $orderArt->amount }}@if ($order->is_reservation) <a href="" class="editBasketCount" data-order-id="{{ $order->id }}" data-product-id="{{ $orderArt->product_id }}" data-product-count="{{ $orderArt->amount }}">[edit]</a>@endif</span></td>
-                <td>&euro;{{ number_format($orderArt->product->prijs, 2, ',', '.') }}</td>
-                <td>&euro;{{ number_format($orderArt->product->prijs*$orderArt->amount, 2, ',', '.') }}</td>
-                @if ($order->is_reservation)
-                <td>
-                    <form action="{{ url('order-article') }}" method="post">
-                        @method('delete')
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $orderArt->id }}">
-                        <button type="submit" onclick="return confirm('You are about to delete {{ $orderArt->product->omschrijving }} from your basket.\n\nAre you sure?')">Delete</button>
-                    </form>
-                </td>
-                @endif
-            </tr>
-        @endforeach
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Total price</th>
+                    @if ($order->is_reservation)<th>&nbsp;</th>@endif
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($order->orderArticles as $orderArt)
+                    @php
+                        $totalOrderSum += $orderArt->product->prijs*$orderArt->amount;
+                    @endphp
+                    <tr>
+                        <td>{{ $orderArt->id }}</td>
+                        <td>{{ $orderArt->product_id }}</td>
+                        <td>{{ $orderArt->product->omschrijving }}</td>
+                        <td><span>{{ $orderArt->amount }}@if ($order->is_reservation) <a href="" class="editBasketCount" data-order-id="{{ $order->id }}" data-product-id="{{ $orderArt->product_id }}" data-product-count="{{ $orderArt->amount }}">[edit]</a>@endif</span></td>
+                        <td>&euro;{{ number_format($orderArt->product->prijs, 2, ',', '.') }}</td>
+                        <td>&euro;{{ number_format($orderArt->product->prijs*$orderArt->amount, 2, ',', '.') }}</td>
+                        @if ($order->is_reservation)
+                        <td>
+                            <form action="{{ url('order-article') }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $orderArt->id }}">
+                                <button type="submit" onclick="return confirm('You are about to delete {{ $orderArt->product->omschrijving }} from your basket.\n\nAre you sure?')">Delete</button>
+                            </form>
+                        </td>
+                        @endif
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
         <p><strong>Total value of your order: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
     @endif

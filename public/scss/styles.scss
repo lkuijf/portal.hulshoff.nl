@@ -80,7 +80,7 @@ table {
         th,td {
             padding: 15px;
         }
-        &:nth-of-type(odd) {
+        &:nth-of-type(even) {
             td {
                 background-color: #EFEFEF;
             }

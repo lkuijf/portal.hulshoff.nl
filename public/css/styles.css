@@ -554,7 +554,7 @@ table {
 table tr th, table tr td {
   padding: 15px;
 }
-table tr:nth-of-type(odd) td {
+table tr:nth-of-type(even) td {
   background-color: #EFEFEF;
 }
 table tr:nth-of-type(1) th {
