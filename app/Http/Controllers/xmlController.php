@@ -24,8 +24,12 @@ class xmlController extends Controller
         $log->save();
 
         if(request()->isXml()) {
-            $body =  $request->getContent();
-            Storage::disk('local_xml_' . $xmltype)->put($xmltype . '-' . date("Ymd-His") . '-' . str_pad(rand(0,9999),4,0,STR_PAD_LEFT) . '.xml', $body); // filename like: klant-20221024-141151-4898.xml
+            $body = $request->getContent();
+            // $filename = $xmltype . '-' . date("Ymd-His") . '-' . str_pad(rand(0,9999),4,0,STR_PAD_LEFT) . '.xml';
+            $t = 1;
+            $filenamePart = $xmltype . '-' . date("Ymd-His") . '-';
+            while(Storage::disk('local_xml_' . $xmltype)->exists($filenamePart . $t . '.xml')) $t++;
+            Storage::disk('local_xml_' . $xmltype)->put($filenamePart . $t . '.xml', $body); // filename like: klant-20221024-141151-4898.xml
         } else {
             return abort(404);
         }
