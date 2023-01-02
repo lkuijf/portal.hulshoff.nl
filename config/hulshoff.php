@@ -10,4 +10,5 @@ return [
     */
 
     'privileges' => ['show_tiles', 'free_search', 'lotcode_search'],
+    'archiveXmlWhenOlderThanXDays' => 7,
 ];
