@@ -33,26 +33,27 @@ Route::get('/parsexml', function () {
 // Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 // Route::post('/login/attempt', [AuthController::class, 'attemptLogin'])->name('attempt_login');
 Route::get('/account', [AuthController::class, 'showAccount'])->name('account')->middleware(['auth:h_users', 'verified']);
-Route::get('/admins', [UserController::class, 'showAdmins'])->name('admins')->middleware('auth:h_users');
 Route::get('/users', [UserController::class, 'showUsers'])->name('users')->middleware('auth:h_users');
-Route::get('/users/{id}', [UserController::class, 'showUser'])->where('id', '[0-9]+')->middleware('auth:h_users');
+Route::get('/users/{id}', [UserController::class, 'showUser'])->name('user_detail')->where('id', '[0-9]+')->middleware('auth:h_users');
 Route::get('/users/new', [UserController::class, 'newUser'])->name('new_user')->middleware('auth:h_users');
+Route::get('/admins', [UserController::class, 'showUsers'])->name('admins')->middleware('auth:h_users');
+Route::get('/admins/{id}', [UserController::class, 'showUser'])->name('admin_detail')->where('id', '[0-9]+')->middleware('auth:h_users');
 Route::get('/admins/new', [UserController::class, 'newUser'])->name('new_admin')->middleware('auth:h_users');
 // Route::get('/admins/{id}', [UserController::class, 'showAdmin'])->where('id', '[0-9]+')->middleware('auth:h_users');
 // Route::get('/admins/new', [UserController::class, 'newAdmin'])->name('new_user')->middleware('auth:h_users');
 Route::get('/orders', [OrderController::class, 'showOrders'])->defaults('type', 'confirmed')->name('orders')->middleware('auth:h_users');
 Route::post('/orders', [OrderController::class, 'showOrders'])->defaults('type', 'confirmed')->middleware('auth:h_users');
-Route::get('/orders/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'confirmed')->where('id', '[0-9]+')->middleware('auth:h_users');
+Route::get('/orders/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'confirmed')->name('order_detail')->where('id', '[0-9]+')->middleware('auth:h_users');
 Route::get('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->name('reservations')->middleware('auth:h_users');
 Route::post('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->middleware('auth:h_users');
-Route::get('/reservations/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'reserved')->where('id', '[0-9]+')->middleware('auth:h_users');
+Route::get('/reservations/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'reserved')->name('reservation_detail')->where('id', '[0-9]+')->middleware('auth:h_users');
 
 Route::post('/user', [UserController::class, 'addUser']);
 Route::put('/user', [UserController::class, 'updateUser']);
 Route::delete('/user', [UserController::class, 'deleteUser']);
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
-Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->where(['id' => '[0-9]+'])->middleware('auth:h_users');
+Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->name('product_detail')->where(['id' => '[0-9]+'])->middleware('auth:h_users');
 Route::post('/ajax/products', [ProductController::class, 'getProducts'])->name('get_products')->middleware('auth:h_users');
 
 Route::get('/basket', [BasketController::class, 'showBasket'])->name('basket')->middleware('auth:h_users');

@@ -47,38 +47,47 @@ class BasketController extends Controller
 
         $request->session()->flash('message', '<p>Product added to basket</p>');
         return redirect()->back();
-
-        // return redirect()->back()->with('message', 'Product added to basket');
     }
 
     public function deleteFromBasket(Request $request) {
         $basket = session('basket');
         unset($basket[$request->id]);
         session(['basket' => $basket]);
-        $request->session()->flash('flash_date', $request->deliveryDate);
+        if(count($basket) == 0) { // basket is empty
+            $request->session()->forget('deliveryDate'); // forget the delivery date
+        }
         $request->session()->flash('message', '<p>Product removed from basket</p>');
         return redirect()->back();
     }
 
     public function updateBasket(Request $request) {
-        $toValidate = array(
-            'count' => 'required|numeric',
-        );
-        $validationMessages = array(
-            'count.required'=> 'Please fill in a value',
-            'count.numeric'=> 'Only a number is allowed',
-        );
-        $validated = $request->validate($toValidate,$validationMessages);
-
-        $product = Product::find($request->id);
-        if($request->count > $product->availableAmount()) {
-            return redirect()->back()->withErrors(['Cannot change to ' . $request->count . ', only ' . $product->availableAmount() . ' are available.']);
+        if(isset($request->deliveryDate)) { // update of the delivery date
+            $toValidate = array(
+                'deliveryDate' => 'required|date_format:d-m-Y',
+            );
+            $validationMessages = array(
+                'deliveryDate.required'=> 'Please fill in the delivery date',
+                'deliveryDate.date_format'=> 'Date format must be: dd-mm-yyyy',
+            );
+            $validated = $request->validate($toValidate,$validationMessages);
+            session(['deliveryDate' => $request->deliveryDate]);
+        } else { // else it is an update of an article amount
+            $toValidate = array(
+                'count' => 'required|numeric',
+            );
+            $validationMessages = array(
+                'count.required'=> 'Please fill in a value',
+                'count.numeric'=> 'Only a number is allowed',
+            );
+            $validated = $request->validate($toValidate,$validationMessages);
+            $product = Product::find($request->id);
+            if($request->count > $product->availableAmount()) {
+                return redirect()->back()->withErrors(['Cannot change to ' . $request->count . ', only ' . $product->availableAmount() . ' are available.']);
+            }
+            $basket = session('basket');
+            $basket[$request->id] = $request->count;
+            session(['basket' => $basket]);
         }
-
-        $basket = session('basket');
-        $basket[$request->id] = $request->count;
-        session(['basket' => $basket]);
-        $request->session()->flash('flash_date', $request->deliveryDate);
         $request->session()->flash('message', '<p>Basket updated</p>');
         return redirect()->back();
     }

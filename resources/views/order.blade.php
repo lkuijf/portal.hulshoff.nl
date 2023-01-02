@@ -79,63 +79,64 @@
     const editDateBtn = document.querySelector('.editBasketDate');
 
     if(editDateBtn) {
-    editDateBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        let parentNode = editDateBtn.parentNode.parentNode;
-        let originalSpan = editDateBtn.parentNode;
-
-        let csrfToken = document.querySelector('meta[name="_token"]').content;
-        let oId = editDateBtn.dataset.orderId;
-        let oDate = editDateBtn.dataset.orderDate;
-        let editForm = document.createElement('form');
-        let editInput = document.createElement('input');
-        let editHiddenMethod = document.createElement('input');
-        let editHiddenToken = document.createElement('input');
-        let editHiddenOId = document.createElement('input');
-        let editHiddenType = document.createElement('input');
-        let editSave = document.createElement('button');
-        let editCancel = document.createElement('a');
-        editForm.setAttribute('action', '/order');
-        editForm.setAttribute('method', 'post');
-        editInput.setAttribute('type', 'text');
-        editInput.setAttribute('size', '12');
-        editInput.setAttribute('name', 'deliveryDate');
-        editInput.setAttribute('value', oDate);
-        editHiddenMethod.setAttribute('type', 'hidden');
-        editHiddenMethod.setAttribute('name', '_method');
-        editHiddenMethod.setAttribute('value', 'put');
-        editHiddenToken.setAttribute('type', 'hidden');
-        editHiddenToken.setAttribute('name', '_token');
-        editHiddenToken.setAttribute('value', csrfToken);
-        editHiddenOId.setAttribute('type', 'hidden');
-        editHiddenOId.setAttribute('name', 'id');
-        editHiddenOId.setAttribute('value', oId);
-        editHiddenType.setAttribute('type', 'hidden');
-        editHiddenType.setAttribute('name', 'type');
-        editHiddenType.setAttribute('value', 'updateDeliveryDate');
-        editSave.setAttribute('type', 'submit');
-        editCancel.setAttribute('href', '');
-
-        let saveBtnText = document.createTextNode('Save');
-        let cancelText = document.createTextNode('Cancel');
-        editSave.appendChild(saveBtnText);
-        editCancel.appendChild(cancelText);
-
-        editForm.append(editHiddenMethod, editHiddenToken, editHiddenOId, editHiddenType, editInput, editSave, editCancel);
-
-        new Datepicker(editInput, {
-            format: 'dd-mm-yyyy'
-        });
-
-        parentNode.replaceChild(editForm, originalSpan);
-
-        editCancel.addEventListener('click', (e) => {
+        editDateBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            parentNode.replaceChild(originalSpan, editForm);
+            let parentNode = editDateBtn.parentNode.parentNode;
+            let originalSpan = editDateBtn.parentNode;
+
+            let csrfToken = document.querySelector('meta[name="_token"]').content;
+            let oId = editDateBtn.dataset.orderId;
+            let oDate = editDateBtn.dataset.orderDate;
+            let editForm = document.createElement('form');
+            let editInput = document.createElement('input');
+            let editHiddenMethod = document.createElement('input');
+            let editHiddenToken = document.createElement('input');
+            let editHiddenOId = document.createElement('input');
+            let editHiddenType = document.createElement('input');
+            let editSave = document.createElement('button');
+            let editCancel = document.createElement('a');
+            editForm.setAttribute('action', '/order');
+            editForm.setAttribute('method', 'post');
+            editInput.setAttribute('type', 'text');
+            editInput.setAttribute('size', '12');
+            editInput.setAttribute('name', 'deliveryDate');
+            editInput.setAttribute('value', oDate);
+            editHiddenMethod.setAttribute('type', 'hidden');
+            editHiddenMethod.setAttribute('name', '_method');
+            editHiddenMethod.setAttribute('value', 'put');
+            editHiddenToken.setAttribute('type', 'hidden');
+            editHiddenToken.setAttribute('name', '_token');
+            editHiddenToken.setAttribute('value', csrfToken);
+            editHiddenOId.setAttribute('type', 'hidden');
+            editHiddenOId.setAttribute('name', 'id');
+            editHiddenOId.setAttribute('value', oId);
+            editHiddenType.setAttribute('type', 'hidden');
+            editHiddenType.setAttribute('name', 'type');
+            editHiddenType.setAttribute('value', 'updateDeliveryDate');
+            editSave.setAttribute('type', 'submit');
+            editCancel.setAttribute('href', '');
+
+            let saveBtnText = document.createTextNode('Save');
+            let cancelText = document.createTextNode('Cancel');
+            editSave.appendChild(saveBtnText);
+            editCancel.appendChild(cancelText);
+
+            editForm.append(editHiddenMethod, editHiddenToken, editHiddenOId, editHiddenType, editInput, editSave, editCancel);
+
+            new Datepicker(editInput, {
+                format: 'dd-mm-yyyy'
+            });
+
+            parentNode.replaceChild(editForm, originalSpan);
+
+            editCancel.addEventListener('click', (e) => {
+                e.preventDefault();
+                parentNode.replaceChild(originalSpan, editForm);
+                toggleVisibility([editDateBtn]);
+            });
             toggleVisibility([editDateBtn]);
+            
         });
-        toggleVisibility([editDateBtn]);
-    });
     }
 
     editCountBtns.forEach(btn => {

@@ -3,9 +3,9 @@
 @section('content')
 <div class="userListContent">
 {{-- @if (auth()->user()->is_admin) --}}
-<h1>{{ __('Overview') }} @if($data['type'] == 'users'){{ __('users') }}@elseif($data['type'] == 'admins'){{ __('administrators') }}@endif</h1>
+<h1>{{ __('Overview') }} @if($data['type'] == 0){{ __('users') }}@elseif($data['type'] == 1){{ __('administrators') }}@endif</h1>
 {{-- <p><a href="{{ route('new_user') }}">[new user]</a></p> --}}
-<p><a href="@if($data['type'] == 'users'){{ route('new_user') }}@elseif($data['type'] == 'admins'){{ route('new_admin') }}@endif">[new {{ substr($data['type'], 0, -1) }}]</a></p>
+<p><a href="@if($data['type'] == 0){{ route('new_user') }}@elseif($data['type'] == 1){{ route('new_admin') }}@endif">[create new]</a></p>
 <table>
     <thead>
         <tr>
@@ -30,7 +30,7 @@
             {{-- <td>@if($user->privileges !== null){{ implode(', ', json_decode('[aasasd,66]',true)) }}@endif</td> --}}
             <td>{{ $user->can_reserve?'Ja':'Nee' }}</td>
             <td>
-                <a href="{{ route('users') }}/{{ $user->id }}">[edit]</a>
+                <a href="@if($data['type'] == 0){{ route('users') }}@elseif($data['type'] == 1){{ route('admins') }}@endif/{{ $user->id }}">[edit]</a>
                 {{-- <a href="">[remove]</a> --}}
                 <form action="/user" method="post">
                     @method('delete')

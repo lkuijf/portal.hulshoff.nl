@@ -1,5 +1,26 @@
 @php
-    $curRouteName = Route::currentRouteName();
+    $usersBtnActive = false;
+    $adminsBtnActive = false;
+    $productsBtnActive = false;
+    $ordersBtnActive = false;
+    $reservationsBtnActive = false;
+    switch (Route::currentRouteName()) {
+        case 'users': case 'new_user': case 'user_detail':
+            $usersBtnActive = true;
+            break;
+        case 'admins': case 'new_admin': case 'admin_detail':
+            $adminsBtnActive = true;
+            break;
+        case 'products': case 'product_detail':
+            $productsBtnActive = true;
+            break;
+        case 'orders': case 'order_detail':
+            $ordersBtnActive = true;
+            break;
+        case 'reservations': case 'reservation_detail':
+            $reservationsBtnActive = true;
+            break;
+    }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +50,7 @@
         @if (auth()->user())
         <div class="accountCell">
             <div class="accInfo">
-                @if($curRouteName == 'front')
+                @if(Route::currentRouteName() == 'front')
                 <img src="https://picsum.photos/300/200" alt="">
                 <span>ABN AMRO</span>
                 @else
@@ -38,7 +59,7 @@
                 @endif
             </div>
             <div class="accButtons">
-                @if($curRouteName == 'front')
+                @if(Route::currentRouteName() == 'front')
                 <a href="#" class="accBtnHome">Home</a>
                 <a href="#" class="accBtnProfile">Profile</a>
                 <a href="#" class="accBtnLogout">Logout</a>
@@ -58,7 +79,7 @@
                     <span></span>
                     <span></span>
                 </label>
-                @if($curRouteName == 'front')
+                @if(Route::currentRouteName() == 'front')
                 <ul>
                     <li><a href="#">Item</a></li>
                     <li><a href="#">Item</a></li>
@@ -70,12 +91,12 @@
                     @if (auth()->user())
                     <ul>
                         @if (auth()->user()->is_admin)
-                            <li><a href="{{ route('users') }}" @if($curRouteName == 'users')class="active"@endif>Users</a></li>
-                            <li><a href="{{ route('admins') }}" @if($curRouteName == 'admins')class="active"@endif>Admins</a></li>
+                            <li><a href="{{ route('users') }}" @if($usersBtnActive)class="active"@endif>Users</a></li>
+                            <li><a href="{{ route('admins') }}" @if($adminsBtnActive)class="active"@endif>Admins</a></li>
                         @endif
-                        <li><a href="{{ route('products') }}" @if($curRouteName == 'products')class="active"@endif>Products</a></li>
-                        <li><a href="{{ route('orders') }}" @if($curRouteName == 'orders')class="active"@endif>Orders</a></li>
-                        @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($curRouteName == 'reservations')class="active"@endif>Reservations</a></li>@endif
+                        <li><a href="{{ route('products') }}" @if($productsBtnActive)class="active"@endif>Products</a></li>
+                        <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>Orders</a></li>
+                        @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($reservationsBtnActive)class="active"@endif>Reservations</a></li>@endif
                     </ul>
                     @endif
                 @endif

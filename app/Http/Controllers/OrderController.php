@@ -46,37 +46,29 @@ class OrderController extends Controller
         $order = Order::findOr($id, function () {
             return abort(404);
         });
-        if($order->hulshoff_user_id != auth()->user()->id) return abort(404); // check if order is of the current user
+        if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         if($order->is_reservation && $type != 'reserved') return abort(404); // reserved or confirmed order
         if(!$order->is_reservation && $type == 'reserved') return abort(404); // reserved or confirmed order
         return view('order')->with('order', $order);
     }
 
     public function newOrder(Request $request) {
-        $toValidate = array(
-            'deliveryDate' => 'required|date_format:d-m-Y',
-            // 'deliveryHour' => 'required',
-            // 'deliveryMinute' => 'required',
-        );
-        $validationMessages = array(
-            'deliveryDate.required'=> 'Please fill in the delivery date',
-            'deliveryDate.date_format'=> 'Date format must be: dd-mm-yyyy',
-            // 'deliveryHour.required'=> 'Please fill in the delivery hour',
-            // 'deliveryMinute.required'=> 'Please fill in the delivery minute',
-        );
-        $validated = $request->validate($toValidate,$validationMessages);
-
         $basket = [];
+        $deliveryDate = date("d-m-Y", strtotime('next week'));
         if($request->session()->has('basket')) {
             $basket = session('basket');
             $request->session()->forget('basket');
         }
-
+        if($request->session()->has('deliveryDate')) {
+            $deliveryDate = session('deliveryDate');
+            $request->session()->forget('deliveryDate');
+        }
+        
         $order = new Order;
         $order->hulshoff_user_id = auth()->user()->id;
         $order->is_reservation = auth()->user()->can_reserve;
         $order->orderCodeKlant = 'HUL' . date('U') - strtotime('1-1-2022') . $order->id;
-        $order->afleverDatum = date("Ymd", strtotime($request->deliveryDate));
+        $order->afleverDatum = date("Ymd", strtotime($deliveryDate));
         // $order->afleverTijd = str_pad($request->deliveryHour, 2, '0', STR_PAD_LEFT) . str_pad($request->deliveryMinute, 2, '0', STR_PAD_LEFT);
         $order->afleverTijd = '0000'; // edit 15-12-2022. Delivery TIME can't be selected by customer.
         $order->save();
@@ -104,7 +96,7 @@ class OrderController extends Controller
         $order = Order::findOr($request->id, function () {
             return abort(404);
         });
-        if($order->hulshoff_user_id != auth()->user()->id) return abort(404); // check if order is of the current user
+        if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         if($request->type == 'confirmReservation') {
             $order->is_reservation = 0;
         }
@@ -125,7 +117,7 @@ class OrderController extends Controller
         $order = Order::findOr($request->id, function () {
             return abort(404);
         });
-        if($order->hulshoff_user_id != auth()->user()->id) return abort(404); // check if order is of the current user
+        if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         $order->delete();
         $request->session()->flash('message', '<p>Reservation deleted</p>');
         return redirect()->back();
@@ -135,7 +127,7 @@ class OrderController extends Controller
         $order = Order::findOr($request->o_id, function () {
             return abort(404);
         });
-        if($order->hulshoff_user_id != auth()->user()->id) return abort(404); // check if order is of the current user
+        if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         $toValidate = array(
             'count' => 'required|numeric',
         );

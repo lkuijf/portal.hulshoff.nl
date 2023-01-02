@@ -265,10 +265,6 @@ ul.crumbs li:first-of-type:before {
 .basketContent table form button {
   cursor: pointer;
 }
-.basketContent .deliveryTxt {
-  display: inline-block;
-  width: 150px;
-}
 
 #burger-check, .burger-label {
   display: none;

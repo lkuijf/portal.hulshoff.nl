@@ -1,12 +1,10 @@
 @extends('templates.portal')
 @section('content')
 @php
-    $deliveryDate = date("d-m-Y");
-    if(session('flash_date')) {
-        $deliveryDate = session('flash_date');
-    }
-    if(old('deliveryDate')) {
-        $deliveryDate = old('deliveryDate');
+    if(session()->has('deliveryDate')) {
+        $deliveryDate = session('deliveryDate');
+    } else {
+        $deliveryDate = date("d-m-Y", strtotime('next week'));
     }
 @endphp
 <div class="basketContent">
@@ -16,41 +14,47 @@
     <h1>Basket</h1>
     @if (count($basket))
         <table>
-            <tr>
-                <th>Id</th>
-                <th>Omschrijving</th>
-                <th>Aantal</th>
-                <th>Prijs</th>
-                <th>Totaal prijs</th>
-                <th>&nbsp;</th>
-            </tr>
-            @foreach ($basket as $item)
-            @php
-                $totalOrderSum += $item['product']->prijs*$item['count'];
-            @endphp
-            <tr>
-                <td>{{ $item['product']->id }}</td>
-                <td>{{ $item['product']->omschrijving }}</td>
-                <td><span>{{ $item['count'] }} <a href="" class="editBasketCount" data-product-id="{{ $item['product']->id }}" data-product-count="{{ $item['count'] }}">[edit]</a></span></td>
-                <td>&euro;{{ number_format($item['product']->prijs, 2, ',', '.') }}</td>
-                <td>&euro;{{ number_format($item['product']->prijs*$item['count'], 2, ',', '.') }}</td>
-                <td>
-                    <form class="deleteFromBasketForm" action="{{ route('basket') }}" method="post">
-                        @method('delete')
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $item['product']->id }}">
-                        <button type="submit" onclick="return confirm('You are about to delete {{ $item['product']->omschrijving }} from your basket.\n\nAre you sure?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Omschrijving</th>
+                    <th>Aantal</th>
+                    <th>Prijs</th>
+                    <th>Totaal prijs</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($basket as $item)
+                @php
+                    $totalOrderSum += $item['product']->prijs*$item['count'];
+                @endphp
+                <tr>
+                    <td>{{ $item['product']->id }}</td>
+                    <td>{{ $item['product']->omschrijving }}</td>
+                    <td><span>{{ $item['count'] }} <a href="" class="editBasketCount" data-product-id="{{ $item['product']->id }}" data-product-count="{{ $item['count'] }}">[edit]</a></span></td>
+                    <td>&euro;{{ number_format($item['product']->prijs, 2, ',', '.') }}</td>
+                    <td>&euro;{{ number_format($item['product']->prijs*$item['count'], 2, ',', '.') }}</td>
+                    <td>
+                        <form class="deleteFromBasketForm" action="{{ route('basket') }}" method="post">
+                            @method('delete')
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $item['product']->id }}">
+                            <button type="submit" onclick="return confirm('You are about to delete {{ $item['product']->omschrijving }} from your basket.\n\nAre you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
         <p><strong>Total value of your order: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
         <h2>Afleverdatum en -tijd</h2>
         <form action="{{ url('order') }}" method="post">
             @csrf
             <p>
-                <span class="deliveryTxt">Afleverdatum</span><input type="input" name="deliveryDate" value="{{ $deliveryDate }}">
+                {{-- <span class="deliveryTxt">Afleverdatum</span><input type="input" name="deliveryDate" value="{{ $deliveryDate }}"> --}}
+                <p>Afleverdatum</p>
+                <p><span>{{ $deliveryDate }}<a class="editBasketDate" data-order-date="{{ $deliveryDate }}" href="">[edit]</a></span></p>
             </p>
             {{-- <p>
                 <span class="deliveryTxt">Aflevertijd (hh:mm)</span><select name="deliveryHour">
@@ -100,7 +104,7 @@
             @if (auth()->user()->can_reserve)
             <button>Reservering bevestigen</button>
             @else
-            <button>Order bevestigen</button>
+            <button onclick="return confirm('Your order will be delivered on {{ $deliveryDate }}.\n\nAre you sure you want to confirm your order?')">Order bevestigen</button>
             @endif
             
         </form>
@@ -117,26 +121,86 @@
 @endsection
 @section('before_closing_body_tag')
 <script>
-    const delDate = document.querySelector('input[name="deliveryDate"]');
-    const datepicker = new Datepicker(delDate, {
-        format: 'dd-mm-yyyy'
-    });
-    // console.log(delDate.value);
-    // delDate.addEventListener('change', () => {
-    //     console.log('aaa');
+    // const delDate = document.querySelector('input[name="deliveryDate"]');
+    // const datepicker = new Datepicker(delDate, {
+    //     format: 'dd-mm-yyyy'
     // });
+
+    const editDateBtn = document.querySelector('.editBasketDate');
+    editDateBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        let parentNode = editDateBtn.parentNode.parentNode;
+        let originalSpan = editDateBtn.parentNode;
+
+        let csrfToken = document.querySelector('meta[name="_token"]').content;
+        let oDate = editDateBtn.dataset.orderDate;
+        let editForm = document.createElement('form');
+        let editInput = document.createElement('input');
+        let editHiddenMethod = document.createElement('input');
+        let editHiddenToken = document.createElement('input');
+        let editSave = document.createElement('button');
+        let editCancel = document.createElement('a');
+        editForm.setAttribute('action', '/basket');
+        editForm.setAttribute('method', 'post');
+        editInput.setAttribute('type', 'text');
+        editInput.setAttribute('size', '12');
+        editInput.setAttribute('name', 'deliveryDate');
+        editInput.setAttribute('value', oDate);
+        editHiddenMethod.setAttribute('type', 'hidden');
+        editHiddenMethod.setAttribute('name', '_method');
+        editHiddenMethod.setAttribute('value', 'put');
+        editHiddenToken.setAttribute('type', 'hidden');
+        editHiddenToken.setAttribute('name', '_token');
+        editHiddenToken.setAttribute('value', csrfToken);
+        editSave.setAttribute('type', 'submit');
+        editCancel.setAttribute('href', '');
+
+        let saveBtnText = document.createTextNode('Save');
+        let cancelText = document.createTextNode('Cancel');
+        editSave.appendChild(saveBtnText);
+        editCancel.appendChild(cancelText);
+
+        editForm.append(editHiddenMethod, editHiddenToken, editInput, editSave, editCancel);
+
+        new Datepicker(editInput, {
+            format: 'dd-mm-yyyy'
+        });
+
+        parentNode.replaceChild(editForm, originalSpan);
+
+        editCancel.addEventListener('click', (e) => {
+            e.preventDefault();
+            parentNode.replaceChild(originalSpan, editForm);
+            toggleVisibility([editDateBtn]);
+        });
+        toggleVisibility([editDateBtn]);
+        
+    });
+    function toggleVisibility(elements) {
+        elements.forEach(element => {
+            if(element.style.visibility != 'hidden') {
+                element.style.visibility = 'hidden';
+            } else {
+                element.style.visibility = '';
+            }
+        });
+    }
+
+
+
+
+
 
     const delForms = document.querySelectorAll('.deleteFromBasketForm');
     delForms.forEach(formEl => {
-        // let delBtn = formEl.querySelector('button');
         formEl.addEventListener('submit', (e) => {
             e.preventDefault();
             // adding current delivery date, so the form can be repopulated
-            let deliveryDateInput = document.createElement('input');
-            deliveryDateInput.setAttribute('type', 'hidden');
-            deliveryDateInput.setAttribute('name', 'deliveryDate');
-            deliveryDateInput.setAttribute('value', delDate.value);
-            formEl.append(deliveryDateInput);
+            // let deliveryDateInput = document.createElement('input');
+            // deliveryDateInput.setAttribute('type', 'hidden');
+            // deliveryDateInput.setAttribute('name', 'deliveryDate');
+            // deliveryDateInput.setAttribute('value', delDate.value);
+            // formEl.append(deliveryDateInput);
             formEl.submit();
         });
     });
@@ -159,7 +223,7 @@
             let editHiddenMethod = document.createElement('input');
             let editHiddenToken = document.createElement('input');
             let editHiddenId = document.createElement('input');
-            let editHiddenDeliveryDate = document.createElement('input');
+            // let editHiddenDeliveryDate = document.createElement('input');
             let editSave = document.createElement('button');
             let editCancel = document.createElement('a');
             editForm.setAttribute('action', '/basket');
@@ -179,9 +243,9 @@
             editHiddenId.setAttribute('value', pId);
 
             // adding current delivery date, so the form can be repopulated
-            editHiddenDeliveryDate.setAttribute('type', 'hidden');
-            editHiddenDeliveryDate.setAttribute('name', 'deliveryDate');
-            editHiddenDeliveryDate.setAttribute('value', delDate.value);
+            // editHiddenDeliveryDate.setAttribute('type', 'hidden');
+            // editHiddenDeliveryDate.setAttribute('name', 'deliveryDate');
+            // editHiddenDeliveryDate.setAttribute('value', delDate.value);
 
             editSave.setAttribute('type', 'submit');
             editCancel.setAttribute('href', '');
@@ -191,7 +255,7 @@
             editSave.appendChild(saveBtnText);
             editCancel.appendChild(cancelText);
 
-            editForm.append(editHiddenMethod, editHiddenToken, editHiddenId, editHiddenDeliveryDate, editInput, editSave, editCancel);
+            editForm.append(editHiddenMethod, editHiddenToken, editHiddenId, editInput, editSave, editCancel);
 
             parentTd.replaceChild(editForm, originalSpan);
 

@@ -6,34 +6,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use App\Models\HulshoffUser;
 use App\Models\Customer;
 
 class UserController extends Controller
 {
     public function showUsers() {
-        $users = HulshoffUser::where('is_admin', 0)->get();
+        if(!auth()->user()->is_admin) return view('no-access');
+        $isAdmin = 0;
+        if(Route::currentRouteName() == 'admins') $isAdmin = 1;
+        $users = HulshoffUser::where('is_admin', $isAdmin)->get();
         $data = [
             'users' => $users,
-            'type' => 'users',
+            'type' => $isAdmin,
         ];
         return view('userList')->with('data', $data);
     }
 
-    public function showAdmins() {
-        // if(auth()->user()->is_admin) {
-            $users = HulshoffUser::where('is_admin', 1)->get();
-            $data = [
-                'users' => $users,
-                'type' => 'admins',
-            ];
-            return view('userList')->with('data', $data);
-        // } else {
-            // return view('no-access');
-        // }
-    }
-
     public function showUser($id) {
+        if(!auth()->user()->is_admin) return view('no-access');
         $user = HulshoffUser::find($id);
         $customers = Customer::get(['klantCode', 'naam']);
         return view('user')->with('data', ['user' => $user, 'customers' => $customers]);
