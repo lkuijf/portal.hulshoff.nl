@@ -29,18 +29,35 @@ echo $file . "\n";
                 $fileLocation = Storage::disk('local_xml_' . $type)->path($file);
 echo $fileLocation . "\n";
                 $data = self::getObjectFromXml($fileLocation);
+                $totalProcessed = 0;
                 if(isset($data->xmldata)) {
-                    if($type == 'vrdstand' && isset($data->xmldata->voorraden->voorraad) && count($data->xmldata->voorraden->voorraad)) {
-                        $result = self::updateVoorraden($data->xmldata->voorraden->voorraad);
-                    } elseif($type == 'artikel' && isset($data->xmldata->artikelen->artikel) && count($data->xmldata->artikelen->artikel)) {
-                        $result = self::upsertProducts($data->xmldata->artikelen->artikel);
-                    } elseif($type == 'klant' && isset($data->xmldata->klanten->klant) && count($data->xmldata->klanten->klant)) {
-                        $result = self::upsertCustomers($data->xmldata->klanten->klant);
-                    } elseif($type == 'order' && isset($data->xmldata->orders->order)) {
-                        if(!is_array($data->xmldata->orders->order)) $data->xmldata->orders->order = array($data->xmldata->orders->order);
-                        if(count($data->xmldata->orders->order)) {
-                            $result = self::insertWmsOrders($data->xmldata->orders->order);
+                    if($type == 'vrdstand' && isset($data->xmldata->voorraden)) {
+                        if(isset($data->xmldata->voorraden->voorraad)) {
+                            if(!is_array($data->xmldata->voorraden->voorraad)) $data->xmldata->voorraden->voorraad = array($data->xmldata->voorraden->voorraad);
+                            $result = self::updateVoorraden($data->xmldata->voorraden->voorraad);
+                            $totalProcessed = count($data->xmldata->voorraden->voorraad);
                         }
+                    } elseif($type == 'artikel' && isset($data->xmldata->artikelen)) {
+                        if(isset($data->xmldata->artikelen->artikel)) {
+                            if(!is_array($data->xmldata->artikelen->artikel)) $data->xmldata->artikelen->artikel = array($data->xmldata->artikelen->artikel);
+                            $result = self::upsertProducts($data->xmldata->artikelen->artikel);
+                            $totalProcessed = count($data->xmldata->artikelen->artikel);
+                        }
+                    } elseif($type == 'klant' && isset($data->xmldata->klanten)) {
+                        if(isset($data->xmldata->klanten->klant)) {
+                            if(!is_array($data->xmldata->klanten->klant)) $data->xmldata->klanten->klant = array($data->xmldata->klanten->klant);
+                            $result = self::upsertCustomers($data->xmldata->klanten->klant);
+                            $totalProcessed = count($data->xmldata->klanten->klant);
+                        }
+                    } elseif($type == 'order' && isset($data->xmldata->orders)) {
+                        if(isset($data->xmldata->orders->order)) {
+                            if(!is_array($data->xmldata->orders->order)) $data->xmldata->orders->order = array($data->xmldata->orders->order);
+                            if(count($data->xmldata->orders->order)) {
+                                $result = self::insertWmsOrders($data->xmldata->orders->order);
+                                $totalProcessed = count($data->xmldata->orders->order);
+                            }
+                        }
+
                     } else {
                         $errors[] = 'No nodes found'; // write to db. no nodes found.
                     }
@@ -48,6 +65,8 @@ echo $fileLocation . "\n";
                 if(isset($data->error)) {
                     $errors[] = $data->error; // write to db. Exception.
                 }
+// echo 'totalProcessed: ' . $totalProcessed . "\n";
+                $logParse->total_items = $totalProcessed;
                 if(count($errors)) $logParse->errors = substr(implode(' & ', $errors), 0, 200);
                 $logParse->file = substr($type . '/' . $file, 0, 200);
                 $logParse->save();

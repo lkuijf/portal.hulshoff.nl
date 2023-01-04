@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('log_xml_parses', function (Blueprint $table) {
             $table->id();
             $table->string('file', 200)->unique();
+            $table->integer('total_items');
             $table->string('errors', 200)->nullable();
             $table->timestamps();
         });
