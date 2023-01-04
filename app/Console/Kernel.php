@@ -5,6 +5,10 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Jobs\ArchiveXml;
+use App\Jobs\ParseVoorraadXml;
+use App\Jobs\ParseArtikelXml;
+use App\Jobs\ParseKlantXml;
+use App\Jobs\ParseOrderXml;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,8 +20,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->job(new ArchiveXml)->dailyAt(12);
+        $schedule->job(new ParseArtikelXml)->dailyAt(11);
+        $schedule->job(new ParseKlantXml)->dailyAt(11);
+        $schedule->job(new ParseOrderXml)->dailyAt(11);
+        $schedule->job(new ParseVoorraadXml)->dailyAt(11);
     }
 
     /**

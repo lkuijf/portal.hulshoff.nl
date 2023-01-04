@@ -11,6 +11,7 @@ use App\Models\WmsOrderArticle;
 use App\Models\LogXmlPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Helpers\XmlParse;
 
 class xmlController extends Controller
 {
@@ -35,25 +36,13 @@ class xmlController extends Controller
         }
     }
 
-    public function getObjectFromXml($file) {
-        $data = new \stdClass();
-        try {
-            $xmlFile = file_get_contents(public_path($file));
-            $xmlObject = simplexml_load_string($xmlFile);
-            $jsonFormattedData = json_encode($xmlObject);
-            $data->xmldata = json_decode($jsonFormattedData);
-        } catch (\Exception $e) {
-            $data->error = $e->getMessage();
-        }
-        return $data;
-    }
     public function importXml($type) {
         // if($type == 'klanten') $xmlFile = file_get_contents(public_path('xml/klanten.xml'));
 
         if($type == 'wmsorders') {
             
-            $xmlLocation = 'xml/orders.xml';
-            $data = $this->getObjectFromXml($xmlLocation);
+            $xmlLocation = public_path('xml/orders.xml');
+            $data = XmlParse::getObjectFromXml($xmlLocation);
 
             if(isset($data->xmldata)) {
 
@@ -61,7 +50,7 @@ class xmlController extends Controller
                     if(!is_array($data->xmldata->orders->order)) $data->xmldata->orders->order = array($data->xmldata->orders->order);
                 
                     if(count($data->xmldata->orders->order)) {
-                        $result = $this->insertWmsOrders($data->xmldata->orders->order);
+                        $result = XmlParse::insertWmsOrders($data->xmldata->orders->order);
                         $data = [
                             'include_view' => 'development.xml',
                             'result' => 'result message: ' . $result->msg,
@@ -82,11 +71,11 @@ class xmlController extends Controller
         }
 
         if($type == 'producten') {
-            $xmlLocation = 'xml/artikelen.xml';
-            $data = $this->getObjectFromXml($xmlLocation);
+            $xmlLocation = public_path('xml/artikelen.xml');
+            $data = XmlParse::getObjectFromXml($xmlLocation);
             if(isset($data->xmldata)) {
                 if(isset($data->xmldata->artikelen->artikel) && count($data->xmldata->artikelen->artikel)) {
-                    $result = $this->upsertProducts($data->xmldata->artikelen->artikel);
+                    $result = XmlParse::upsertProducts($data->xmldata->artikelen->artikel);
                     $data = [
                         'include_view' => 'development.xml',
                         'result' => 'result message: ' . $result->msg,
@@ -104,11 +93,11 @@ class xmlController extends Controller
         }
         
         if($type == 'klanten') {
-            $xmlLocation = 'xml/klanten.xml';
-            $data = $this->getObjectFromXml($xmlLocation);
+            $xmlLocation = public_path('xml/klanten.xml');
+            $data = XmlParse::getObjectFromXml($xmlLocation);
             if(isset($data->xmldata)) {
                 if(isset($data->xmldata->klanten->klant) && count($data->xmldata->klanten->klant)) {
-                    $result = $this->upsertCustomers($data->xmldata->klanten->klant);
+                    $result = XmlParse::upsertCustomers($data->xmldata->klanten->klant);
                     $data = [
                         'include_view' => 'development.xml',
                         'result' => 'result message: ' . $result->msg,
@@ -126,11 +115,12 @@ class xmlController extends Controller
         }
 
         if($type == 'voorraden') {
-            $xmlLocation = 'xml/voorraden.xml';
-            $data = $this->getObjectFromXml($xmlLocation);
+            $xmlLocation = public_path('xml/voorraden.xml');
+            $data = XmlParse::getObjectFromXml($xmlLocation);
             if(isset($data->xmldata)) {
                 if(isset($data->xmldata->voorraden->voorraad) && count($data->xmldata->voorraden->voorraad)) {
-                    $result = $this->updateVoorraden($data->xmldata->voorraden->voorraad);
+                    // $result = $this->updateVoorraden($data->xmldata->voorraden->voorraad);
+                    $result = XmlParse::updateVoorraden($data->xmldata->voorraden->voorraad);
                     $data = [
                         'include_view' => 'development.xml',
                         'result' => 'result message: ' . $result->msg,
@@ -147,109 +137,5 @@ class xmlController extends Controller
             }
         }
         
-    }
-
-    public function insertWmsOrders($orders) {
-        $res = new \stdClass();
-        foreach($orders as $ord) {
-            $customer = Customer::firstOrCreate([
-                'klantCode' => $ord->{'ord-klant-code'}
-            ]);
-            $wmsOrder = WmsOrder::firstOrCreate(
-                ['orderCodeKlant' => $ord->{'ord-order-code-klant'}, 'orderCodeAflever' => $ord->{'ord-order-code-aflever'}],
-                [
-                    'klantCode' => $ord->{'ord-klant-code'},
-                    'orderNr' => $ord->{'ord-order-nr'},
-                    'ataAleverenDatum' => $ord->{'ord-ata-afleveren-datum'},
-                    'ataAleverenTijd' => $ord->{'ord-ata-afleveren-tijd'}
-                ]
-            );
-            if(isset($ord->details->detail)) {
-                if(!is_array($ord->details->detail)) $ord->details->detail = array($ord->details->detail);
-                if(count($ord->details->detail)) {
-                    foreach($ord->details->detail as $det) {
-                        $wmsOrderArticle = WmsOrderArticle::firstOrCreate(
-                            ['wms_order_id' => $wmsOrder->id, 'artikelCode' => $det->{'odt-artikel-code'},],
-                            [
-                                'stuksUitgeleverd' => $det->{'odt-stuks-uitgeleverd'},
-                            ]
-                        );
-                    }
-                }
-            }
-        }
-        $res->msg = 'success';
-        return $res;
-    }
-
-    public function updateVoorraden($stocks) {
-        $res = new \stdClass();
-        foreach($stocks as $stock) {
-            $totalAffected = Product::where([
-                'klantCode' => $stock->{'vrr-klant-code'},
-                'artikelCode' => $stock->{'vrr-artikel-code'}
-                ])->update(['minimaleVoorraad' => $stock->{'vrr-aantal-stuks'}]);
-        }
-        $res->msg = 'success';
-        return $res;
-    }
-
-    public function upsertCustomers($customers) {
-        $res = new \stdClass();
-        foreach($customers as $cust) {
-            Customer::updateOrCreate(
-                ['klantCode' => $cust->{'kla-klant-code'}],
-                [
-                    'naam' => $cust->{'kla-naam'},
-                    'straat' => $cust->{'kla-straat'},
-                    'huisnummer' => $cust->{'kla-huisnummer'},
-                    'postcode' => $cust->{'kla-postcode'},
-                    'landCode' => $cust->{'kla-land-code'},
-                    'contactpersoon' => $cust->{'kla-contactpersoon'},
-                    'telefoon' => $cust->{'kla-telefoon'},
-                    'eMailadres' => $cust->{'kla-e-mailadres'},
-                    'website' => $cust->{'kla-website'},
-                ]
-            );
-        }
-        $res->msg = 'success';
-        return $res;
-    }
-
-    public function upsertProducts($products) {
-        $res = new \stdClass();
-        foreach($products as $prod) {
-            $productgroup = Productgroup::firstOrCreate([
-                'group' => $prod->{'art-artikelgroep-code'}
-            ]);
-            $productbrand = Productbrand::firstOrCreate([
-                'brand' => $prod->{'art-merk'}
-            ]);
-            $producttype = Producttype::firstOrCreate([
-                'type' => $prod->{'art-type'}
-            ]);
-            $customer = Customer::firstOrCreate([
-                'klantCode' => $prod->{'art-klant-code'}
-            ]);
-            $product = Product::updateOrCreate(
-                ['klantCode' => $prod->{'art-klant-code'}, 'artikelCode' => $prod->{'art-artikel-code'}],
-                [
-                    'omschrijving' => $prod->{'art-omschrijving'},
-                    'stuksPerBundel' => $prod->{'art-stuks-per-bundel'},
-                    'prijs' => $prod->{'art-prijs'},
-                    'minimaleVoorraad' => $prod->{'art-minimale-voorraad'},
-                    'bijzonderheden' => $prod->{'art-bijzonderheden'},
-                    'kleur' => $prod->{'art-kleur'},
-                    'lengte' => $prod->{'art-lengte'},
-                    'breedte' => $prod->{'art-breedte'},
-                    'hoogte' => $prod->{'art-hoogte'},
-                    'productgroup_id' => $productgroup->id,
-                    'productbrand_id' => $productbrand->id,
-                    'producttype_id' => $producttype->id
-                ]
-            );
-        }
-        $res->msg = 'success';
-        return $res;
     }
 }
