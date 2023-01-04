@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('klantCode')->references('klantCode')->on('customers')->onDelete('cascade');
             $table->string('orderCodeKlant', 30);
             $table->string('orderCodeAflever', 50);
-            $table->integer('orderNr');
+            $table->integer('orderNr')->nullable();
             $table->integer('ataAleverenDatum');
             $table->integer('ataAleverenTijd');
             $table->timestamps();

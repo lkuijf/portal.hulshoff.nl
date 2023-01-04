@@ -18,18 +18,19 @@ class XmlParse {
     public static function parseIt($type) {
 echo "\n";
 echo 'parseIt: ' . $type . "\n";
-
-        
-        $aFiles = [];
+        $totalFiles = count(Storage::disk('local_xml_' . $type)->files());
+        $x = 1;
         foreach(Storage::disk('local_xml_' . $type)->files() as $file) {
-echo $file . "\n";
+echo "\r" . $x++ . '/' . $totalFiles;
+// echo $file . "\n";
             $foundRec = LogXmlParse::where('file', $type . '/' . $file)->firstOr(function () use ($type, $file) { // check if not already parsed
                 $logParse = new LogXmlParse;
                 $errors = [];
                 $fileLocation = Storage::disk('local_xml_' . $type)->path($file);
-echo $fileLocation . "\n";
+// echo $fileLocation . "\n";
                 $data = self::getObjectFromXml($fileLocation);
                 $totalProcessed = 0;
+// var_dump($data->xmldata);
                 if(isset($data->xmldata)) {
                     if($type == 'vrdstand' && isset($data->xmldata->voorraden)) {
                         if(isset($data->xmldata->voorraden->voorraad)) {
@@ -73,11 +74,12 @@ echo $fileLocation . "\n";
             });
             if($foundRec) {
                 // some notice?
-echo 'ALREADY PARSED: ' . $type . '/' . $file . "\n";
+// echo 'ALREADY PARSED: ' . $type . '/' . $file . "\n";
             }
 
         }
 
+        echo "\n";
         
     }
 
@@ -87,6 +89,7 @@ echo 'ALREADY PARSED: ' . $type . '/' . $file . "\n";
             $xmlFile = file_get_contents($file);
             $xmlObject = simplexml_load_string($xmlFile);
             $jsonFormattedData = json_encode($xmlObject);
+            $jsonFormattedData = str_replace('{}', '""', $jsonFormattedData); // Not very nice sollution.
             $data->xmldata = json_decode($jsonFormattedData);
         } catch (\Exception $e) {
             $data->error = $e->getMessage();
@@ -168,6 +171,11 @@ echo 'ALREADY PARSED: ' . $type . '/' . $file . "\n";
     public static function insertWmsOrders($orders) {
         $res = new \stdClass();
         foreach($orders as $ord) {
+
+            //4-1-2023 no ord-order-nr in test
+            $ordernumber = null;
+            if(isset($ord->{'ord-order-nr'})) $ordernumber = $ord->{'ord-order-nr'};
+
             $customer = Customer::firstOrCreate([
                 'klantCode' => $ord->{'ord-klant-code'}
             ]);
@@ -175,7 +183,7 @@ echo 'ALREADY PARSED: ' . $type . '/' . $file . "\n";
                 ['orderCodeKlant' => $ord->{'ord-order-code-klant'}, 'orderCodeAflever' => $ord->{'ord-order-code-aflever'}],
                 [
                     'klantCode' => $ord->{'ord-klant-code'},
-                    'orderNr' => $ord->{'ord-order-nr'},
+                    'orderNr' => $ordernumber,
                     'ataAleverenDatum' => $ord->{'ord-ata-afleveren-datum'},
                     'ataAleverenTijd' => $ord->{'ord-ata-afleveren-tijd'}
                 ]
