@@ -22,12 +22,12 @@ echo 'parseIt: ' . $type . "\n";
         
         $aFiles = [];
         foreach(Storage::disk('local_xml_' . $type)->files() as $file) {
-// echo $file . "\n";
+echo $file . "\n";
             $foundRec = LogXmlParse::where('file', $type . '/' . $file)->firstOr(function () use ($type, $file) { // check if not already parsed
                 $logParse = new LogXmlParse;
                 $errors = [];
                 $fileLocation = Storage::disk('local_xml_' . $type)->path($file);
-// echo $fileLocation . "\n";
+echo $fileLocation . "\n";
                 $data = self::getObjectFromXml($fileLocation);
                 if(isset($data->xmldata)) {
                     if($type == 'vrdstand' && isset($data->xmldata->voorraden->voorraad) && count($data->xmldata->voorraden->voorraad)) {
