@@ -21,10 +21,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new ArchiveXml)->daily();
-        $schedule->job(new ParseArtikelXml)->dailyAt('13:50');
-        $schedule->job(new ParseKlantXml)->dailyAt('13:50');
-        $schedule->job(new ParseOrderXml)->dailyAt('13:50');
-        $schedule->job(new ParseVoorraadXml)->dailyAt('13:50');
+        $schedule->job(new ParseArtikelXml)->dailyAt('14:23');
+        $schedule->job(new ParseKlantXml)->dailyAt('14:23');
+        $schedule->job(new ParseOrderXml)->dailyAt('14:23');
+        $schedule->job(new ParseVoorraadXml)->dailyAt('14:23');
     }
 
     /**
