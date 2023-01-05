@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('file', 200)->unique();
             $table->integer('total_items');
             $table->string('errors', 200)->nullable();
+            $table->unsignedBigInteger('job_id')->nullable();
+            $table->foreign('job_id')->references('id')->on('jobs')->nullOnDelete();
             $table->timestamps();
         });
     }

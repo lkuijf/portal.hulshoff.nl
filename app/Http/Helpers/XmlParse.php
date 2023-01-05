@@ -15,47 +15,57 @@ class XmlParse {
     public function __construct() {
     }
 
-    public static function parseIt($type) {
+    public static function parseIt($type, $jobId) {
 echo "\n";
 echo 'parseIt: ' . $type . "\n";
         $totalFiles = count(Storage::disk('local_xml_' . $type)->files());
+        $totalFilesProcessed = 0;
+        $totalFilesSkipped = 0;
         $x = 1;
         foreach(Storage::disk('local_xml_' . $type)->files() as $file) {
 echo "\r" . $x++ . '/' . $totalFiles;
 // echo $file . "\n";
-            $foundRec = LogXmlParse::where('file', $type . '/' . $file)->firstOr(function () use ($type, $file) { // check if not already parsed
+
+            $foundRec = LogXmlParse::where('file', $type . '/' . $file)->first();
+            if($foundRec) {
+                // file already parsed.
+                // some notice?
+                $totalFilesSkipped++;
+// echo 'ALREADY PARSED: ' . $type . '/' . $file . "\n";
+            } else {
+                $totalFilesProcessed++;
                 $logParse = new LogXmlParse;
                 $errors = [];
                 $fileLocation = Storage::disk('local_xml_' . $type)->path($file);
 // echo $fileLocation . "\n";
                 $data = self::getObjectFromXml($fileLocation);
-                $totalProcessed = 0;
+                $totalItemsProcessed = 0;
 // var_dump($data->xmldata);
                 if(isset($data->xmldata)) {
                     if($type == 'vrdstand' && isset($data->xmldata->voorraden)) {
                         if(isset($data->xmldata->voorraden->voorraad)) {
                             if(!is_array($data->xmldata->voorraden->voorraad)) $data->xmldata->voorraden->voorraad = array($data->xmldata->voorraden->voorraad);
                             $result = self::updateVoorraden($data->xmldata->voorraden->voorraad);
-                            $totalProcessed = count($data->xmldata->voorraden->voorraad);
+                            $totalItemsProcessed = count($data->xmldata->voorraden->voorraad);
                         }
                     } elseif($type == 'artikel' && isset($data->xmldata->artikelen)) {
                         if(isset($data->xmldata->artikelen->artikel)) {
                             if(!is_array($data->xmldata->artikelen->artikel)) $data->xmldata->artikelen->artikel = array($data->xmldata->artikelen->artikel);
                             $result = self::upsertProducts($data->xmldata->artikelen->artikel);
-                            $totalProcessed = count($data->xmldata->artikelen->artikel);
+                            $totalItemsProcessed = count($data->xmldata->artikelen->artikel);
                         }
                     } elseif($type == 'klant' && isset($data->xmldata->klanten)) {
                         if(isset($data->xmldata->klanten->klant)) {
                             if(!is_array($data->xmldata->klanten->klant)) $data->xmldata->klanten->klant = array($data->xmldata->klanten->klant);
                             $result = self::upsertCustomers($data->xmldata->klanten->klant);
-                            $totalProcessed = count($data->xmldata->klanten->klant);
+                            $totalItemsProcessed = count($data->xmldata->klanten->klant);
                         }
                     } elseif($type == 'order' && isset($data->xmldata->orders)) {
                         if(isset($data->xmldata->orders->order)) {
                             if(!is_array($data->xmldata->orders->order)) $data->xmldata->orders->order = array($data->xmldata->orders->order);
                             if(count($data->xmldata->orders->order)) {
                                 $result = self::insertWmsOrders($data->xmldata->orders->order);
-                                $totalProcessed = count($data->xmldata->orders->order);
+                                $totalItemsProcessed = count($data->xmldata->orders->order);
                             }
                         }
 
@@ -66,21 +76,22 @@ echo "\r" . $x++ . '/' . $totalFiles;
                 if(isset($data->error)) {
                     $errors[] = $data->error; // write to db. Exception.
                 }
-// echo 'totalProcessed: ' . $totalProcessed . "\n";
-                $logParse->total_items = $totalProcessed;
+// echo 'totalItemsProcessed: ' . $totalItemsProcessed . "\n";
+                $logParse->total_items = $totalItemsProcessed;
                 if(count($errors)) $logParse->errors = substr(implode(' & ', $errors), 0, 200);
                 $logParse->file = substr($type . '/' . $file, 0, 200);
+                $logParse->job_id = $jobId;
                 $logParse->save();
-            });
-            if($foundRec) {
-                // some notice?
-// echo 'ALREADY PARSED: ' . $type . '/' . $file . "\n";
             }
-
         }
 
         echo "\n";
-        
+        // return $totalFiles;
+        return [
+            'total' => $totalFiles,
+            'processed' => $totalFilesProcessed,
+            'skipped' => $totalFilesSkipped,
+        ];
     }
 
     public static function getObjectFromXml($file) {

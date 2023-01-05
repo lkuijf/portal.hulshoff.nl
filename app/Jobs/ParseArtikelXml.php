@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Http\Helpers\XmlParse;
+use App\Models\Job;
 
 class ParseArtikelXml implements ShouldQueue
 {
@@ -31,6 +32,12 @@ class ParseArtikelXml implements ShouldQueue
      */
     public function handle()
     {
-        XmlParse::parseIt('artikel');
+        $startedAt = date("Y-m-d H:i:s");
+        $job = new Job;
+        $job->save();
+        $results = XmlParse::parseIt('artikel', $job->id);
+        $endedAt = date("Y-m-d H:i:s");
+        
+        $job->updateEntry(get_class($this), $startedAt, $endedAt, $results);
     }
 }

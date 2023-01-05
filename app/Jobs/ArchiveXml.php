@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Job;
 
 class ArchiveXml implements ShouldQueue
 {
@@ -31,6 +32,8 @@ class ArchiveXml implements ShouldQueue
      */
     public function handle()
     {
+        $startedAt = date("Y-m-d H:i:s");
+        $totalZippedFiles = 0;
         $types = ['klant','artikel','order','vrdstand'];
         $filesToArchive = array_fill_keys($types, []);
 
@@ -53,6 +56,7 @@ class ArchiveXml implements ShouldQueue
                 if($created === TRUE) {
                     foreach($files as $file){
                         $zip->addFile($file, basename($file));
+                        $totalZippedFiles++;
                     }
                     $zip->close();
                 } else {
@@ -88,6 +92,13 @@ class ArchiveXml implements ShouldQueue
             }
         }
 
-        
+        $endedAt = date("Y-m-d H:i:s");
+        $job = new Job;
+        $results = [
+            'total' => $totalZippedFiles,
+            'processed' => $totalZippedFiles,
+            'skipped' => 0,
+        ];
+        $job->newEntry(get_class($this), $startedAt, $endedAt, $results);
     }
 }
