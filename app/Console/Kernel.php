@@ -10,6 +10,7 @@ use App\Jobs\ParseArtikelXml;
 use App\Jobs\ParseKlantXml;
 use App\Jobs\ParseOrderXml;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Stringable;
 
 class Kernel extends ConsoleKernel
 {
