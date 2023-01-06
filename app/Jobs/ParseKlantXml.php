@@ -32,12 +32,24 @@ class ParseKlantXml implements ShouldQueue
      */
     public function handle()
     {
-        $startedAt = date("Y-m-d H:i:s");
-        $job = new Job;
-        $job->save();
-        $results = XmlParse::parseIt('klant', $job->id);
-        $endedAt = date("Y-m-d H:i:s");
 
-        $job->updateEntry(get_class($this), $startedAt, $endedAt, $results);
+        try {
+
+            $startedAt = date("Y-m-d H:i:s");
+            $job = new Job;
+            $job->save();
+            $results = XmlParse::parseIt('klant', $job->id);
+            $endedAt = date("Y-m-d H:i:s");
+            $job->updateEntry(get_class($this), $startedAt, $endedAt, $results);
+
+        } catch (\Exception $e) {
+            Mail::raw($e->getMessage(), function ($message) {
+                $message
+                ->to('leon@wtmedia-events.nl')
+                ->subject('ParseKlantXml job failed!');
+            });
+            throw $e; //rethrow
+        }
+
     }
 }
