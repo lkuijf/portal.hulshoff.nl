@@ -104,7 +104,7 @@ class ArchiveXml implements ShouldQueue
                 'processed' => $totalZippedFiles,
                 'skipped' => 0,
             ];
-            $job->newEntry(get_class($this), $startedAt, $endedAt, $results);
+            $job->updateEntry(get_class($this), $startedAt, $endedAt, $results);
 
 
         } catch (\Exception $e) {
