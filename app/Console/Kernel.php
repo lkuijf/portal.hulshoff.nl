@@ -29,11 +29,20 @@ class Kernel extends ConsoleKernel
         //           ->subject('ArchiveXml job failed!');
         //       });
         // });
-        $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
-        $schedule->job(new ParseArtikelXml)->hourly(); // dailyAt('14:23')
-        $schedule->job(new ParseKlantXml)->hourly();
-        $schedule->job(new ParseOrderXml)->hourly();
-        $schedule->job(new ParseVoorraadXml)->hourly();
+        try {
+            $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
+            $schedule->job(new ParseArtikelXml)->hourly(); // dailyAt('14:23')
+            $schedule->job(new ParseKlantXml)->hourly();
+            $schedule->job(new ParseOrderXml)->hourly();
+            $schedule->job(new ParseVoorraadXml)->hourly();
+        } catch (\Exception $e) {
+            // $data->error = $e->getMessage();
+            Mail::raw($e->getMessage(), function ($message) {
+                $message
+                  ->to('leon@wtmedia-events.nl')
+                  ->subject('Hulshoff portal job failed!');
+              });
+        }
     }
 
     /**
