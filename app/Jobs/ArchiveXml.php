@@ -33,7 +33,10 @@ class ArchiveXml implements ShouldQueue
      */
     public function handle()
     {
+
         try {
+
+
             $startedAt = date("Y-m-d H:i:s");
             $totalZippedFiles = 0;
             $types = ['klant','artikel','order','vrdstand'];
@@ -102,14 +105,17 @@ class ArchiveXml implements ShouldQueue
                 'skipped' => 0,
             ];
             $job->newEntry(get_class($this), $startedAt, $endedAt, $results);
+
+
         } catch (\Exception $e) {
-            // $data->error = $e->getMessage();
             Mail::raw($e->getMessage(), function ($message) {
                 $message
                   ->to('leon@wtmedia-events.nl')
                   ->subject('ArchiveXml job failed!');
               });
+            throw $e; //rethrow
         }
+
 
     }
 }
