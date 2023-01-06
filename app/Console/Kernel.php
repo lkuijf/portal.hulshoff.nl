@@ -22,8 +22,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Laravel Task Scheduling not providing output on Failure
+
         // $schedule->job(new ArchiveXml)->dailyAt(1);
-        $schedule->job(new ArchiveXml)->everyMinute();
+        // $schedule->job(new ArchiveXml)->everyMinute();
         // $schedule->job(new ArchiveXml)->everyMinute()->onFailure(function () {
         //     Mail::raw($error, function ($message) {
         //         $message
@@ -31,7 +33,7 @@ class Kernel extends ConsoleKernel
         //           ->subject('ArchiveXml job failed!');
         //       });
         // });
-        // $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
+        $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
         $schedule->job(new ParseArtikelXml)->hourly(); // dailyAt('14:23')
         $schedule->job(new ParseKlantXml)->hourly();
         $schedule->job(new ParseOrderXml)->hourly();
