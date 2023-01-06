@@ -108,7 +108,6 @@ class ArchiveXml implements ShouldQueue
 
 
         } catch (\Exception $e) {
-            echo $e->getMessage(); // for output
             Mail::raw($e->getMessage(), function ($message) {
                 $message
                   ->to('leon@wtmedia-events.nl')
