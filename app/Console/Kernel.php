@@ -10,7 +10,7 @@ use App\Jobs\ParseArtikelXml;
 use App\Jobs\ParseKlantXml;
 use App\Jobs\ParseOrderXml;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Stringable;
+// use Illuminate\Support\Stringable;
 
 class Kernel extends ConsoleKernel
 {
@@ -23,13 +23,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->job(new ArchiveXml)->dailyAt(1);
-        $schedule->job(new ArchiveXml)->everyMinute()->onFailure(function (Stringable $error) {
-            Mail::raw($error, function ($message) {
-                $message
-                  ->to('leon@wtmedia-events.nl')
-                  ->subject('ArchiveXml job failed!');
-              });
-        });
+        $schedule->job(new ArchiveXml)->everyMinute();
+        // $schedule->job(new ArchiveXml)->everyMinute()->onFailure(function () {
+        //     Mail::raw($error, function ($message) {
+        //         $message
+        //           ->to('leon@wtmedia-events.nl')
+        //           ->subject('ArchiveXml job failed!');
+        //       });
+        // });
         // $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
         $schedule->job(new ParseArtikelXml)->hourly(); // dailyAt('14:23')
         $schedule->job(new ParseKlantXml)->hourly();
