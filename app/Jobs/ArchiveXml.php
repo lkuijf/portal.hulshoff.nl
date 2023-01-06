@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Job;
+use Illuminate\Support\Facades\Mail;
 
 class ArchiveXml implements ShouldQueue
 {
