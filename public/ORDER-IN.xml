@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bericht>
+    <bericht-type>IFC-ORDER-IN</bericht-type>
+    <bericht-id>4565789</bericht-id>
+    <orders>
+        <order>
+            <ord-klant-code>55054</ord-klant-code>
+            <ord-order-code-klant>ORDER112233<ord-order-code-klant/>
+            <ord-order-code-aflever>BESTELLL123<ord-order-code-aflever/>
+            <ord-ata-afleveren-datum>20232512</ord-ata-afleveren-datum>
+            <ord-ata-afleveren-tijd>1200</ord-ata-afleveren-tijd>
+            <adressen>
+                <adres>
+                    <afa-afleveradres-code>ALGEMEEN</afa-afleveradres-code>
+                    <afa-naam>ALGEMEEN AFLEVERADRES</afa-naam>
+                    <afa-straat>Westeinde</afa-straat>
+                    <afa-huisnummer>1</afa-huisnummer>
+                    <afa-postcode>1017 ZN</afa-postcode>
+                    <afa-plaats>Amsterdam</afa-plaats>
+                    <afa-land-code>NL</afa-land-code>
+                    <afa-contactpersoon>Dhr. Bankie</afa-contactpersoon>
+                    <afa-telefoon>0666666666</afa-telefoon>
+                    <afa-e-mailadres>info@ddddnnnbbbb.nl</afa-e-mailadres>
+                </adres>
+            </adressen>
+            <details>
+                <detail>
+                    <odt-klant-regel-code>50019<odt-klant-regel-code/>
+                    <odt-artikel-code>00011</odt-artikel-code>
+                    <odt-lotcode/>
+                    <odt-stuks-besteld>1</odt-stuks-besteld>
+                </detail>
+            </details>
+        </order>
+    </orders>
+</bericht>
