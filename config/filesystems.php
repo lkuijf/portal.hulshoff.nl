@@ -38,43 +38,53 @@ return [
 
         'local_xml_klant' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/posted/klant'),
+            'root' => storage_path('app/xml/inbound/klant'),
             'throw' => false,
         ],
         'local_xml_artikel' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/posted/artikel'),
+            'root' => storage_path('app/xml/inbound/artikel'),
             'throw' => false,
         ],
         'local_xml_order' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/posted/order'),
+            'root' => storage_path('app/xml/inbound/order'),
             'throw' => false,
         ],
         'local_xml_vrdstand' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/posted/vrdstand'),
+            'root' => storage_path('app/xml/inbound/vrdstand'),
+            'throw' => false,
+        ],
+        'local_xml_order_out' => [
+            'driver' => 'local',
+            'root' => storage_path('app/xml/outbound/order'),
             'throw' => false,
         ],
 
         'local_xml_klant_archived' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/archived/klant'),
+            'root' => storage_path('app/xml/archived/inbound/klant'),
             'throw' => false,
         ],
         'local_xml_artikel_archived' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/archived/artikel'),
+            'root' => storage_path('app/xml/archived/inbound/artikel'),
             'throw' => false,
         ],
         'local_xml_order_archived' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/archived/order'),
+            'root' => storage_path('app/xml/archived/inbound/order'),
             'throw' => false,
         ],
         'local_xml_vrdstand_archived' => [
             'driver' => 'local',
-            'root' => storage_path('app/xml/archived/vrdstand'),
+            'root' => storage_path('app/xml/archived/inbound/vrdstand'),
+            'throw' => false,
+        ],
+        'local_xml_order_out_archived' => [
+            'driver' => 'local',
+            'root' => storage_path('app/xml/archived/outbound/order'),
             'throw' => false,
         ],
 
