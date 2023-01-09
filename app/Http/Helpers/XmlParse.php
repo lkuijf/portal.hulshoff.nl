@@ -114,7 +114,7 @@ echo "\r" . $x++ . '/' . $totalFiles;
             $totalAffected = Product::where([
                 'klantCode' => $stock->{'vrr-klant-code'},
                 'artikelCode' => $stock->{'vrr-artikel-code'}
-                ])->update(['minimaleVoorraad' => $stock->{'vrr-aantal-stuks'}]);
+                ])->update(['voorraad' => $stock->{'vrr-aantal-stuks'}]);
         }
         $res->msg = 'success';
         return $res;

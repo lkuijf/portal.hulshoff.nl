@@ -46,7 +46,7 @@ class Product extends Model
                 else $totalOrdered += $orderArt->amount;
             }
         }
-        return $this->minimaleVoorraad - $totalOrdered - $totalReserved;
+        return $this->voorraad - $totalOrdered - $totalReserved;
     }
     public function reservedAmount() {
         $total = 0;

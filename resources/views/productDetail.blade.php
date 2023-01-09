@@ -9,7 +9,7 @@
             <div>
                 <div class="prodReserveWrap">
                     <h2>Reserveren / bestellen</h2>
-                    <p>Magazijnvoorraad: {{ $product->minimaleVoorraad - $product->orderedAmount() }}<br />
+                    <p>Magazijnvoorraad: {{ $product->voorraad - $product->orderedAmount() }}<br />
                         Gereserveerd: {{ $product->reservedAmount() }}<br />
                         Beschikbaar: {{ $product->availableAmount() }}
                     </p>
