@@ -35,9 +35,9 @@ class Kernel extends ConsoleKernel
         //       });
         // });
         // $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
-        $schedule->job(new ParseArtikelXml)->hourly(); // dailyAt('14:23')
-        $schedule->job(new ParseKlantXml)->hourly();
-        $schedule->job(new ParseOrderXml)->hourly();
+        $schedule->job(new ParseArtikelXml)->everyMinute(); // dailyAt('14:23') // hourly()
+        $schedule->job(new ParseKlantXml)->everyMinute();
+        $schedule->job(new ParseOrderXml)->everyMinute();
         $schedule->job(new ParseVoorraadXml)->hourly();
     }
 
