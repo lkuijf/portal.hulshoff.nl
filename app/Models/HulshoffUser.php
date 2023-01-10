@@ -13,6 +13,10 @@ class HulshoffUser extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, TwoFactorAuthenticatable, Notifiable;
 
+    public function customer() {
+        return $this->hasOne(Customer::class, 'klantCode', 'klantCode');
+    }
+
     public function canDisplay() {
         if(!$this->is_admin && !$this->klantCode) {
             return false;

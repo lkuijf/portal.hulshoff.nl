@@ -86,6 +86,8 @@ class OrderController extends Controller
         if(auth()->user()->can_reserve) {
             $orderMsg = '<p>Your reservation has been placed</p>';
             $redirect = 'reservations';
+        } else {
+            $order->generateXml();
         }
         Mail::to(auth()->user()->email)->send(new OrderPlaced(auth()->user()->can_reserve));
         $request->session()->flash('message', $orderMsg);
@@ -99,6 +101,7 @@ class OrderController extends Controller
         if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         if($request->type == 'confirmReservation') {
             $order->is_reservation = 0;
+            $order->generateXml();
         }
         if($request->type == 'updateDeliveryDate') {
             $order->afleverDatum = date("Ymd", strtotime($request->deliveryDate));
