@@ -55,7 +55,7 @@ class Order extends Model
             }
         }
 
-        $filename = 'order-outbound-' . date("Ymd-His") . '.xml';
+        $filename = 'order-' . $this->id . '-' . date("Ymd-His") . '.xml';
         $orderXml->asXML(Storage::disk('local_xml_order_out')->path($filename));
 
         return true;

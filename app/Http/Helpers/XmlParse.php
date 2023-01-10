@@ -145,6 +145,9 @@ echo "\r" . $x++ . '/' . $totalFiles;
     public static function upsertProducts($products) {
         $res = new \stdClass();
         foreach($products as $prod) {
+            if($prod->{'art-artikelgroep-code'} == '') $prod->{'art-artikelgroep-code'} = '- Artikelgroep code ONBEKEND -';
+            if($prod->{'art-merk'} == '') $prod->{'art-merk'} = '- Merk ONBEKEND -';
+            if($prod->{'art-type'} == '') $prod->{'art-type'} = '- Type ONBEKEND -';
             $productgroup = Productgroup::firstOrCreate([
                 'group' => $prod->{'art-artikelgroep-code'}
             ]);
