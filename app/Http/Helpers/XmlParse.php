@@ -64,7 +64,8 @@ echo "\r" . $x++ . '/' . $totalFiles;
                         if(isset($data->xmldata->orders->order)) {
                             if(!is_array($data->xmldata->orders->order)) $data->xmldata->orders->order = array($data->xmldata->orders->order);
                             if(count($data->xmldata->orders->order)) {
-                                $result = self::insertWmsOrders($data->xmldata->orders->order);
+// dd($data->xmldata->{'bericht-id'});
+                                $result = self::insertWmsOrders((int)$data->xmldata->{'bericht-id'}, $data->xmldata->orders->order);
                                 $totalItemsProcessed = count($data->xmldata->orders->order);
                             }
                         }
@@ -182,7 +183,7 @@ echo "\r" . $x++ . '/' . $totalFiles;
         return $res;
     }
 
-    public static function insertWmsOrders($orders) {
+    public static function insertWmsOrders($berichtId, $orders) {
         $res = new \stdClass();
         foreach($orders as $ord) {
 
@@ -193,15 +194,17 @@ echo "\r" . $x++ . '/' . $totalFiles;
             $customer = Customer::firstOrCreate([
                 'klantCode' => $ord->{'ord-klant-code'}
             ]);
-            $wmsOrder = WmsOrder::firstOrCreate(
-                ['orderCodeKlant' => $ord->{'ord-order-code-klant'}, 'orderCodeAflever' => $ord->{'ord-order-code-aflever'}],
-                [
-                    'klantCode' => $ord->{'ord-klant-code'},
-                    'orderNr' => $ordernumber,
-                    'ataAleverenDatum' => $ord->{'ord-ata-afleveren-datum'},
-                    'ataAleverenTijd' => $ord->{'ord-ata-afleveren-tijd'}
-                ]
-            );
+
+            $wmsOrder = new WmsOrder;
+            $wmsOrder->bericht_id = $berichtId;
+            $wmsOrder->orderCodeKlant = $ord->{'ord-order-code-klant'};
+            $wmsOrder->orderCodeAflever = $ord->{'ord-order-code-aflever'};
+            $wmsOrder->klantCode = $ord->{'ord-klant-code'};
+            $wmsOrder->orderNr = $ordernumber;
+            $wmsOrder->ataAleverenDatum = $ord->{'ord-ata-afleveren-datum'};
+            $wmsOrder->ataAleverenTijd = $ord->{'ord-ata-afleveren-tijd'};
+            $wmsOrder->save();
+
             if(isset($ord->details->detail)) {
                 if(!is_array($ord->details->detail)) $ord->details->detail = array($ord->details->detail);
                 if(count($ord->details->detail)) {
@@ -212,6 +215,17 @@ echo "\r" . $x++ . '/' . $totalFiles;
                                 'stuksUitgeleverd' => $det->{'odt-stuks-uitgeleverd'},
                             ]
                         );
+
+                        $product = Product::where('klantCode', $ord->{'ord-klant-code'})->where('artikelCode', $det->{'odt-artikel-code'})->first();
+                        $stuksUitgeleverd = (int)$det->{'odt-stuks-uitgeleverd'};
+
+                        $newBesteldAmount = $product->aantal_besteld_onverwerkt - $stuksUitgeleverd;
+                        $newVoorraad = $product->voorraad - $stuksUitgeleverd;
+                        if($newBesteldAmount < 0) $newBesteldAmount = 0;
+                        if($newVoorraad < 0) $newVoorraad = 0;
+                        $product->aantal_besteld_onverwerkt = $newBesteldAmount;
+                        $product->voorraad = $newVoorraad;
+                        $product->save();
                     }
                 }
             }

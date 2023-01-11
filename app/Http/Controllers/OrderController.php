@@ -88,6 +88,11 @@ class OrderController extends Controller
             $redirect = 'reservations';
         } else {
             $order->generateXml();
+            foreach($basket as $id => $count) {
+                $product = Product::find($id);
+                $product->aantal_besteld_onverwerkt += $count;
+                $product->save();
+            }
         }
         Mail::to(auth()->user()->email)->send(new OrderPlaced(auth()->user()->can_reserve));
         $request->session()->flash('message', $orderMsg);
@@ -102,6 +107,9 @@ class OrderController extends Controller
         if($request->type == 'confirmReservation') {
             $order->is_reservation = 0;
             $order->generateXml();
+
+            $this->updateProductsOrderedValue($order->orderArticles);
+
         }
         if($request->type == 'updateDeliveryDate') {
             $order->afleverDatum = date("Ymd", strtotime($request->deliveryDate));
@@ -114,6 +122,16 @@ class OrderController extends Controller
         if($request->type == 'updateDeliveryDate') $request->session()->flash('message', '<p>Delivery date has been changed</p>');
         if($request->type == 'confirmReservation') return redirect()->route('orders');
         if($request->type == 'updateDeliveryDate') return redirect()->back();
+    }
+
+    public function updateProductsOrderedValue($orderArticles) {
+        if(count($orderArticles)) {
+            foreach($orderArticles as $ordArt) {
+                $product = Product::find($ordArt->product_id);
+                $product->aantal_besteld_onverwerkt += $ordArt->amount;
+                $product->save();
+            }
+        }
     }
 
     public function deleteOrder(Request $request) {

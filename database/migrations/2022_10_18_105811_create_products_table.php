@@ -26,7 +26,8 @@ return new class extends Migration
             $table->unsignedBigInteger('producttype_id');
             $table->foreign('producttype_id')->references('id')->on('producttypes')->onDelete('cascade');
             $table->integer('minimaleVoorraad');
-            $table->integer('voorraad')->nullable();
+            $table->integer('voorraad')->default(0);
+            $table->integer('aantal_besteld_onverwerkt')->default(0);
             $table->unsignedBigInteger('productbrand_id');
             $table->foreign('productbrand_id')->references('id')->on('productbrands')->onDelete('cascade');
             $table->string('bijzonderheden', 200);

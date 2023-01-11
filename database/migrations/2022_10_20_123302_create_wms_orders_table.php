@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('wms_orders', function (Blueprint $table) {
             $table->id();
+            $table->integer('bericht_id')->unique();
             $table->string('klantCode', 30);
             $table->foreign('klantCode')->references('klantCode')->on('customers')->onDelete('cascade');
             $table->string('orderCodeKlant', 30);
@@ -23,7 +24,6 @@ return new class extends Migration
             $table->integer('ataAleverenDatum');
             $table->integer('ataAleverenTijd');
             $table->timestamps();
-            $table->unique(['orderCodeKlant', 'orderCodeAflever']);
         });
     }
 
