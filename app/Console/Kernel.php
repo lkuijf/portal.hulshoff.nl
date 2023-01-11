@@ -9,6 +9,7 @@ use App\Jobs\ParseVoorraadXml;
 use App\Jobs\ParseArtikelXml;
 use App\Jobs\ParseKlantXml;
 use App\Jobs\ParseOrderXml;
+use App\Jobs\SendOrder;
 // use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Stringable;
 
@@ -39,6 +40,8 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ParseKlantXml)->everyMinute();
         $schedule->job(new ParseOrderXml)->everyMinute();
         $schedule->job(new ParseVoorraadXml)->hourly();
+
+        $schedule->job(new SendOrder)->everyMinute(); // webportal -> WMS
     }
 
     /**

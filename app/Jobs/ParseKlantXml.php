@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Http\Helpers\XmlParse;
 use App\Models\Job;
+use Illuminate\Support\Facades\Mail;
 
 class ParseKlantXml implements ShouldQueue
 {
