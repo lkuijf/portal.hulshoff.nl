@@ -39,7 +39,7 @@ class ArchiveXml implements ShouldQueue
 
             $startedAt = date("Y-m-d H:i:s");
             $totalZippedFiles = 0;
-            $types = ['klant','artikel','order','vrdstand'];
+            $types = ['klant','artikel','order','vrdstand', 'order_out'];
             $filesToArchive = array_fill_keys($types, []);
 
             foreach($types as $type) {
