@@ -1,0 +1,20 @@
+.wizzardWrap {
+    // outline: 1px solid red;
+    .wizzard {
+        // outline: 1px solid blue;
+        background-color: #EEE;
+        padding: 15px;
+        display: flex;
+        @media (max-width: $screenBreakpoint) {
+            flex-wrap: wrap;
+        }
+        gap: 20px;
+        .wizSelectWrap {
+            // outline: 1px solid green;
+            width: 100%;
+            select {
+                width: 100%;
+            }
+        }
+    }
+}

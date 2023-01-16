@@ -13,7 +13,7 @@
             <th>E-mail adres</th>
             <th>Klant</th>
             <th>Extra E-mail adressen</th>
-            <th>Privileges</th>
+            {{-- <th>Interface</th> --}}
             <th>Can reserve?</th>
             <th>&nbsp;</th>
         </tr>
@@ -25,7 +25,7 @@
             <td>{{ $user->email }}</td>
             <td>{{ $user->klantCode }}</td>
             <td>@if($user->extra_email !== null){{ implode(', ', array_column(json_decode($user->extra_email,true),'email')) }}@endif</td>
-            <td>@if($user->privileges !== null){{ implode(', ', json_decode($user->privileges,true)) }}@endif</td>
+            {{-- <td>@if($user->privileges !== null){{ implode(', ', json_decode($user->privileges,true)) }}@endif</td> --}}
             {{-- @if($user->privileges !== null)@dd($user->privileges)@endif --}}
             {{-- <td>@if($user->privileges !== null){{ implode(', ', json_decode('[aasasd,66]',true)) }}@endif</td> --}}
             <td>{{ $user->can_reserve?'Ja':'Nee' }}</td>

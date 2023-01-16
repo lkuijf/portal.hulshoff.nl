@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Productbrand;
 use App\Models\Productgroup;
 use App\Models\Producttype;
+use App\Models\Productcolor;
 use App\Models\Customer;
 use App\Models\WmsOrder;
 use App\Models\WmsOrderArticle;
@@ -149,6 +150,7 @@ echo "\r" . $x++ . '/' . $totalFiles;
             if($prod->{'art-artikelgroep-code'} == '') $prod->{'art-artikelgroep-code'} = '- Artikelgroep code ONBEKEND -';
             if($prod->{'art-merk'} == '') $prod->{'art-merk'} = '- Merk ONBEKEND -';
             if($prod->{'art-type'} == '') $prod->{'art-type'} = '- Type ONBEKEND -';
+            if($prod->{'art-kleur'} == '') $prod->{'art-kleur'} = '- Kleur ONBEKEND -';
             $productgroup = Productgroup::firstOrCreate([
                 'group' => $prod->{'art-artikelgroep-code'}
             ]);
@@ -157,6 +159,9 @@ echo "\r" . $x++ . '/' . $totalFiles;
             ]);
             $producttype = Producttype::firstOrCreate([
                 'type' => $prod->{'art-type'}
+            ]);
+            $productcolor = Productcolor::firstOrCreate([
+                'color' => $prod->{'art-kleur'}
             ]);
             $customer = Customer::firstOrCreate([
                 'klantCode' => $prod->{'art-klant-code'}
@@ -169,13 +174,13 @@ echo "\r" . $x++ . '/' . $totalFiles;
                     'prijs' => $prod->{'art-prijs'},
                     'minimaleVoorraad' => $prod->{'art-minimale-voorraad'},
                     'bijzonderheden' => $prod->{'art-bijzonderheden'},
-                    'kleur' => $prod->{'art-kleur'},
                     'lengte' => $prod->{'art-lengte'},
                     'breedte' => $prod->{'art-breedte'},
                     'hoogte' => $prod->{'art-hoogte'},
                     'productgroup_id' => $productgroup->id,
                     'productbrand_id' => $productbrand->id,
-                    'producttype_id' => $producttype->id
+                    'producttype_id' => $producttype->id,
+                    'productcolor_id' => $productcolor->id
                 ]
             );
         }

@@ -497,6 +497,24 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   margin-bottom: 10px;
 }
 
+.wizzardWrap .wizzard {
+  background-color: #EEE;
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .wizzardWrap .wizzard {
+    flex-wrap: wrap;
+  }
+}
+.wizzardWrap .wizzard .wizSelectWrap {
+  width: 100%;
+}
+.wizzardWrap .wizzard .wizSelectWrap select {
+  width: 100%;
+}
+
 html, body {
   margin: 0;
   padding: 0;

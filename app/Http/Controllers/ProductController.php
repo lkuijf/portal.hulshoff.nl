@@ -8,28 +8,41 @@ use App\Models\Product;
 use App\Models\Productbrand;
 use App\Models\Productgroup;
 use App\Models\Producttype;
+use App\Models\Productcolor;
 
 class ProductController extends Controller
 {
     public function showProducts() {
         if(!auth()->user()->canDisplay()) return view('no-data');
+
+        $filterToShow = 'side';
+        $privileges = json_decode(auth()->user()->privileges);
+        if($privileges) {
+            if(in_array('filter_on_top', $privileges)) $filterToShow = 'top';
+            if(in_array('filter_at_side', $privileges)) $filterToShow = 'side';
+        }
         
         $customerBrands = $this->getSpecs('brand', auth()->user()->klantCode);
         $customerGroups = $this->getSpecs('group', auth()->user()->klantCode);
         $customerTypes = $this->getSpecs('type', auth()->user()->klantCode);
+        $customerColors = $this->getSpecs('color', auth()->user()->klantCode);
 
         $aBrands = [];
         $aGroups = [];
         $aTypes = [];
-        foreach($customerBrands as $brand) $aBrands[] = $brand->brand;
-        foreach($customerGroups as $group) $aGroups[] = $group->group;
-        foreach($customerTypes as $type) $aTypes[] = $type->type;
+        $aColors = [];
+        foreach($customerBrands as $brand) $aBrands[$brand->id] = $brand->brand;
+        foreach($customerGroups as $group) $aGroups[$group->id] = $group->group;
+        foreach($customerTypes as $type) $aTypes[$type->id] = $type->type;
+        foreach($customerColors as $color) $aColors[$color->id] = $color->color;
         
         $data = [
+            'filterDisplay' => $filterToShow,
             'filters' => [
                 'brand' => ['name' => 'Merk', 'items' => $aBrands],
                 'group' => ['name' => 'Groep', 'items' => $aGroups],
                 'type' => ['name' => 'Type', 'items' => $aTypes],
+                'color' => ['name' => 'Color', 'items' => $aColors],
             ],
         ];
         return view('productOverview')->with('data', $data);
@@ -39,19 +52,23 @@ class ProductController extends Controller
         $resQry = Product::select();
         if(auth()->user()->klantCode) $resQry->where('klantCode', auth()->user()->klantCode);
 // dd($filters);
-        if($filters->brand['value']) {
-            $brand = Productbrand::where('brand', $filters->brand['value'])->first();
-            $resQry->where('productbrand_id', $brand->id);
+        if(isset($filters->brand) && $filters->brand['value']) {
+            // $brand = Productbrand::where('brand', $filters->brand['value'])->first();
+            $resQry->where('productbrand_id', $filters->brand['value']);
         }
-        if($filters->group['value']) {
-            $group = Productgroup::where('group', $filters->group['value'])->first();
-            $resQry->where('productgroup_id', $group->id);
+        if(isset($filters->group) && $filters->group['value']) {
+            // $group = Productgroup::where('group', $filters->group['value'])->first();
+            $resQry->where('productgroup_id', $filters->group['value']);
         }
-        if($filters->type['value']) {
-            $type = Producttype::where('type', $filters->type['value'])->first();
-            $resQry->where('producttype_id', $type->id);
+        if(isset($filters->type) && $filters->type['value']) {
+            // $type = Producttype::where('type', $filters->type['value'])->first();
+            $resQry->where('producttype_id', $filters->type['value']);
         }
-        if($filters->search['value']) {
+        if(isset($filters->color) && $filters->color['value']) {
+            // $color = Productcolor::where('color', $filters->color['value'])->first();
+            $resQry->where('productcolor_id', $filters->color['value']);
+        }
+        if(isset($filters->search) && $filters->search['value']) {
             $resQry
                 ->where('omschrijving', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('bijzonderheden', 'like', '%' . $filters->search['value'] . '%');
@@ -81,8 +98,41 @@ class ProductController extends Controller
         $product = Product::findOr($id, function () {
             return abort(404);
         });
-        // dd($product);
         return view('productDetail')->with('product', $product);
+    }
+
+    public function getTypes(Request $req) {
+        $resQry = DB::table('producttypes')
+            ->join('products', 'products.producttype_id', '=', 'producttypes.id')
+            ->where('products.productgroup_id', $req->groupId)
+            ->select('producttypes.id', 'producttypes.type')
+            ->distinct();
+        $results = $resQry->get();
+        echo json_encode($results);
+    }
+
+    public function getBrands(Request $req) {
+        $resQry = DB::table('productbrands')
+            ->join('products', 'products.productbrand_id', '=', 'productbrands.id')
+            ->where('products.productgroup_id', $req->groupId)
+            ->where('products.producttype_id', $req->typeId)
+            ->select('productbrands.id', 'productbrands.brand')
+            ->distinct();
+        if($req->colorId) $resQry->where('products.productcolor_id', $req->colorId);
+        $results = $resQry->get();
+        echo json_encode($results);
+    }
+
+    public function getColors(Request $req) {
+        $resQry = DB::table('productcolors')
+            ->join('products', 'products.productcolor_id', '=', 'productcolors.id')
+            ->where('products.productgroup_id', $req->groupId)
+            ->where('products.producttype_id', $req->typeId)
+            ->select('productcolors.id', 'productcolors.color')
+            ->distinct();
+        if($req->brandId) $resQry->where('products.productbrand_id', $req->brandId);
+        $results = $resQry->get();
+        echo json_encode($results);
     }
 
 }

@@ -95,7 +95,7 @@
     </tr>
     @endif
     <tr>
-        <td>{{ __('Privileges') }}</td>
+        <td>{{ __('Interface') }}</td>
         <td>
             {{-- @foreach (['show_tiles', 'free_search', 'lotcode_search'] as $privilege) --}}
             @foreach (config('hulshoff.privileges') as $privilege)
@@ -132,6 +132,16 @@
 @endsection
 @section('before_closing_body_tag')
 <script>
+    const filterTop = document.querySelector('#filter_on_top');
+    const filterSide = document.querySelector('#filter_at_side');
+
+    filterTop.addEventListener('change', () => {
+        if(filterTop.checked) filterSide.checked = false;
+    });
+    filterSide.addEventListener('change', () => {
+        if(filterSide.checked) filterTop.checked = false;
+    });
+
     document.addEventListener('keydown', (e) => {
         if(e.keyCode === 13 || e.which === 13) {
             e.preventDefault();
