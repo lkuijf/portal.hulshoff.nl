@@ -1,6 +1,7 @@
 @php
     $usersBtnActive = false;
     $adminsBtnActive = false;
+    $tilesBtnActive = false;
     $productsBtnActive = false;
     $ordersBtnActive = false;
     $reservationsBtnActive = false;
@@ -10,6 +11,9 @@
             break;
         case 'admins': case 'new_admin': case 'admin_detail':
             $adminsBtnActive = true;
+            break;
+        case 'tiles':
+            $tilesBtnActive = true;
             break;
         case 'products': case 'product_detail':
             $productsBtnActive = true;
@@ -93,6 +97,7 @@
                         @if (auth()->user()->is_admin)
                             <li><a href="{{ route('users') }}" @if($usersBtnActive)class="active"@endif>Users</a></li>
                             <li><a href="{{ route('admins') }}" @if($adminsBtnActive)class="active"@endif>Admins</a></li>
+                            <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>Tiles</a></li>
                         @endif
                         <li><a href="{{ route('products') }}" @if($productsBtnActive)class="active"@endif>Products</a></li>
                         <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>Orders</a></li>

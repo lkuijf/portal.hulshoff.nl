@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TilesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,10 @@ Route::get('/orders/{id}', [OrderController::class, 'showOrder'])->defaults('typ
 Route::get('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->name('reservations')->middleware('auth:h_users');
 Route::post('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->middleware('auth:h_users');
 Route::get('/reservations/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'reserved')->name('reservation_detail')->where('id', '[0-9]+')->middleware('auth:h_users');
+
+Route::get('/tiles', [TilesController::class, 'showTiles'])->name('tiles')->middleware('auth:h_users');
+Route::post('/tile', [TilesController::class, 'uploadTile'])->name('tile_upload')->middleware('auth:h_users');
+Route::delete('/tile', [TilesController::class, 'deleteTile'])->name('tile_delete')->middleware('auth:h_users');
 
 Route::post('/user', [UserController::class, 'addUser']);
 Route::put('/user', [UserController::class, 'updateUser']);

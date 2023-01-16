@@ -15,11 +15,13 @@ class ProductController extends Controller
     public function showProducts() {
         if(!auth()->user()->canDisplay()) return view('no-data');
 
+        $bShowTiles = false;
         $filterToShow = 'side';
         $privileges = json_decode(auth()->user()->privileges);
         if($privileges) {
             if(in_array('filter_on_top', $privileges)) $filterToShow = 'top';
             if(in_array('filter_at_side', $privileges)) $filterToShow = 'side';
+            if(in_array('show_tiles', $privileges)) $bShowTiles = true;
         }
         
         $customerBrands = $this->getSpecs('brand', auth()->user()->klantCode);
@@ -37,11 +39,12 @@ class ProductController extends Controller
         foreach($customerColors as $color) $aColors[$color->id] = $color->color;
         
         $data = [
+            'tilesDisplay' => $bShowTiles,
             'filterDisplay' => $filterToShow,
             'filters' => [
-                'brand' => ['name' => 'Merk', 'items' => $aBrands],
                 'group' => ['name' => 'Groep', 'items' => $aGroups],
                 'type' => ['name' => 'Type', 'items' => $aTypes],
+                'brand' => ['name' => 'Merk', 'items' => $aBrands],
                 'color' => ['name' => 'Color', 'items' => $aColors],
             ],
         ];

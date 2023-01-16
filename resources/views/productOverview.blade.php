@@ -59,6 +59,7 @@
                         wizBrandSelect.innerHTML = '';
                         wizColorSelect.innerHTML = '';
                         getTypes(wizSel.value);
+                        displayProducts();
                         break;
                     case 'Type':
                         content.innerHTML = '';
@@ -67,6 +68,7 @@
 
                         if(wizBrandRadio.checked) getBrands(wizGroupSelect.value, wizSel.value);
                         if(wizColorRadio.checked) getColors(wizGroupSelect.value, wizSel.value);
+                        displayProducts();
                         break;
                     case 'Merk':
                         getColors(wizGroupSelect.value, wizTypeSelect.value, wizSel.value);
