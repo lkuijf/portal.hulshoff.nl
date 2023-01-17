@@ -190,6 +190,7 @@ table {
 }
 .contentCell {
     grid-area: content;
+    position: relative;
     background-color: #FFF;
     // border-right: 3px solid #F0F2F4;
 

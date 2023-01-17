@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
-use App\Models\Productbrand;
-use App\Models\Productgroup;
-use App\Models\Producttype;
-use App\Models\Productcolor;
+// use App\Models\Productbrand;
+// use App\Models\Productgroup;
+// use App\Models\Producttype;
+// use App\Models\Productcolor;
 
 class ProductController extends Controller
 {
@@ -23,24 +23,28 @@ class ProductController extends Controller
             if(in_array('filter_at_side', $privileges)) $filterToShow = 'side';
             if(in_array('show_tiles', $privileges)) $bShowTiles = true;
         }
-        
+
         $customerBrands = $this->getSpecs('brand', auth()->user()->klantCode);
         $customerGroups = $this->getSpecs('group', auth()->user()->klantCode);
         $customerTypes = $this->getSpecs('type', auth()->user()->klantCode);
         $customerColors = $this->getSpecs('color', auth()->user()->klantCode);
+        $allTiles = DB::table('tiles')->get();
 
         $aBrands = [];
         $aGroups = [];
         $aTypes = [];
         $aColors = [];
+        $aTiles = [];
         foreach($customerBrands as $brand) $aBrands[$brand->id] = $brand->brand;
         foreach($customerGroups as $group) $aGroups[$group->id] = $group->group;
         foreach($customerTypes as $type) $aTypes[$type->id] = $type->type;
         foreach($customerColors as $color) $aColors[$color->id] = $color->color;
+        foreach($allTiles as $tile) $aTiles[$tile->group] = $tile->file;
         
         $data = [
             'tilesDisplay' => $bShowTiles,
             'filterDisplay' => $filterToShow,
+            'tiles' => $aTiles,
             'filters' => [
                 'group' => ['name' => 'Groep', 'items' => $aGroups],
                 'type' => ['name' => 'Type', 'items' => $aTypes],

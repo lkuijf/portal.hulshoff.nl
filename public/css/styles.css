@@ -10,6 +10,46 @@
   border: 2px solid #000;
 }
 
+.selectTileOverlay {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+}
+.selectTileOverlay .tileGrid {
+  display: grid;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 1200px) {
+  .selectTileOverlay .tileGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .selectTileOverlay .tileGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.selectTileOverlay .tileGrid div {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.selectTileOverlay .tileGrid div a {
+  align-self: flex-end;
+  font-weight: bold;
+}
+.selectTileOverlay .tileGrid div a img {
+  max-width: 250px;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 2px solid #000;
+}
+
 .productList .products {
   display: flex;
   flex-wrap: wrap;
@@ -669,6 +709,7 @@ table tr:nth-of-type(1) th {
 
 .contentCell {
   grid-area: content;
+  position: relative;
   background-color: #FFF;
 }
 .contentCell > div {

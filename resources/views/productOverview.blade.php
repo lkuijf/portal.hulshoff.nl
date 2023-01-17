@@ -2,6 +2,21 @@
 @extends('templates.portal')
 @section('content')
 
+@if ($data['tilesDisplay'])  
+<div class="selectTileOverlay">
+    <div class="tileGrid">
+        @foreach ($data['filters']['group']['items'] as $group)
+        <div>
+            <a href="" data-group="{{ $group }}">
+                @if (isset($data['tiles'][$group]))<img src="{{ asset('storage/tiles') }}/{{ $data['tiles'][$group] }}" alt="">@endif
+                <p>{{ $group }}</p>
+            </a>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
 @php
     $showWizzard = false;
     $showFilters = false;
@@ -13,22 +28,22 @@
 @endif
 
 <div class="productOverviewContent">
-        @if ($showFilters)
-        <div class="filterWrap">
-            <div class="filters">
-                <h4>Filteren</h4>
-                @foreach ($data['filters'] as $ref => $info)
-                    @include('snippets.filter_select', ['filter_name' => $info['name'], 'filter_reference' => $ref, 'filter_options' => $info['items'], 'filter_selected_option' => ''])
-                @endforeach
-                @include('snippets.filter_input')
-                <button class="filterProductsBtn">TOON RESULTATEN</button>
-                <h4>Actieve filters</h4>
-                <div class="activeFilters"></div>
-            </div>
+    @if ($showFilters)
+    <div class="filterWrap">
+        <div class="filters">
+            <h4>Filteren</h4>
+            @foreach ($data['filters'] as $ref => $info)
+                @include('snippets.filter_select', ['filter_name' => $info['name'], 'filter_reference' => $ref, 'filter_options' => $info['items'], 'filter_selected_option' => ''])
+            @endforeach
+            @include('snippets.filter_input')
+            <button class="filterProductsBtn">TOON RESULTATEN</button>
+            <h4>Actieve filters</h4>
+            <div class="activeFilters"></div>
         </div>
-        @endif
-        <div class="loadProducts"></div>
     </div>
+    @endif
+    <div class="loadProducts"></div>
+</div>
 @endsection
 @section('extra_head')
     <script src="{{ asset('js/axios.min.js') }}"></script>
@@ -47,7 +62,40 @@
     const wizBrandRadio = document.querySelector('#wiz_me_radio');
     const wizColorRadio = document.querySelector('#wiz_kl_radio');
 
+    const tilesWrapper = document.querySelector('.selectTileOverlay');
+
     displayProducts();
+
+    if(tilesWrapper) {
+        const tileLinks = tilesWrapper.querySelectorAll('.tileGrid a');
+        tileLinks.forEach(tLink => {
+            tLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(wizSelects.length) {
+                    for (var i = 0; i < wizGroupSelect.options.length; i++) {
+                        if (wizGroupSelect.options[i].text === tLink.dataset.group) {
+                            wizGroupSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    let event = new Event('change');
+                    wizGroupSelect.dispatchEvent(event);
+                }
+                if(filterBtn) {
+                    const groupFilterEl = document.querySelector('[data-filter-reference=group]');
+                    for (var i = 0; i < groupFilterEl.options.length; i++) {
+                        if (groupFilterEl.options[i].text === tLink.dataset.group) {
+                            groupFilterEl.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    let event = new Event('click');
+                    filterBtn.dispatchEvent(event);
+                }
+                tilesWrapper.style.display = 'none';
+            });
+        });
+    }
 
     if(wizSelects.length) {
         wizSelects.forEach(wizSel => {
