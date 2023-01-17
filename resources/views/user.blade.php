@@ -54,8 +54,11 @@
     <tr>
         <td>{{ __('E-mail address') }}</td>
         <td>
-            {{-- <input type="text" name="email" value="@if(old('email')){{ old('email') }}@else{{ $email }}@endif"> --}}
-            {{ $email }}
+            @if ($method == 'post')
+                <input type="text" name="email" value="@if(old('email')){{ old('email') }}@else{{ $email }}@endif">
+            @else
+                {{ $email }}
+            @endif
         </td>
     </tr>
     {{-- @if(!$id)
