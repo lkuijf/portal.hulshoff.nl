@@ -64,7 +64,7 @@ echo "\r" . $x++ . '/' . $totalFiles;
                     // ]);
 
                     $response = Http::withHeaders([
-                        'Content-Type' => 'application/xml'
+                        // 'Content-Type' => 'application/xml'
                     ])->post('https://edi.hulshoff.nl/api/accept/interface-web/BerichtOrders', [
                         'body' => $xmlString,
                     ]);
