@@ -36,12 +36,12 @@ class Kernel extends ConsoleKernel
         //       });
         // });
         // $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
-        $schedule->job(new ParseArtikelXml)->everyMinute(); // dailyAt('14:23') // hourly()
-        $schedule->job(new ParseKlantXml)->everyMinute();
-        $schedule->job(new ParseOrderXml)->everyMinute();
-        $schedule->job(new ParseVoorraadXml)->hourly();
+        $schedule->job(new ParseArtikelXml)->everyFiveMinutes(); // dailyAt('14:23') // hourly()
+        $schedule->job(new ParseKlantXml)->everyFiveMinutes();
+        $schedule->job(new ParseOrderXml)->everyFiveMinutes();
+        $schedule->job(new ParseVoorraadXml)->everyFiveMinutes();
 
-        $schedule->job(new SendOrder)->everyMinute(); // webportal -> WMS
+        $schedule->job(new SendOrder)->everyFiveMinutes(); // webportal -> WMS
     }
 
     /**

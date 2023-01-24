@@ -173,7 +173,10 @@
   padding: 10px;
 }
 
-div.productOverviewPagination ul {
+.productOverviewPagination {
+  padding: 20px 0;
+}
+.productOverviewPagination ul {
   display: flex;
   margin: 0;
   padding: 0;
@@ -181,10 +184,10 @@ div.productOverviewPagination ul {
   gap: 5px;
   justify-content: center;
 }
-div.productOverviewPagination ul li {
+.productOverviewPagination ul li {
   vertical-align: middle;
 }
-div.productOverviewPagination ul li a {
+.productOverviewPagination ul li a {
   text-decoration: none;
   color: #000;
   font-size: 14px;
@@ -192,18 +195,18 @@ div.productOverviewPagination ul li a {
   padding: 2px 12px;
   border: 2px solid #CCC;
 }
-div.productOverviewPagination ul li a:not(.inactive):hover, div.productOverviewPagination ul li a.active {
+.productOverviewPagination ul li a:not(.inactive):hover, .productOverviewPagination ul li a.active {
   background-color: #00BE31;
   border-color: #666;
 }
-div.productOverviewPagination ul li a.inactive {
+.productOverviewPagination ul li a.inactive {
   color: #999;
   cursor: default;
 }
-div.productOverviewPagination ul li form {
+.productOverviewPagination ul li form {
   display: inline;
 }
-div.productOverviewPagination ul li form input, div.productOverviewPagination ul li form button {
+.productOverviewPagination ul li form input, .productOverviewPagination ul li form button {
   font-size: 15px;
 }
 
