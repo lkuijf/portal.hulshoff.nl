@@ -461,6 +461,7 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 }
 .accButtons button:hover {
   color: #FFF;
+  background-color: transparent;
 }
 .accButtons button:before {
   font-family: hulshoff;
@@ -508,9 +509,6 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 }
 .loginContent form label {
   padding-right: 5px;
-}
-.loginContent form button {
-  cursor: pointer;
 }
 
 .accountHomeContent .twofaWrap {
@@ -603,6 +601,21 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 }
 .wizzardWrap .wizzard .wizSelectWrap select {
   width: 100%;
+}
+
+.resetPasswordContent {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.resetPasswordContent form {
+  display: inline-block;
+  text-align: right;
+}
+.resetPasswordContent form div {
+  padding-bottom: 5px;
+}
+.resetPasswordContent form label {
+  padding-right: 5px;
 }
 
 html, body {

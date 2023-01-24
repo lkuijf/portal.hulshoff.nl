@@ -51,6 +51,7 @@ class UserController extends Controller
         $token = Password::getRepository()->create($user);
         $user->sendPasswordResetNotification($token);
         // sendPasswordResetNotification
+        $request->session()->flash('message', '<p>Success. The user received a notification (e-mail) to reset their password.</p>');
         if($user->is_admin) return redirect()->route('admins');
         return redirect()->route('users');
     }
