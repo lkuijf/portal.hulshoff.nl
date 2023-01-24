@@ -12,22 +12,23 @@
             <input type="password" name="password" id="enterPassword">
         </div>
         <div>
-            <label for="enterPasswordConfirmation">Password</label>
+            <label for="enterPasswordConfirmation">Confirm password</label>
             <input type="password" name="password_confirmation" id="enterPasswordConfirmation">
         </div>
         <input type="hidden" name="token" value="{{ request()->route('token') }}">
         <button type="submit">Reset</button>
     </form>
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    @endif
-    {{-- @if (session('status'))
-        <ul>
-            <li>{{ session('status') }}</li>
-        </ul>
     @endif --}}
+    @if (session('status'))
+        {{-- <ul>
+            <li>{{ session('status') }}</li>
+        </ul> --}}
+        <script>showMessage('success','{!! session('status') !!}')</script>
+    @endif
 </div>

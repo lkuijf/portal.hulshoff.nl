@@ -22,16 +22,17 @@ admin@portal.hulshoff.nl<br />
     </form>
     <p><a href="/forgot-password">Wachtwoord vergeten?</a></p>
     <p><a href="/" class="backBtn">Terug</a></p>
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    @endif
+    @endif --}}
     @if (session('status'))
-        <ul>
+        {{-- <ul>
             <li>{{ session('status') }}</li>
-        </ul>
+        </ul> --}}
+        <script>showMessage('success','{!! session('status') !!}')</script>
     @endif
 {{-- </div> --}}

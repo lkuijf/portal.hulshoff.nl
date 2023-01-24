@@ -22,14 +22,16 @@
     @endif --}}
     <div class="twofaWrap">
     <h2>Two Factor Authentication</h2>
-    <p>Het wordt aangeraden om gebruik te maken van <em>Two Factor Authentication</em></p>
+    
     @if (auth()->user()->two_factor_confirmed_at)
+        <p><em>Two Factor Authentication</em> is geactiveerd.</p>
         <form action="{{ url('user/two-factor-authentication') }}" method="POST">
             @method('DELETE')
             @csrf
             <button type="submit">DISABLE Two Factor Authentication </button>
         </form>
     @else
+        <p>Het wordt aangeraden om gebruik te maken van <em>Two Factor Authentication</em></p>
         <form action="{{ url('user/two-factor-authentication') }}" method="POST">
             @csrf
             <button type="submit">Enable Two Factor Authentication </button>
@@ -45,10 +47,12 @@
         </form>
     @endif
     @if (session('status') == 'two-factor-authentication-disabled')
-        <p>2Fa is DISABLED</p>
+        {{-- <p><em>Two Factor Authentication</em> has been disabled.</p> --}}
+        <script>showMessage('success','<p><em>Two Factor Authentication</em> has been disabled.</p>')</script>
     @endif
     @if (session('status') == 'two-factor-authentication-confirmed')
-        <p>Two factor authentication confirmed and enabled successfully.</p>
+        {{-- <p><em>Two factor authentication</em> confirmed and enabled successfully.</p> --}}
+        <script>showMessage('success','<p><em>Two factor authentication</em> confirmed and enabled successfully.</p>')</script>
         <p>Below you find the recovery codes in case you lose access to your mobile device</p>
         <ul>
             @foreach ((array)auth()->user()->recoveryCodes() as $code)
