@@ -18,7 +18,7 @@ class HulshoffUser extends Authenticatable implements MustVerifyEmail
     }
 
     public function canDisplay() {
-        if(!$this->is_admin && !$this->klantCode) {
+        if((!$this->is_admin && !$this->klantCode) || !$this->email_verified_at) {
             return false;
         }
         return true;

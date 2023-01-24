@@ -33,6 +33,6 @@ admin@portal.hulshoff.nl<br />
         {{-- <ul>
             <li>{{ session('status') }}</li>
         </ul> --}}
-        <script>showMessage('success','{!! session('status') !!}')</script>
+        <script>showMessage('success','<p>{!! session('status') !!}</p>')</script>
     @endif
 {{-- </div> --}}
