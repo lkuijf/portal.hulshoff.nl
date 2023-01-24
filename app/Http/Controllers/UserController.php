@@ -38,6 +38,11 @@ class UserController extends Controller
 
     public function addUser(Request $request) {
         $validated = $this->validateUserData($request);
+
+        if(HulshoffUser::where('email', $request->email)->first()) {
+            return redirect()->back()->withErrors(['E-mail address already in use'])->withInput();
+        }
+
         $customer = Customer::find($request->klantCode);
         $user = new HulshoffUser;
         $user = $this->populateUserModel($user, $customer, $request);
@@ -81,7 +86,7 @@ class UserController extends Controller
             $curEmails[] = $res;
             $user->extra_email = json_encode($curEmails);
         } else {
-            $validated = $this->validateUserData($request);
+            $validated = $this->validateUserData($request, false);
             $user = $this->populateUserModel($user, $customer, $request);
         }
         $user->save();
@@ -94,24 +99,22 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function validateUserData($req) {
+    public function validateUserData($req, $bValidateEmail = true) {
         $method = strtolower($req->method());
         $toValidate = array(
-            'email' => 'required|email',
+            // 'email' => 'required|email',
             'name' => 'required',
-            // 'password' => 'required',
-            // 'klantCode' => 'required',
         );
         $validationMessages = array(
-            'email.required'=> 'Geef a.u.b. een e-mail adres op.',
-            'email.email'=> 'Het e-mail adres is niet juist geformuleerd.',
-            'name.required'=> 'Geef a.u.b. een naam op.',
-            // 'klantCode.required'=> 'Geef a.u.b. aan bij welke klant de gebruiker hoort.',
+            // 'email.required' => 'Geef a.u.b. een e-mail adres op.',
+            // 'email.email' => 'Het e-mail adres is niet juist geformuleerd.',
+            'name.required' => 'Geef a.u.b. een naam op.',
         );
-        // if($method == 'post') {
-        //     $toValidate['password'] = 'required';
-        //     $validationMessages['password.required'] = 'Geef a.u.b. een wachtwoord op.';
-        // }
+        if($bValidateEmail) {
+            $toValidate['email'] = 'required|email';
+            $validationMessages['email.required'] = 'Geef a.u.b. een e-mail adres op.';
+            $validationMessages['email.email'] = 'Het e-mail adres is niet juist geformuleerd.';
+        }
         $validated = $req->validate($toValidate,$validationMessages);
         return $validated;
     }
@@ -130,7 +133,7 @@ class UserController extends Controller
 
     public function populateUserModel($usr, $cust, $req) {
         $usr->name = $req->name;
-        $usr->email = $req->email;
+        if(isset($req->email)) $usr->email = $req->email;
         if(isset($req->password)) $usr->password = Hash::make($req->password);
         $usr->klantCode = $req->klantCode;
         if(isset($cust->naam)) $usr->last_known_klantCode_name = $req->klantCode . ',' . $cust->naam;

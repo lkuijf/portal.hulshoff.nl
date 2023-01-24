@@ -3,23 +3,15 @@
 }
 nav.mainNav {
     @media (max-width: $screenBreakpoint) {
-        // position: fixed;
-        // z-index: 2;
-        // width: 60px;
-        // height: 55px;
-        // right: 0;
-        // background-color: #FFF;
-        // border-left: 1px solid #CCC;
-        // border-bottom: 1px solid #CCC;
-        // border-top: 1px solid #CCC;
         @include burgerMenuAdapter;
 
         .burger-label {
             position: inherit;
             margin: 8px auto 0 auto;
-            // margin-left: auto;
-            // margin-right: auto;
-            // margin-top: 5px;
+        }
+
+        #burger-check ~ ul {
+            z-index: 10;
         }
 
     }

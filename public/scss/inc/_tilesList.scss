@@ -5,6 +5,11 @@
         object-fit: cover;
         border: 2px solid #000;
     }
+    .imageIsSet {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
 }
 .selectTileOverlay {
     // outline: 1px solid red;
@@ -17,6 +22,7 @@
     .tileGrid {
         display: grid;
         gap: 20px;
+        align-items: start;
         max-width: $screenBreakpointExtra;
         margin: 0 auto;
         grid-template-columns: repeat(4, 1fr);
@@ -38,6 +44,7 @@
                     width: 100%;
                     aspect-ratio: 16/9;
                     border: 2px solid #000;
+                    object-fit: contain;
                 }
             }
         }

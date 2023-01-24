@@ -26,21 +26,24 @@
                     <td>{{ $group->group }}</td>
                     <td>
                         @if (isset($data['all_tiles_by_group'][$group->group]))
-                            <p><img src="{{ asset('storage/tiles') }}/{{ $data['all_tiles_by_group'][$group->group] }}" alt="tile" class="tileImg"></p>
-                            <form action="/tile" method="post">
-                                @method('delete')
-                                @csrf
-                                <input type="hidden" name="group_name" value="{{ $group->group }}">
-                                <button type="submit" onclick="return confirm('You are about to delete the tile for group {{ $group->group }}\n\nAre you sure?')">Delete</button>
-                            </form>
+                            <div class="imageIsSet">
+                                <p><img src="{{ asset('storage/tiles') }}/{{ $data['all_tiles_by_group'][$group->group] }}" alt="tile" class="tileImg"></p>
+                                <form action="/tile" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <input type="hidden" name="group_name" value="{{ $group->group }}">
+                                    <button type="submit" onclick="return confirm('You are about to delete the tile for group {{ $group->group }}\n\nAre you sure?')" class="deleteBtn"></button>
+                                </form>
+                            </div>
                         @else
                             <p>Geen afbeelding aanwezig</p>
                             <form action="/tile" method="post" enctype="multipart/form-data">
                                 {{-- @method('post') --}}
                                 @csrf
                                 <input type="hidden" name="group_name" value="{{ $group->group }}">
-                                <input type="file" name="tileFile">
-                                <button type="submit">Upload</button>
+                                <label for="fileUploadRef" class="fileUpload">Select file</label>
+                                <input id="fileUploadRef" type="file" name="tileFile">
+                                <button type="submit" class="uploadBtn">Upload</button>
                             </form>       
                         @endif
                     </td>

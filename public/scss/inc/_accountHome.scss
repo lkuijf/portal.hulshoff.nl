@@ -1,2 +1,10 @@
 .accountHomeContent {
+    .twofaWrap {
+        border: 1px solid #CCC;
+        padding: 20px;
+        display: inline-block;
+        :first-child {
+            margin-top: 0;
+        }
+    }
 }

@@ -2,10 +2,13 @@
 @extends('templates.portal')
 @section('content')
 <div class="userListContent">
-{{-- @if (auth()->user()->is_admin) --}}
 <h1>{{ __('Overview') }} @if($data['type'] == 0){{ __('users') }}@elseif($data['type'] == 1){{ __('administrators') }}@endif</h1>
-{{-- <p><a href="{{ route('new_user') }}">[new user]</a></p> --}}
-<p><a href="@if($data['type'] == 0){{ route('new_user') }}@elseif($data['type'] == 1){{ route('new_admin') }}@endif">[create new]</a></p>
+@if($data['type'] == 0)
+    <p>Overzicht van alle gebruikers. Gebruikers kunnen gekoppeld worden aan een klant.</p>
+@elseif($data['type'] == 1)
+    <p>Overzicht van alle administrators. Een administrator kan gebruikers aanmaken en muteren.</p>
+@endif
+<p><a href="@if($data['type'] == 0){{ route('new_user') }}@elseif($data['type'] == 1){{ route('new_admin') }}@endif" class="addBtn">create new</a></p>
 <table>
     <thead>
         <tr>
@@ -30,14 +33,14 @@
             {{-- <td>@if($user->privileges !== null){{ implode(', ', json_decode('[aasasd,66]',true)) }}@endif</td> --}}
             <td>{{ $user->can_reserve?'Ja':'Nee' }}</td>
             <td>
-                <a href="@if($data['type'] == 0){{ route('users') }}@elseif($data['type'] == 1){{ route('admins') }}@endif/{{ $user->id }}">[edit]</a>
+                <a href="@if($data['type'] == 0){{ route('users') }}@elseif($data['type'] == 1){{ route('admins') }}@endif/{{ $user->id }}" class="editBtn">Edit</a>
                 {{-- <a href="">[remove]</a> --}}
                 <form action="/user" method="post">
                     @method('delete')
                     @csrf
                     <input type="hidden" name="id" value="{{ $user->id }}">
                     @if ($user->id != 1)
-                        <button type="submit" onclick="return confirm('You are about to delete user {{ $user->name }} ({{ $user->email }})\n\nAre you sure?')">Delete</button>
+                        <button type="submit" onclick="return confirm('You are about to delete user {{ $user->name }} ({{ $user->email }})\n\nAre you sure?')" class="deleteBtn"></button>
                     @endif
                 </form>
             </td>

@@ -17,3 +17,21 @@
         display: inline-block;
     }
 }
+.extraEmailSection {
+    > div {
+        padding: 5px 0;
+    }
+    input {
+        cursor: pointer;
+        background-color: #FFF;
+        border: 1px solid #000;
+        font-weight: bold;
+        font-size: 14px;
+        &.removeEmail {
+            color: red;
+        }
+        &.addEmail {
+            color: $colorGreen;
+        }
+    }
+}

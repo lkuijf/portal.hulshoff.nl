@@ -15,15 +15,15 @@
 }
 .accButtons {
     display: flex;
-    gap: 30px;
+    gap: 15px;
     justify-content: center;
     padding-top: 10px;
     a {
-        text-decoration: none;
         color: #CCC;
         font-size: 0;
         &:hover {
             color: #FFF;
+            text-decoration: none;
         }
         &:before {
             font-family: hulshoff;
@@ -39,7 +39,7 @@
         outline: none;
         border: 0;
         color: #CCC;
-        padding: 0;
+        padding: 0 10px;
         &:hover {
             color: #FFF;
         }

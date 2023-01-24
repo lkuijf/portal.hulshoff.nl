@@ -21,15 +21,19 @@ use App\Http\Controllers\TilesController;
 |
 */
 
+// Route::get('/', function () {
+//     return view('templates.development')->with(['data' => ['include_view' => 'development.index']]);
+// })->middleware('auth.basic');
+// Route::get('/front', function () {
+//     return view('portal-welcome');
+// })->name('front')->middleware('auth.basic');
+// Route::get('/parsexml', function () {
+//     return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
+// })->name('parseXml_Index')->middleware('auth.basic');
+
 Route::get('/', function () {
-    return view('templates.development')->with(['data' => ['include_view' => 'development.index']]);
-})->middleware('auth.basic');
-Route::get('/front', function () {
-    return view('portal-welcome');
-})->name('front')->middleware('auth.basic');
-Route::get('/parsexml', function () {
-    return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
-})->name('parseXml_Index')->middleware('auth.basic');
+    return redirect('login');
+});
 
 // Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 // Route::post('/login/attempt', [AuthController::class, 'attemptLogin'])->name('attempt_login');

@@ -4,14 +4,14 @@
 <div class="orderListContent">
     <h1>All {{ $data['type'] }}</h1>
     {{-- <div class="allOrders"> --}}
-        <form action="{{ url()->current() }}" method="post">
+        <form action="{{ url()->current() }}" method="post" class="searchForm">
             @csrf
             <input type="text" name="search" placeholder="Search order" value="{{ $data['search_value'] }}">
             @if (auth()->user()->is_admin)
             <br /><input type="checkbox" id="only_my_orders" name="showOnlyMyOrders" value="1" @if($data['show_only_my_orders']){{ 'checked' }}@endif>
             <label for="only_my_orders">Only my orders</label><br />
             @endif
-            <button type="submit">Find</button>
+            <button type="submit" class="searchBtn">Find</button>
         </form>
         @if(count($data['orders']))
         <table>
@@ -36,14 +36,14 @@
                     <td>{{ $order->hulshoffUser->name }} ({{ $order->hulshoffUser->email }})</td>
                     <td>{{ date("d-m-Y H:m:s", strtotime($order->created_at)) }}</td>
                     {{-- <td>{{ date("H:i", strtotime($order->afleverTijd)) }}</td> --}}
-                    <td><a href="{{ url()->current() }}/{{ $order->id }}">[view]</a></td>
+                    <td><a href="{{ url()->current() }}/{{ $order->id }}" class="editBtn">view</a></td>
                     <td>
                         @if ($order->is_reservation)
                         <form action="{{ url('order') }}" method="post">
                             @method('delete')
                             @csrf
                             <input type="hidden" name="id" value="{{ $order->id }}">
-                            <button type="submit" onclick="return confirm('You are about to delete this reservation (id: {{ $order->id }}).\n\nAre you sure?')">Delete</button>
+                            <button type="submit" onclick="return confirm('You are about to delete this reservation (id: {{ $order->id }}).\n\nAre you sure?')" class="deleteBtn"></button>
                         </form>
                         @endif
                     </td>

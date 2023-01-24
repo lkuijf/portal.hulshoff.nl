@@ -68,7 +68,7 @@
                 <a href="#" class="accBtnProfile">Profile</a>
                 <a href="#" class="accBtnLogout">Logout</a>
                 @else
-                <a href="/" class="accBtnHome">Home</a>
+                <a href="{{ route('products') }}" class="accBtnHome">Home</a>
                 <a href="{{ route('account') }}" class="accBtnProfile">Profile</a>
                 @include('auth_hulshoff.logout', ['buttonInside' => ''])
                 @endif
@@ -103,6 +103,10 @@
                         <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>Orders</a></li>
                         @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($reservationsBtnActive)class="active"@endif>Reservations</a></li>@endif
                     </ul>
+                    @else
+                    <ul>
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                    </ul>
                     @endif
                 @endif
             </nav>
@@ -112,7 +116,8 @@
             @yield('content')
         </div>
         <footer class="footerCell">
-            Footer
+            <p><a href="tel:09003456666">0900 345 6666</a></p>
+            <p>&copy; {{ date('Y') }} - Hulshoff</p>
         </footer>
     </div>
 @if ($errors->any())

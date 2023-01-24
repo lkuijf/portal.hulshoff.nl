@@ -6,6 +6,7 @@ $containerWidth: 1600px;
 $colorYellow: #FFE600; // original color used in logo
 $colorGreen: #00BE31; // green color used in homepage
 $colorGreenLight: #bfffcf;
+$colorGreenDark: #008e24;
 $colorBasket: #9EFF00; // 
 // $colorGoldLight: #e1d2b8;
 
@@ -70,14 +71,78 @@ h2 { font-size: 1.5em; }
 h3,h4,h5 { font-size: 1.2em; }
 a {
     color: $colorGreen;
+    font-weight: bold;
     text-decoration: none;
+    padding: 0 10px;
     &:hover {
         text-decoration: underline;
+    }
+    &:before {
+        font-family: 'hulshoff';
+    }
+    &.editBtn {
+        &:before {
+            content: '\e900\00a0';
+        }
+    }
+    &.addBtn {
+        &:before {
+            content: '\e901\00a0';
+        }
+    }
+    &.backBtn {
+        &:before {
+            content: '\e904\00a0';
+        }
+    }
+}
+form {
+    button {
+        cursor: pointer;
+        border: 0;
+        border-radius: 5px;
+        padding: 7px 15px;
+        background-color: $colorGreen;
+        color: #FFF;
+        &:hover {
+            background-color: $colorGreenDark;
+        }
+        &:before {
+            font-family: 'hulshoff';
+        }
+        &.deleteBtn {
+            padding: 3px 8px;
+            background-color: red;
+            color: #FFF;
+            &:hover {
+                background-color: #bf0000;
+            }
+            &:before {
+                content: '\e902';
+            }
+        }
+        &.saveBtn {
+            &:before {
+                content: '\e903\00a0';
+            }
+        }
+        &.uploadBtn {
+            &:before {
+                content: '\e905\00a0';
+            }
+        }
+        &.searchBtn {
+            &:before {
+                content: '\f50d\00a0';
+            }
+        }
     }
 }
 table {
     border: 1px solid #000;
     border-collapse: collapse;
+    @media (max-width: $screenBreakpointExtra) {font-size: 0.8em;}
+    @media (max-width: $screenBreakpointMobile) {font-size: 0.7em;}
     tr {
         th,td {
             padding: 15px;
@@ -116,7 +181,7 @@ table {
         grid-template-areas:
             'logo logo logo logo logo logo logo logo'
             'navigation navigation navigation navigation navigation navigation navigation navigation'
-            'breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket'
+            'breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket basket'
             // 'breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs'
             'account account account account account account account account'
             'content content content content content content content content'
@@ -219,4 +284,22 @@ table {
 .footerCell {
     grid-area: footer;
     background-color: #333333;
+    text-align: center;
+    color: #FFF;
+    p {
+        &:first-child {
+            font-size: 40px;
+            &:before {
+                font-family: 'hulshoff';
+                content: '\e906\00a0';
+            }
+            a {
+                color: #FFF;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
 }

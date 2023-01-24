@@ -1,9 +1,9 @@
-User:<br />
+{{-- User:<br />
 customer_a@hulshoffportal.nl<br />
 v482kS0Y<br /><br />
 Admin:<br />
 admin@portal.hulshoff.nl<br />
-6weY9e5H
+6weY9e5H --}}
 {{-- <form action="{{ route('attempt_login') }}" method="post"> --}}
 {{-- <div class="loginContent"> --}}
     <h1>Login</h1>
@@ -21,6 +21,7 @@ admin@portal.hulshoff.nl<br />
         <button type="submit">Login</button>
     </form>
     <p><a href="/forgot-password">Wachtwoord vergeten?</a></p>
+    <p><a href="/" class="backBtn">Terug</a></p>
     @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)

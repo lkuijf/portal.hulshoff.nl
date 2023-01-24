@@ -41,7 +41,7 @@
 @endif
 <h1>{{ __($title) }}</h1>
 {{-- <p><a href="{{ url()->previous() }}">< terug naar overzicht</a></p> --}}
-<p><a href="{{ $backUrl }}">< terug naar overzicht</a></p>
+<p><a href="{{ $backUrl }}" class="backBtn">terug naar overzicht</a></p>
 <form action="{{ url('user') }}" method="post">
 @method($method)
 @csrf
@@ -83,19 +83,21 @@
     <tr>
         <td>{{ __('Extra e-mail addresses') }}</td>
         <td>
-            <div>
-                @foreach (array_column(json_decode($extra_email,true),'email') as $email)
-                    <span>
-                        {{ $email }}
-                        <input type="hidden" name="current_extra_emails[]" value="{{ $email }}">
-                        <input type="submit" name="current_extra_emails[]" value="Remove" onclick="return confirm('You are about to delete {{ $email }}\n\nAre you sure?')" />
-                    </span>
-                @endforeach
-            </div>
-            <div>
-                {{ __('Add extra e-mail address') }}:
-                <input type="text" name="extra_email">
-                <input type="submit" name="add_email_btn" value="Add" />
+            <div class="extraEmailSection">
+                <div>
+                    @foreach (array_column(json_decode($extra_email,true),'email') as $email)
+                        <span>
+                            {{ $email }}
+                            <input type="hidden" name="current_extra_emails[]" value="{{ $email }}">
+                            <input type="submit" name="current_extra_emails[]" value="Remove" class="removeEmail" onclick="return confirm('You are about to delete {{ $email }}\n\nAre you sure?')" />
+                        </span>
+                    @endforeach
+                </div>
+                <div>
+                    {{ __('Add extra e-mail address') }}:
+                    <input type="text" name="extra_email">
+                    <input type="submit" name="add_email_btn" class="addEmail" value="Add" />
+                </div>
             </div>
         </td>
     </tr>
@@ -123,7 +125,7 @@
     </tr>
     <tr>
         <td>&nbsp;</td>
-        <td><button type="submit">{{ __('Save') }}</button></td>
+        <td><button type="submit" class="saveBtn">{{ __('Save') }}</button></td>
     </tr>
 </table>
 </form>

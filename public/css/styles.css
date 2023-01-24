@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
     Burger-menu
     DO NOT ALTER THIS MIXIN
@@ -8,6 +9,11 @@
   -o-object-fit: cover;
      object-fit: cover;
   border: 2px solid #000;
+}
+.tilesListContent .imageIsSet {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .selectTileOverlay {
@@ -20,6 +26,7 @@
 .selectTileOverlay .tileGrid {
   display: grid;
   gap: 20px;
+  align-items: start;
   max-width: 1200px;
   margin: 0 auto;
   grid-template-columns: repeat(4, 1fr);
@@ -48,6 +55,8 @@
   width: 100%;
   aspect-ratio: 16/9;
   border: 2px solid #000;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .productList .products {
@@ -371,6 +380,9 @@ ul.crumbs li:first-of-type:before {
     position: inherit;
     margin: 8px auto 0 auto;
   }
+  nav.mainNav #burger-check ~ ul {
+    z-index: 10;
+  }
 }
 
 nav.mainNav ul {
@@ -414,17 +426,17 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 
 .accButtons {
   display: flex;
-  gap: 30px;
+  gap: 15px;
   justify-content: center;
   padding-top: 10px;
 }
 .accButtons a {
-  text-decoration: none;
   color: #CCC;
   font-size: 0;
 }
 .accButtons a:hover {
   color: #FFF;
+  text-decoration: none;
 }
 .accButtons a:before {
   font-family: hulshoff;
@@ -445,7 +457,7 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   outline: none;
   border: 0;
   color: #CCC;
-  padding: 0;
+  padding: 0 10px;
 }
 .accButtons button:hover {
   color: #FFF;
@@ -483,6 +495,10 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   background-color: #CCC;
 }
 
+.loginContent {
+  max-width: 500px;
+  margin: 0 auto;
+}
 .loginContent form {
   display: inline-block;
   text-align: right;
@@ -495,6 +511,15 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 }
 .loginContent form button {
   cursor: pointer;
+}
+
+.accountHomeContent .twofaWrap {
+  border: 1px solid #CCC;
+  padding: 20px;
+  display: inline-block;
+}
+.accountHomeContent .twofaWrap :first-child {
+  margin-top: 0;
 }
 
 .userListContent table {
@@ -513,6 +538,23 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 }
 .userListContent form {
   display: inline-block;
+}
+
+.extraEmailSection > div {
+  padding: 5px 0;
+}
+.extraEmailSection input {
+  cursor: pointer;
+  background-color: #FFF;
+  border: 1px solid #000;
+  font-weight: bold;
+  font-size: 14px;
+}
+.extraEmailSection input.removeEmail {
+  color: red;
+}
+.extraEmailSection input.addEmail {
+  color: #00BE31;
 }
 
 #msg {
@@ -541,7 +583,7 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   background-color: #ff9800;
 }
 
-.orderListContent form {
+.orderListContent form.searchForm {
   margin-bottom: 10px;
 }
 
@@ -603,15 +645,74 @@ h3, h4, h5 {
 
 a {
   color: #00BE31;
+  font-weight: bold;
   text-decoration: none;
+  padding: 0 10px;
 }
 a:hover {
   text-decoration: underline;
+}
+a:before {
+  font-family: "hulshoff";
+}
+a.editBtn:before {
+  content: "\e900 ";
+}
+a.addBtn:before {
+  content: "\e901 ";
+}
+a.backBtn:before {
+  content: "\e904 ";
+}
+
+form button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 5px;
+  padding: 7px 15px;
+  background-color: #00BE31;
+  color: #FFF;
+}
+form button:hover {
+  background-color: #008e24;
+}
+form button:before {
+  font-family: "hulshoff";
+}
+form button.deleteBtn {
+  padding: 3px 8px;
+  background-color: red;
+  color: #FFF;
+}
+form button.deleteBtn:hover {
+  background-color: #bf0000;
+}
+form button.deleteBtn:before {
+  content: "\e902";
+}
+form button.saveBtn:before {
+  content: "\e903 ";
+}
+form button.uploadBtn:before {
+  content: "\e905 ";
+}
+form button.searchBtn:before {
+  content: "\f50d ";
 }
 
 table {
   border: 1px solid #000;
   border-collapse: collapse;
+}
+@media (max-width: 1200px) {
+  table {
+    font-size: 0.8em;
+  }
+}
+@media (max-width: 480px) {
+  table {
+    font-size: 0.7em;
+  }
 }
 table tr th, table tr td {
   padding: 15px;
@@ -639,7 +740,7 @@ table tr:nth-of-type(1) th {
 }
 @media (max-width: 768px) {
   .gridContainer {
-    grid-template-areas: "logo logo logo logo logo logo logo logo" "navigation navigation navigation navigation navigation navigation navigation navigation" "breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket" "account account account account account account account account" "content content content content content content content content" "info info info info info info info info" "footer footer footer footer footer footer footer footer";
+    grid-template-areas: "logo logo logo logo logo logo logo logo" "navigation navigation navigation navigation navigation navigation navigation navigation" "breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket basket" "account account account account account account account account" "content content content content content content content content" "info info info info info info info info" "footer footer footer footer footer footer footer footer";
     grid-template-rows: auto auto auto auto auto auto auto auto auto;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   }
@@ -742,4 +843,20 @@ table tr:nth-of-type(1) th {
 .footerCell {
   grid-area: footer;
   background-color: #333333;
+  text-align: center;
+  color: #FFF;
+}
+.footerCell p:first-child {
+  font-size: 40px;
+}
+.footerCell p:first-child:before {
+  font-family: "hulshoff";
+  content: "\e906 ";
+}
+.footerCell p:first-child a {
+  color: #FFF;
+  text-decoration: none;
+}
+.footerCell p:first-child a:hover {
+  text-decoration: underline;
 }/*# sourceMappingURL=styles.css.map */

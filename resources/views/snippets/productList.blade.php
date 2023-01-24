@@ -12,7 +12,6 @@
         @endif
     </div>
     {{-- Paginering --}}
-    <p style="text-decoration: underline">Pagination</p>
     <div class="productOverviewPagination">
         @if (isset($data['totalPages']))
             @include('snippets.pagination', ['total_pages' => $data['totalPages'], 'active_page' => $data['currentPage']])

@@ -1,6 +1,13 @@
 <div class="accountHomeContent">
-    <p>Welkom <em>{{ auth()->user()->name }} (e-mail adres geverifiëerd)</em></p>
-    <h1>Account</h1>
+    <h1>Welkom <em>{{ auth()->user()->name }}</em></h1>
+    <p>{{ auth()->user()->email }}
+        @if (auth()->user()->email_verified_at)
+        (e-mail adres geverifiëerd)
+        @else
+        <a href="{{ url('email/verify') }}">Verifiëren</a>
+        @endif
+    </p>
+    {{-- <h1>Account</h1> --}}
     {{-- @include('auth_hulshoff.logout', ['buttonInside' => 'Logout']) --}}
     @if (auth()->user()->is_admin)
     <p>Als administrator bent u gemachtigd om gebruikers te bewerken.</p>
@@ -13,8 +20,9 @@
     @else
         no
     @endif --}}
-
+    <div class="twofaWrap">
     <h2>Two Factor Authentication</h2>
+    <p>Het wordt aangeraden om gebruik te maken van <em>Two Factor Authentication</em></p>
     @if (auth()->user()->two_factor_confirmed_at)
         <form action="{{ url('user/two-factor-authentication') }}" method="POST">
             @method('DELETE')
@@ -48,6 +56,7 @@
             @endforeach
         </ul>
     @endif
+    </div>
     {{-- @php
         var_dump(session()->all());
     @endphp
