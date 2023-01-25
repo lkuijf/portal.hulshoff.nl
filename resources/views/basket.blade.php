@@ -40,7 +40,7 @@
                             @method('delete')
                             @csrf
                             <input type="hidden" name="id" value="{{ $item['product']->id }}">
-                            <button type="submit" onclick="return confirm('You are about to delete {{ $item['product']->omschrijving }} from your basket.\n\nAre you sure?')">Delete</button>
+                            <button type="submit" onclick="return confirm('You are about to delete {{ $item['product']->omschrijving }} from your basket.\n\nAre you sure?')" class="deleteBtn"></button>
                         </form>
                     </td>
                 </tr>

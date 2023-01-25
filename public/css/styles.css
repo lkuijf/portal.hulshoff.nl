@@ -319,6 +319,9 @@ ul.crumbs li:first-of-type:before {
   text-align: center;
 }
 
+.basketContent input {
+  margin-right: 5px;
+}
 .basketContent table form {
   display: inline-block;
 }
