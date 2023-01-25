@@ -21,7 +21,7 @@ admin@portal.hulshoff.nl<br />
         <button type="submit">Login</button>
     </form>
     <p><a href="/forgot-password">Wachtwoord vergeten?</a></p>
-    <p><a href="/" class="backBtn">Terug</a></p>
+    {{-- <p><a href="/" class="backBtn">Terug</a></p> --}}
     {{-- @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
