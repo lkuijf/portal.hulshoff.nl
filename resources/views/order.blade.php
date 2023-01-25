@@ -43,7 +43,7 @@
                                 @method('delete')
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $orderArt->id }}">
-                                <button type="submit" onclick="return confirm('You are about to delete {{ $orderArt->product->omschrijving }} from your {{ ($order->is_reservation?'reservation':'order') }}.\n\nAre you sure?')">Delete</button>
+                                <button type="submit" onclick="return confirm('You are about to delete {{ $orderArt->product->omschrijving }} from your {{ ($order->is_reservation?'reservation':'order') }}.\n\nAre you sure?')" class="deleteBtn"></button>
                             </form>
                         </td>
                         @endif

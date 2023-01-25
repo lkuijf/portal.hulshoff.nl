@@ -591,6 +591,10 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   margin-bottom: 10px;
 }
 
+.orderContent input {
+  margin-right: 5px;
+}
+
 .wizzardWrap .wizzard {
   background-color: #EEE;
   padding: 15px;
