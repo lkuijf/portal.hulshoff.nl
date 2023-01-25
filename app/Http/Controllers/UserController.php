@@ -13,7 +13,7 @@ use App\Models\Customer;
 class UserController extends Controller
 {
     public function showUsers() {
-        if(!auth()->user()->is_admin || !$this->email_verified_at) return view('no-access');
+        if(!auth()->user()->is_admin || !auth()->user()->email_verified_at) return view('no-access');
         $isAdmin = 0;
         if(Route::currentRouteName() == 'admins') $isAdmin = 1;
         $users = HulshoffUser::where('is_admin', $isAdmin)->get();

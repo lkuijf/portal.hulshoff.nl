@@ -13,7 +13,7 @@ use App\Mail\OrderPlaced;
 class OrderController extends Controller
 {
     public function showOrders(Request $request, $type) {
-        if(!$this->email_verified_at) return view('no-access');
+        if(!auth()->user()->email_verified_at) return view('no-access');
 
         $t = 0;
         if($type == 'confirmed') $t = 0;
