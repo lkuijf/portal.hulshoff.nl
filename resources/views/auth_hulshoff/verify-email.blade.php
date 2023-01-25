@@ -10,7 +10,7 @@
     <p><a href="{{ route('login') }}">< Terug</a></p>
     @if (session('status') == 'verification-link-sent')
         {{-- <p>A new email verification link has been emailed to you!</p> --}}
-        <script>showMessage('success','<p>A new email verification link has been emailed to you!</p>')</script>
+        <script>showMessage('success',"<p>A new email verification link has been emailed to you!</p>")</script>
     @endif
     {{-- @if ($errors->any())
         <ul>

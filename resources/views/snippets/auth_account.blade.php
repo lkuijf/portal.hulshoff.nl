@@ -48,11 +48,11 @@
     @endif
     @if (session('status') == 'two-factor-authentication-disabled')
         {{-- <p><em>Two Factor Authentication</em> has been disabled.</p> --}}
-        <script>showMessage('success','<p><em>Two Factor Authentication</em> has been disabled.</p>')</script>
+        <script>showMessage('success',"<p><em>Two Factor Authentication</em> has been disabled.</p>")</script>
     @endif
     @if (session('status') == 'two-factor-authentication-confirmed')
         {{-- <p><em>Two factor authentication</em> confirmed and enabled successfully.</p> --}}
-        <script>showMessage('success','<p><em>Two factor authentication</em> confirmed and enabled successfully.</p>')</script>
+        <script>showMessage('success',"<p><em>Two factor authentication</em> confirmed and enabled successfully.</p>")</script>
         <p>Below you find the recovery codes in case you lose access to your mobile device</p>
         <ul>
             @foreach ((array)auth()->user()->recoveryCodes() as $code)
