@@ -106,6 +106,7 @@
                     @else
                     <ul>
                         <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ url('forgot-password') }}">Forgot password</a></li>
                     </ul>
                     @endif
                 @endif

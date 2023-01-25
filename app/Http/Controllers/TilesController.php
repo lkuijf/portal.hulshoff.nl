@@ -10,7 +10,7 @@ use App\Models\Tile;
 class TilesController extends Controller
 {
     public function showTiles() {
-        if(!auth()->user()->is_admin) return view('no-access');
+        if(!auth()->user()->is_admin || !$this->email_verified_at) return view('no-access');
 
         $allGroups = DB::table('productgroups')->get();
         $allTiles = DB::table('tiles')->get();

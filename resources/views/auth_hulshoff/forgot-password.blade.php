@@ -7,16 +7,17 @@
         <button type="submit">Request</button>
     </form>
     <p><a href="{{ route('login') }}">< Terug</a></p>
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    @endif
+    @endif --}}
     @if (session('status'))
-        <ul>
+        {{-- <ul>
             <li>{{ session('status') }}</li>
-        </ul>
+        </ul> --}}
+        <script>showMessage('success',"<p>{!! session('status') !!}</p>")</script>
     @endif
 </div>
