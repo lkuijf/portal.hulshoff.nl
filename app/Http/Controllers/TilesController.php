@@ -34,7 +34,7 @@ class TilesController extends Controller
         );
         $validated = $request->validate($toValidate,$validationMessages);
 
-        $path = $request->file('tileFile')->store('tiles');
+        $path = $request->file('tileFile')->store('public/tiles');
         $uploadedFile = [];
         $uploadedFile['group'] = $request->group_name;
         $uploadedFile['file'] = basename($path);
