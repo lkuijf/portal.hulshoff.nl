@@ -98,7 +98,7 @@ return [
 
         'tiles' => [
             'driver' => 'local',
-            'root' => storage_path('app/tiles'),
+            'root' => storage_path('app/public/tiles'),
             'url' => env('APP_URL').'/storage/tiles',
             'visibility' => 'public',
             'throw' => false,
