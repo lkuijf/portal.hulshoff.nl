@@ -131,7 +131,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('storage/tiles') => storage_path('app/tiles'),
+        public_path('storage/tiles') => storage_path('app/public/tiles'),
     ],
 
 ];
