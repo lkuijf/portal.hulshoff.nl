@@ -30,7 +30,8 @@ class AppServiceProvider extends ServiceProvider
             if(session()->has('basket')) {
                 $basket = \Session::get('basket');
                 foreach($basket as $id => $count) {
-                    $total += $count;
+                    // $total += $count;
+                    $total++;
                 }
             }
             $view->with('basket_total', $total);    
