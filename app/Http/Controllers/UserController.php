@@ -24,9 +24,11 @@ class UserController extends Controller
         $isAdmin = 0;
         if(Route::currentRouteName() == 'admins') $isAdmin = 1;
         $usrQry = HulshoffUser::where('is_admin', $isAdmin);
-        $usrQry->where('name', 'like', '%' . $search . '%');
-        $usrQry->orWhere('email', 'like', '%' . $search . '%');
-        $usrQry->orWhere('extra_email', 'like', '%' . $search . '%');
+        if($search) {
+            $usrQry->where('name', 'like', '%' . $search . '%');
+            $usrQry->orWhere('email', 'like', '%' . $search . '%');
+            $usrQry->orWhere('extra_email', 'like', '%' . $search . '%');
+        }
         $users = $usrQry->get();
         $data = [
             'users' => $users,
