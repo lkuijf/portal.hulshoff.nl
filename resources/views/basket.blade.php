@@ -11,16 +11,16 @@
     @php
         $totalOrderSum = 0;
     @endphp
-    <h1>Basket</h1>
+    <h1>{{ __('Basket') }}</h1>
     @if (count($basket))
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Omschrijving</th>
-                    <th>Aantal</th>
-                    <th>Prijs</th>
-                    <th>Totaal prijs</th>
+                    <th>id</th>
+                    <th>Product</th>
+                    <th>{{ __('Amount') }}</th>
+                    <th>{{ __('Price') }}</th>
+                    <th>{{ __('Total') }} {{ Str::lower(__('Price')) }}</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -40,21 +40,21 @@
                             @method('delete')
                             @csrf
                             <input type="hidden" name="id" value="{{ $item['product']->id }}">
-                            <button type="submit" onclick="return confirm('You are about to delete {{ $item['product']->omschrijving }} from your basket.\n\nAre you sure?')" class="deleteBtn"></button>
+                            <button type="submit" onclick="return confirm('{{ __('You are about to delete product') }} {{ $item['product']->omschrijving }} {{ __('from your basket') }}.\n\n{{ __('Are you sure') }}?')" class="deleteBtn"></button>
                         </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        <p><strong>Total value of your order: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
-        <h2>Afleverdatum en -tijd</h2>
+        <p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
+        <h2>{{ __('Delivery date') }}</h2>
         <form action="{{ url('order') }}" method="post">
             @csrf
             <p>
                 {{-- <span class="deliveryTxt">Afleverdatum</span><input type="input" name="deliveryDate" value="{{ $deliveryDate }}"> --}}
-                <p>Afleverdatum</p>
-                <p><span>{{ $deliveryDate }}<a class="editBasketDate" data-order-date="{{ $deliveryDate }}" href="">[edit]</a></span></p>
+                {{-- <p>Afleverdatum</p> --}}
+                <p><span>{{ $deliveryDate }}<a class="editBtn editBasketDate" data-order-date="{{ $deliveryDate }}" href="">{{ __('Edit') }}</a></span></p>
             </p>
             {{-- <p>
                 <span class="deliveryTxt">Aflevertijd (hh:mm)</span><select name="deliveryHour">
@@ -104,7 +104,7 @@
             @if (auth()->user()->can_reserve)
             <button>Reservering bevestigen</button>
             @else
-            <button onclick="return confirm('Your order will be delivered on {{ $deliveryDate }}.\n\nAre you sure you want to confirm your order?')">Order bevestigen</button>
+            <button onclick="return confirm('{{ __('Your order will be delivered on') }} {{ $deliveryDate }}.\n\n{{ __('Are you sure you want to confirm your order') }}?')">Order bevestigen</button>
             @endif
             
         </form>

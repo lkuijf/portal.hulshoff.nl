@@ -22,19 +22,20 @@ nav.mainNav ul {
     list-style-type: none;
     li {
         a {
+            padding: 15px 0;
             display: block;
             color: #FFF;
             text-decoration: none;
             border-left: 10px solid #333;
             padding-left: 40px;
-            line-height: 47px;
+            // line-height: 47px;
             background-color: #333;
             &:hover, &.active {
                 border-left: 10px solid $colorGreen;
                 background-color: #555555;
                 background-image: url('../statics/nav-arrow.png');
                 background-repeat: no-repeat;
-                background-position: top right;
+                background-position: right center;
             }
         }
     }

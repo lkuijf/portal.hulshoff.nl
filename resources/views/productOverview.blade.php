@@ -31,13 +31,13 @@
     @if ($showFilters)
     <div class="filterWrap">
         <div class="filters">
-            <h4>Filteren</h4>
+            <h4>{{ __('Filter') }}</h4>
             @foreach ($data['filters'] as $ref => $info)
                 @include('snippets.filter_select', ['filter_name' => $info['name'], 'filter_reference' => $ref, 'filter_options' => $info['items'], 'filter_selected_option' => ''])
             @endforeach
             @include('snippets.filter_input')
-            <button class="filterProductsBtn">TOON RESULTATEN</button>
-            <h4>Actieve filters</h4>
+            <button class="filterProductsBtn">{{ __('Show results') }}</button>
+            <h4>{{ __('Active') }} filters</h4>
             <div class="activeFilters"></div>
         </div>
     </div>

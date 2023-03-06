@@ -1,12 +1,12 @@
 <div class="forgotPasswordContent">
-    <h1>Forgot password</h1>
-    <p>Please provide your e-mail address</p>
+    <h1>{{ __('Forgot password') }}</h1>
+    <p>{{ __('Please provide your e-mail address to request a password reset') }}</p>
     <form action="/forgot-password" method="POST">
         @csrf
         <input type="text" name="email">
-        <button type="submit">Request</button>
+        <button type="submit">{{ __('Request') }}</button>
     </form>
-    <p><a href="{{ route('login') }}">< Terug</a></p>
+    <p><a href="{{ route('login') }}">< {{ __('Back') }}</a></p>
     {{-- @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)

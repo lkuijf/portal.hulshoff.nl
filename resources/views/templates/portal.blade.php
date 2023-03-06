@@ -95,18 +95,18 @@
                     @if (auth()->user())
                     <ul>
                         @if (auth()->user()->is_admin)
-                            <li><a href="{{ route('users') }}" @if($usersBtnActive)class="active"@endif>Users</a></li>
-                            <li><a href="{{ route('admins') }}" @if($adminsBtnActive)class="active"@endif>Admins</a></li>
-                            <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>Tiles</a></li>
+                            <li><a href="{{ route('users') }}" @if($usersBtnActive)class="active"@endif>{{ __('Users') }}</a></li>
+                            <li><a href="{{ route('admins') }}" @if($adminsBtnActive)class="active"@endif>{{ __('Admins') }}</a></li>
+                            <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>{{ __('Tiles') }}</a></li>
                         @endif
-                        <li><a href="{{ route('products') }}" @if($productsBtnActive)class="active"@endif>Products</a></li>
-                        <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>Orders</a></li>
-                        @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($reservationsBtnActive)class="active"@endif>Reservations</a></li>@endif
+                        <li><a href="{{ route('products') }}" @if($productsBtnActive)class="active"@endif>{{ __('Products') }}</a></li>
+                        <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>{{ __('Orders') }}</a></li>
+                        @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($reservationsBtnActive)class="active"@endif>{{ __('Reservations') }}</a></li>@endif
                     </ul>
                     @else
                     <ul>
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ url('forgot-password') }}">Forgot password</a></li>
+                        <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                        <li><a href="{{ url('forgot-password') }}">{{ __('Forgot password') }}</a></li>
                     </ul>
                     @endif
                 @endif
@@ -122,7 +122,13 @@
         </footer>
     </div>
 @if ($errors->any())
-    @php $errMsg = '<p>' . implode('</p><p>', $errors->all()) . '</p>'; @endphp
+    @php
+        $locationErrors = [];
+        foreach($errors->all() as $err) {
+            $locationErrors[] = __($err);
+        }
+    @endphp
+    @php $errMsg = '<p>' . implode('</p><p>', $locationErrors) . '</p>'; @endphp
     <script>showMessage('error',"{!! $errMsg !!}")</script>
 @endif
 @if(session('message'))

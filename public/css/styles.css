@@ -72,6 +72,9 @@
 .productList .products .product {
   width: 200px;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid #CCC;
 }
 @media (max-width: 530px) {
@@ -79,8 +82,9 @@
     width: 100%;
   }
 }
-.productList .products .product .prodInnerWrap {
-  padding: 5px;
+.productList .products .product .prodInnerWrap .prodCodeWrap {
+  font-size: 0.8em;
+  text-align: right;
 }
 .productList .products .product .prodInnerWrap .prodImgHolder img {
   width: 100%;
@@ -89,8 +93,11 @@
      object-fit: contain;
   background-color: #EEE;
 }
+.productList .products .product .prodInnerWrap .prodInfo {
+  padding: 5px;
+}
 .productList .products .product .prodInnerWrap .prodInfo p {
-  margin: 1px;
+  margin: 0;
 }
 .productList .products .product .prodToDetail {
   text-align: right;
@@ -114,6 +121,12 @@
   color: #CCC;
 }
 
+.productDetailContent > h1 {
+  margin-bottom: 0;
+}
+.productDetailContent > p {
+  margin-top: 0;
+}
 .productDetailContent .prodDetTopWrap {
   display: flex;
   gap: 20px;
@@ -213,7 +226,6 @@
 .filters {
   background-color: #EEEEEE;
   padding: 10px;
-  position: -webkit-sticky;
   position: sticky;
   top: 0px;
 }
@@ -397,12 +409,12 @@ nav.mainNav ul {
   list-style-type: none;
 }
 nav.mainNav ul li a {
+  padding: 15px 0;
   display: block;
   color: #FFF;
   text-decoration: none;
   border-left: 10px solid #333;
   padding-left: 40px;
-  line-height: 47px;
   background-color: #333;
 }
 nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
@@ -410,7 +422,7 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   background-color: #555555;
   background-image: url("../statics/nav-arrow.png");
   background-repeat: no-repeat;
-  background-position: top right;
+  background-position: right center;
 }
 
 .accInfo {
@@ -540,6 +552,9 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   padding: 7px;
   border: 1px solid #666;
 }
+.userListContent > form {
+  padding: 20px 0;
+}
 .userListContent form {
   display: inline-block;
 }
@@ -594,6 +609,14 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 .orderContent input {
   margin-right: 5px;
 }
+.orderContent .confirmReservation {
+  padding: 20px;
+  background-color: #EFEFEF;
+  border: 1px solid #CCC;
+}
+.orderContent .confirmReservation > :first-child {
+  margin-top: 0;
+}
 
 .wizzardWrap .wizzard {
   background-color: #EEE;
@@ -626,6 +649,11 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 }
 .resetPasswordContent form label {
   padding-right: 5px;
+}
+
+.forgotPasswordContent {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 html, body {

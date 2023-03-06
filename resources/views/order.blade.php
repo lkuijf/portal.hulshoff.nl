@@ -7,21 +7,21 @@
     @endphp
     <h1>{{ ($order->is_reservation?'Reservation':'Order') }} details</h1>
     <p>Id: {{ $order->id }}</p>
-    <p>Is reservation: {{ ($order->is_reservation?'Yes':'No') }}</p>
-    <p>Aflever datum: <span>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}{!! ($order->is_reservation?' <a class="editBasketDate" data-order-id="' . $order->id . '" data-order-date="' . date("d-m-Y", strtotime($order->afleverDatum)) . '" href="">[edit]</a>':'') !!}</span></p>
+    <p>Is {{ Str::lower(__('Reservation')) }}: {{ ($order->is_reservation?__('Yes'):__('No')) }}</p>
+    <p>{{ __('Delivery date') }}: <span>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}{!! ($order->is_reservation?' <a class="editBasketDate editBtn" data-order-id="' . $order->id . '" data-order-date="' . date("d-m-Y", strtotime($order->afleverDatum)) . '" href="">' . __('Edit') . '</a>':'') !!}</span></p>
     {{-- <p>Aflever tijd: {{ $order->afleverTijd }}</p> --}}
-    <p>Order aangemaakt op: {{ $order->created_at }}</p>
+    <p>Order {{ Str::lower(__('Created at')) }}: {{ date("d-m-Y", strtotime($order->created_at)) }} om {{ date("H:i", strtotime($order->created_at)) }} uur</p>
     @if (count($order->orderArticles))
-        <h2>Producten</h2>
+        <h2>{{ __('Products') }}</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Product Id</th>
-                    <th>Product Name</th>
-                    <th>Amount</th>
-                    <th>Price</th>
-                    <th>Total price</th>
+                    <th>id</th>
+                    <th>Product id</th>
+                    <th>Product {{ __('Name') }}</th>
+                    <th>{{ __('Amount') }}</th>
+                    <th>{{ __('Price') }}</th>
+                    <th>{{ __('Total') }} {{ Str::lower(__('Price')) }}</th>
                     @if ($order->is_reservation)<th>&nbsp;</th>@endif
                 </tr>
             </thead>
@@ -34,7 +34,7 @@
                         <td>{{ $orderArt->id }}</td>
                         <td>{{ $orderArt->product_id }}</td>
                         <td>{{ $orderArt->product->omschrijving }}</td>
-                        <td><span>{{ $orderArt->amount }}@if ($order->is_reservation) <a href="" class="editBasketCount" data-order-id="{{ $order->id }}" data-product-id="{{ $orderArt->product_id }}" data-product-count="{{ $orderArt->amount }}">[edit]</a>@endif</span></td>
+                        <td><span>{{ $orderArt->amount }}@if ($order->is_reservation) <a href="" class="editBasketCount editBtn" data-order-id="{{ $order->id }}" data-product-id="{{ $orderArt->product_id }}" data-product-count="{{ $orderArt->amount }}">{{ __('Edit') }}</a>@endif</span></td>
                         <td>&euro;{{ number_format($orderArt->product->prijs, 2, ',', '.') }}</td>
                         <td>&euro;{{ number_format($orderArt->product->prijs*$orderArt->amount, 2, ',', '.') }}</td>
                         @if ($order->is_reservation)
@@ -43,7 +43,7 @@
                                 @method('delete')
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $orderArt->id }}">
-                                <button type="submit" onclick="return confirm('You are about to delete {{ $orderArt->product->omschrijving }} from your {{ ($order->is_reservation?'reservation':'order') }}.\n\nAre you sure?')" class="deleteBtn"></button>
+                                <button type="submit" onclick="return confirm('{{ __('You are about to delete product') }} {{ $orderArt->product->omschrijving }}, {{ __('from your') }} {{ ($order->is_reservation? Str::lower(__('Reservation')):'order') }}.\n\n{{ __('Are you sure') }}?')" class="deleteBtn"></button>
                             </form>
                         </td>
                         @endif
@@ -51,19 +51,24 @@
                 @endforeach
             </tbody>
         </table>
-        <p><strong>Total value of your order: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
+        <p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
     @endif
     @if ($order->is_reservation)
-    <h2>Confirm reservation</h2>
-    <p>Confirm your reservation via the button below</p>
-    <p>When your order is placed, it cannot be undone.</p>
+    <div class="confirmReservation">
+    <h2>{{ __('Confirm reservation') }}</h2>
+    <ul>
+        <li>{{ __('Confirm your reservation via the button below') }}.</li>
+        <li>{{ __('The reservation will be promoted to an order') }}.</li>
+        <li>{{ __('When your order is placed, it cannot be undone') }}</li>
+    </ul>
         <form action="/order" method="post">
             @method('put')
             @csrf
             <input type="hidden" name="id" value="{{ $order->id }}">
             <input type="hidden" name="type" value="confirmReservation">
-            <button type="submit">Confirm reservation</button>
+            <button type="submit">{{ __('Confirm reservation') }}</button>
         </form>
+    </div>
     @endif
 </div>
 @endsection
@@ -116,8 +121,8 @@
             editSave.setAttribute('type', 'submit');
             editCancel.setAttribute('href', '');
 
-            let saveBtnText = document.createTextNode('Save');
-            let cancelText = document.createTextNode('Cancel');
+            let saveBtnText = document.createTextNode('{{ __('Save') }}');
+            let cancelText = document.createTextNode('{{ __('Cancel') }}');
             editSave.appendChild(saveBtnText);
             editCancel.appendChild(cancelText);
 
@@ -180,8 +185,8 @@
             editSave.setAttribute('type', 'submit');
             editCancel.setAttribute('href', '');
 
-            let saveBtnText = document.createTextNode('Save');
-            let cancelText = document.createTextNode('Cancel');
+            let saveBtnText = document.createTextNode('{{ __('Save') }}');
+            let cancelText = document.createTextNode('{{ __('Cancel') }}');
             editSave.appendChild(saveBtnText);
             editCancel.appendChild(cancelText);
 

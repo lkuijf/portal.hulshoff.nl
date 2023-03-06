@@ -10,12 +10,19 @@
     .product {
         width: 200px;
         cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         @media (max-width: ($screenBreakpointMobile+50)) {
             width: 100%;
         }
         border: 1px solid #CCC;
         .prodInnerWrap {
-            padding: 5px;
+            // padding: 0 5px 5px 5px;
+            .prodCodeWrap {
+                font-size: .8em;
+                text-align: right;
+            }
             .prodImgHolder {
                 img {
                     width: 100%;
@@ -25,8 +32,9 @@
                 }
             }
             .prodInfo {
+                padding: 5px;
                 p {
-                    margin: 1px;
+                    margin: 0;
                 }
             }
         }

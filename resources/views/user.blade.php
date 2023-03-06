@@ -41,7 +41,7 @@
 @endif
 <h1>{{ __($title) }}</h1>
 {{-- <p><a href="{{ url()->previous() }}">< terug naar overzicht</a></p> --}}
-<p><a href="{{ $backUrl }}" class="backBtn">terug naar overzicht</a></p>
+<p><a href="{{ $backUrl }}" class="backBtn">{{ __('Back to overview') }}</a></p>
 <form action="{{ url('user') }}" method="post">
 @method($method)
 @csrf
@@ -89,14 +89,14 @@
                         <span>
                             {{ $email }}
                             <input type="hidden" name="current_extra_emails[]" value="{{ $email }}">
-                            <input type="submit" name="current_extra_emails[]" value="Remove" class="removeEmail" onclick="return confirm('You are about to delete {{ $email }}\n\nAre you sure?')" />
+                            <input type="submit" name="current_extra_emails[]" value="{{ __('Remove') }}" class="removeEmail" onclick="return confirm('You are about to delete {{ $email }}\n\nAre you sure?')" />
                         </span>
                     @endforeach
                 </div>
                 <div>
                     {{ __('Add extra e-mail address') }}:
                     <input type="text" name="extra_email">
-                    <input type="submit" name="add_email_btn" class="addEmail" value="Add" />
+                    <input type="submit" name="add_email_btn" class="addEmail" value="{{ __('Add') }}" />
                 </div>
             </div>
         </td>
@@ -112,13 +112,13 @@
         </td>
     </tr>
     <tr>
-        <td>{{ __('Can reserve?') }}</td>
+        <td>{{ __('Can reserve') }}?</td>
         <td>
             <input type="checkbox" name="can_reserve" id="canreserve" @if($canReserve) checked @endif><label for="canreserve">{{ __('Yes') }}</label>
         </td>
     </tr>
     <tr>
-        <td>{{ __('Is administrator?') }}</td>
+        <td>{{ __('Is admin') }}?</td>
         <td>
             <input type="checkbox" name="is_admin" id="isadmin" @if($isAdmin) checked @endif><label for="isadmin">{{ __('Yes') }}</label>
         </td>

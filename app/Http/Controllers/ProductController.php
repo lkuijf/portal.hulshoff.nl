@@ -46,10 +46,10 @@ class ProductController extends Controller
             'filterDisplay' => $filterToShow,
             'tiles' => $aTiles,
             'filters' => [
-                'group' => ['name' => 'Groep', 'items' => $aGroups],
+                'group' => ['name' => __('Group'), 'items' => $aGroups],
                 'type' => ['name' => 'Type', 'items' => $aTypes],
-                'brand' => ['name' => 'Merk', 'items' => $aBrands],
-                'color' => ['name' => 'Color', 'items' => $aColors],
+                'brand' => ['name' => __('Brand'), 'items' => $aBrands],
+                'color' => ['name' => __('Color'), 'items' => $aColors],
             ],
         ];
         return view('productOverview')->with('data', $data);
@@ -88,6 +88,7 @@ class ProductController extends Controller
             'totalPages' => $res->lastPage(),
             'currentPage' => $res->currentPage(),
         ];
+
         return view('snippets.productList')->with('data', $data);
     }
 

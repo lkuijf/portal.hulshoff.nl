@@ -7,16 +7,27 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
 use App\Models\HulshoffUser;
 use App\Models\Customer;
 
 class UserController extends Controller
 {
-    public function showUsers() {
+    public function showUsers(Request $request) {
         if(!auth()->user()->is_admin || !auth()->user()->email_verified_at) return view('no-access');
+
+        $search = false;
+        if ($request->has('search')) {
+            $search = $request->input('search');
+        }
+
         $isAdmin = 0;
         if(Route::currentRouteName() == 'admins') $isAdmin = 1;
-        $users = HulshoffUser::where('is_admin', $isAdmin)->get();
+        $usrQry = HulshoffUser::where('is_admin', $isAdmin);
+        $usrQry->where('name', 'like', '%' . $search . '%');
+        $usrQry->orWhere('email', 'like', '%' . $search . '%');
+        $usrQry->orWhere('extra_email', 'like', '%' . $search . '%');
+        $users = $usrQry->get();
         $data = [
             'users' => $users,
             'type' => $isAdmin,
@@ -40,7 +51,7 @@ class UserController extends Controller
         $validated = $this->validateUserData($request);
 
         if(HulshoffUser::where('email', $request->email)->first()) {
-            return redirect()->back()->withErrors(['E-mail address already in use'])->withInput();
+            return redirect()->back()->withErrors(['E-mail address is already in use'])->withInput();
         }
 
         $customer = Customer::find($request->klantCode);
@@ -51,7 +62,7 @@ class UserController extends Controller
         $token = Password::getRepository()->create($user);
         $user->sendPasswordResetNotification($token);
         // sendPasswordResetNotification
-        $request->session()->flash('message', '<p>Success. The user received a notification (e-mail) to reset their password.</p>');
+        $request->session()->flash('message', '<p>' . __('Success. The user received a notification (e-mail) to reset their password.') . '</p>');
         if($user->is_admin) return redirect()->route('admins');
         return redirect()->route('users');
     }
@@ -91,7 +102,7 @@ class UserController extends Controller
             $user = $this->populateUserModel($user, $customer, $request);
         }
         $user->save();
-        $request->session()->flash('message', '<p>User saved</p>');
+        $request->session()->flash('message', '<p>' . __('User saved') . '</p>');
         return redirect()->back();
     }
 
@@ -103,18 +114,15 @@ class UserController extends Controller
     public function validateUserData($req, $bValidateEmail = true) {
         $method = strtolower($req->method());
         $toValidate = array(
-            // 'email' => 'required|email',
             'name' => 'required',
         );
         $validationMessages = array(
-            // 'email.required' => 'Geef a.u.b. een e-mail adres op.',
-            // 'email.email' => 'Het e-mail adres is niet juist geformuleerd.',
-            'name.required' => 'Geef a.u.b. een naam op.',
+            'name.required' => 'Please enter a name',
         );
         if($bValidateEmail) {
             $toValidate['email'] = 'required|email';
-            $validationMessages['email.required'] = 'Geef a.u.b. een e-mail adres op.';
-            $validationMessages['email.email'] = 'Het e-mail adres is niet juist geformuleerd.';
+            $validationMessages['email.required'] = 'Please enter an e-mail address';
+            $validationMessages['email.email'] = 'The e-mail address is not correctly formulated';
         }
         $validated = $req->validate($toValidate,$validationMessages);
         return $validated;
@@ -125,8 +133,8 @@ class UserController extends Controller
             'extra_email' => 'required|email',
         );
         $validationMessages = array(
-            'extra_email.required'=> 'Geef a.u.b. een e-mail adres op.',
-            'extra_email.email'=> 'Het e-mail adres is niet juist geformuleerd.',
+            'extra_email.required'=> 'Please enter an e-mail address',
+            'extra_email.email'=> 'The e-mail address is not correctly formulated',
         );
         $validated = $req->validate($toValidate,$validationMessages);
         return $validated;

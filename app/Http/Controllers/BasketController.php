@@ -35,7 +35,7 @@ class BasketController extends Controller
         $product = Product::find($request->id);
         $availableAmount = $product->availableAmount();
         if($request->aantal > $availableAmount) {
-            return redirect()->back()->withErrors(['Cannot add ' . $request->aantal . ' to your basket, only ' . $availableAmount . ' are available.']);
+            return redirect()->back()->withErrors([__('Cannot add') . ' ' . $request->aantal . ' ' . __('to your basket, only') . ' ' . $availableAmount . ' ' . __('are available') . '.']);
         }
 
         $basket = [];
@@ -45,7 +45,7 @@ class BasketController extends Controller
         $basket[$request->id] = $request->aantal;
         session(['basket' => $basket]);
 
-        $request->session()->flash('message', '<p>Product added to basket</p>');
+        $request->session()->flash('message', '<p>' . __('Product added to basket') . '</p>');
         return redirect()->back();
     }
 
@@ -67,7 +67,7 @@ class BasketController extends Controller
             );
             $validationMessages = array(
                 'deliveryDate.required'=> 'Please fill in the delivery date',
-                'deliveryDate.date_format'=> 'Date format must be: dd-mm-yyyy',
+                'deliveryDate.date_format'=> 'Format must be: dd-mm-yyyy',
             );
             $validated = $request->validate($toValidate,$validationMessages);
             session(['deliveryDate' => $request->deliveryDate]);
@@ -88,7 +88,7 @@ class BasketController extends Controller
             $basket[$request->id] = $request->count;
             session(['basket' => $basket]);
         }
-        $request->session()->flash('message', '<p>Basket updated</p>');
+        $request->session()->flash('message', '<p>' . __('Basket updated') . '</p>');
         return redirect()->back();
     }
 

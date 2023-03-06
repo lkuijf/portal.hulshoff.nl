@@ -5,18 +5,18 @@
     {{-- @php
         $uploadedFileData = session('fileData');
     @endphp --}}
-    <h1>Tiles</h1>
+    <h1>{{ __('Tiles') }}</h1>
     {{-- {{ print_r($data['all_tiles_by_group']) }} --}}
-    <p>Set tiles for groups</p>
-    <h2>Groups</h2>
-    <p>Current active groups with its tile.</p>
+    <p>{{ __('Set a tile for every group found within the portal') }}.</p>
+    <h2>{{ __('Groups') }}</h2>
+    <p>{{ __('Current active groups with its tile') }}.</p>
         @if(count($data['all_groups']))
         <table>
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>Group</th>
-                    <th>Tile</th>
+                    <th>{{ __('Group') }}</th>
+                    <th>{{ __('Tile') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,16 +32,16 @@
                                     @method('delete')
                                     @csrf
                                     <input type="hidden" name="group_name" value="{{ $group->group }}">
-                                    <button type="submit" onclick="return confirm('You are about to delete the tile for group {{ $group->group }}\n\nAre you sure?')" class="deleteBtn"></button>
+                                    <button type="submit" onclick="return confirm('{{ __('You are about to delete the tile for group') }} {{ $group->group }}\n\n{{ __('Are you sure') }}?')" class="deleteBtn"></button>
                                 </form>
                             </div>
                         @else
-                            <p>Geen afbeelding aanwezig</p>
+                            <p>{{ __('No image found') }}</p>
                             <form action="/tile" method="post" enctype="multipart/form-data">
                                 {{-- @method('post') --}}
                                 @csrf
                                 <input type="hidden" name="group_name" value="{{ $group->group }}">
-                                <label for="fileUploadRef" class="fileUpload">Select file</label>
+                                <label for="fileUploadRef" class="fileUpload">{{ __('Select file') }}</label>
                                 <input id="fileUploadRef" type="file" name="tileFile">
                                 <button type="submit" class="uploadBtn">Upload</button>
                             </form>       
@@ -52,7 +52,7 @@
             </tbody>
         </table>
         @else
-        <p>No groups found</p>
+        <p>{{ __('No groups found') }}</p>
         @endif
     {{-- </div> --}}
 </div>

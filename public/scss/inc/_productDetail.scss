@@ -1,5 +1,11 @@
 .productDetailContent {
     // padding: 20px;
+    > h1 {
+        margin-bottom: 0;
+    }
+    > p {
+        margin-top: 0;
+    }
     .prodDetTopWrap {
         display: flex;
         @media (max-width: $screenBreakpoint) { flex-direction: column; }

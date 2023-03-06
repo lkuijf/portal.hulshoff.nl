@@ -3,15 +3,22 @@
 @section('content')
 <div class="productDetailContent">
     <h1>{{ $product->omschrijving }}</h1>
+    <p>{{ __('Article') }} code: <strong>{{ $product->artikelCode }}</strong></p>
     <div class="prodDetTopWrap">
         <div><img src="https://picsum.photos/200/400" alt="Product image"></div>
         <div>
             <div>
                 <div class="prodReserveWrap">
-                    <h2>Reserveren / bestellen</h2>
-                    <p>Magazijnvoorraad: {{ $product->voorraad - $product->orderedAmount() }}<br />
-                        Gereserveerd: {{ $product->reservedAmount() }}<br />
-                        Beschikbaar: {{ $product->availableAmount() }}
+                    <h2>
+                    @if (auth()->user()->can_reserve)
+                    {{ __('Reserve') }}
+                    @else
+                    {{ __('Order') }}
+                    @endif
+                    </h2>
+                    <p>{{ __('Warehouse stock') }}: {{ $product->voorraad - $product->orderedAmount() }}<br />
+                        {{ __('Total reserved') }}: {{ $product->reservedAmount() }}<br />
+                        {{ __('Total available') }}: {{ $product->availableAmount() }}
                     </p>
                     <form action="{{ url('basket') }}" method="POST">
                         @csrf
@@ -19,7 +26,13 @@
                         {{-- do not use input field for type of order, because of active code alteration --}}
                         {{-- <input type="hidden" name="orderType" value="reserve"> --}}
                         <input type="text" name="aantal">
-                        <button>Reserveren</button>{{-- Reserveren of Bestellen --}}
+                        <button>
+                            @if (auth()->user()->can_reserve)
+                            {{ __('Reserve') }}
+                            @else
+                            {{ __('Order') }}
+                            @endif
+                        </button>
                     </form>
                     <p>{{ $product->bijzonderheden }}</p>
                 </div>

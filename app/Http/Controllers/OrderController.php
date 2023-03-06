@@ -120,8 +120,8 @@ class OrderController extends Controller
 
         if($request->type == 'confirmReservation') Mail::to(auth()->user()->email)->send(new OrderPromoted());
 
-        if($request->type == 'confirmReservation') $request->session()->flash('message', '<p>Your order has been placed!</p>');
-        if($request->type == 'updateDeliveryDate') $request->session()->flash('message', '<p>Delivery date has been changed</p>');
+        if($request->type == 'confirmReservation') $request->session()->flash('message', '<p>' . __('Your order has been placed') . '!</p>');
+        if($request->type == 'updateDeliveryDate') $request->session()->flash('message', '<p>' . __('Delivery date has been changed') . '</p>');
         if($request->type == 'confirmReservation') return redirect()->route('orders');
         if($request->type == 'updateDeliveryDate') return redirect()->back();
     }
@@ -167,7 +167,7 @@ class OrderController extends Controller
         }
         $orderArticle->amount = $request->count;
         $orderArticle->save();
-        $request->session()->flash('message', '<p>Reservation updated</p>');
+        $request->session()->flash('message', '<p>' . __('Reservation updated') . '</p>');
         return redirect()->back();
     }
 
