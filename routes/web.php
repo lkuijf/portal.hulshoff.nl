@@ -30,7 +30,7 @@ use App\Http\Controllers\TilesController;
 // Route::get('/parsexml', function () {
 //     return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
 // })->name('parseXml_Index')->middleware('auth.basic');
-//test
+
 Route::get('/', function () {
     return redirect('login');
 });
