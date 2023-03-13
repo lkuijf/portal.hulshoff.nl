@@ -56,7 +56,7 @@ class BasketController extends Controller
         if(count($basket) == 0) { // basket is empty
             $request->session()->forget('deliveryDate'); // forget the delivery date
         }
-        $request->session()->flash('message', '<p>Product removed from basket</p>');
+        $request->session()->flash('message', '<p>' . __('Product removed from basket') . '</p>');
         return redirect()->back();
     }
 

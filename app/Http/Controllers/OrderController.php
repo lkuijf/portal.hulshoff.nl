@@ -83,10 +83,10 @@ class OrderController extends Controller
             $orderItem->save();
         }
         
-        $orderMsg = '<p>Your order has been placed</p>';
+        $orderMsg = '<p>' . __('Your order has been placed') . '</p>';
         $redirect = 'orders';
         if(auth()->user()->can_reserve) {
-            $orderMsg = '<p>Your reservation has been placed</p>';
+            $orderMsg = '<p>' . __('Your reservation has been placed') . '</p>';
             $redirect = 'reservations';
         } else {
             $order->generateXml();
@@ -142,7 +142,7 @@ class OrderController extends Controller
         });
         if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         $order->delete();
-        $request->session()->flash('message', '<p>Reservation deleted</p>');
+        $request->session()->flash('message', '<p>' . __('Reservation deleted') . '</p>');
         return redirect()->back();
     }
 
@@ -178,10 +178,10 @@ class OrderController extends Controller
         $totalArticles = OrderArticle::where('order_id', $ordArt->order_id)->count();
         if($totalArticles == 0) {
             Order::destroy($ordArt->order_id);
-            $request->session()->flash('message', '<p>Product removed from reservation</p><p>Reservation is empty and has been removed</p>');
+            $request->session()->flash('message', '<p>' . __('Product removed from reservation') . '</p><p>' . __('Reservation is empty and has been removed') . '</p>');
             return redirect()->route('reservations');
         }
-        $request->session()->flash('message', '<p>Product removed from reservation</p>');
+        $request->session()->flash('message', '<p>' . __('Product removed from reservation') . '</p>');
         return redirect()->back();
     }
 }
