@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->string('klantCode', 30)->nullable();
-            $table->foreign('klantCode')->references('klantCode')->on('customers')->nullOnDelete();
-            $table->string('last_known_klantCode_name')->nullable();
+            // $table->string('klantCode', 30)->nullable();
+            // $table->foreign('klantCode')->references('klantCode')->on('customers')->nullOnDelete();
+            // $table->string('last_known_klantCode_name')->nullable();
             $table->json('extra_email')->nullable();
             $table->json('privileges')->nullable();
             $table->boolean('can_reserve')->default(0);
@@ -46,8 +46,8 @@ return new class extends Migration
                 'email' => 'customer_a@hulshoffportal.nl',
                 'email_verified_at' => '2022-01-01 00:00:00',
                 'password' => Hash::make('v482kS0Y'),
-                'klantCode' => '1234',
-                'last_known_klantCode_name' => '1234',
+                // 'klantCode' => '1234',
+                // 'last_known_klantCode_name' => '1234',
                 'extra_email' => '[{"email":"Belg@rade"},{"email":"Pa@ris"},{"email":"Madr@id"}]',
                 // 'privileges' => '["show_tiles","free_search","lotcode_search"]',
                 'can_reserve' => 1,

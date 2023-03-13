@@ -442,6 +442,16 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   border: 1px solid #000;
 }
 
+.accClientSelect {
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+.accClientSelect select {
+  background-color: #222;
+  color: #CCC;
+}
+
 .accButtons {
   display: flex;
   gap: 15px;

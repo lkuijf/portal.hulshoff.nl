@@ -45,9 +45,9 @@
     <div class="loadProducts"></div>
 </div>
 @endsection
-@section('extra_head')
+{{-- @section('extra_head')
     <script src="{{ asset('js/axios.min.js') }}"></script>
-@endsection
+@endsection --}}
 @section('before_closing_body_tag')
 @parent
 <script>
@@ -257,7 +257,7 @@
             for (const key in activeFilters) {
                 if (Object.hasOwnProperty.call(activeFilters, key)) {
                     const element = activeFilters[key];
-                    if(element.value != '') {
+                    if(element.value != '' && element.name != 'customerCode') {
                         let wrapP = document.createElement("p");
                         wrapP.classList.add("activeFilter");
 

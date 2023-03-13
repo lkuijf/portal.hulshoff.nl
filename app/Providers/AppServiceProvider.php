@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
+use App\Models\Customer;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -34,7 +36,19 @@ class AppServiceProvider extends ServiceProvider
                     $total++;
                 }
             }
-            $view->with('basket_total', $total);    
+            $view->with('basket_total', $total);
+
+
+            if(auth()->user()) {
+                $klantCodes = auth()->user()->clientCodes;
+                $customers = [];
+                foreach($klantCodes as $kcode) {
+                    $customer = Customer::find($kcode->klantCode);
+                    $customers[] = $customer;
+                }
+                $view->with('customers', $customers);
+            }
+            
         });
         //
         // DB::listen(function ($query) {

@@ -69,14 +69,56 @@
     @endif --}}
     <tr>
         <td>{{ __('Customer') }}</td>
-        <td>
-            <select name="klantCode">
-                <option value="">-geen-</option>
-                @foreach ($data['customers'] as $customer)
-                    <option value="{{ $customer->klantCode }}" @if((old('klantCode') && $customer->klantCode == old('klantCode')) || $customer->klantCode == $klantCode) selected @endif>{{ $customer->naam }}({{ $customer->klantCode }})</option>
+        <td class="klantCode_td">
+            @if(old('klantCode'))
+            {{-- {{ print_r(old('klantCode')) }} --}}
+                @foreach (old('klantCode') as $oldKCode)
+                @if($oldKCode)
+                <div>
+                    <select name="klantCode[]">
+                        <option value="">-geen-</option>
+                        @foreach ($data['customers'] as $customer)
+                            <option value="{{ $customer->klantCode }}" @if($customer->klantCode == $oldKCode) selected @endif>{{ $customer->naam }}({{ $customer->klantCode }})</option>
+                        @endforeach
+                    </select>
+                </div>
+                @endif
                 @endforeach
-            </select>
-            @if($klantCode === null) Last known: {{ $data['user']->last_known_klantCode_name }} @endif
+            @else
+            @if (isset($data['userCustomers']))
+                @foreach($data['userCustomers'] as $oCust)
+                    <div>
+                        <select name="klantCode[]">
+                            <option value="">-geen-</option>
+                            @foreach ($data['customers'] as $customer)
+                                <option value="{{ $customer->klantCode }}" @if($customer->klantCode == $oCust->klantCode) selected @endif>{{ $customer->naam }}({{ $customer->klantCode }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endforeach
+            @endif
+            @endif
+
+
+            {{-- <div>
+                <select name="klantCode[]">
+                    <option value="">-geen-</option>
+                    @foreach ($data['customers'] as $customer)
+                        <option value="{{ $customer->klantCode }}">{{ $customer->naam }}({{ $customer->klantCode }})</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div>
+                <select name="klantCode[]">
+                    <option value="">-geen-</option>
+                    @foreach ($data['customers'] as $customer)
+                        <option value="{{ $customer->klantCode }}">{{ $customer->naam }}({{ $customer->klantCode }})</option>
+                    @endforeach
+                </select>
+            </div> --}}
+            
+            {{-- @if($klantCode === null) Last known: {{ $data['user']->last_known_klantCode_name }} @endif --}}
         </td>
     </tr>
     @if($extra_email)
@@ -142,6 +184,55 @@
 <script>
     const filterTop = document.querySelector('#filter_on_top');
     const filterSide = document.querySelector('#filter_at_side');
+    // const clients = document.querySelectorAll('[name="klantCode[]"]');
+    const klantCodeSelectsWrap = document.querySelector('.klantCode_td');
+    const customers = {};
+    @foreach ($data['customers'] as $customer)
+        customers['{{ $customer->klantCode }}'] = '{{ $customer->naam }}';
+    @endforeach
+    
+    checkSelectSlots();
+
+    function checkSelectSlots() {
+// console.log('_checkSelectSlots');
+        const clients = document.querySelectorAll('[name="klantCode[]"]');
+        let freeSlots = false;
+        clients.forEach(el => {
+            el.addEventListener('change', () => {
+                checkSelectSlots();
+            });
+            if(el.value === '') freeSlots = true;
+        });
+        if(!freeSlots) {
+            addSelectSlot();
+        }
+    }
+
+    function addSelectSlot() {
+// console.log('_addSelectSlot');
+        const div = document.createElement('div');
+        const select = document.createElement('select');
+        const emptyOption = document.createElement('option');
+        const emptyText = document.createTextNode('-geen-');
+        emptyOption.appendChild(emptyText);
+        select.setAttribute('name', 'klantCode[]');
+        emptyOption.value = '';
+        select.appendChild(emptyOption);
+        div.appendChild(select);
+        
+        Object.keys(customers).forEach(key => {
+            let option = document.createElement('option');
+            let text = document.createTextNode(customers[key] + '(' + key + ')');
+            option.appendChild(text);
+            option.value = key;
+            select.appendChild(option);
+        });
+        select.addEventListener('change', () => {
+            checkSelectSlots();
+        });
+
+        klantCodeSelectsWrap.appendChild(div);
+    }
 
     filterTop.addEventListener('change', () => {
         if(filterTop.checked) filterSide.checked = false;

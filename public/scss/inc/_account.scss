@@ -13,6 +13,15 @@
         border: 1px solid #000;
     }
 }
+.accClientSelect {
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    select {
+        background-color: #222;
+        color: #CCC;
+    }
+}
 .accButtons {
     display: flex;
     gap: 15px;

@@ -92,4 +92,13 @@ class BasketController extends Controller
         return redirect()->back();
     }
 
+    public function resetClientBasket(Request $request) {
+        session(['basket' => []]);
+        if($request->newClientCode) session(['selectedClient' => $request->newClientCode]);
+        else session()->forget('selectedClient');
+        $res = new \stdClass();
+        $res->success = true;
+        echo json_encode($res);
+    }
+
 }

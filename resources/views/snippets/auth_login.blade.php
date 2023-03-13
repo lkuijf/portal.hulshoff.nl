@@ -36,6 +36,6 @@ admin@portal.hulshoff.nl<br />
         @php
             $statusMsg = session('status');
         @endphp
-        <script>showMessage('success',"<p>aaa{!! $statusMsg !!}</p>")</script>
+        <script>showMessage('success',"<p>{!! $statusMsg !!}</p>")</script>
     @endif
 {{-- </div> --}}

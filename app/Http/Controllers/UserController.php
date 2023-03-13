@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 use App\Models\HulshoffUser;
+use App\Models\HulshoffUserKlantcode;
 use App\Models\Customer;
 
 class UserController extends Controller
@@ -40,8 +41,10 @@ class UserController extends Controller
     public function showUser($id) {
         if(!auth()->user()->is_admin) return view('no-access');
         $user = HulshoffUser::find($id);
+// dd($user->customers);
         $customers = Customer::get(['klantCode', 'naam']);
-        return view('user')->with('data', ['user' => $user, 'customers' => $customers]);
+        $userCustomers = HulshoffUserKlantcode::where('hulshoff_user_id', $id)->get('klantCode');
+        return view('user')->with('data', ['user' => $user, 'customers' => $customers, 'userCustomers' => $userCustomers]);
     }
 
     public function newUser() {
@@ -56,10 +59,19 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['E-mail address is already in use'])->withInput();
         }
 
-        $customer = Customer::find($request->klantCode);
         $user = new HulshoffUser;
-        $user = $this->populateUserModel($user, $customer, $request);
+        $user = $this->populateUserModel($user, $request);
         $user->save();
+
+        foreach($request->klantCode as $kCode) {
+            if($kCode) {
+                $hhUserKlant = HulshoffUserKlantcode::firstOrCreate([
+                    'hulshoff_user_id' => $user->id,
+                    'klantCode' => $kCode
+                ]);
+            }
+        }
+
         // $user->sendEmailVerificationNotification();
         $token = Password::getRepository()->create($user);
         $user->sendPasswordResetNotification($token);
@@ -101,9 +113,20 @@ class UserController extends Controller
             $user->extra_email = json_encode($curEmails);
         } else {
             $validated = $this->validateUserData($request, false);
-            $user = $this->populateUserModel($user, $customer, $request);
+            $user = $this->populateUserModel($user, $request);
         }
         $user->save();
+
+        HulshoffUserKlantcode::where('hulshoff_user_id', $user->id)->delete();
+        foreach($request->klantCode as $kCode) {
+            if($kCode) {
+                $hhUserKlant = HulshoffUserKlantcode::firstOrCreate([
+                    'hulshoff_user_id' => $user->id,
+                    'klantCode' => $kCode
+                ]);
+            }
+        }
+
         $request->session()->flash('message', '<p>' . __('User saved') . '</p>');
         return redirect()->back();
     }
@@ -142,13 +165,14 @@ class UserController extends Controller
         return $validated;
     }
 
-    public function populateUserModel($usr, $cust, $req) {
+    public function populateUserModel($usr, $req) {
         $usr->name = $req->name;
         if(isset($req->email)) $usr->email = $req->email;
         if(isset($req->password)) $usr->password = Hash::make($req->password);
-        $usr->klantCode = $req->klantCode;
-        if(isset($cust->naam)) $usr->last_known_klantCode_name = $req->klantCode . ',' . $cust->naam;
-        // else $usr->last_known_klantCode_name = null;
+
+        // $usr->klantCode = $req->klantCode;
+        // if(isset($cust->naam)) $usr->last_known_klantCode_name = $req->klantCode . ',' . $cust->naam;
+
         $usr->privileges = ($req->privileges?json_encode($req->privileges):null);
         $usr->can_reserve = ($req->can_reserve?1:0);
         $usr->is_admin = ($req->is_admin?1:0);

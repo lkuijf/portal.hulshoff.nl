@@ -11,7 +11,4 @@ class pageController extends Controller
         return view('templates.development')->with('data', $data);
     }
 
-    public function allContentElements() {
-        
-    }
 }

@@ -5,6 +5,7 @@
     $productsBtnActive = false;
     $ordersBtnActive = false;
     $reservationsBtnActive = false;
+    $selectedCustomer = '';
     switch (Route::currentRouteName()) {
         case 'users': case 'new_user': case 'user_detail':
             $usersBtnActive = true;
@@ -25,6 +26,9 @@
             $reservationsBtnActive = true;
             break;
     }
+    if(session()->has('selectedClient')) {
+        $selectedCustomer = session('selectedClient');
+    }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +43,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
     <meta name="_token" content="{{ csrf_token() }}">
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/axios.min.js') }}"></script>
     @yield('extra_head')
 </head>
 <body>
@@ -62,6 +67,16 @@
                 <span>{{ auth()->user()->name }}</span>
                 @endif
             </div>
+            @if (count($customers))
+            <div class="accClientSelect">
+                <select name="customerCode" data-filter-reference="c_code">
+                    <option value="" @if('' == $selectedCustomer){{ 'selected' }}@endif>- {{ __('Please select') }} -</option>
+                @foreach ($customers as $client)
+                    <option value="{{ $client->klantCode }}" @if($client->klantCode == $selectedCustomer){{ 'selected' }}@endif>{{ $client->naam }}</option>
+                @endforeach
+                </select>
+            </div>
+            @endif
             <div class="accButtons">
                 @if(Route::currentRouteName() == 'front')
                 <a href="#" class="accBtnHome">Home</a>
@@ -134,6 +149,41 @@
 @if(session('message'))
     <script>showMessage('success',"{!! session('message') !!}")</script>
 @endif
+<script>
+    clientSelect = document.querySelector('select[name=customerCode]');
+    if(clientSelect) {
+        let previousValue = clientSelect.value;
+        clientSelect.addEventListener('change', () => {
+            if(previousValue == '') {
+                doSetClient(previousValue);
+            } else if(confirm('U staat op het punt om van klant te wisselen, uw winkelwagen wordt leeggemaakt.')) {
+                doSetClient(previousValue);
+            } else {
+                clientSelect.value = previousValue;
+            }
+        });
+    }
+    function doSetClient(prevVal) {
+        let info = {};
+        info['newClientCode'] = clientSelect.value;
+        axios.post('{{ url('/ajax/setClient') }}', info)
+        .then(function (response) {
+            // handle success
+            // console.log(response.data);
+            if(response.data.success == true) {
+                // previousValue = clientSelect.value;
+                location.reload();
+            }
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+    }
+</script>
 @yield('before_closing_body_tag')
 </body>
 </html>

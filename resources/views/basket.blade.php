@@ -32,7 +32,7 @@
                 <tr>
                     <td>{{ $item['product']->id }}</td>
                     <td>{{ $item['product']->omschrijving }}</td>
-                    <td><span>{{ $item['count'] }} <a href="" class="editBasketCount" data-product-id="{{ $item['product']->id }}" data-product-count="{{ $item['count'] }}">[edit]</a></span></td>
+                    <td><span>{{ $item['count'] }} <a href="" class="editBtn editBasketCount" data-product-id="{{ $item['product']->id }}" data-product-count="{{ $item['count'] }}">{{ __('Edit') }}</a></span></td>
                     <td>&euro;{{ number_format($item['product']->prijs, 2, ',', '.') }}</td>
                     <td>&euro;{{ number_format($item['product']->prijs*$item['count'], 2, ',', '.') }}</td>
                     <td>
@@ -127,55 +127,57 @@
     // });
 
     const editDateBtn = document.querySelector('.editBasketDate');
-    editDateBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        let parentNode = editDateBtn.parentNode.parentNode;
-        let originalSpan = editDateBtn.parentNode;
-
-        let csrfToken = document.querySelector('meta[name="_token"]').content;
-        let oDate = editDateBtn.dataset.orderDate;
-        let editForm = document.createElement('form');
-        let editInput = document.createElement('input');
-        let editHiddenMethod = document.createElement('input');
-        let editHiddenToken = document.createElement('input');
-        let editSave = document.createElement('button');
-        let editCancel = document.createElement('a');
-        editForm.setAttribute('action', '/basket');
-        editForm.setAttribute('method', 'post');
-        editInput.setAttribute('type', 'text');
-        editInput.setAttribute('size', '12');
-        editInput.setAttribute('name', 'deliveryDate');
-        editInput.setAttribute('value', oDate);
-        editHiddenMethod.setAttribute('type', 'hidden');
-        editHiddenMethod.setAttribute('name', '_method');
-        editHiddenMethod.setAttribute('value', 'put');
-        editHiddenToken.setAttribute('type', 'hidden');
-        editHiddenToken.setAttribute('name', '_token');
-        editHiddenToken.setAttribute('value', csrfToken);
-        editSave.setAttribute('type', 'submit');
-        editCancel.setAttribute('href', '');
-
-        let saveBtnText = document.createTextNode('Save');
-        let cancelText = document.createTextNode('Cancel');
-        editSave.appendChild(saveBtnText);
-        editCancel.appendChild(cancelText);
-
-        editForm.append(editHiddenMethod, editHiddenToken, editInput, editSave, editCancel);
-
-        new Datepicker(editInput, {
-            format: 'dd-mm-yyyy'
-        });
-
-        parentNode.replaceChild(editForm, originalSpan);
-
-        editCancel.addEventListener('click', (e) => {
+    if(editDateBtn) { // basket is empty, not button present
+        editDateBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            parentNode.replaceChild(originalSpan, editForm);
+            let parentNode = editDateBtn.parentNode.parentNode;
+            let originalSpan = editDateBtn.parentNode;
+
+            let csrfToken = document.querySelector('meta[name="_token"]').content;
+            let oDate = editDateBtn.dataset.orderDate;
+            let editForm = document.createElement('form');
+            let editInput = document.createElement('input');
+            let editHiddenMethod = document.createElement('input');
+            let editHiddenToken = document.createElement('input');
+            let editSave = document.createElement('button');
+            let editCancel = document.createElement('a');
+            editForm.setAttribute('action', '/basket');
+            editForm.setAttribute('method', 'post');
+            editInput.setAttribute('type', 'text');
+            editInput.setAttribute('size', '12');
+            editInput.setAttribute('name', 'deliveryDate');
+            editInput.setAttribute('value', oDate);
+            editHiddenMethod.setAttribute('type', 'hidden');
+            editHiddenMethod.setAttribute('name', '_method');
+            editHiddenMethod.setAttribute('value', 'put');
+            editHiddenToken.setAttribute('type', 'hidden');
+            editHiddenToken.setAttribute('name', '_token');
+            editHiddenToken.setAttribute('value', csrfToken);
+            editSave.setAttribute('type', 'submit');
+            editCancel.setAttribute('href', '');
+
+            let saveBtnText = document.createTextNode('Save');
+            let cancelText = document.createTextNode('Cancel');
+            editSave.appendChild(saveBtnText);
+            editCancel.appendChild(cancelText);
+
+            editForm.append(editHiddenMethod, editHiddenToken, editInput, editSave, editCancel);
+
+            new Datepicker(editInput, {
+                format: 'dd-mm-yyyy'
+            });
+
+            parentNode.replaceChild(editForm, originalSpan);
+
+            editCancel.addEventListener('click', (e) => {
+                e.preventDefault();
+                parentNode.replaceChild(originalSpan, editForm);
+                toggleVisibility([editDateBtn]);
+            });
             toggleVisibility([editDateBtn]);
+            
         });
-        toggleVisibility([editDateBtn]);
-        
-    });
+    }
     function toggleVisibility(elements) {
         elements.forEach(element => {
             if(element.style.visibility != 'hidden') {

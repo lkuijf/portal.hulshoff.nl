@@ -80,6 +80,7 @@ Route::post('/ajax/products', [ProductController::class, 'getProducts'])->name('
 Route::post('/ajax/types', [ProductController::class, 'getTypes'])->name('get_types')->middleware('auth:h_users');
 Route::post('/ajax/brands', [ProductController::class, 'getBrands'])->name('get_brands')->middleware('auth:h_users');
 Route::post('/ajax/colors', [ProductController::class, 'getColors'])->name('get_colors')->middleware('auth:h_users');
+Route::post('/ajax/setClient', [BasketController::class, 'resetClientBasket'])->name('set_client')->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

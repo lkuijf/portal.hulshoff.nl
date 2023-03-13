@@ -57,22 +57,20 @@ class ProductController extends Controller
 
     public function getProducts(Request $filters) {
         $resQry = Product::select();
-        if(auth()->user()->klantCode) $resQry->where('klantCode', auth()->user()->klantCode);
-// dd($filters);
+        // if(auth()->user()->klantCode) $resQry->where('klantCode', auth()->user()->klantCode);
+        if(isset($filters->c_code) && $filters->c_code['value']) {
+            $resQry->where('klantCode', $filters->c_code['value']);
+        }
         if(isset($filters->brand) && $filters->brand['value']) {
-            // $brand = Productbrand::where('brand', $filters->brand['value'])->first();
             $resQry->where('productbrand_id', $filters->brand['value']);
         }
         if(isset($filters->group) && $filters->group['value']) {
-            // $group = Productgroup::where('group', $filters->group['value'])->first();
             $resQry->where('productgroup_id', $filters->group['value']);
         }
         if(isset($filters->type) && $filters->type['value']) {
-            // $type = Producttype::where('type', $filters->type['value'])->first();
             $resQry->where('producttype_id', $filters->type['value']);
         }
         if(isset($filters->color) && $filters->color['value']) {
-            // $color = Productcolor::where('color', $filters->color['value'])->first();
             $resQry->where('productcolor_id', $filters->color['value']);
         }
         if(isset($filters->search) && $filters->search['value']) {
