@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -41,7 +42,7 @@ class UserController extends Controller
     public function showUser($id) {
         if(!auth()->user()->is_admin) return view('no-access');
         $user = HulshoffUser::find($id);
-// dd($user->customers);
+        if(!$user) return abort(404);
         $customers = Customer::get(['klantCode', 'naam']);
         $userCustomers = HulshoffUserKlantcode::where('hulshoff_user_id', $id)->get('klantCode');
         return view('user')->with('data', ['user' => $user, 'customers' => $customers, 'userCustomers' => $userCustomers]);
@@ -177,6 +178,18 @@ class UserController extends Controller
         $usr->can_reserve = ($req->can_reserve?1:0);
         $usr->is_admin = ($req->is_admin?1:0);
         return $usr;
+    }
+
+    public function getClientUsers(Request $req) {
+        $resQry = DB::table('hulshoff_users')
+            ->join('hulshoff_user_klantcodes', 'hulshoff_user_klantcodes.hulshoff_user_id', '=', 'hulshoff_users.id')
+            ->where('hulshoff_user_klantcodes.klantCode', $req->klantCode)
+            // ->select('productbrands.id', 'productbrands.brand')
+            // ->distinct()
+            ;
+        $results = $resQry->get();
+        echo json_encode($results);
+
     }
 
 }

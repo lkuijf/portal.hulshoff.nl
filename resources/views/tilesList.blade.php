@@ -57,10 +57,3 @@
     {{-- </div> --}}
 </div>
 @endsection
-{{-- @section('before_closing_body_tag')
-@if ($uploadedFileData)
-<script>
-    console.log($uploadedFileData['file']);
-</script>
-@endif
-@endsection --}}

@@ -36,6 +36,7 @@ $fontFamily: 'Heebo', sans-serif;
 @import 'inc/wizzard.scss';
 @import 'inc/resetPassword.scss';
 @import 'inc/forgotPassword.scss';
+@import 'inc/reportsContent.scss';
 
 html, body {
     margin: 0;
@@ -109,6 +110,11 @@ form {
         color: #FFF;
         &:hover {
             background-color: $colorGreenDark;
+        }
+        &:disabled {
+            background-color: #CCC;
+            color: #777;
+            cursor: not-allowed;
         }
         &:before {
             font-family: 'hulshoff';

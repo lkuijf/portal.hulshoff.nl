@@ -2,6 +2,7 @@
     $usersBtnActive = false;
     $adminsBtnActive = false;
     $tilesBtnActive = false;
+    $reportsBtnActive = false;
     $productsBtnActive = false;
     $ordersBtnActive = false;
     $reservationsBtnActive = false;
@@ -15,6 +16,9 @@
             break;
         case 'tiles':
             $tilesBtnActive = true;
+            break;
+        case 'reports':
+            $reportsBtnActive = true;
             break;
         case 'products': case 'product_detail':
             $productsBtnActive = true;
@@ -47,6 +51,7 @@
     @yield('extra_head')
 </head>
 <body>
+    {{-- {{ session('selectedClient') }} --}}
     @yield('after_body_tag')
     <div class="gridContainer">
         <header class="logoCell"><img src="{{ asset('statics/hulshoff-logo.png') }}" alt=""></header>
@@ -113,6 +118,7 @@
                             <li><a href="{{ route('users') }}" @if($usersBtnActive)class="active"@endif>{{ __('Users') }}</a></li>
                             <li><a href="{{ route('admins') }}" @if($adminsBtnActive)class="active"@endif>{{ __('Admins') }}</a></li>
                             <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>{{ __('Tiles') }}</a></li>
+                            <li><a href="{{ route('reports') }}" @if($reportsBtnActive)class="active"@endif>{{ __('Reports') }}</a></li>
                         @endif
                         <li><a href="{{ route('products') }}" @if($productsBtnActive)class="active"@endif>{{ __('Products') }}</a></li>
                         <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>{{ __('Orders') }}</a></li>
@@ -150,28 +156,27 @@
     <script>showMessage('success',"{!! session('message') !!}")</script>
 @endif
 <script>
-    clientSelect = document.querySelector('select[name=customerCode]');
-    if(clientSelect) {
-        let previousValue = clientSelect.value;
-        clientSelect.addEventListener('change', () => {
+    custSel = document.querySelector('select[name=customerCode]');
+    if(custSel) {
+        let previousValue = custSel.value;
+        custSel.addEventListener('change', () => {
             if(previousValue == '') {
                 doSetClient(previousValue);
-            } else if(confirm('U staat op het punt om van klant te wisselen, uw winkelwagen wordt leeggemaakt.')) {
+            } else if(confirm("{{ __('You are about to switch customer, your shopping basket will be emptied') }}")) {
                 doSetClient(previousValue);
             } else {
-                clientSelect.value = previousValue;
+                custSel.value = previousValue;
             }
         });
     }
     function doSetClient(prevVal) {
         let info = {};
-        info['newClientCode'] = clientSelect.value;
+        info['newClientCode'] = custSel.value;
         axios.post('{{ url('/ajax/setClient') }}', info)
         .then(function (response) {
             // handle success
             // console.log(response.data);
             if(response.data.success == true) {
-                // previousValue = clientSelect.value;
                 location.reload();
             }
         })

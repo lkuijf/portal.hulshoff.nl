@@ -101,9 +101,14 @@ class ProductController extends Controller
     }
 
     public function showProductDetails($id) {
+        if(!auth()->user()->canDisplay()) return view('no-data');
+
         $product = Product::findOr($id, function () {
             return abort(404);
         });
+
+        if(!session()->has('selectedClient' ) || (session('selectedClient') != $product->klantCode)) return view('no-data');
+
         return view('productDetail')->with('product', $product);
     }
 

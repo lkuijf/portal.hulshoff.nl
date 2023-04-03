@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TilesController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,9 @@ Route::get('/tiles', [TilesController::class, 'showTiles'])->name('tiles')->midd
 Route::post('/tile', [TilesController::class, 'uploadTile'])->name('tile_upload')->middleware('auth:h_users');
 Route::delete('/tile', [TilesController::class, 'deleteTile'])->name('tile_delete')->middleware('auth:h_users');
 
+Route::get('/reports', [ReportController::class, 'reportsPage'])->name('reports')->middleware('auth:h_users');
+Route::post('/validate-report', [ReportController::class, 'validateReport'])->name('validate_report')->middleware('auth:h_users');
+
 Route::post('/user', [UserController::class, 'addUser']);
 Route::put('/user', [UserController::class, 'updateUser']);
 Route::delete('/user', [UserController::class, 'deleteUser']);
@@ -81,6 +85,8 @@ Route::post('/ajax/types', [ProductController::class, 'getTypes'])->name('get_ty
 Route::post('/ajax/brands', [ProductController::class, 'getBrands'])->name('get_brands')->middleware('auth:h_users');
 Route::post('/ajax/colors', [ProductController::class, 'getColors'])->name('get_colors')->middleware('auth:h_users');
 Route::post('/ajax/setClient', [BasketController::class, 'resetClientBasket'])->name('set_client')->middleware('auth:h_users');
+Route::get('/ajax/users/{klantCode}', [UserController::class, 'getClientUsers'])->name('get_client_users')->where(['klantCode' => '[0-9]+'])->middleware('auth:h_users');
+Route::post('/ajax/generate-report', [ReportController::class, 'generateReport'])->name('generate_report')->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

@@ -88,6 +88,12 @@ return [
             'throw' => false,
         ],
 
+        // 'local_pdf_exports' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/pdf'),
+        //     'throw' => false,
+        // ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -103,6 +109,20 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'csv' => [
+            'driver' => 'local',
+            'root' => storage_path('app/csv'),
+            'url' => env('APP_URL').'/csv',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+        // 'pdf' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/public/pdf'),
+        //     'url' => env('APP_URL').'/storage/pdf',
+        //     'visibility' => 'public',
+        //     'throw' => false,
+        // ],
 
         's3' => [
             'driver' => 's3',
@@ -132,6 +152,8 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('storage/tiles') => storage_path('app/public/tiles'),
+        public_path('pdf') => storage_path('app/pdf'),
+        public_path('csv') => storage_path('app/csv'),
     ],
 
 ];
