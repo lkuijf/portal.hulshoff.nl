@@ -450,6 +450,7 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 .accClientSelect select {
   background-color: #222;
   color: #CCC;
+  max-width: 100%;
 }
 
 .accButtons {
