@@ -107,7 +107,7 @@ class ProductController extends Controller
             return abort(404);
         });
 
-        if(!session()->has('selectedClient' ) || (session('selectedClient') != $product->klantCode)) return view('no-data');
+        if(session()->has('selectedClient' ) && (session('selectedClient') != $product->klantCode)) return view('no-data');
 
         return view('productDetail')->with('product', $product);
     }
