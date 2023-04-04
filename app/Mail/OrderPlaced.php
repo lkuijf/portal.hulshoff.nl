@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Order;
-use App\Models\OrderArticle;
+// use App\Models\OrderArticle;
 use App\Models\Product;
 
 class OrderPlaced extends Mailable
@@ -51,8 +51,18 @@ class OrderPlaced extends Mailable
      */
     public function content()
     {
+        $aProds = [];
+        if(count($this->order->orderArticles)) {
+            foreach($this->order->orderArticles as $ordArt) {
+                $product = Product::find($ordArt->product_id);
+                $aProds[] = $product->omschrijving;
+            }
+        }
         return new Content(
             view: 'mail.order_placed',
+            with: [
+                'orderProducts' => $aProds,
+            ],
         );
     }
 

@@ -12,13 +12,13 @@
         <p>Order code klant:<br /><strong>{{ $order->orderCodeKlant }}</strong></p>
     @endif
     <p>Delivery date:<br />{{ date('d-m-Y', strtotime($order->afleverDatum)) }}</p>
-    @if (count($order->orderArticles))
+    @if (count($order->orderProducts))
         <p>
-        @foreach ($order->orderArticles as $ordArt)
-            @php
+        @foreach ($order->orderProducts as $prod)
+            {{-- @php
                 $product = Product::find($ordArt->product_id);
-            @endphp
-            {{ $product->omschrijving }}<br />
+            @endphp --}}
+            {{ $prod }}<br />
         @endforeach
         </p>
     @endif
