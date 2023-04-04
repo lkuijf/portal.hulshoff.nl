@@ -55,7 +55,7 @@ class OrderPlaced extends Mailable
         if(count($this->order->orderArticles)) {
             foreach($this->order->orderArticles as $ordArt) {
                 $product = Product::find($ordArt->product_id);
-                $aProds[] = $product->omschrijving;
+                $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
             }
         }
         return new Content(
