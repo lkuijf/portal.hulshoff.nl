@@ -19,7 +19,9 @@ class OrderPlaced extends Mailable
      *
      * @return void
      */
-    public $isReservation = 0;
+    // public $isReservation = 0;
+    public $order;
+    
     // public function __construct($canReserve)
     public function __construct(Order $order)
     {
