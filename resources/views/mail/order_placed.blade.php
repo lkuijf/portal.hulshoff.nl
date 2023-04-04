@@ -1,6 +1,6 @@
 @extends('templates.email')
 @section('content')
-    @if ($isReservation)
+    @if ($order->is_reservation)
         <h1>Reservation placed</h1>
         <p>Your reservation has been placed.</p>
         <p>{{ $order->id }}</p>
