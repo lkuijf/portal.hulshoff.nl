@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Order;
+use App\Models\Product;
 
 class OrderPlaced extends Mailable
 {
@@ -21,7 +22,7 @@ class OrderPlaced extends Mailable
      */
     // public $isReservation = 0;
     public $order;
-    
+
     // public function __construct($canReserve)
     public function __construct(Order $order)
     {
