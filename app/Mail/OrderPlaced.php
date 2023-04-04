@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Order;
 
 class OrderPlaced extends Mailable
 {
@@ -19,9 +20,11 @@ class OrderPlaced extends Mailable
      * @return void
      */
     public $isReservation = 0;
-    public function __construct($canReserve)
+    // public function __construct($canReserve)
+    public function __construct(Order $order)
     {
-        if($canReserve) $this->isReservation = $canReserve;
+        // if($canReserve) $this->isReservation = $canReserve;
+        $this->order = $order;
     }
 
     /**
@@ -32,7 +35,8 @@ class OrderPlaced extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: ($this->isReservation?'Reservation':'Order') . ' Placed',
+            // subject: ($this->isReservation?'Reservation':'Order') . ' Placed',
+            subject: ($this->order->is_reservation?'Reservation':'Order') . ' Placed',
         );
     }
 
