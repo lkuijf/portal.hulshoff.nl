@@ -8,6 +8,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Order;
+use App\Models\Product;
 
 class OrderPromoted extends Mailable
 {
@@ -18,9 +20,12 @@ class OrderPromoted extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+    public $order;
+
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -42,8 +47,18 @@ class OrderPromoted extends Mailable
      */
     public function content()
     {
+        $aProds = [];
+        if(count($this->order->orderArticles)) {
+            foreach($this->order->orderArticles as $ordArt) {
+                $product = Product::find($ordArt->product_id);
+                $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
+            }
+        }
         return new Content(
             view: 'mail.order_promoted',
+            with: [
+                'orderProducts' => $aProds,
+            ],
         );
     }
 

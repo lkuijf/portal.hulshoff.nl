@@ -15,9 +15,6 @@
     @if (count($orderProducts))
         <p>Products:<br />
         @foreach ($orderProducts as $prod)
-            {{-- @php
-                $product = Product::find($ordArt->product_id);
-            @endphp --}}
             <strong>{{ $prod }}</strong><br />
         @endforeach
         </p>
