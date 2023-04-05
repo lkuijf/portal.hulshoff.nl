@@ -14,7 +14,7 @@
                     margin-right: auto;
                     background-color: #FFF;
                     border: 1px solid #CCC;
-                    border-bottom: 2px;
+                    border-bottom: 1px;
                 ">
                 <p style="text-align:center;"><img src="https://portal.hulshoff.nl/statics/hulshoff-logo.png" alt="logo" /></p>
 				@yield('content')
