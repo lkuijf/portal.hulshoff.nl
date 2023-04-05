@@ -96,8 +96,13 @@ class OrderController extends Controller
                 $product->save();
             }
         }
-        // Mail::to(auth()->user()->email)->send(new OrderPlaced(auth()->user()->can_reserve));
         Mail::to(auth()->user()->email)->send(new OrderPlaced($order));
+        $extraEmails = json_decode(auth()->user()->extra_email);
+        if($extraEmails && count($extraEmails)) {
+            foreach($extraEmails as $e_email) {
+                Mail::to($e_email)->send(new OrderPlaced($order));
+            }
+        }
         $request->session()->flash('message', $orderMsg);
         return redirect()->route($redirect);
     }
