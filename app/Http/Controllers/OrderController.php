@@ -124,7 +124,15 @@ class OrderController extends Controller
         }
         $order->save();
 
-        if($request->type == 'confirmReservation') Mail::to(auth()->user()->email)->send(new OrderPromoted($order));
+        if($request->type == 'confirmReservation') {
+            Mail::to(auth()->user()->email)->send(new OrderPromoted($order));
+            $extraEmails = json_decode(auth()->user()->extra_email);
+            if($extraEmails && count($extraEmails)) {
+                foreach($extraEmails as $e_email) {
+                    Mail::to($e_email)->send(new OrderPromoted($order));
+                }
+            }
+        }
 
         if($request->type == 'confirmReservation') $request->session()->flash('message', '<p>' . __('Your order has been placed') . '!</p>');
         if($request->type == 'updateDeliveryDate') $request->session()->flash('message', '<p>' . __('Delivery date has been changed') . '</p>');
