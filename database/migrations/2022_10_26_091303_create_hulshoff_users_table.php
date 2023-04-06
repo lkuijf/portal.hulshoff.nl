@@ -36,7 +36,7 @@ return new class extends Migration
                 'name' => 'admin',
                 'email' => 'admin@portal.hulshoff.nl',
                 'email_verified_at' => '2022-01-01 00:00:00',
-                'password' => Hash::make('6weY9e5H'),
+                'password' => Hash::make('Yq2NvDLkeEaXm6Aha'),
                 'is_admin' => 1,
             )
         );
@@ -45,7 +45,7 @@ return new class extends Migration
                 'name' => 'TEST klant',
                 'email' => 'customer_a@hulshoffportal.nl',
                 'email_verified_at' => '2022-01-01 00:00:00',
-                'password' => Hash::make('v482kS0Y'),
+                'password' => Hash::make('nzDxHh887VjGbjGZw'),
                 // 'klantCode' => '1234',
                 // 'last_known_klantCode_name' => '1234',
                 'extra_email' => '[{"email":"Belg@rade"},{"email":"Pa@ris"},{"email":"Madr@id"}]',
