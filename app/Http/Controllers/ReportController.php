@@ -104,21 +104,19 @@ class ReportController extends Controller
             }
 
             if($req->generateTypeValue =='pdf') {
+                if(!Storage::exists('pdf')) Storage::makeDirectory('pdf', 0777, true); //creates directory
+                
                 if($req->reportType == 'orders')            $pdf = Pdf::loadView('reports.orders-pdf', $exportData);
                 if($req->reportType == 'total_orders')      $pdf = Pdf::loadView('reports.total_orders-pdf', $exportData);
                 if($req->reportType == 'total_products')    $pdf = Pdf::loadView('reports.total_products-pdf', $exportData);
                 $file = $req->klantCode . '-' . $req->reportType . '-' . date('U') . '.pdf';
-
-                if(!Storage::exists('nieuweDIR')) {
-                    // Storage::makeDirectory('/path/to/create/your/directory', 0775, true); //creates directory
-                    Storage::makeDirectory('nieuweDIR', 0777, true); //creates directory
-                }
-
                 $pdf->save(storage_path('app/pdf/' . $file));
                 $results->export_file = '/pdf/' . $file;
             }
 
             if($req->generateTypeValue =='csv') {
+                if(!Storage::exists('csv')) Storage::makeDirectory('csv', 0777, true); //creates directory
+
                 $file = $req->klantCode . '-' . $req->reportType . '-' . date('U') . '.csv';
                 $fp = fopen(config('filesystems.disks.csv.root') . '/' . $file, 'w');
                 fputs($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
