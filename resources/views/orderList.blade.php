@@ -21,6 +21,7 @@
                     <th>Order Code {{ __('Client') }}</th>
                     <th>{{ __('Delivery date') }}</th>
                     <th>{{ __('User') }}</th>
+                    <th>{{ __('Client') }}</th>
                     <th>{{ __('Created at') }}</th>
                     {{-- <th>Aflever Tijd</th> --}}
                     <th>&nbsp;</th>
@@ -34,6 +35,7 @@
                     <td>{{ $order->orderCodeKlant }}</td>
                     <td>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}</td>
                     <td>{{ $order->hulshoffUser->name }} ({{ $order->hulshoffUser->email }})</td>
+                    <td>{{ $order->klantCode }}</td>
                     <td>{{ date("d-m-Y H:m:s", strtotime($order->created_at)) }}</td>
                     {{-- <td>{{ date("H:i", strtotime($order->afleverTijd)) }}</td> --}}
                     <td><a href="{{ url()->current() }}/{{ $order->id }}" class="editBtn">{{ __('View') }}</a></td>

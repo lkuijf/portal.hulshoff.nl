@@ -50,6 +50,7 @@ class ReportController extends Controller
                 $resQry = DB::table('orders')
                     ->join('hulshoff_user_klantcodes', 'hulshoff_user_klantcodes.hulshoff_user_id', '=', 'orders.hulshoff_user_id')
                     ->where('hulshoff_user_klantcodes.klantCode', $req->klantCode)
+                    ->where('orders.klantCode', $req->klantCode)
                     ->where('orders.is_reservation', 0)
                     ->whereBetween('orders.created_at', [date('Y-m-d', strtotime($req->startDate)) . ' 00:00:00', date('Y-m-d', strtotime($req->endDate)) . ' 00:00:00'])
                     ;

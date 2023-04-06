@@ -57,6 +57,7 @@ class OrderController extends Controller
     public function newOrder(Request $request) {
         $basket = [];
         $deliveryDate = date("d-m-Y", strtotime('next week'));
+        $activeClient = false;
         if($request->session()->has('basket')) {
             $basket = session('basket');
             $request->session()->forget('basket');
@@ -65,9 +66,13 @@ class OrderController extends Controller
             $deliveryDate = session('deliveryDate');
             $request->session()->forget('deliveryDate');
         }
+        if($request->session()->has('selectedClient')) {
+            $activeClient = session('selectedClient');
+        }
         
         $order = new Order;
         $order->hulshoff_user_id = auth()->user()->id;
+        $order->klantCode = $activeClient;
         $order->is_reservation = auth()->user()->can_reserve;
         $order->orderCodeKlant = 'HUL' . date('U') - strtotime('1-1-2022') . $order->id;
         $order->afleverDatum = date("Ymd", strtotime($deliveryDate));

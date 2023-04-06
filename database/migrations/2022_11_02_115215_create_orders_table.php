@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id()->from(2500);
             $table->unsignedBigInteger('hulshoff_user_id')->nullable();
             $table->foreign('hulshoff_user_id')->references('id')->on('hulshoff_users')->nullOnDelete();
+            $table->string('klantCode', 30);
+            $table->foreign('klantCode')->references('klantCode')->on('customers')->cascadeOnDelete();
             $table->boolean('is_reservation')->default(0);
             $table->string('orderCodeKlant', 30)->nullable()->default(null); // nog niet duidelijk wat het gebruik hiervan is, overgenomen van WMS
             $table->string('orderCodeAflever', 50)->nullable()->default(null); // nog niet duidelijk wat het gebruik hiervan is, overgenomen van WMS
