@@ -94,7 +94,7 @@ class ReportController extends Controller
             if($req->generateTypeValue =='pdf' || $req->generateTypeValue =='csv') {
                 $user = false;
                 $customer = Customer::where('klantCode', $req->klantCode)->first();
-                if($req->userId) $user = HulshoffUser::find((int)$req->userId)->first();
+                if($req->userId) $user = HulshoffUser::where('id', $req->userId)->first();
                 $exportData = [
                     'data' => $results,
                     'period' => $req->startDate . ' tot ' . $req->endDate,
