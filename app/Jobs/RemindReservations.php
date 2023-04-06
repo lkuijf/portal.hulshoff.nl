@@ -46,8 +46,9 @@ class RemindReservations implements ShouldQueue
                     $reservationAgeDays = (int)($reservationAgeSeconds / 3600 / 24);
 // echo $reservationAgeDays . "\n";
 // echo $reservationAgeDays % 7 . "\n";
-                    if($reservationAgeDays % 7 == 0) { // exactly 1, 2, 3 etc... weeks old.
 
+                    if($reservationAgeDays > 0 && $reservationAgeDays % 7 == 0) { // exactly 1, 2, 3 etc... weeks old.
+// echo "mailen!\n";
                         $hhUser = HulshoffUser::find($reservation->hulshoff_user_id);
 
                         Mail::to($hhUser->email)->send(new ReservationReminder($reservation));
