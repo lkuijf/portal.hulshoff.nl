@@ -48,7 +48,7 @@ return new class extends Migration
                 'password' => Hash::make('nzDxHh887VjGbjGZw'),
                 // 'klantCode' => '1234',
                 // 'last_known_klantCode_name' => '1234',
-                'extra_email' => '[{"email":"Belg@rade"},{"email":"Pa@ris"},{"email":"Madr@id"}]',
+                'extra_email' => '[{"email":"aa@bb1234ab.nl"},{"email":"cc@dd1234ab.nl"}]',
                 // 'privileges' => '["show_tiles","free_search","lotcode_search"]',
                 'can_reserve' => 1,
                 'is_admin' => 0,
