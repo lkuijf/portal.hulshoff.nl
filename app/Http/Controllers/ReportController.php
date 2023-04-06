@@ -58,7 +58,7 @@ class ReportController extends Controller
                 if($req->userId) $resQry->where('hulshoff_user_klantcodes.hulshoff_user_id', $req->userId);
                 $resQry->join('hulshoff_users', 'hulshoff_users.id', '=', 'hulshoff_user_klantcodes.hulshoff_user_id');
                 if($req->reportType == 'orders') $resQry->select('hulshoff_users.name', 'orders.*');
-                if($req->reportType == 'total_orders') $resQry->select('hulshoff_users.name', DB::raw('count(hulshoff_users.name) total'));
+                if($req->reportType == 'total_orders') $resQry->select('hulshoff_users.name', DB::raw('count(`hulshoff_users`.`name`) total'));
                 $results = $resQry->get();
     
                 if($req->reportType == 'orders') {
