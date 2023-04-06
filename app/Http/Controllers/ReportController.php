@@ -108,6 +108,12 @@ class ReportController extends Controller
                 if($req->reportType == 'total_orders')      $pdf = Pdf::loadView('reports.total_orders-pdf', $exportData);
                 if($req->reportType == 'total_products')    $pdf = Pdf::loadView('reports.total_products-pdf', $exportData);
                 $file = $req->klantCode . '-' . $req->reportType . '-' . date('U') . '.pdf';
+
+                if(!Storage::exists('nieuweDIR')) {
+                    // Storage::makeDirectory('/path/to/create/your/directory', 0775, true); //creates directory
+                    Storage::makeDirectory('nieuweDIR', 0777, true); //creates directory
+                }
+
                 $pdf->save(storage_path('app/pdf/' . $file));
                 $results->export_file = '/pdf/' . $file;
             }
