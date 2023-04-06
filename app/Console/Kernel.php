@@ -10,6 +10,7 @@ use App\Jobs\ParseArtikelXml;
 use App\Jobs\ParseKlantXml;
 use App\Jobs\ParseOrderXml;
 use App\Jobs\SendOrder;
+use App\Jobs\RemindReservations;
 // use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Stringable;
 
@@ -42,6 +43,8 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ParseVoorraadXml)->everyFiveMinutes();
 
         $schedule->job(new SendOrder)->everyFiveMinutes(); // webportal -> WMS
+
+        $schedule->job(new RemindReservations)->dailyAt('14:00');
     }
 
     /**
