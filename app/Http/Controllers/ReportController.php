@@ -98,7 +98,7 @@ class ReportController extends Controller
                 $exportData = [
                     'data' => $results,
                     'period' => $req->startDate . ' tot ' . $req->endDate,
-                    'client' => $customer->naam,
+                    'client' => $customer->naam . ' (' . $req->klantCode . ')',
                     'user' => ($user?$user->name:'-'),
                     'type' => $req->reportType,
                 ];
