@@ -44,7 +44,8 @@ class Kernel extends ConsoleKernel
 
         $schedule->job(new SendOrder)->everyFiveMinutes(); // webportal -> WMS
 
-        $schedule->job(new RemindReservations)->dailyAt('14:00');
+        // $schedule->job(new RemindReservations)->dailyAt('14:00');
+        $schedule->job(new RemindReservations)->everyMinute();
     }
 
     /**
