@@ -123,9 +123,9 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #F0F2F4;
-    border-bottom: 1px solid #F0F2F4;
-    border-top: 1px solid #F0F2F4;
+    /* background-color: #F0F2F4; */
+    /* border-bottom: 1px solid #F0F2F4; */
+    /* border-top: 1px solid #F0F2F4; */
     margin: 0;
     padding: 0;
     width: 100%;
@@ -266,7 +266,7 @@ img {
 }
 
 .panel-content {
-    background-color: #F0F2F4;
+    /* background-color: #F0F2F4; */
     color: #718096;
     padding: 16px;
 }
