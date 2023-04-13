@@ -34,7 +34,8 @@ class AuthServiceProvider extends ServiceProvider
                 ->subject(__('Verify Email Address'))
                 ->line(__('Click the button below to verify your email address') . '.')
                 ->action(__('Verify Email Address'), $url)
-                ->salutation(__('Regards'))
+                ->salutation(__('Regards') . ',')
+                ->salutation('Hulshoff')
                 ;
         });
     }
