@@ -34,7 +34,13 @@
                     <td>{{ $order->id }}</td>
                     <td>{{ $order->orderCodeKlant }}</td>
                     <td>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}</td>
-                    <td>{{ $order->hulshoffUser->name }} ({{ $order->hulshoffUser->email }})</td>
+                    <td>
+                        @if ($order->hulshoffUser)
+                        {{ $order->hulshoffUser->name }} ({{ $order->hulshoffUser->email }})
+                        @else
+                        - gebruiker bestaat niet meer -
+                        @endif
+                    </td>
                     <td>{{ $order->klantCode }}</td>
                     <td>{{ date("d-m-Y H:m:s", strtotime($order->created_at)) }}</td>
                     {{-- <td>{{ date("H:i", strtotime($order->afleverTijd)) }}</td> --}}
