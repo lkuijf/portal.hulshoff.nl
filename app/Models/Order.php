@@ -59,9 +59,9 @@ class Order extends Model
                 $aAdressen[0]->addChild('afa-huisnummer', '00');
                 $aAdressen[0]->addChild('afa-postcode', '9999XX');
                 $aAdressen[0]->addChild('afa-plaats', '-niet bekend-');
-                $aAdressen[0]->addChild('afa-land-code', 'AA');
+                $aAdressen[0]->addChild('afa-land-code', 'NL');
                 $aAdressen[0]->addChild('afa-contactpersoon', '-niet bekend-');
-                $aAdressen[0]->addChild('afa-telefoon', '06001122');
+                $aAdressen[0]->addChild('afa-telefoon', '0600112233');
                 $aAdressen[0]->addChild('afa-e-mailadres', '-niet bekend-');
             }
         }
@@ -70,7 +70,7 @@ class Order extends Model
         if(count($this->orderArticles)) {
             foreach($this->orderArticles as $i => $ordArt) {
                 $aDetails[$i] = $details->addChild('detail');
-                $aDetails[$i]->addChild('odt-klant-regel-code', '100'); // ??
+                $aDetails[$i]->addChild('odt-klant-regel-code', '16044'); // ??
                 $aDetails[$i]->addChild('odt-artikel-code', $ordArt->product->artikelCode);
                 $aDetails[$i]->addChild('odt-stuks-besteld', $ordArt->amount);
             }
