@@ -33,7 +33,8 @@ class Order extends Model
         // $order->addChild('ord-klant-code', ($this->hulshoffUser?$this->hulshoffUser->klantCode:'-deleted user-'));
         $order->addChild('ord-klant-code', $this->klantCode);
         $order->addChild('ord-order-code-klant', $this->orderCodeKlant);
-        $order->addChild('ord-order-code-aflever', $this->orderCodeAflever);
+        // $order->addChild('ord-order-code-aflever', $this->orderCodeAflever);
+        $order->addChild('ord-order-code-aflever', '2507501');
         $order->addChild('ord-eta-afleveren-datum', $this->afleverDatum);
         $order->addChild('ord-eta-afleveren-tijd', $this->afleverTijd);
         $adressen = $order->addChild('adressen');
