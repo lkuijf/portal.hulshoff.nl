@@ -37,7 +37,8 @@ class AuthServiceProvider extends ServiceProvider
                 ->action(__('Verify Email Address'), $url)
                 ->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'))
                 // ->outroLines(['Problemen? Klikken: ' . $url])
-                ->markdown('outroLines', ['aa', 'bb'])
+                // ->markdown('outroLines', ['aa', 'bb'])
+                ->outroLines = ['a', 'b']
                 ;
         });
     }
