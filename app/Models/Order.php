@@ -34,8 +34,8 @@ class Order extends Model
         $order->addChild('ord-klant-code', $this->klantCode);
         $order->addChild('ord-order-code-klant', $this->orderCodeKlant);
         $order->addChild('ord-order-code-aflever', $this->orderCodeAflever);
-        $order->addChild('ord-eta-aflever-datum', $this->afleverDatum);
-        $order->addChild('ord-eta-aflever-tijd', $this->afleverTijd);
+        $order->addChild('ord-eta-afleveren-datum', $this->afleverDatum);
+        $order->addChild('ord-eta-afleveren-tijd', $this->afleverTijd);
         $adressen = $order->addChild('adressen');
 
         if($this->customer) { // when the order is connected to a customer
