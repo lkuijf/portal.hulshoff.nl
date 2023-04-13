@@ -26,7 +26,7 @@ class Order extends Model
         $orderXml->addChild('bericht-id', $this->id);
         $orders = $orderXml->addChild('orders');
         $order = $orders->addChild('order');
-        $order->addChild('ord-klant-code', $this->hulshoffUser->klantCode);
+        $order->addChild('ord-klant-code', ($this->hulshoffUser?$this->hulshoffUser->klantCode:'-deleted user-'));
         $order->addChild('ord-order-code-klant', $this->orderCodeKlant);
         $order->addChild('ord-order-code-aflever', $this->orderCodeAflever);
         $order->addChild('ord-eta-aflever-datum', $this->afleverDatum);
