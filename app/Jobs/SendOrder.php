@@ -63,11 +63,15 @@ echo "\r" . $x++ . '/' . $totalFiles;
                     //     'https://edi.hulshoff.nl/api/accept/interface-web/BerichtOrders' => Http::sequence()->pushStatus(404)
                     // ]);
 
-                    $response = Http::withHeaders([
-                        'Content-Type' => 'application/xml'
-                    ])->post('https://edi.hulshoff.nl/api/accept/interface-wti/BerichtOrders', [
-                        'body' => $xmlString,
-                    ]);
+                    // $response = Http::withHeaders([
+                    //     'Content-Type' => 'application/xml'
+                    // ])->post('https://edi.hulshoff.nl/api/accept/interface-wti/BerichtOrders', [
+                    //     'body' => $xmlString,
+                    // ]);
+
+                    $response = Http::withBody($xmlString)->withHeaders(['Content-Type' => 'application/xml'])->post('https://edi.hulshoff.nl/api/accept/interface-wti/BerichtOrders');
+
+
 
                     if($response->failed()) {
                         $err = $response->status();
