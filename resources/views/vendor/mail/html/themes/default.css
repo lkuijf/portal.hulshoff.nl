@@ -232,12 +232,12 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #FFE600;
-    border-bottom: 8px solid #FFE600;
-    border-left: 18px solid #FFE600;
-    border-right: 18px solid #FFE600;
-    border-top: 8px solid #FFE600;
-    color: #000;
+    background-color: #00BE31;
+    border-bottom: 8px solid #00BE31;
+    border-left: 18px solid #00BE31;
+    border-right: 18px solid #00BE31;
+    border-top: 8px solid #00BE31;
+    /* color: #000; */
 }
 
 .button-green,
