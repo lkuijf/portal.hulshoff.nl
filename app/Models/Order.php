@@ -50,6 +50,18 @@ class Order extends Model
             $aAdressen[0]->addChild('afa-contactpersoon', $this->customer->contactpersoon);
             $aAdressen[0]->addChild('afa-telefoon', $this->customer->telefoon);
             $aAdressen[0]->addChild('afa-e-mailadres', $this->customer->eMailadres);
+        } else {
+            $aAdressen[0] = $adressen->addChild('adres');
+            $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
+            $aAdressen[0]->addChild('afa-naam', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-straat', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-huisnummer', '00');
+            $aAdressen[0]->addChild('afa-postcode', '9999XX');
+            $aAdressen[0]->addChild('afa-plaats', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-land-code', 'AA');
+            $aAdressen[0]->addChild('afa-contactpersoon', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-telefoon', '06001122');
+            $aAdressen[0]->addChild('afa-e-mailadres', '-niet bekend-');
         }
 
         $details = $order->addChild('details');
