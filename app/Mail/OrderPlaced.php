@@ -38,8 +38,7 @@ class OrderPlaced extends Mailable
     public function envelope()
     {
         return new Envelope(
-            // subject: ($this->isReservation?'Reservation':'Order') . ' Placed',
-            subject: ($this->order->is_reservation?'Reservation':'Order') . ' Placed',
+            subject: ($this->order->is_reservation?__('Reservation'):'Order') . ' ' . __('placed'),
         );
     }
 

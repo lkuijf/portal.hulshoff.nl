@@ -36,7 +36,7 @@ class OrderPromoted extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Order Promoted',
+            subject: 'Order ' . __('placed'),
         );
     }
 
