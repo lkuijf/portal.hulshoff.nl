@@ -41,11 +41,13 @@ class AuthServiceProvider extends ServiceProvider
         });
         ResetPassword::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
-                ->greeting(__('Hello22') . '!')
-                ->subject(__('Verify Email Address22'))
-                ->line(__('Click the button below to verify your email address22') . '.')
-                ->action(__('Verify Email Address22'), $url)
-                ->salutation(new HtmlString(__('Regards22') . ',<br>Hulshoff'))
+                ->greeting(__('Hello') . '!')
+                ->subject(__('Reset Password'))
+                ->line(__('You are receiving this email because we received a password reset request for your account') . '.')
+                ->action(__('Reset Password'), $url)
+                ->line(__('This password reset link will expire in 60 minutes') . '.')
+                ->line(__('If you did not request a password reset, no further action is required') . '.')
+                ->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'))
                 ;
         });
     }
