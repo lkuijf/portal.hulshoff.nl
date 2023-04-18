@@ -101,12 +101,16 @@
                     <option value="55">55</option>
                 </select>
             </p> --}}
-            @if (auth()->user()->can_reserve)
-            <button>Reservering bevestigen</button>
+            @if (session()->has('selectedClient'))
+                @if (auth()->user()->can_reserve)
+                <button>Reservering bevestigen</button>
+                @else
+                <button onclick="return confirm('{{ __('Your order will be delivered on') }} {{ $deliveryDate }}.\n\n{{ __('Are you sure you want to confirm your order') }}?')">Order bevestigen</button>
+                @endif
             @else
-            <button onclick="return confirm('{{ __('Your order will be delivered on') }} {{ $deliveryDate }}.\n\n{{ __('Are you sure you want to confirm your order') }}?')">Order bevestigen</button>
+                CANNOT ORDER, NO CLIENT SELECTED
             @endif
-            
+
         </form>
     @else
         <p>Basket is empty.</p>
