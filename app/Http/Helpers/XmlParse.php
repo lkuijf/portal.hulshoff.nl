@@ -3,6 +3,7 @@ namespace App\Http\Helpers;
 use Illuminate\Support\Facades\Storage;
 use App\Models\LogXmlParse;
 use App\Models\Product;
+use App\Models\ProductLotcode;
 use App\Models\Productbrand;
 use App\Models\Productgroup;
 use App\Models\Producttype;
@@ -113,10 +114,35 @@ echo "\r" . $x++ . '/' . $totalFiles;
     public static function updateVoorraden($stocks) {
         $res = new \stdClass();
         foreach($stocks as $stock) {
-            $totalAffected = Product::where([
-                'klantCode' => $stock->{'vrr-klant-code'},
-                'artikelCode' => $stock->{'vrr-artikel-code'}
-                ])->update(['voorraad' => $stock->{'vrr-aantal-stuks'}]);
+
+            // if($stock->{'vrr-artikel-code'} == '00043') {
+            //     echo "\n" . $stock->{'vrr-aantal-stuks'} . ' (' . $stock->{'vrr-klant-code'} . ")\n";
+            // }
+            
+
+            if($stock->{'vrr-lotcode'}) {
+                $art = Product::where([
+                    'klantCode' => $stock->{'vrr-klant-code'},
+                    'artikelCode' => $stock->{'vrr-artikel-code'}
+                ])->first();
+                
+                if($art) {
+                    $productlotcode = ProductLotcode::updateOrCreate(
+                        ['product_id' => $art->id, 'lotcode' => $stock->{'vrr-lotcode'}],
+                        [
+                            'voorraad' => $stock->{'vrr-aantal-stuks'},
+                        ]
+                    );
+                }
+            } else {
+                $totalAffected = Product::where([
+                    'klantCode' => $stock->{'vrr-klant-code'},
+                    'artikelCode' => $stock->{'vrr-artikel-code'}
+                    ])->update(['voorraad' => $stock->{'vrr-aantal-stuks'}]);
+            }
+    
+
+
         }
         $res->msg = 'success';
         return $res;
