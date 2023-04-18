@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ParseArtikelXml)->everyMinute(); // dailyAt('14:23') // hourly()
         $schedule->job(new ParseKlantXml)->everyMinute();
         $schedule->job(new ParseOrderXml)->everyMinute();
-        $schedule->job(new ParseVoorraadXml)->everyFiveMinutes();
+        $schedule->job(new ParseVoorraadXml)->everyTwoMinutes();
 
         $schedule->job(new SendOrder)->everyMinute(); // webportal -> WMS
 
