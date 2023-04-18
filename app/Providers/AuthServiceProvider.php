@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\HtmlString;
 
@@ -36,19 +37,16 @@ class AuthServiceProvider extends ServiceProvider
                 ->line(__('Click the button below to verify your email address') . '.')
                 ->action(__('Verify Email Address'), $url)
                 ->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'))
-                // ->outroLines(['Problemen? Klikken: ' . $url])
-                // ->markdown('outroLines', ['aa', 'bb'])
-                // ->outroLines = ['a', 'b']
                 ;
-
-            // $msg = new MailMessage();
-            // $msg->greeting(__('Hello') . '!');
-            // $msg->subject(__('Verify Email Address'));
-            // $msg->line(__('Click the button below to verify your email address') . '.');
-            // $msg->action(__('Verify Email Address'), $url);
-            // $msg->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'));
-            // $msg->outroLines = ['cc', 'vv'];
-            // return $msg;
-    });
+        });
+        ResetPassword::toMailUsing(function ($notifiable, $url) {
+            return (new MailMessage)
+                ->greeting(__('Hello22') . '!')
+                ->subject(__('Verify Email Address22'))
+                ->line(__('Click the button below to verify your email address22') . '.')
+                ->action(__('Verify Email Address22'), $url)
+                ->salutation(new HtmlString(__('Regards22') . ',<br>Hulshoff'))
+                ;
+        });
     }
 }
