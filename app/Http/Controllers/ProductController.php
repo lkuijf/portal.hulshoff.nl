@@ -78,6 +78,8 @@ class ProductController extends Controller
                 ->where('omschrijving', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('bijzonderheden', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('artikelCode', 'like', '%' . $filters->search['value'] . '%')
+                ->orWhere('artikelCodeKlant', 'like', '%' . $filters->search['value'] . '%')
+                ->orWhere('verpakkingBundel', 'like', '%' . $filters->search['value'] . '%')
                 ;
         }
 

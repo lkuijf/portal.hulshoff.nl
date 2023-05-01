@@ -177,6 +177,8 @@ echo "\r" . $x++ . '/' . $totalFiles;
             if($prod->{'art-merk'} == '') $prod->{'art-merk'} = '- Merk ONBEKEND -';
             if($prod->{'art-type'} == '') $prod->{'art-type'} = '- Type ONBEKEND -';
             if($prod->{'art-kleur'} == '') $prod->{'art-kleur'} = '- Kleur ONBEKEND -';
+            if(!isset($prod->{'art-artikel-code-klant'})) $prod->{'art-artikel-code-klant'} = '';
+            if(!isset($prod->{'art-verpakking-bundel'})) $prod->{'art-verpakking-bundel'} = '';
             $productgroup = Productgroup::firstOrCreate([
                 'group' => $prod->{'art-artikelgroep-code'}
             ]);
@@ -195,8 +197,10 @@ echo "\r" . $x++ . '/' . $totalFiles;
             $product = Product::updateOrCreate(
                 ['klantCode' => $prod->{'art-klant-code'}, 'artikelCode' => $prod->{'art-artikel-code'}],
                 [
+                    'artikelCodeKlant' => $prod->{'art-artikel-code-klant'},
                     'omschrijving' => $prod->{'art-omschrijving'},
                     'stuksPerBundel' => $prod->{'art-stuks-per-bundel'},
+                    'verpakkingBundel' => $prod->{'art-verpakking-bundel'},
                     'prijs' => $prod->{'art-prijs'},
                     'minimaleVoorraad' => $prod->{'art-minimale-voorraad'},
                     'bijzonderheden' => $prod->{'art-bijzonderheden'},
