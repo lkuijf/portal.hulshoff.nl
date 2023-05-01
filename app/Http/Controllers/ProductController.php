@@ -74,13 +74,15 @@ class ProductController extends Controller
             $resQry->where('productcolor_id', $filters->color['value']);
         }
         if(isset($filters->search) && $filters->search['value']) {
-            $resQry
+            $resQry->where(function($resQry) use ($filters) {
+                $resQry
                 ->where('omschrijving', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('bijzonderheden', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('artikelCode', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('artikelCodeKlant', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('verpakkingBundel', 'like', '%' . $filters->search['value'] . '%')
                 ;
+            });
         }
 
         $res = $resQry->paginate(10);
