@@ -58,7 +58,7 @@
     <h2>{{ __('Confirm reservation') }}</h2>
     <ul>
         <li>{{ __('Confirm your reservation via the button below') }}.</li>
-        <li>{{ __('The reservation will be promoted to an order') }}.</li>
+        <li>{{ __('The reservation will be converted to an order') }}.</li>
         <li>{{ __('When your order is placed, it cannot be undone') }}</li>
     </ul>
         <form action="/order" method="post">
