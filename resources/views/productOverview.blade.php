@@ -64,7 +64,15 @@
 
     const tilesWrapper = document.querySelector('.selectTileOverlay');
 
+    const searchInputField = document.querySelector('.searchInputWrap input');
+
     displayProducts();
+
+    document.addEventListener('keydown', (e) => {
+        if(event.keyCode === 13 && searchInputField == document.activeElement) {
+            displayProducts();
+        }
+    });
 
     if(tilesWrapper) {
         const tileLinks = tilesWrapper.querySelectorAll('.tileGrid a');
