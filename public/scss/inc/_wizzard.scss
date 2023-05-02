@@ -1,9 +1,10 @@
 .wizzardWrap {
     // outline: 1px solid red;
+    background-color: #EEE;
+    margin: 15px;
     .wizzard {
         // outline: 1px solid blue;
-        background-color: #EEE;
-        padding: 15px;
+        // padding: 15px;
         display: flex;
         @media (max-width: $screenBreakpoint) {
             flex-wrap: wrap;

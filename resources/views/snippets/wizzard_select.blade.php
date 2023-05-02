@@ -28,4 +28,5 @@
             </select>
         </div>
     </div>
+    @include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Only show products in stock')])
 </div>

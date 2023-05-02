@@ -3,12 +3,26 @@
 @section('content')
 <div class="productDetailContent">
     <h1>{{ $product->omschrijving }}</h1>
-    <p>{{ __('Article') }} code: <strong>{{ $product->artikelCode }}</strong></p>
+    @if (count($product->reservations()) && auth()->user()->is_admin)
+    <div class="prodDetReservations">
+        <p>Er zijn reserveringen actief voor dit product:</p>
+        <ul>
+        @foreach ($product->reservations() as $reservationInfo)
+            <li>{{ $reservationInfo->amount }}x gereserveerd door {{ $reservationInfo->orderUserName }} ({{ $reservationInfo->orderUserEmail }}), reservering nummer <a href="{{ route('reservation_detail', ['id' => $reservationInfo->orderId]) }}">{{ $reservationInfo->orderId }}</a></li>
+        @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="prodDetTopWrap">
         <div><img src="https://picsum.photos/200/400" alt="Product image"></div>
         <div>
             <div>
                 <div class="prodReserveWrap">
+                    <div class="prodCodes">
+                        <p>{{ __('Article') }} code: <strong>{{ $product->artikelCode }}</strong></p>
+                        <p>{{ __('Article') }} code {{ __('Customer') }}: <strong>{{ ($product->artikelCodeKlant?$product->artikelCodeKlant:'-') }}</strong></p>
+                        <p>{{ __('Customer') }} code: <strong>{{ $product->klantCode }}</strong></p>
+                    </div>
                     <h2>
                     @if (auth()->user()->can_reserve)
                     {{ __('Reserve') }}
@@ -34,7 +48,8 @@
                             @endif
                         </button>
                     </form>
-                    <p>{{ $product->bijzonderheden }}</p>
+                    <h3>Bijzonderheden:</h3>
+                    <p>{{ ($product->bijzonderheden?$product->bijzonderheden:'-') }}</p>
                 </div>
             </div>
         </div>
@@ -43,19 +58,27 @@
 
         <div class="prodDetProp">
             <h3>Merk</h3>
-            <p>{{ $product->brand->brand }}</p>
+            <p>{{ ($product->brand->brand?$product->brand->brand:'-') }}</p>
         </div>
         <div class="prodDetProp">
             <h3>Groep</h3>
-            <p>{{ $product->group->group }}</p>
+            <p>{{ ($product->group->group?$product->group->group:'-') }}</p>
         </div>
         <div class="prodDetProp">
             <h3>Type</h3>
-            <p>{{ $product->type->type }}</p>
+            <p>{{ ($product->type->type?$product->type->type:'-') }}</p>
         </div>
         <div class="prodDetProp">
             <h3>Stuks per bundel</h3>
-            <p>{{ $product->stuksPerBundel }}</p>
+            <p>{{ ($product->stuksPerBundel?$product->stuksPerBundel:'-') }}</p>
+        </div>
+        <div class="prodDetProp">
+            <h3>Verpakking bundel</h3>
+            <p>{{ ($product->verpakkingBundel?$product->verpakkingBundel:'-') }}</p>
+        </div>
+        <div class="prodDetProp">
+            <h3>Minimale voorraad</h3>
+            <p>{{ ($product->minimaleVoorraad?$product->minimaleVoorraad:'-') }}</p>
         </div>
         <div class="prodDetProp">
             <h3>Prijs</h3>
@@ -63,7 +86,7 @@
         </div>
         <div class="prodDetProp">
             <h3>Kleur</h3>
-            <p>{{ $product->kleur }}</p>
+            <p>{{ ($product->kleur?$product->kleur:'-') }}</p>
         </div>
         <div class="prodDetProp">
             <h3>Afmetingen (mm.)</h3>

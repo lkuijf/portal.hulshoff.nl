@@ -70,4 +70,21 @@ class Product extends Model
         // }
         return $total;
     }
+    public function reservations() {
+        $reservations = [];
+        $orderArticles = OrderArticle::where('product_id', $this->id)->get();
+        if($orderArticles) {
+            foreach($orderArticles as $orderArt) {
+                if($orderArt->order->is_reservation) {
+                    $resInfo = new \stdClass();
+                    $resInfo->orderId = $orderArt->order->id;
+                    $resInfo->orderUserName = $orderArt->order->hulshoffUser->name;
+                    $resInfo->orderUserEmail = $orderArt->order->hulshoffUser->email;
+                    $resInfo->amount = $orderArt->amount;
+                    $reservations[] = $resInfo;
+                }
+            }
+        }
+        return $reservations;
+    }
 }

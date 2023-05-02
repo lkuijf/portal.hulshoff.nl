@@ -36,6 +36,7 @@
                 @include('snippets.filter_select', ['filter_name' => $info['name'], 'filter_reference' => $ref, 'filter_options' => $info['items'], 'filter_selected_option' => ''])
             @endforeach
             @include('snippets.filter_input')
+            @include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Only show products in stock')])
             <button class="filterProductsBtn">{{ __('Show results') }}</button>
             <h4>{{ __('Active') }} filters</h4>
             <div class="activeFilters"></div>
@@ -61,6 +62,7 @@
     const wizColorSelect = document.querySelector('.wizWrapColor select');
     const wizBrandRadio = document.querySelector('#wiz_me_radio');
     const wizColorRadio = document.querySelector('#wiz_kl_radio');
+    const wizStockCheckBox = document.querySelector('input[name="show_in_stock"]');
 
     const tilesWrapper = document.querySelector('.selectTileOverlay');
 
@@ -142,6 +144,9 @@
         });
         wizColorRadio.addEventListener('change', () => {
             resetBrandColor();
+        });
+        wizStockCheckBox.addEventListener('change', () => {
+            displayProducts();
         });
     }
     
@@ -254,6 +259,8 @@
                         break;
                 }
             });
+            activeFilters.onlyinstock = false;
+            if(wizStockCheckBox.checked) activeFilters.onlyinstock = true
         }
         return activeFilters;
     }
@@ -265,7 +272,7 @@
             for (const key in activeFilters) {
                 if (Object.hasOwnProperty.call(activeFilters, key)) {
                     const element = activeFilters[key];
-                    if(element.value != '' && element.name != 'customerCode') {
+                    if(element.value != '' && element.name != 'customerCode' && typeof element != 'boolean') {
                         let wrapP = document.createElement("p");
                         wrapP.classList.add("activeFilter");
 

@@ -129,6 +129,21 @@
 .productDetailContent > p {
   margin-top: 0;
 }
+.productDetailContent .prodDetReservations {
+  background-color: #bfffcf;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #000;
+}
+.productDetailContent .prodDetReservations a {
+  padding: 0;
+}
+.productDetailContent .prodDetReservations > :first-child {
+  margin-top: 0;
+}
+.productDetailContent .prodDetReservations > :last-child {
+  margin-bottom: 0;
+}
 .productDetailContent .prodDetTopWrap {
   display: flex;
   gap: 20px;
@@ -142,7 +157,6 @@
   flex: 1 1 0px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 .productDetailContent .prodDetTopWrap div img {
   display: block;
@@ -166,6 +180,28 @@
     width: 100%;
     max-width: 400px;
   }
+}
+.productDetailContent .prodDetTopWrap div div .prodReserveWrap .prodCodes {
+  border-bottom: 1px solid #CCC;
+  padding: 5px;
+  width: 280px;
+  font-size: 0.8em;
+  text-align: right;
+}
+@media (max-width: 768px) {
+  .productDetailContent .prodDetTopWrap div div .prodReserveWrap .prodCodes {
+    width: 100%;
+    text-align: center;
+  }
+}
+.productDetailContent .prodDetTopWrap div div .prodReserveWrap .prodCodes p {
+  margin: 0;
+}
+.productDetailContent .prodDetTopWrap div div .prodReserveWrap h3 {
+  margin-bottom: 0;
+}
+.productDetailContent .prodDetTopWrap div div .prodReserveWrap h3 + p {
+  margin-top: 0;
 }
 .productDetailContent .prodDetPropertiesWrap {
   display: flex;
@@ -231,7 +267,7 @@
   position: sticky;
   top: 0px;
 }
-.filters select, .filters input {
+.filters select, .filters input:not([type=checkbox]) {
   width: 100%;
   padding: 3px;
   margin-bottom: 5px;
@@ -631,9 +667,11 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   margin-top: 0;
 }
 
-.wizzardWrap .wizzard {
+.wizzardWrap {
   background-color: #EEE;
-  padding: 15px;
+  margin: 15px;
+}
+.wizzardWrap .wizzard {
   display: flex;
   gap: 20px;
 }

@@ -84,7 +84,10 @@ class ProductController extends Controller
                 ;
             });
         }
-
+        if(isset($filters->onlyinstock) && $filters->onlyinstock == true) {
+            $resQry->where('voorraad', '>', 0);
+        }
+        
         $res = $resQry->paginate(10);
 
         $data = [
