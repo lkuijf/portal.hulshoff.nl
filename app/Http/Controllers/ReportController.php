@@ -9,6 +9,7 @@ use App\Models\Orders;
 use App\Models\HulshoffUser;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
 {
@@ -27,6 +28,7 @@ class ReportController extends Controller
             'end' => 'required|date_format:d-m-Y',
             'client' => 'required',
             'reportType' => 'required',
+            'product' => Rule::requiredIf($request->reportType == 'stock_history'),
         );
         $validationMessages = array(
             'start.required'=> 'Please fill in the start date',
@@ -35,6 +37,7 @@ class ReportController extends Controller
             'end.date_format'=> 'Format must be: dd-mm-yyyy',
             'client.required'=> 'Please select a client',
             'reportType.required'=> 'Please select a report type',
+            'product.required'=> 'Please select a product when generating stock history',
         );
         $validated = $request->validate($toValidate,$validationMessages);
 
@@ -91,6 +94,21 @@ class ReportController extends Controller
                 $results = $resQry->get();
             }
 
+
+            if($req->reportType == 'stock_history') {
+                $resQry = DB::table('stock_histories')
+                    ->where('klantCode', $req->klantCode)
+                    ->where('artikelCode', $req->artikelCode)
+                    ;
+                $results = $resQry->get();
+
+                $results->periodStart = date('Y-m-d', strtotime($req->startDate));
+                $results->periodEnd = date('Y-m-d', strtotime($req->endDate));
+            }
+
+
+
+
             if($req->generateTypeValue =='pdf' || $req->generateTypeValue =='csv') {
                 $user = false;
                 $customer = Customer::where('klantCode', $req->klantCode)->first();
@@ -104,16 +122,23 @@ class ReportController extends Controller
                 ];
             }
 
+
+
+
             if($req->generateTypeValue =='pdf') {
                 if(!Storage::exists('pdf')) Storage::makeDirectory('pdf', 0777, true); //creates directory
                 
                 if($req->reportType == 'orders')            $pdf = Pdf::loadView('reports.orders-pdf', $exportData);
                 if($req->reportType == 'total_orders')      $pdf = Pdf::loadView('reports.total_orders-pdf', $exportData);
                 if($req->reportType == 'total_products')    $pdf = Pdf::loadView('reports.total_products-pdf', $exportData);
+                if($req->reportType == 'stock_history')     $pdf = Pdf::loadView('reports.stock_history-pdf', $exportData);
                 $file = $req->klantCode . '-' . $req->reportType . '-' . date('U') . '.pdf';
                 $pdf->save(storage_path('app/pdf/' . $file));
                 $results->export_file = '/pdf/' . $file;
             }
+
+
+
 
             if($req->generateTypeValue =='csv') {
                 if(!Storage::exists('csv')) Storage::makeDirectory('csv', 0777, true); //creates directory
@@ -181,6 +206,33 @@ class ReportController extends Controller
                         fputcsv($fp, $row, ';');
                     }
                 }
+                if($req->reportType == 'stock_history') {
+                    $row = [];
+                    $row[] = 'Klant code';
+                    $row[] = 'Artikel code';
+                    $row[] = 'Datum';
+                    $row[] = 'Voorraad';
+                    fputcsv($fp, $row, ';');
+
+                    $stockByDate = [];
+                    $curStock = '-';
+                    $klantCode = $exportData['data'][0]->klantCode;
+                    $artikelCode = $exportData['data'][0]->artikelCode;
+                    foreach($exportData['data'] as $dataRow) {
+                        $stockByDate[date("Y-m-d",  strtotime($dataRow->created_at))] = $dataRow->voorraad;
+                    }
+                    for($x=strtotime(date('Y-m-d', strtotime($req->startDate))); $x<=strtotime(date('Y-m-d', strtotime($req->endDate))); $x+=86400) {
+                        if(isset($stockByDate[date("Y-m-d",  $x)])) {
+                            $curStock = $stockByDate[date("Y-m-d",  $x)];
+                        }
+                        $row = [];
+                        $row[] = $klantCode;
+                        $row[] = $artikelCode;
+                        $row[] = date("Y-m-d",  $x);
+                        $row[] = $curStock;
+                        fputcsv($fp, $row, ';');
+                    }
+                }
                 fclose($fp);
                 $results->export_file = '/csv/' . $file;
             }
@@ -188,6 +240,7 @@ class ReportController extends Controller
             if($req->reportType == 'orders') return view('reports.orders')->with('data', $results);
             if($req->reportType == 'total_orders') return view('reports.total_orders')->with('data', $results);
             if($req->reportType == 'total_products') return view('reports.total_products')->with('data', $results);
+            if($req->reportType == 'stock_history') return view('reports.stock_history')->with('data', $results);
 
     }
 }

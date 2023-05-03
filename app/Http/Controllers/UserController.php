@@ -180,16 +180,21 @@ class UserController extends Controller
         return $usr;
     }
 
+    public function getClientProducts(Request $req) {
+        $resQry = DB::table('products')
+            ->where('klantCode', $req->klantCode)
+            ;
+        $results = $resQry->get();
+        echo json_encode($results);
+    }
+
     public function getClientUsers(Request $req) {
         $resQry = DB::table('hulshoff_users')
             ->join('hulshoff_user_klantcodes', 'hulshoff_user_klantcodes.hulshoff_user_id', '=', 'hulshoff_users.id')
             ->where('hulshoff_user_klantcodes.klantCode', $req->klantCode)
-            // ->select('productbrands.id', 'productbrands.brand')
-            // ->distinct()
             ;
         $results = $resQry->get();
         echo json_encode($results);
-
     }
 
 }

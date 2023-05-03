@@ -20,7 +20,6 @@
             <tr>
                 <td>{{ __('Customer') }}</td>
                 <td>
-                    {{-- <input type="checkbox" name="clientCheck"> --}}
                     <select name="client">
                         <option value="">- {{ __('Select') }} -</option>
                         @foreach ($data['clients'] as $client)
@@ -30,9 +29,16 @@
                 </td>
             </tr>
             <tr>
+                <td>{{ __('Product') }}</td>
+                <td>
+                    <select name="product" data-old="{{ old('product') }}">
+                        <option value="">- {{ __('Select a customer first') }} -</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td>{{ __('User') }}</td>
                 <td>
-                    {{-- <input type="checkbox" name="userCheck"> --}}
                     <select name="user" data-old="{{ old('user') }}">
                         <option value="">- {{ __('Select a customer first') }} -</option>
                     </select>
@@ -43,7 +49,8 @@
                 <td>
                     <input type="radio" name="reportType" value="orders" id="ordersRef" @if(old('reportType') == 'orders'){{ 'checked' }}@endif><label for="ordersRef">Orders</label><br />
                     <input type="radio" name="reportType" value="total_orders" id="total_ordersRef" @if(old('reportType') == 'total_orders'){{ 'checked' }}@endif><label for="total_ordersRef">{{ __('Total') }} orders</label><br />
-                    <input type="radio" name="reportType" value="total_products" id="total_productsRef" @if(old('reportType') == 'total_products'){{ 'checked' }}@endif><label for="total_productsRef">{{ __('Total') }} {{ strtolower(__('Products')) }}</label>
+                    <input type="radio" name="reportType" value="total_products" id="total_productsRef" @if(old('reportType') == 'total_products'){{ 'checked' }}@endif><label for="total_productsRef">{{ __('Total') }} {{ strtolower(__('Products')) }}</label><br />
+                    <input type="radio" name="reportType" value="stock_history" id="stock_historyRef" @if(old('reportType') == 'stock_history'){{ 'checked' }}@endif><label for="stock_historyRef">{{ __('Product') }} {{ strtolower(__('Stock')) }} {{ strtolower(__('History')) }}</label>
                 </td>
             </tr>
         </table>
@@ -76,8 +83,10 @@
     const start = document.querySelector('[name=start]');
     const end = document.querySelector('[name=end]');
     const clientSelect = document.querySelector('[name=client]');
+    const productSelect = document.querySelector('[name=product]');
     const userSelect = document.querySelector('[name=user]');
     const reportTypeRadios = document.querySelectorAll('[name=reportType]');
+    const oldProductValue = productSelect.dataset.old;
     const oldUserValue = userSelect.dataset.old;
     const reportResult = document.querySelector('.reportWrapper');
     const pdfBtn = document.querySelector('[value=pdf]');
@@ -86,6 +95,7 @@
     const viewBtn = document.querySelector('[value=view]'); //
     const generateBtns = document.querySelectorAll('[name=generateType]'); //
 
+    populateProductSelect();
     populateUserSelect();
 
     const rangepicker = new DateRangePicker(range, {
@@ -97,11 +107,11 @@
         reportTypeRadios.forEach(radio => {
             if(radio.checked) reportTypeValue = radio.value;
         });
-
         axios.post('{{ url('/ajax/generate-report') }}', {
                 startDate:start.value,
                 endDate:end.value,
                 klantCode:clientSelect.value,
+                artikelCode:oldProductValue,
                 userId:oldUserValue,
                 reportType:reportTypeValue,
                 generateTypeValue:typeOfGeneration,
@@ -127,6 +137,7 @@
 
     clientSelect.addEventListener('change', () => {
         resetElementStates();
+        populateProductSelect();
         populateUserSelect();
     });
     userSelect.addEventListener('change', () => {
@@ -150,6 +161,42 @@
         csvBtn.disabled = true;
     }
     
+    function populateProductSelect() {
+        if(clientSelect.value) {
+            productSelect.innerHTML = '';
+            
+            axios.get('{{ url('/ajax/products') }}' + '/' +  clientSelect.value)
+                .then(function (response) {
+                    // handle success
+                    // console.log(response.data);
+                    if(response.data.length) {
+                        let defaultOption = document.createElement('option');
+                        let defaultOptionText = document.createTextNode("- {{ __('Select') }}  -");
+                        defaultOption.value = '';
+                        defaultOption.appendChild(defaultOptionText);
+                        productSelect.appendChild(defaultOption);
+                        response.data.forEach(element => {
+                            let newOption = document.createElement('option');
+                            let newOptionText = document.createTextNode(element.artikelCode);
+                            newOption.value = element.artikelCode;
+                            if(element.artikelCode == oldProductValue) {
+                                newOption.selected = true;
+                                newOption.setAttribute('selected', true);
+                            }
+                            newOption.appendChild(newOptionText);
+                            productSelect.appendChild(newOption);
+                        });
+                    }
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .finally(function () {
+                    // always executed
+                });
+        }
+    }
     function populateUserSelect() {
         if(clientSelect.value) {
             userSelect.innerHTML = '';

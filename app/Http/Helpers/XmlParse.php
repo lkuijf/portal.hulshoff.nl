@@ -11,6 +11,7 @@ use App\Models\Productcolor;
 use App\Models\Customer;
 use App\Models\WmsOrder;
 use App\Models\WmsOrderArticle;
+use App\Models\StockHistory;
 
 class XmlParse {
 
@@ -134,11 +135,56 @@ echo "\r" . $x++ . '/' . $totalFiles;
                         ]
                     );
                 }
+
+                
+                $lastLotcodeStock = StockHistory::where([
+                    'klantCode' => $stock->{'vrr-klant-code'},
+                    'artikelCode' => $stock->{'vrr-artikel-code'},
+                    'lotcode' => $stock->{'vrr-lotcode'}
+                    ])->latest()->first();
+                
+                if(
+                    !$lastLotcodeStock ||
+                    ($lastLotcodeStock && $lastLotcodeStock->voorraad != $stock->{'vrr-aantal-stuks'})
+                    ) {
+                        $shLotcode = new StockHistory;
+                        $shLotcode->klantCode = $stock->{'vrr-klant-code'};
+                        $shLotcode->artikelCode = $stock->{'vrr-artikel-code'};
+                        $shLotcode->lotcode = $stock->{'vrr-lotcode'};
+                        $shLotcode->voorraad = $stock->{'vrr-aantal-stuks'};
+                        $shLotcode->save();
+                    }
+
+
+
+
             } else {
                 $totalAffected = Product::where([
                     'klantCode' => $stock->{'vrr-klant-code'},
                     'artikelCode' => $stock->{'vrr-artikel-code'}
                     ])->update(['voorraad' => $stock->{'vrr-aantal-stuks'}]);
+
+                $lastStock = StockHistory::where([
+                    'klantCode' => $stock->{'vrr-klant-code'},
+                    'artikelCode' => $stock->{'vrr-artikel-code'}
+                    ])->latest()->first();
+
+// if($lastStock) echo '[' . $stock->{'vrr-klant-code'} . '|' . $stock->{'vrr-artikel-code'} . '|' . $stock->{'vrr-aantal-stuks'} . '|' . $lastStock->voorraad . ']';
+// if($lastStock && $lastStock->voorraad != $stock->{'vrr-aantal-stuks'}) {
+//     echo "\n" . '[' . $stock->{'vrr-klant-code'} . '|' . $stock->{'vrr-artikel-code'} . '|' . $stock->{'vrr-aantal-stuks'} . '|' . $lastStock->voorraad . ']' . "\n";
+// }
+
+                if(
+                    !$lastStock ||
+                    ($lastStock && $lastStock->voorraad != $stock->{'vrr-aantal-stuks'})
+                    ) {
+                        $sh = new StockHistory;
+                        $sh->klantCode = $stock->{'vrr-klant-code'};
+                        $sh->artikelCode = $stock->{'vrr-artikel-code'};
+                        $sh->voorraad = $stock->{'vrr-aantal-stuks'};
+                        $sh->save();
+                    }
+    
             }
     
 
