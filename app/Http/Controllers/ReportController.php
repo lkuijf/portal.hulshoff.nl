@@ -174,7 +174,9 @@ class ReportController extends Controller
                                 $row[] = '';
                                 $row[] = '';
                                 $row[] = '';
-                                $row[] = $product->amount . 'x ' . $product->omschrijving . ' (' . $product->artikelCode . ')';
+                                $row[] = $product->amount . 'x';
+                                $row[] = $product->omschrijving . ' (' . $product->artikelCode . ')';
+                                // $row[] = $product->amount . 'x ' . $product->omschrijving . ' (' . $product->artikelCode . ')';
                                 fputcsv($fp, $row, ';');
                             }
                         }
