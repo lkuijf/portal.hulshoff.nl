@@ -154,7 +154,9 @@ class ReportController extends Controller
                     $row[] = 'Besteld door';
                     $row[] = 'created_at';
                     $row[] = 'updated_at';
-                    $row[] = 'Bestelling';
+                    $row[] = 'Product aantal';
+                    $row[] = 'Product omschrijving';
+                    $row[] = 'artikelCode';
                     fputcsv($fp, $row, ';');
                     foreach($exportData['data'] as $dataRow) {
                         $row = [];
@@ -174,8 +176,9 @@ class ReportController extends Controller
                                 $row[] = '';
                                 $row[] = '';
                                 $row[] = '';
-                                $row[] = $product->amount . 'x';
-                                $row[] = $product->omschrijving . ' (' . $product->artikelCode . ')';
+                                $row[] = $product->amount;
+                                $row[] = $product->omschrijving;
+                                $row[] = $product->artikelCode;
                                 // $row[] = $product->amount . 'x ' . $product->omschrijving . ' (' . $product->artikelCode . ')';
                                 fputcsv($fp, $row, ';');
                             }
