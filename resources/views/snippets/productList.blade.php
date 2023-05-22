@@ -3,7 +3,7 @@
         @if (isset($data['products']))
             @foreach($data['products'] as $product)
                 {{-- @include('snippets.product', ['product_id' => $product['id'], 'product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>' . $product['omschrijving'] . 'Categorie: WERKPLEK</p><p>Inrichtingsconcept: TAFEL</p><p>Leverancier: Gispen</p><p>Soort: VERGADERTAFEL</p>']) --}}
-                @include('snippets.product', ['product_id' => $product['id'], 'product_code' => $product['artikelCode'], 'product_voorraad' => $product['voorraad'], 'product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>' . $product['omschrijving'] . '</p>'])
+                @include('snippets.product', ['product_id' => $product['id'], 'product_code' => $product['artikelCode'], 'product_voorraad' => ($product['voorraad'] - $product['aantal_besteld_onverwerkt']), 'product_image' => 'https://picsum.photos/300/200', 'product_info' => '<p>' . $product['omschrijving'] . '</p>'])
             @endforeach
         @else
             @for ($x=0;$x<12;$x++)
