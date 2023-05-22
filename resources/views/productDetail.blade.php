@@ -34,6 +34,7 @@
                         {{ __('Total reserved') }}: {{ $product->reservedAmount() }}<br />
                         {{ __('Total available') }}: {{ $product->availableAmount() }}
                     </p>
+                    @if (session()->has('selectedClient'))
                     <form action="{{ url('basket') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $product->id }}">
@@ -48,6 +49,9 @@
                             @endif
                         </button>
                     </form>
+                    @else
+                        <p>{{ __('Please select a client before ordering') }}.</p>
+                    @endif
                     <h3>Bijzonderheden:</h3>
                     <p>{{ ($product->bijzonderheden?$product->bijzonderheden:'-') }}</p>
                 </div>
