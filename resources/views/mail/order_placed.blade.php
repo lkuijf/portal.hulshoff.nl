@@ -2,7 +2,7 @@
 @section('content')
     @if ($order->is_reservation)
         <h1>{{ __('Reservation placed') }}</h1>
-        <p>{{ __('Thanks for your reservation') }}. {{ __('The products you selected will be set aside') }}. {{ __('Below you will find details of your reservation') }}.</p>
+        <p>{{ __('Thanks for your reservation') }}. {{ __('The products you selected will be set aside') }}. {{ __('Beware: this reservation has to be confirmed to receive the products') }}. {{ __('Below you will find details of your reservation') }}.</p>
         <p>{{ __('Reservation number') }}:<br /><strong><a href="{{ route('reservation_detail', ['id' => $order->id]) }}">{{ $order->id }}</a></strong></p>
         <p>{{ __('Reservation code customer') }}:<br /><strong>{{ $order->orderCodeKlant }}</strong></p>
     @else
