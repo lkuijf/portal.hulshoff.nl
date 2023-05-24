@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('klantCode', 30);
             $table->foreign('klantCode')->references('klantCode')->on('customers')->cascadeOnDelete();
             $table->timestamps();
-            $table->unique(['hulshoff_user_id', 'klantCode']);
+            $table->unique(['hulshoff_user_id', 'klantCode'], 'huk_hui_k');
             $table->primary(['hulshoff_user_id', 'klantCode']);
         });
     }

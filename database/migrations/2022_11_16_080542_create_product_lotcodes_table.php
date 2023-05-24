@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('lotcode', 30);
             $table->integer('voorraad')->default(0);
             $table->timestamps();
-            $table->unique(['product_id', 'lotcode']);
+            $table->unique(['product_id', 'lotcode'], 'pl_pi_l');
             $table->primary(['product_id', 'lotcode']);
         });
     }
