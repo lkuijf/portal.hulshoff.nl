@@ -711,6 +711,27 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   margin: 0;
 }
 
+.manualsContent table {
+  border: 1px solid #666;
+  border-collapse: collapse;
+}
+.manualsContent table th {
+  color: #444;
+  padding: 7px;
+  background: #DDD;
+  border: 1px solid #666;
+}
+.manualsContent table td {
+  padding: 7px;
+  border: 1px solid #666;
+}
+.manualsContent > form {
+  padding: 20px 0;
+}
+.manualsContent form {
+  display: inline-block;
+}
+
 html, body {
   margin: 0;
   padding: 0;

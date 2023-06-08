@@ -3,6 +3,7 @@
     $adminsBtnActive = false;
     $tilesBtnActive = false;
     $reportsBtnActive = false;
+    $manualsBtnActive = false;
     $productsBtnActive = false;
     $ordersBtnActive = false;
     $reservationsBtnActive = false;
@@ -19,6 +20,9 @@
             break;
         case 'reports':
             $reportsBtnActive = true;
+            break;
+        case 'manuals':
+            $manualsBtnActive = true;
             break;
         case 'products': case 'product_detail':
             $productsBtnActive = true;
@@ -119,6 +123,7 @@
                             <li><a href="{{ route('admins') }}" @if($adminsBtnActive)class="active"@endif>{{ __('Admins') }}</a></li>
                             <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>{{ __('Tiles') }}</a></li>
                             <li><a href="{{ route('reports') }}" @if($reportsBtnActive)class="active"@endif>{{ __('Reports') }}</a></li>
+                            <li><a href="{{ route('manuals') }}" @if($manualsBtnActive)class="active"@endif>{{ __('Manuals') }}</a></li>
                         @endif
                         <li><a href="{{ route('products') }}" @if($productsBtnActive)class="active"@endif>{{ __('Products') }}</a></li>
                         <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>{{ __('Orders') }}</a></li>

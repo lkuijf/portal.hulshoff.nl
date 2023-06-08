@@ -10,6 +10,7 @@ use App\Http\Controllers\BasketController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TilesController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ManualController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,11 +60,18 @@ Route::post('/tile', [TilesController::class, 'uploadTile'])->name('tile_upload'
 Route::delete('/tile', [TilesController::class, 'deleteTile'])->name('tile_delete')->middleware('auth:h_users');
 
 Route::get('/reports', [ReportController::class, 'reportsPage'])->name('reports')->middleware('auth:h_users');
+Route::get('/manuals', [ManualController::class, 'manualsPage'])->name('manuals')->middleware('auth:h_users');
+Route::get('/manuals/new', [ManualController::class, 'showNewManual'])->name('new_manual')->middleware('auth:h_users');
+Route::get('/manuals/{id}', [ManualController::class, 'showManual'])->name('manual_detail')->middleware('auth:h_users');
 Route::post('/validate-report', [ReportController::class, 'validateReport'])->name('validate_report')->middleware('auth:h_users');
 
 Route::post('/user', [UserController::class, 'addUser']);
 Route::put('/user', [UserController::class, 'updateUser']);
 Route::delete('/user', [UserController::class, 'deleteUser']);
+
+Route::post('/manual', [ManualController::class, 'storeManual']);
+Route::put('/manual', [ManualController::class, 'storeManual']);
+Route::delete('/manual', [ManualController::class, 'deleteManual']);
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
 Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->name('product_detail')->where(['id' => '[0-9]+'])->middleware('auth:h_users');
