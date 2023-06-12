@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
         // Laravel Task Scheduling not providing output on Failure (https://stackoverflow.com/questions/65941010/laravel-task-scheduling-not-providing-output-on-failure)
         // Set a Try Catch block within the job handle() !!
 
-        // $schedule->job(new ArchiveXml)->dailyAt(1);
-        $schedule->job(new ArchiveXml)->everyMinute();
+        $schedule->job(new ArchiveXml)->dailyAt(1);
+        // $schedule->job(new ArchiveXml)->everyMinute();
         // $schedule->job(new ArchiveXml)->everyMinute()->onFailure(function () {
         //     Mail::raw($error, function ($message) {
         //         $message
@@ -37,10 +37,10 @@ class Kernel extends ConsoleKernel
         //       });
         // });
         // $schedule->job(new ArchiveXml)->everyMinute()->emailOutputOnFailure('leon@wtmedia-events.nl');
-        $schedule->job(new ParseArtikelXml)->everyThreeMinutes(); // dailyAt('14:23') // hourly()
-        $schedule->job(new ParseKlantXml)->everyThreeMinutes(); // everyMinute // everyTwoMinutes // everyThreeMinutes // everyFourMinutes // everyFiveMinutes
-        $schedule->job(new ParseOrderXml)->everyThreeMinutes();
-        $schedule->job(new ParseVoorraadXml)->everyFiveMinutes();
+        $schedule->job(new ParseArtikelXml)->everyFiveMinutes(); // dailyAt('14:23') // hourly()
+        $schedule->job(new ParseKlantXml)->everyFiveMinutes(); // everyMinute // everyTwoMinutes // everyThreeMinutes // everyFourMinutes // everyFiveMinutes
+        $schedule->job(new ParseOrderXml)->everyFiveMinutes();
+        $schedule->job(new ParseVoorraadXml)->everyFifteenMinutes();
 
         $schedule->job(new SendOrder)->everyMinute(); // webportal -> WMS
 
