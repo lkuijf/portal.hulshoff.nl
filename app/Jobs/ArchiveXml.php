@@ -36,6 +36,7 @@ class ArchiveXml implements ShouldQueue
 
         try {
 
+echo "\n";
 
             $startedAt = date("Y-m-d H:i:s");
             $totalZippedFiles = 0;
@@ -51,15 +52,18 @@ class ArchiveXml implements ShouldQueue
             }
 
             foreach($filesToArchive as $type => $files) {
+echo $type . "\n";
                 if(count($files)) {
                     $zip = new \ZipArchive();
                     $filename = $type . '-' . date("Ymd-His") . '.zip';
                     $fileSystemPathToFile = Storage::disk('local_xml_' . $type . '_archived')->path('') . $filename;
+echo $fileSystemPathToFile . "\n";
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
                     
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
                     if($created === TRUE) {
                         foreach($files as $file){
+echo 'addFil() ';
                             $zip->addFile($file, basename($file));
 // echo 'zipped. Now deleting: ' . $file . "\n";
                             // Storage::delete($file);
@@ -68,6 +72,8 @@ class ArchiveXml implements ShouldQueue
                             // @unlink($file);
                             $totalZippedFiles++;
                         }
+echo "\n";
+echo "zip->close()\n";
                         $zip->close();
                     } else {
                         $message = match ($created) {
