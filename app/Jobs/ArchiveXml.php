@@ -60,8 +60,7 @@ echo $type . "\n";
 echo $fileSystemPathToFile . "\n";
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
 
-                    $processUser = posix_getpwuid(posix_geteuid());
-                    if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable (by ' . $processUser['name'] . '): ' . $fileSystemPathToFile);
+                    if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
 
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
 var_dump($created);
