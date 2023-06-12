@@ -123,6 +123,7 @@ echo "\nStarting updateVoorraden()\n";
             
 
             if($stock->{'vrr-lotcode'}) {
+echo "vrr-lotcode found\n";
 
 echo "Product::where\n";
                 $art = Product::where([
@@ -165,6 +166,10 @@ echo "save()\n";
 
 
             } else {
+echo "NO vrr-lotcode found\n";
+
+
+
 echo "Product::where\n";
                 $totalAffected = Product::where([
                     'klantCode' => $stock->{'vrr-klant-code'},
