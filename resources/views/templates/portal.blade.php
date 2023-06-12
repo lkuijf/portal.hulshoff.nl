@@ -57,6 +57,10 @@
 <body>
     {{-- {{ session('selectedClient') }} --}}
     @yield('after_body_tag')
+    @if (isset($page_manual))
+        <div class="pageHelp">?</div>
+        <div class="pageManual"><div>{!! $page_manual !!}</div></div>
+    @endif
     <div class="gridContainer">
         <header class="logoCell"><img src="{{ asset('statics/hulshoff-logo.png') }}" alt=""></header>
         <div class="breadcrumbsCell">
@@ -161,7 +165,20 @@
     <script>showMessage('success',"{!! session('message') !!}")</script>
 @endif
 <script>
-    custSel = document.querySelector('select[name=customerCode]');
+    const custSel = document.querySelector('select[name=customerCode]');
+    const helpMe = document.querySelector('.pageHelp');
+    const manual = document.querySelector('.pageManual');
+
+    if(helpMe) {
+        helpMe.addEventListener('click', () => {
+            if(manual.style.display != "block") {
+                manual.style.display = "block";
+            } else {
+                manual.style.display = "none";
+            }
+        });
+    }
+
     if(custSel) {
         let previousValue = custSel.value;
         custSel.addEventListener('change', () => {
