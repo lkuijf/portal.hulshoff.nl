@@ -62,8 +62,9 @@ echo $fileSystemPathToFile . "\n";
                     
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
                     if($created === TRUE) {
+echo 'adding Files..';
                         foreach($files as $file){
-echo 'addFil() ';
+
                             $zip->addFile($file, basename($file));
 // echo 'zipped. Now deleting: ' . $file . "\n";
                             // Storage::delete($file);
