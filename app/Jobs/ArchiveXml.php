@@ -61,8 +61,10 @@ class ArchiveXml implements ShouldQueue
                     if($created === TRUE) {
                         foreach($files as $file){
                             $zip->addFile($file, basename($file));
-echo 'zipped. Now deleting: ' . $file . "\n";
+// echo 'zipped. Now deleting: ' . $file . "\n";
                             // Storage::delete($file);
+                            Storage::disk('local_xml_' . $type)->delete(basename($file));
+
                             // @unlink($file);
                             $totalZippedFiles++;
                         }
