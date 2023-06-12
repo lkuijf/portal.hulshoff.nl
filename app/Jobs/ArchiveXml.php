@@ -59,7 +59,8 @@ echo $type . "\n";
                     $fileSystemPathToFile = Storage::disk('local_xml_' . $type . '_archived')->path('') . $filename;
 echo $fileSystemPathToFile . "\n";
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
-                    
+                    if(!is_writable($fileSystemPathToFile))  throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
+
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
 var_dump($created);
                     if($created === TRUE) {
