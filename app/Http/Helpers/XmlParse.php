@@ -124,14 +124,14 @@ echo "\nStarting updateVoorraden()\n";
 
             if($stock->{'vrr-lotcode'}) {
 
-echo "Product::where";
+echo "Product::where\n";
                 $art = Product::where([
                     'klantCode' => $stock->{'vrr-klant-code'},
                     'artikelCode' => $stock->{'vrr-artikel-code'}
                 ])->first();
                 
                 if($art) {
-echo "ProductLotcode::updateOrCreate";
+echo "ProductLotcode::updateOrCreate\n";
                     $productlotcode = ProductLotcode::updateOrCreate(
                         ['product_id' => $art->id, 'lotcode' => $stock->{'vrr-lotcode'}],
                         [
@@ -140,7 +140,7 @@ echo "ProductLotcode::updateOrCreate";
                     );
                 }
 
-echo "StockHistory::where";
+echo "StockHistory::where\n";
                 $lastLotcodeStock = StockHistory::where([
                     'klantCode' => $stock->{'vrr-klant-code'},
                     'artikelCode' => $stock->{'vrr-artikel-code'},
@@ -151,13 +151,13 @@ echo "StockHistory::where";
                     !$lastLotcodeStock ||
                     ($lastLotcodeStock && $lastLotcodeStock->voorraad != $stock->{'vrr-aantal-stuks'})
                     ) {
-echo "new StockHistory";
+echo "new StockHistory\n";
                         $shLotcode = new StockHistory;
                         $shLotcode->klantCode = $stock->{'vrr-klant-code'};
                         $shLotcode->artikelCode = $stock->{'vrr-artikel-code'};
                         $shLotcode->lotcode = $stock->{'vrr-lotcode'};
                         $shLotcode->voorraad = $stock->{'vrr-aantal-stuks'};
-echo "save()";
+echo "save()\n";
                         $shLotcode->save();
                     }
 
@@ -165,12 +165,12 @@ echo "save()";
 
 
             } else {
-echo "Product::where";
+echo "Product::where\n";
                 $totalAffected = Product::where([
                     'klantCode' => $stock->{'vrr-klant-code'},
                     'artikelCode' => $stock->{'vrr-artikel-code'}
                     ])->update(['voorraad' => $stock->{'vrr-aantal-stuks'}]);
-echo "StockHistory::where";
+echo "StockHistory::where\n";
                 $lastStock = StockHistory::where([
                     'klantCode' => $stock->{'vrr-klant-code'},
                     'artikelCode' => $stock->{'vrr-artikel-code'}
@@ -185,12 +185,12 @@ echo "StockHistory::where";
                     !$lastStock ||
                     ($lastStock && $lastStock->voorraad != $stock->{'vrr-aantal-stuks'})
                     ) {
-echo "new StockHistory";
+echo "new StockHistory\n";
                         $sh = new StockHistory;
                         $sh->klantCode = $stock->{'vrr-klant-code'};
                         $sh->artikelCode = $stock->{'vrr-artikel-code'};
                         $sh->voorraad = $stock->{'vrr-aantal-stuks'};
-echo "save()";
+echo "save()\n";
                         $sh->save();
                     }
     
