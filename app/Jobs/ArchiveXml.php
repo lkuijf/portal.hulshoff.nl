@@ -61,6 +61,7 @@ echo $fileSystemPathToFile . "\n";
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
                     
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
+var_dump($created);
                     if($created === TRUE) {
 echo 'adding Files..';
                         foreach($files as $file){
