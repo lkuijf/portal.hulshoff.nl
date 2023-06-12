@@ -58,12 +58,12 @@ class ArchiveXml implements ShouldQueue
                     $fileSystemPathToFile = Storage::disk('local_xml_' . $type . '_archived')->path('') . $filename;
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
                     
-                    // check before writing. See https://stackoverflow.com/questions/4651276/no-error-when-creating-zip-but-it-doesnt-get-created
-                    if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
-
                     /* For Windows. ZipArchive::CREATE is not working properly. */
                     file_put_contents($fileSystemPathToFile, '');
                     /**************/
+
+                    // check before writing. See https://stackoverflow.com/questions/4651276/no-error-when-creating-zip-but-it-doesnt-get-created
+                    if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
 
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
                     if($created === TRUE) {
