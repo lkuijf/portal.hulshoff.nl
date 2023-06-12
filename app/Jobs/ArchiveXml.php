@@ -36,7 +36,7 @@ class ArchiveXml implements ShouldQueue
 
         try {
 
-echo "\n";
+// echo "\n";
 
             $startedAt = date("Y-m-d H:i:s");
             $totalZippedFiles = 0;
@@ -52,28 +52,28 @@ echo "\n";
             }
 
             foreach($filesToArchive as $type => $files) {
-echo $type . "\n";
+// echo $type . "\n";
                 if(count($files)) {
                     $zip = new \ZipArchive();
                     $filename = $type . '-' . date("Ymd-His") . '.zip';
                     $fileSystemPathToFile = Storage::disk('local_xml_' . $type . '_archived')->path('') . $filename;
-echo $fileSystemPathToFile . "\n";
+// echo $fileSystemPathToFile . "\n";
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
-                    file_put_contents($fileSystemPathToFile, '');
+            // file_put_contents($fileSystemPathToFile, '');
                     if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
 
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
-var_dump($created);
+// var_dump($created);
                     if($created === TRUE) {
-echo 'adding Files..';
+// echo 'adding Files..';
                         foreach($files as $file){
                             $zip->addFile($file, basename($file));
 // echo 'zipped. Now deleting: ' . $file . "\n";
                             // Storage::disk('local_xml_' . $type)->delete(basename($file));
                             $totalZippedFiles++;
                         }
-echo "\n";
-echo "zip->close()\n";
+// echo "\n";
+// echo "zip->close()\n";
                         $zip->close();
                     } else {
                         $message = match ($created) {
