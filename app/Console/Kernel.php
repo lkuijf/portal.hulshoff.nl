@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
         // Laravel Task Scheduling not providing output on Failure (https://stackoverflow.com/questions/65941010/laravel-task-scheduling-not-providing-output-on-failure)
         // Set a Try Catch block within the job handle() !!
 
-        $schedule->job(new ArchiveXml)->dailyAt(1);
-        // $schedule->job(new ArchiveXml)->everyMinute();
+        // $schedule->job(new ArchiveXml)->dailyAt(1);
+        $schedule->job(new ArchiveXml)->everyMinute();
         // $schedule->job(new ArchiveXml)->everyMinute()->onFailure(function () {
         //     Mail::raw($error, function ($message) {
         //         $message
