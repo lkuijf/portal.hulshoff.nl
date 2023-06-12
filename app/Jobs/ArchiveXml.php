@@ -52,28 +52,26 @@ class ArchiveXml implements ShouldQueue
             }
 
             foreach($filesToArchive as $type => $files) {
-// echo $type . "\n";
                 if(count($files)) {
                     $zip = new \ZipArchive();
                     $filename = $type . '-' . date("Ymd-His") . '.zip';
                     $fileSystemPathToFile = Storage::disk('local_xml_' . $type . '_archived')->path('') . $filename;
-// echo $fileSystemPathToFile . "\n";
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
-            file_put_contents($fileSystemPathToFile, '');
+                    
+                    // check before writing. See https://stackoverflow.com/questions/4651276/no-error-when-creating-zip-but-it-doesnt-get-created
                     if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
 
+                    /* For Windows. ZipArchive::CREATE is not working properly. */
+                    file_put_contents($fileSystemPathToFile, '');
+                    /**************/
+
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
-// var_dump($created);
                     if($created === TRUE) {
-// echo 'adding Files..';
                         foreach($files as $file){
                             $zip->addFile($file, basename($file));
-// echo 'zipped. Now deleting: ' . $file . "\n";
                             // Storage::disk('local_xml_' . $type)->delete(basename($file));
                             $totalZippedFiles++;
                         }
-// echo "\n";
-// echo "zip->close()\n";
                         $zip->close();
                     } else {
                         $message = match ($created) {
