@@ -67,13 +67,9 @@ var_dump($created);
                     if($created === TRUE) {
 echo 'adding Files..';
                         foreach($files as $file){
-
                             $zip->addFile($file, basename($file));
 // echo 'zipped. Now deleting: ' . $file . "\n";
-                            // Storage::delete($file);
-                            Storage::disk('local_xml_' . $type)->delete(basename($file));
-
-                            // @unlink($file);
+                            // Storage::disk('local_xml_' . $type)->delete(basename($file));
                             $totalZippedFiles++;
                         }
 echo "\n";
