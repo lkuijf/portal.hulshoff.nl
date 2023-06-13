@@ -27,11 +27,12 @@ class ProductController extends Controller
 
         $selectedKlantCode = false;
         if(session()->has('selectedClient')) $selectedKlantCode = session('selectedClient');
-        
         $customerBrands = $this->getSpecs('brand', $selectedKlantCode);
         $customerGroups = $this->getSpecs('group', $selectedKlantCode);
         $customerTypes = $this->getSpecs('type', $selectedKlantCode);
         $customerColors = $this->getSpecs('color', $selectedKlantCode);
+        
+        $tiles = DB::table('tiles')->get();      
 
         $aBrands = [];
         $aGroups = [];
