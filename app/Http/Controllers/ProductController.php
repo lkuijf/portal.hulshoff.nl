@@ -16,13 +16,13 @@ class ProductController extends Controller
     public function showProducts() {
         if(!auth()->user()->canDisplay()) return view('no-data');
 
-        $bShowTiles = false;
+        // $bShowTiles = false;
         $filterToShow = 'side';
         $privileges = json_decode(auth()->user()->privileges);
         if($privileges) {
             if(in_array('filter_on_top', $privileges)) $filterToShow = 'top';
             if(in_array('filter_at_side', $privileges)) $filterToShow = 'side';
-            if(in_array('show_tiles', $privileges)) $bShowTiles = true;
+            // if(in_array('show_tiles', $privileges)) $bShowTiles = true;
         }
 
         $selectedKlantCode = false;
@@ -46,7 +46,7 @@ class ProductController extends Controller
         foreach($tiles as $tile) $aTiles[$tile->group] = $tile->file;
         
         $data = [
-            'tilesDisplay' => $bShowTiles,
+            // 'tilesDisplay' => $bShowTiles,
             'filterDisplay' => $filterToShow,
             'tiles' => $aTiles,
             'filters' => [

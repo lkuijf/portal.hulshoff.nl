@@ -1,8 +1,7 @@
 {{-- @extends('templates.development') --}}
 @extends('templates.portal')
 @section('content')
-
-@if ($data['tilesDisplay'])  
+{{-- @if (Route::currentRouteName() == 'products_tiles') --}}
 <div class="selectTileOverlay">
     <div class="tileGrid">
         @foreach ($data['filters']['group']['items'] as $group)
@@ -15,7 +14,7 @@
         @endforeach
     </div>
 </div>
-@endif
+{{-- @endif --}}
 
 @php
     $showWizzard = false;
@@ -76,6 +75,11 @@
         }
     });
 
+    tilesWrapper.style.display = 'none';
+    if(window.location.hash == '#tiles') {
+        tilesWrapper.style.display = 'block';
+    }
+
     if(tilesWrapper) {
         const tileLinks = tilesWrapper.querySelectorAll('.tileGrid a');
         tileLinks.forEach(tLink => {
@@ -103,9 +107,22 @@
                     filterBtn.dispatchEvent(event);
                 }
                 tilesWrapper.style.display = 'none';
+
+                const state = {};
+                history.pushState(state, '', "/products");
+
             });
         });
     }
+
+
+    window.addEventListener("popstate", (event) => {
+        // console.log(`location: ${document.location}, state: ${JSON.stringify(event.state)}`)
+        if(document.location.hash == '#tiles') {
+            tilesWrapper.style.display = 'block';
+        }
+    });
+
 
     if(wizSelects.length) {
         wizSelects.forEach(wizSel => {

@@ -74,6 +74,7 @@ Route::put('/manual', [ManualController::class, 'storeManual']);
 Route::delete('/manual', [ManualController::class, 'deleteManual']);
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
+Route::get('/products#tiles', [ProductController::class, 'showProducts'])->name('products_tiles')->middleware('auth:h_users');
 Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->name('product_detail')->where(['id' => '[0-9]+'])->middleware('auth:h_users');
 
 Route::get('/basket', [BasketController::class, 'showBasket'])->name('basket')->middleware('auth:h_users');

@@ -49,6 +49,13 @@ class AppServiceProvider extends ServiceProvider
                     $customers[] = $customer;
                 }
                 $view->with('customers', $customers);
+
+                $bShowTiles = false;
+                $privileges = json_decode(auth()->user()->privileges);
+                if($privileges) {
+                    if(in_array('show_tiles', $privileges)) $bShowTiles = true;
+                }
+                $view->with('tilesDisplay', $bShowTiles);
             }
             
             $currentUrl = parse_url(url()->current(), PHP_URL_PATH);

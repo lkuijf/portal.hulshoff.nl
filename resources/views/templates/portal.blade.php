@@ -129,7 +129,13 @@
                             <li><a href="{{ route('reports') }}" @if($reportsBtnActive)class="active"@endif>{{ __('Reports') }}</a></li>
                             <li><a href="{{ route('manuals') }}" @if($manualsBtnActive)class="active"@endif>{{ __('Manuals') }}</a></li>
                         @endif
-                        <li><a href="{{ route('products') }}" @if($productsBtnActive)class="active"@endif>{{ __('Products') }}</a></li>
+                        @php
+                            $productPageRoute = 'products';
+                            if(isset($tilesDisplay) && $tilesDisplay) {
+                                $productPageRoute = 'products_tiles';
+                            }          
+                        @endphp
+                        <li><a href="{{ route($productPageRoute) }}" @if($productsBtnActive)class="active"@endif>{{ __('Products') }}</a></li>
                         <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>{{ __('Orders') }}</a></li>
                         @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($reservationsBtnActive)class="active"@endif>{{ __('Reservations') }}</a></li>@endif
                     </ul>
