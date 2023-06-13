@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use App\Models\Customer;
 // use App\Models\Productbrand;
 // use App\Models\Productgroup;
 // use App\Models\Producttype;
@@ -24,11 +25,13 @@ class ProductController extends Controller
             if(in_array('show_tiles', $privileges)) $bShowTiles = true;
         }
 
-        $customerBrands = $this->getSpecs('brand', auth()->user()->klantCode);
-        $customerGroups = $this->getSpecs('group', auth()->user()->klantCode);
-        $customerTypes = $this->getSpecs('type', auth()->user()->klantCode);
-        $customerColors = $this->getSpecs('color', auth()->user()->klantCode);
-        $allTiles = DB::table('tiles')->get();
+        $selectedKlantCode = false;
+        if(session()->has('selectedClient')) $selectedKlantCode = session('selectedClient');
+        
+        $customerBrands = $this->getSpecs('brand', $selectedKlantCode);
+        $customerGroups = $this->getSpecs('group', $selectedKlantCode);
+        $customerTypes = $this->getSpecs('type', $selectedKlantCode);
+        $customerColors = $this->getSpecs('color', $selectedKlantCode);
 
         $aBrands = [];
         $aGroups = [];
@@ -39,7 +42,7 @@ class ProductController extends Controller
         foreach($customerGroups as $group) $aGroups[$group->id] = $group->group;
         foreach($customerTypes as $type) $aTypes[$type->id] = $type->type;
         foreach($customerColors as $color) $aColors[$color->id] = $color->color;
-        foreach($allTiles as $tile) $aTiles[$tile->group] = $tile->file;
+        foreach($tiles as $tile) $aTiles[$tile->group] = $tile->file;
         
         $data = [
             'tilesDisplay' => $bShowTiles,
