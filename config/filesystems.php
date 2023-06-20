@@ -123,10 +123,10 @@ return [
         //     'visibility' => 'public',
         //     'throw' => false,
         // ],
-        'product_images' => [
+        'product_images_drive' => [
             'driver' => 'local',
             'root' => 'M:/',
-            'url' => env('APP_URL').'/product_images',
+            'url' => env('APP_URL').'/product_images_drive',
             'visibility' => 'public',
             'throw' => false,
         ],
