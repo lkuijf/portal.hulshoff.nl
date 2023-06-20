@@ -34,6 +34,13 @@ class ArchiveXml implements ShouldQueue
     public function handle()
     {
 
+Mail::raw('START!', function ($message) {
+    $message
+        ->to('leon@wtmedia-events.nl')
+        ->subject('Starting the archiver');
+});
+        
+
         try {
 
 // echo "\n";
