@@ -51,6 +51,14 @@ class ArchiveXml implements ShouldQueue
                 }
             }
 
+
+Mail::raw(print_r($filesToArchive, true), function ($message) {
+    $message
+        ->to('leon@wtmedia-events.nl')
+        ->subject('Files to archive');
+});
+
+
             foreach($filesToArchive as $type => $files) {
                 if(count($files)) {
                     $zip = new \ZipArchive();
