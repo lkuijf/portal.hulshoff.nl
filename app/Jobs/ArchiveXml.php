@@ -34,11 +34,11 @@ class ArchiveXml implements ShouldQueue
     public function handle()
     {
 
-Mail::raw('START!', function ($message) {
-    $message
-        ->to('leon@wtmedia-events.nl')
-        ->subject('Starting the archiver');
-});
+// Mail::raw('START!', function ($message) {
+//     $message
+//         ->to('leon@wtmedia-events.nl')
+//         ->subject('Starting the archiver');
+// });
         
 
         try {
@@ -59,11 +59,11 @@ Mail::raw('START!', function ($message) {
             }
 
 
-Mail::raw(print_r($filesToArchive, true), function ($message) {
-    $message
-        ->to('leon@wtmedia-events.nl')
-        ->subject('Files to archive');
-});
+// Mail::raw(print_r($filesToArchive, true), function ($message) {
+//     $message
+//         ->to('leon@wtmedia-events.nl')
+//         ->subject('Files to archive');
+// });
 
 
             foreach($filesToArchive as $type => $files) {
