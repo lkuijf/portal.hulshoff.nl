@@ -73,21 +73,26 @@ class ArchiveXml implements ShouldQueue
                     $fileSystemPathToFile = Storage::disk('local_xml_' . $type . '_archived')->path('') . $filename;
                     if(file_exists($fileSystemPathToFile)) throw new \Exception('File already exists: ' . $fileSystemPathToFile);
                     
-                    // /* For Windows. ZipArchive::CREATE is not working properly. */
-                    // file_put_contents($fileSystemPathToFile, '');
-                    // /**************/
+                    /* For Windows. ZipArchive::CREATE is not working properly. */
+                    file_put_contents($fileSystemPathToFile, '');
+                    /**************/
 
-                    // // check before writing. See https://stackoverflow.com/questions/4651276/no-error-when-creating-zip-but-it-doesnt-get-created
-                    // if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
+                    // check before writing. See https://stackoverflow.com/questions/4651276/no-error-when-creating-zip-but-it-doesnt-get-created
+                    if(!is_writable($fileSystemPathToFile)) throw new \Exception('File is not writable: ' . $fileSystemPathToFile);
 
                     $created = $zip->open($fileSystemPathToFile, \ZipArchive::CREATE);
                     if($created === TRUE) {
                         foreach($files as $file){
                             $zip->addFile($file, basename($file));
-                            Storage::disk('local_xml_' . $type)->delete(basename($file));
+                            // Storage::disk('local_xml_' . $type)->delete(basename($file));
                             $totalZippedFiles++;
                         }
                         $zip->close();
+                        /* !!! If you are adding files to the zip file that you want to be deleted make sure you delete AFTER you call the close() function. !!! */
+                        // https://stackoverflow.com/questions/37299433/warning-on-ziparchive-close
+                        foreach($files as $file){
+                            Storage::disk('local_xml_' . $type)->delete(basename($file));
+                        }
                     } else {
                         $message = match ($created) {
                             \ZipArchive::ER_MULTIDISK   => 'Multi-disk zip archives not supported',
