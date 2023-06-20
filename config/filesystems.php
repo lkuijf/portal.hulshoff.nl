@@ -125,7 +125,7 @@ return [
         // ],
         'product_images' => [
             'driver' => 'local',
-            'root' => 'M:\\',
+            'root' => 'M:/',
             'url' => env('APP_URL').'/product_images',
             'visibility' => 'public',
             'throw' => false,
