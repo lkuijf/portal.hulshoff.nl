@@ -123,13 +123,13 @@ return [
         //     'visibility' => 'public',
         //     'throw' => false,
         // ],
-        'product_images' => [
-            'driver' => 'local',
-            'root' => 'M:/',
-            'url' => env('APP_URL').'/product_images',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
+        // 'product_images' => [
+        //     'driver' => 'local',
+        //     'root' => 'M:/',
+        //     'url' => env('APP_URL').'/product_images',
+        //     'visibility' => 'public',
+        //     'throw' => false,
+        // ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -160,6 +160,7 @@ return [
         public_path('storage/tiles') => storage_path('app/public/tiles'),
         public_path('pdf') => storage_path('app/pdf'),
         public_path('csv') => storage_path('app/csv'),
+        public_path('product_images') => 'M:/',
     ],
 
 ];
