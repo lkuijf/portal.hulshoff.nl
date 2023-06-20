@@ -10,6 +10,7 @@ use App\Models\Customer;
 // use App\Models\Productgroup;
 // use App\Models\Producttype;
 // use App\Models\Productcolor;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
