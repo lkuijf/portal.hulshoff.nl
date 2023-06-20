@@ -9,7 +9,8 @@
                     'product_id' => $product['id'], 
                     'product_code' => $product['artikelCode'], 
                     'product_voorraad' => ($product['voorraad'] - $product['aantal_besteld_onverwerkt']), 
-                    'product_image' => Storage::disk('product_images_drive')->url() . '/50240/00003.jpg', 
+                    // 'product_image' => Storage::disk('product_images_drive')->url() . '/50240/00003.jpg', 
+                    'product_image' => Storage::disk('product_images_drive')->path(''), 
                     // 'product_image' => url('product_images') . '/50240/00003.jpg', 
                     'product_info' => '<p>' . $product['omschrijving'] . '</p>'
                 ])
