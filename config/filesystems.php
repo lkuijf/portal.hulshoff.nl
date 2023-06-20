@@ -129,6 +129,7 @@ return [
             'url' => env('APP_URL').'/product_images_drive',
             'visibility' => 'public',
             'throw' => false,
+            'readonly' => true,
         ],
         's3' => [
             'driver' => 's3',
