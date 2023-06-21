@@ -131,13 +131,13 @@ return [
         //     'throw' => false,
         //     'readonly' => true,
         // ],
-        'samba_drive' => [
-            'driver' => 'smb',
-            'host' => '192.168.110.37',
-            'username' => 'opslag-user',
-            'password' => 'casa123!',
-            'share' => 'applications$',
-        ],
+        // 'samba_drive' => [
+        //     'driver' => 'smb',
+        //     'host' => '192.168.110.37',
+        //     'username' => 'opslag-user',
+        //     'password' => 'casa123!',
+        //     'share' => 'applications$',
+        // ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
