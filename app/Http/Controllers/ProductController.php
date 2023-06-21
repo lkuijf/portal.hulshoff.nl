@@ -95,7 +95,7 @@ class ProductController extends Controller
         
         $res = $resQry->paginate(10);
         
-dd(Storage::disk('product_images_drive')->files());
+dd(Storage::disk('samba_drive')->files());
 
         $data = [
             'products' => $res,

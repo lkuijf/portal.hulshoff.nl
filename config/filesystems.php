@@ -123,13 +123,20 @@ return [
         //     'visibility' => 'public',
         //     'throw' => false,
         // ],
-        'product_images_drive' => [
-            'driver' => 'local',
-            'root' => 'M:/',
-            'url' => env('APP_URL').'/product_images_drive',
-            'visibility' => 'public',
-            'throw' => false,
-            'readonly' => true,
+        // 'product_images_drive' => [
+        //     'driver' => 'local',
+        //     'root' => 'M:/',
+        //     'url' => env('APP_URL').'/product_images_drive',
+        //     'visibility' => 'public',
+        //     'throw' => false,
+        //     'readonly' => true,
+        // ],
+        'samba_drive' => [
+            'driver' => 'smb',
+            'host' => '192.168.110.37',
+            'username' => 'opslag-user',
+            'password' => 'casa123!',
+            'share' => 'applications$',
         ],
         's3' => [
             'driver' => 's3',
