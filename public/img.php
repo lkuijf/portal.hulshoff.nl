@@ -7,6 +7,6 @@
 </head>
 <body>
 <!-- <img src="file://192.168.110.37/applications$/MeubelOpslag/Meubelfoto/50944/00009.JPG" alt=""> -->
-    <img src="product_images/50944/00009.JPG" alt="">
+    <img src="product_images2/50944/00009.JPG" alt="">
 </body>
 </html>
