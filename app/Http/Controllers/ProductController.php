@@ -95,7 +95,7 @@ class ProductController extends Controller
         
         $res = $resQry->paginate(10);
         
-dd(Storage::disk('network_images')->files());
+dd(Storage::disk('network_images')->get('/meubelopslag/meubelfoto/50246/00044.jpg'));
 
         $data = [
             'products' => $res,

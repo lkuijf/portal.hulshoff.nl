@@ -140,7 +140,7 @@ return [
         // ],
         'network_images' => [
             'driver' => 'local',
-            'root' => '\\\\192.168.110.37\applications$\meubelopslag\meubelfoto',
+            'root' => '\\\\192.168.110.37\applications$',
             'username' => 'opslag-user',
             'password' => 'casa123!',
         ],
