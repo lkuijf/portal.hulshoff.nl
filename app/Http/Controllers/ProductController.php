@@ -19,7 +19,7 @@ class ProductController extends Controller
 
 // dd(Storage::disk('network_images')->get('50246/00044.jpg'));
 // dd(Storage::disk('network_images')->files('50246'));
-Storage::disk('network_images')->allDirectories('');
+dd(Storage::disk('network_images')->allDirectories('50246'));
 
         // $bShowTiles = false;
         $filterToShow = 'side';
