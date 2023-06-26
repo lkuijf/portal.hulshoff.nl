@@ -17,6 +17,8 @@ class ProductController extends Controller
     public function showProducts() {
         if(!auth()->user()->canDisplay()) return view('no-data');
 
+dd(Storage::disk('network_images')->get('/meubelopslag/meubelfoto/50246/00044.jpg'));
+
         // $bShowTiles = false;
         $filterToShow = 'side';
         $privileges = json_decode(auth()->user()->privileges);
@@ -95,7 +97,7 @@ class ProductController extends Controller
         
         $res = $resQry->paginate(10);
         
-dd(Storage::disk('network_images')->get('/meubelopslag/meubelfoto/50246/00044.jpg'));
+// dd(Storage::disk('network_images')->get('/meubelopslag/meubelfoto/50246/00044.jpg'));
 
         $data = [
             'products' => $res,
