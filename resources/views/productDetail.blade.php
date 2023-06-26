@@ -14,7 +14,7 @@
     </div>
     @endif
     <div class="prodDetTopWrap">
-        <div><img src="https://picsum.photos/200/400" alt="Product image"></div>
+        <div><img src="{!! $product->imageUrl !!}" alt="Product image"></div>
         <div>
             <div>
                 <div class="prodReserveWrap">

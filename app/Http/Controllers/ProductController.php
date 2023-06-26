@@ -134,6 +134,12 @@ class ProductController extends Controller
         $product = Product::findOr($id, function () {
             return abort(404);
         });
+        $productImageUrl = 'https://via.placeholder.com/800x600?text=Geen+afbeelding+gevonden';
+        $imgUrlPart = $product->klantCode . '/' . $product->artikelCode;
+        if(Storage::disk('product_images')->exists($imgUrlPart . '.jpg')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.jpg');
+        if(Storage::disk('product_images')->exists($imgUrlPart . '.JPG')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.JPG');
+        $product->imageUrl = $productImageUrl;
+
 
         if(session()->has('selectedClient' ) && (session('selectedClient') != $product->klantCode)) return view('no-data');
 
