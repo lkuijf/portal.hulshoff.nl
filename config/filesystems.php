@@ -143,6 +143,7 @@ return [
             'root' => '\\\\192.168.110.37\applications$\meubelopslag\meubelfoto',
             'username' => 'opslag-user',
             'password' => 'casa123!',
+            'read-only' => true,
         ],
         's3' => [
             'driver' => 's3',
