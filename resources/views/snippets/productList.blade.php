@@ -9,16 +9,9 @@
                     'product_id' => $product['id'], 
                     'product_code' => $product['artikelCode'], 
                     'product_voorraad' => ($product['voorraad'] - $product['aantal_besteld_onverwerkt']), 
-                    // 'product_image' => Storage::disk('product_images_drive')->url() . '/50240/00003.jpg', 
-                    // 'product_image' => Storage::disk('product_images_drive')->url(), 
-                    // 'product_image' => url('product_images') . '/50240/00003.jpg', 
-                    // 'product_image' => '/50240/00003.jpg', 
-                    // 'product_image' => '\\192.168.110.37\applications$\MeubelOpslag\Meubelfoto\50246\00044.jpg', 
-                    // 'product_image' => url('p_images') . '/' . $product['klantCode'] . '/' . $product['artikelCode'] . '.jpg', 
                     'product_image' => $product['imageUrl'], 
                     'product_info' => '<p>' . $product['omschrijving'] . '</p>'
                 ])
-                {{-- file:///M:/50240/00003.jpg --}}
             @endforeach
         @else
             @for ($x=0;$x<12;$x++)
