@@ -138,13 +138,13 @@ return [
         //     'password' => 'casa123!',
         //     'share' => 'applications$',
         // ],
-        'network_images' => [
-            'driver' => 'local',
-            'root' => '\\\\192.168.110.37\applications$\meubelopslag\meubelfoto',
-            'username' => 'opslag-user',
-            'password' => 'casa123!',
-            'read-only' => true,
-        ],
+        // 'network_images' => [
+        //     'driver' => 'local',
+        //     'root' => '\\\\192.168.110.37\applications$\meubelopslag\meubelfoto',
+        //     'username' => 'opslag-user',
+        //     'password' => 'casa123!',
+        //     'read-only' => true,
+        // ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

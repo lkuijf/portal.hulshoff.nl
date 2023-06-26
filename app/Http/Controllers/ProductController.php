@@ -18,7 +18,7 @@ class ProductController extends Controller
         if(!auth()->user()->canDisplay()) return view('no-data');
 
 // dd(Storage::disk('network_images')->get('50246/00044.jpg'));
-dd(Storage::disk('network_images')->files('50246'));
+// dd(Storage::disk('network_images')->files('50246'));
 // dd(Storage::disk('network_images')->allDirectories('50246'));
 
         // $bShowTiles = false;
