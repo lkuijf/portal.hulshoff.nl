@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function showProducts() {
         if(!auth()->user()->canDisplay()) return view('no-data');
 
-// dd(Storage::disk('network_images')->get('50246/00044.jpg'));
+dd(Storage::disk('network_images')->get('50246/00044.jpg'));
 
         // $bShowTiles = false;
         $filterToShow = 'side';
