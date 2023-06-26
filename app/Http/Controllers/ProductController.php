@@ -98,8 +98,15 @@ class ProductController extends Controller
         }
         
         $res = $resQry->paginate(10);
+
+// dd(Storage::disk('product_images')->url('/50246/00044.jpg'));
+        foreach($res as &$product) {
+            $productImageUrl = 'https://via.placeholder.com/800x600?text=Geen+afbeelding+gevonden';
+            if(Storage::disk('product_images')->exists($product['klantCode'] . '/' . $product['artikelCode'] . '.jpg')) $productImageUrl = Storage::disk('product_images')->url($product['klantCode'] . '/' . $product['artikelCode'] . '.jpg');
+            if(Storage::disk('product_images')->exists($product['klantCode'] . '/' . $product['artikelCode'] . '.JPG')) $productImageUrl = Storage::disk('product_images')->url($product['klantCode'] . '/' . $product['artikelCode'] . '.JPG');
+            $product['imageUrl'] = $productImageUrl;
+        }
         
-dd(Storage::disk('product_images')->url('/50246/00044.jpg'));
 
         $data = [
             'products' => $res,
