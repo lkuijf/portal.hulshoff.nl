@@ -34,7 +34,7 @@
                     <tr>
                         {{-- <td>{{ $orderArt->id }}</td> --}}
                         {{-- <td>{{ $orderArt->product_id }}</td> --}}
-                        <td>{{ $orderArt->product->artikelCode }}</td>
+                        <td><a href="{{ route('product_detail', $orderArt->product_id) }}">{{ $orderArt->product->artikelCode }}</a></td>
                         <td>{{ $orderArt->product->omschrijving }}</td>
                         <td><span>{{ $orderArt->amount }}@if ($order->is_reservation) <a href="" class="editBasketCount editBtn" data-order-id="{{ $order->id }}" data-product-id="{{ $orderArt->product_id }}" data-product-count="{{ $orderArt->amount }}">{{ __('Edit') }}</a>@endif</span></td>
                         <td>&euro;{{ number_format($orderArt->product->prijs, 2, ',', '.') }}</td>
