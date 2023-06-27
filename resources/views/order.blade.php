@@ -6,11 +6,13 @@
         $totalOrderSum = 0;
     @endphp
     <h1>{{ ($order->is_reservation?'Reservation':'Order') }} details</h1>
-    <p>Id: {{ $order->id }}</p>
-    <p>Is {{ Str::lower(__('Reservation')) }}: {{ ($order->is_reservation?__('Yes'):__('No')) }}</p>
-    <p>{{ __('Delivery date') }}: <span>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}{!! ($order->is_reservation?' <a class="editBasketDate editBtn" data-order-id="' . $order->id . '" data-order-date="' . date("d-m-Y", strtotime($order->afleverDatum)) . '" href="">' . __('Edit') . '</a>':'') !!}</span></p>
-    {{-- <p>Aflever tijd: {{ $order->afleverTijd }}</p> --}}
-    <p>Order {{ Str::lower(__('Created at')) }}: {{ date("d-m-Y", strtotime($order->created_at)) }} om {{ date("H:i", strtotime($order->created_at)) }} uur</p>
+    <div class="orderMetaData">
+        <p>Id: {{ $order->id }}</p>
+        <p>Is {{ Str::lower(__('Reservation')) }}: {{ ($order->is_reservation?__('Yes'):__('No')) }}</p>
+        <p>{{ __('Delivery date') }}: <span>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}{!! ($order->is_reservation?' <a class="editBasketDate editBtn" data-order-id="' . $order->id . '" data-order-date="' . date("d-m-Y", strtotime($order->afleverDatum)) . '" href="">' . __('Edit') . '</a>':'') !!}</span></p>
+        {{-- <p>Aflever tijd: {{ $order->afleverTijd }}</p> --}}
+        <p>Order {{ Str::lower(__('Created at')) }}: {{ date("d-m-Y", strtotime($order->created_at)) }} om {{ date("H:i", strtotime($order->created_at)) }} uur</p>
+    </div>
     @if (count($order->orderArticles))
         <h2>{{ __('Products') }}</h2>
         <table>

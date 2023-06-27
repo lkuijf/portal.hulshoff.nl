@@ -658,6 +658,13 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 .orderContent input {
   margin-right: 5px;
 }
+.orderContent .orderMetaData {
+  background-color: #EFEFEF;
+  padding: 10px;
+}
+.orderContent .orderMetaData p {
+  margin: 0;
+}
 .orderContent .confirmReservation {
   padding: 20px;
   background-color: #EFEFEF;
