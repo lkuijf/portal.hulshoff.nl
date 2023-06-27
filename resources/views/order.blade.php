@@ -16,8 +16,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>id</th>
-                    <th>Product id</th>
+                    {{-- <th>id</th> --}}
+                    {{-- <th>Product id</th> --}}
+                    <th>artikelCode</th>
                     <th>Product {{ __('Name') }}</th>
                     <th>{{ __('Amount') }}</th>
                     <th>{{ __('Price') }}</th>
@@ -31,8 +32,9 @@
                         $totalOrderSum += $orderArt->product->prijs*$orderArt->amount;
                     @endphp
                     <tr>
-                        <td>{{ $orderArt->id }}</td>
-                        <td>{{ $orderArt->product_id }}</td>
+                        {{-- <td>{{ $orderArt->id }}</td> --}}
+                        {{-- <td>{{ $orderArt->product_id }}</td> --}}
+                        <td>{{ $orderArt->product->artikelCode }}</td>
                         <td>{{ $orderArt->product->omschrijving }}</td>
                         <td><span>{{ $orderArt->amount }}@if ($order->is_reservation) <a href="" class="editBasketCount editBtn" data-order-id="{{ $order->id }}" data-product-id="{{ $orderArt->product_id }}" data-product-count="{{ $orderArt->amount }}">{{ __('Edit') }}</a>@endif</span></td>
                         <td>&euro;{{ number_format($orderArt->product->prijs, 2, ',', '.') }}</td>
