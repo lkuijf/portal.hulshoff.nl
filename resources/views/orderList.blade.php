@@ -17,7 +17,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>id</th>
+                    {{-- <th>id</th> --}}
                     <th>Order Code {{ __('Client') }}</th>
                     <th>{{ __('Delivery date') }}</th>
                     <th>{{ __('User') }}</th>
@@ -31,7 +31,7 @@
             <tbody>
             @foreach ($data['orders'] as $order)
                 <tr>
-                    <td>{{ $order->id }}</td>
+                    {{-- <td>{{ $order->id }}</td> --}}
                     <td>{{ $order->orderCodeKlant }}</td>
                     <td>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}</td>
                     <td>
