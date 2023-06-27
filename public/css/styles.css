@@ -659,7 +659,7 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   margin-right: 5px;
 }
 .orderContent .orderMetaData {
-  background-color: #EFEFEF;
+  border: 1px dashed #999;
   padding: 10px;
   display: inline-block;
 }
