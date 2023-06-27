@@ -70,7 +70,7 @@ echo "\r" . $x++ . '/' . $totalFiles;
                     // ]);
 // echo $xmlString;
 
-                    $response = Http::withBody($xmlString, 'application/xml')->post('https://edi.hulshoff.nl/api/accept/interface-wti/BerichtOrders');
+                    $response = Http::withBody($xmlString, 'application/xml')->post(config('hulshoff.OrdersOutEndpoint'));
                     
 
                     // $curl = curl_init();
