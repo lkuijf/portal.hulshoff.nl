@@ -130,15 +130,20 @@
             editForm.setAttribute('action', '/order');
             editForm.setAttribute('method', 'post');
             editSelect.setAttribute('name', 'address');
-            editSelect.setAttribute('value', oaId);
+            // editSelect.setAttribute('value', oaId);
+            let selectedI = 0;
+            let i = 0;
             allAddresses.forEach(addr => {
                 let option = document.createElement("option");
                 option.value = addr.id;
                 option.text = addr.naam;
                 editSelect.add(option);
+                if(addr.id == oaId) selectedI = i;
+                i++;
             });
-            let event = new Event('change');
-            editSelect.dispatchEvent(event);
+            // let event = new Event('change');
+            // editSelect.dispatchEvent(event);
+            editSelect.selectedIndex = selectedI;
 
             editHiddenMethod.setAttribute('type', 'hidden');
             editHiddenMethod.setAttribute('name', '_method');
