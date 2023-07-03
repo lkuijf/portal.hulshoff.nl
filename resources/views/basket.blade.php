@@ -52,7 +52,7 @@
         <select name="address">
             <option value="">-geen-</option>
             @foreach ($addresses as $address)
-                <option value="{{ $address->klantCode }}">{{ $address->naam }} ({{ $address->klantCode }})</option>
+                <option value="{{ $address->klantCode }}">{{ $address->naam }} - {{ $address->straat }} {{ $address->huisnummer }}, {{ $address->postcode }} {{ $address->plaats }} ({{ $address->contactpersoon }} {{ $address->telefoon }} {{ $address->eMailadres }})</option>
             @endforeach
         </select>
         <h2>{{ __('Delivery date') }}</h2>
