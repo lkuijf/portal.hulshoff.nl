@@ -12,7 +12,7 @@
         $totalOrderSum = 0;
     @endphp
     <h1>{{ __('Basket') }}</h1>
-    {{-- @if (count($basket)) --}}
+    @if (count($basket))
         <table>
             <thead>
                 <tr>
@@ -122,9 +122,9 @@
             @endif
 
         </form>
-    {{-- @else
+    @else
         <p>Basket is empty.</p>
-    @endif --}}
+    @endif
 </div>
 @endsection
 @section('extra_head')

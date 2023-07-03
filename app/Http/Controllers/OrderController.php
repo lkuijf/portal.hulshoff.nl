@@ -55,6 +55,14 @@ class OrderController extends Controller
     }
 
     public function newOrder(Request $request) {
+        $toValidate = array(
+            'address' => 'required',
+        );
+        $validationMessages = array(
+            'address.required'=> 'Please select an address',
+        );
+        $validated = $request->validate($toValidate,$validationMessages);
+
         $basket = [];
         $deliveryDate = date("d-m-Y", strtotime('next week'));
         $activeClient = false;
