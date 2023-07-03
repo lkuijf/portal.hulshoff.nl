@@ -112,13 +112,13 @@
     if(editAddressBtn) {
         editAddressBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            let parentTd = btn.parentNode.parentNode;
-            let originalSpan = btn.parentNode;
+            let parentTd = editAddressBtn.parentNode.parentNode;
+            let originalSpan = editAddressBtn.parentNode;
 
             let csrfToken = document.querySelector('meta[name="_token"]').content;
 
-            let oId = btn.dataset.orderId;
-            let oaId = btn.dataset.addressId;
+            let oId = editAddressBtn.dataset.orderId;
+            let oaId = editAddressBtn.dataset.addressId;
 
             let editForm = document.createElement('form');
             let editSelect = document.createElement('select');
