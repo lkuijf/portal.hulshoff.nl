@@ -128,7 +128,7 @@
             let editSave = document.createElement('button');
             let editCancel = document.createElement('a');
             editForm.setAttribute('action', '/order');
-            editForm.setAttribute('method', 'post');
+            editForm.setAttribute('method', 'put');
             editSelect.setAttribute('name', 'address');
             let selectedI = 0;
             let i = 0;
