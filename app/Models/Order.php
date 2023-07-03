@@ -22,6 +22,10 @@ class Order extends Model
         return $this->hasOne(Customer::class, 'klantCode', 'klantCode');
     }
 
+    public function address() {
+        return $this->hasOne(Address::class, 'id', 'address_id');
+    }
+
     public function generateXml() {
         $aAdressen = [];
         $aDetails = [];
