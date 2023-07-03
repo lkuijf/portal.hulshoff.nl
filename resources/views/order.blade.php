@@ -138,11 +138,16 @@
                 option.value = addr.id;
                 option.text = addr.naam;
                 editSelect.add(option);
-                if(addr.id == oaId) selectedI = i;
+                if(addr.id == oaId) {
+                    selectedI = i;
+                    console.log('YES ' + selectedI + ' ' + i);
+                }
                 i++;
+console.log(i);
             });
             // let event = new Event('change');
             // editSelect.dispatchEvent(event);
+console.log(selectedI);
             editSelect.selectedIndex = selectedI;
 
             editHiddenMethod.setAttribute('type', 'hidden');
