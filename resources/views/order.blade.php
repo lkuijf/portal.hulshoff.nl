@@ -125,6 +125,7 @@
             let editHiddenMethod = document.createElement('input');
             let editHiddenToken = document.createElement('input');
             let editHiddenOId = document.createElement('input');
+            let editHiddenType = document.createElement('input');
             let editSave = document.createElement('button');
             let editCancel = document.createElement('a');
             editForm.setAttribute('action', '/order');
