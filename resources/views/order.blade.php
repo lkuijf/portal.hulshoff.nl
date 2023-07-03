@@ -11,7 +11,7 @@
         <p>Order Code Klant: <strong>{{ $order->orderCodeKlant }}</strong></p>
         <p>Is {{ Str::lower(__('Reservation')) }}: <strong>{{ ($order->is_reservation?__('Yes'):__('No')) }}</strong></p>
         <p>{{ __('Delivery date') }}: <strong><span>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}{!! ($order->is_reservation?' <a class="editBasketDate editBtn" data-order-id="' . $order->id . '" data-order-date="' . date("d-m-Y", strtotime($order->afleverDatum)) . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
-        <p>{{ __('Delivery address') }}: <strong><span>{{ $order->address->naam }}{!! ($order->is_reservation?' <a class="editBasketDate editBtn" data-order-id="' . $order->id . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
+        <p>{{ __('Delivery address') }}: <strong><span>{{ $order->address->naam }}{!! ($order->is_reservation?' <a class="editBasketAddress editBtn" data-order-id="' . $order->id . '" data-address-id="' . $order->address_id . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
         {{-- <p>Aflever tijd: {{ $order->afleverTijd }}</p> --}}
         <p>Order {{ Str::lower(__('Created at')) }}: <strong>{{ date("d-m-Y", strtotime($order->created_at)) }} om {{ date("H:i", strtotime($order->created_at)) }} uur</strong></p>
     </div>
@@ -88,6 +88,84 @@
 <script>
     const editCountBtns = document.querySelectorAll('.editBasketCount');
     const editDateBtn = document.querySelector('.editBasketDate');
+    const editAddressBtn = document.querySelector('.editBasketAddress');
+
+    const allAddresses = [
+        {
+            id: 2,
+            naam: 'aaa'
+        },
+        {
+            id: 1,
+            naam: 'deze'
+        }
+        {
+            id: 3,
+            naam: 'ccc'
+        }
+        {
+            id: 4,
+            naam: 'ddd'
+        }
+    ]
+
+    if(editAddressBtn) {
+        editAddressBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let parentTd = btn.parentNode.parentNode;
+            let originalSpan = btn.parentNode;
+
+            let csrfToken = document.querySelector('meta[name="_token"]').content;
+
+            let oId = btn.dataset.orderId;
+            let oaId = btn.dataset.addressId;
+
+            let editForm = document.createElement('form');
+            let editSelect = document.createElement('select');
+            let editHiddenMethod = document.createElement('input');
+            let editHiddenToken = document.createElement('input');
+            let editHiddenOId = document.createElement('input');
+            let editSave = document.createElement('button');
+            let editCancel = document.createElement('a');
+            editForm.setAttribute('action', '/order');
+            editForm.setAttribute('method', 'post');
+            editSelect.setAttribute('name', 'address');
+            editSelect.setAttribute('value', oaId);
+            allAddresses.forEach(addr => {
+                let option = document.createElement("option");
+                option.value = addr.id;
+                option.text = addr.naam;
+                editSelect.add(option);
+            });
+            editHiddenMethod.setAttribute('type', 'hidden');
+            editHiddenMethod.setAttribute('name', '_method');
+            editHiddenMethod.setAttribute('value', 'put');
+            editHiddenToken.setAttribute('type', 'hidden');
+            editHiddenToken.setAttribute('name', '_token');
+            editHiddenToken.setAttribute('value', csrfToken);
+            editHiddenOId.setAttribute('type', 'hidden');
+            editHiddenOId.setAttribute('name', 'o_id');
+            editHiddenOId.setAttribute('value', oId);
+            editSave.setAttribute('type', 'submit');
+            editCancel.setAttribute('href', '');
+
+            let saveBtnText = document.createTextNode('{{ __('Save') }}');
+            let cancelText = document.createTextNode('{{ __('Cancel') }}');
+            editSave.appendChild(saveBtnText);
+            editCancel.appendChild(cancelText);
+
+            editForm.append(editHiddenMethod, editHiddenToken, editHiddenOId, editSelect, editSave, editCancel);
+
+            parentTd.replaceChild(editForm, originalSpan);
+
+            editCancel.addEventListener('click', (e) => {
+                e.preventDefault();
+                parentNode.replaceChild(originalSpan, editForm);
+                toggleVisibility([editDateBtn]);
+            });
+            toggleVisibility([editDateBtn]);
+        });
+    }
 
     if(editDateBtn) {
         editDateBtn.addEventListener('click', (e) => {
