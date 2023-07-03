@@ -130,7 +130,6 @@
             editForm.setAttribute('action', '/order');
             editForm.setAttribute('method', 'post');
             editSelect.setAttribute('name', 'address');
-            // editSelect.setAttribute('value', oaId);
             let selectedI = 0;
             let i = 0;
             allAddresses.forEach(addr => {
@@ -138,16 +137,9 @@
                 option.value = addr.id;
                 option.text = addr.naam;
                 editSelect.add(option);
-                if(addr.id == oaId) {
-                    selectedI = i;
-                    console.log('YES ' + selectedI + ' ' + i);
-                }
+                if(addr.id == oaId) selectedI = i;
                 i++;
-console.log(i);
             });
-            // let event = new Event('change');
-            // editSelect.dispatchEvent(event);
-console.log(selectedI);
             editSelect.selectedIndex = selectedI;
 
             editHiddenMethod.setAttribute('type', 'hidden');
@@ -157,8 +149,11 @@ console.log(selectedI);
             editHiddenToken.setAttribute('name', '_token');
             editHiddenToken.setAttribute('value', csrfToken);
             editHiddenOId.setAttribute('type', 'hidden');
-            editHiddenOId.setAttribute('name', 'o_id');
+            editHiddenOId.setAttribute('name', 'id');
             editHiddenOId.setAttribute('value', oId);
+            editHiddenOId.setAttribute('type', 'hidden');
+            editHiddenOId.setAttribute('name', 'type');
+            editHiddenOId.setAttribute('value', 'updateDeliveryAddress');
             editSave.setAttribute('type', 'submit');
             editCancel.setAttribute('href', '');
 

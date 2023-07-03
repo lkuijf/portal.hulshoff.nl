@@ -136,6 +136,9 @@ class OrderController extends Controller
         if($request->type == 'updateDeliveryDate') {
             $order->afleverDatum = date("Ymd", strtotime($request->deliveryDate));
         }
+        if($request->type == 'updateDeliveryAddress') {
+            $order->address_id = $request->address;
+        }
         $order->save();
 
         if($request->type == 'confirmReservation') {
@@ -150,8 +153,10 @@ class OrderController extends Controller
 
         if($request->type == 'confirmReservation') $request->session()->flash('message', '<p>' . __('Your order has been placed') . '!</p>');
         if($request->type == 'updateDeliveryDate') $request->session()->flash('message', '<p>' . __('Delivery date has been changed') . '</p>');
+        if($request->type == 'updateDeliveryAddress') $request->session()->flash('message', '<p>' . __('Delivery address has been changed') . '</p>');
         if($request->type == 'confirmReservation') return redirect()->route('orders');
         if($request->type == 'updateDeliveryDate') return redirect()->back();
+        if($request->type == 'updateDeliveryAddress') return redirect()->back();
     }
 
     public function updateProductsOrderedValue($orderArticles) {
