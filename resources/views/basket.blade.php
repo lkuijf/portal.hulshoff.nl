@@ -52,7 +52,7 @@
         <select name="address">
             <option value="">-geen-</option>
             @foreach ($addresses as $address)
-                <option value="{{ $address->klantCode }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
+                <option value="{{ $address->id }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
             @endforeach
         </select>
         <div>
@@ -141,16 +141,18 @@
     // });
     const addressSelect = document.querySelector('select[name="address"]');
     const nawBox = document.querySelector('.deliveryNaw');
-    addressSelect.addEventListener('change', () => {
-        if(addressSelect.value) {
-            let selectedNawInfo = addressSelect.options[addressSelect.selectedIndex].dataset.naw
-            nawBox.innerHTML = selectedNawInfo.replaceAll('\\n', '<br>');
-            nawBox.style.borderColor = '#CCC';
-        } else {
-            nawBox.innerHTML = '';
-            nawBox.style.borderColor = '#FFF';
-        }
-    });
+    if(addressSelect) {
+        addressSelect.addEventListener('change', () => {
+            if(addressSelect.value) {
+                let selectedNawInfo = addressSelect.options[addressSelect.selectedIndex].dataset.naw
+                nawBox.innerHTML = selectedNawInfo.replaceAll('\\n', '<br>');
+                nawBox.style.borderColor = '#CCC';
+            } else {
+                nawBox.innerHTML = '';
+                nawBox.style.borderColor = '#FFF';
+            }
+        });
+    }
 
     const editDateBtn = document.querySelector('.editBasketDate');
     if(editDateBtn) { // basket is empty, not button present

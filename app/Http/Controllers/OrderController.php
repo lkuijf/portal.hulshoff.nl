@@ -86,6 +86,7 @@ class OrderController extends Controller
         $order->afleverDatum = date("Ymd", strtotime($deliveryDate));
         // $order->afleverTijd = str_pad($request->deliveryHour, 2, '0', STR_PAD_LEFT) . str_pad($request->deliveryMinute, 2, '0', STR_PAD_LEFT);
         $order->afleverTijd = '0000'; // edit 15-12-2022. Delivery TIME can't be selected by customer.
+        $order->address_id = $request->address;
         $order->save();
 
         foreach($basket as $id => $count) {
