@@ -151,9 +151,9 @@
             editHiddenOId.setAttribute('type', 'hidden');
             editHiddenOId.setAttribute('name', 'id');
             editHiddenOId.setAttribute('value', oId);
-            editHiddenOId.setAttribute('type', 'hidden');
-            editHiddenOId.setAttribute('name', 'type');
-            editHiddenOId.setAttribute('value', 'updateDeliveryAddress');
+            editHiddenType.setAttribute('type', 'hidden');
+            editHiddenType.setAttribute('name', 'type');
+            editHiddenType.setAttribute('value', 'updateDeliveryAddress');
             editSave.setAttribute('type', 'submit');
             editCancel.setAttribute('href', '');
 
@@ -162,7 +162,7 @@
             editSave.appendChild(saveBtnText);
             editCancel.appendChild(cancelText);
 
-            editForm.append(editHiddenMethod, editHiddenToken, editHiddenOId, editSelect, editSave, editCancel);
+            editForm.append(editHiddenMethod, editHiddenToken, editHiddenOId, editHiddenType, editSelect, editSave, editCancel);
 
             parentNode.replaceChild(editForm, originalSpan);
 
