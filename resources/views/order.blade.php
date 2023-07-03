@@ -137,6 +137,9 @@
                 option.text = addr.naam;
                 editSelect.add(option);
             });
+            let event = new Event('change');
+            editSelect.dispatchEvent(event);
+
             editHiddenMethod.setAttribute('type', 'hidden');
             editHiddenMethod.setAttribute('name', '_method');
             editHiddenMethod.setAttribute('value', 'put');
