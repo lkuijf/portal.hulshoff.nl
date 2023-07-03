@@ -112,7 +112,7 @@
     if(editAddressBtn) {
         editAddressBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            let parentTd = editAddressBtn.parentNode.parentNode;
+            let parentNode = editAddressBtn.parentNode.parentNode;
             let originalSpan = editAddressBtn.parentNode;
 
             let csrfToken = document.querySelector('meta[name="_token"]').content;
@@ -164,14 +164,14 @@
 
             editForm.append(editHiddenMethod, editHiddenToken, editHiddenOId, editSelect, editSave, editCancel);
 
-            parentTd.replaceChild(editForm, originalSpan);
+            parentNode.replaceChild(editForm, originalSpan);
 
             editCancel.addEventListener('click', (e) => {
                 e.preventDefault();
                 parentNode.replaceChild(originalSpan, editForm);
-                toggleVisibility([editDateBtn]);
+                toggleVisibility([editAddressBtn]);
             });
-            toggleVisibility([editDateBtn]);
+            toggleVisibility([editAddressBtn]);
         });
     }
 
