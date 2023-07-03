@@ -101,6 +101,16 @@
                     <option value="55">55</option>
                 </select>
             </p> --}}
+            <h2>{{ __('Delivery address') }}</h2>
+            <select name="address">
+                <option value="">-geen-</option>
+                @foreach ($addresses as $address)
+                    <option value="{{ $address->id }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
+                @endforeach
+            </select>
+            <div>
+                <div class="deliveryNaw"></div>
+            </div>
             @if (session()->has('selectedClient'))
                 @if (auth()->user()->can_reserve)
                 <button>Reservering bevestigen</button>
@@ -112,16 +122,6 @@
             @endif
 
         </form>
-        <h2>{{ __('Delivery address') }}</h2>
-        <select name="address">
-            <option value="">-geen-</option>
-            @foreach ($addresses as $address)
-                <option value="{{ $address->id }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
-            @endforeach
-        </select>
-        <div>
-            <div class="deliveryNaw"></div>
-        </div>
     @else
         <p>Basket is empty.</p>
     @endif
