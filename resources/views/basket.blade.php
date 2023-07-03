@@ -48,16 +48,6 @@
             </tbody>
         </table>
         <p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
-        <h2>{{ __('Delivery address') }}</h2>
-        <select name="address">
-            <option value="">-geen-</option>
-            @foreach ($addresses as $address)
-                <option value="{{ $address->id }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
-            @endforeach
-        </select>
-        <div>
-            <div class="deliveryNaw"></div>
-        </div>
         <h2>{{ __('Delivery date') }}</h2>
         <form action="{{ url('order') }}" method="post">
             @csrf
@@ -122,6 +112,16 @@
             @endif
 
         </form>
+        <h2>{{ __('Delivery address') }}</h2>
+        <select name="address">
+            <option value="">-geen-</option>
+            @foreach ($addresses as $address)
+                <option value="{{ $address->id }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
+            @endforeach
+        </select>
+        <div>
+            <div class="deliveryNaw"></div>
+        </div>
     @else
         <p>Basket is empty.</p>
     @endif
