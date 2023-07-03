@@ -42,7 +42,10 @@
     //     width: 150px;
     // }
     .deliveryNaw {
-        padding: 0 0 20px 0;
+        display: inline-block;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #FFF;
         font-weight: bold;
     }
 }

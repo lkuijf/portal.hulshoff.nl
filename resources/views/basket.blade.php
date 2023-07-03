@@ -55,7 +55,9 @@
                 <option value="{{ $address->klantCode }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
             @endforeach
         </select>
-        <div class="deliveryNaw"></div>
+        <div>
+            <div class="deliveryNaw"></div>
+        </div>
         <h2>{{ __('Delivery date') }}</h2>
         <form action="{{ url('order') }}" method="post">
             @csrf
@@ -140,9 +142,14 @@
     const addressSelect = document.querySelector('select[name="address"]');
     const nawBox = document.querySelector('.deliveryNaw');
     addressSelect.addEventListener('change', () => {
-        // console.log(addressSelect.options[addressSelect.selectedIndex].dataset.naw);
-        let selectedNawInfo = addressSelect.options[addressSelect.selectedIndex].dataset.naw
-        nawBox.innerHTML = selectedNawInfo.replaceAll('\\n', '<br>');
+        if(addressSelect.value) {
+            let selectedNawInfo = addressSelect.options[addressSelect.selectedIndex].dataset.naw
+            nawBox.innerHTML = selectedNawInfo.replaceAll('\\n', '<br>');
+            nawBox.style.borderColor = '#CCC';
+        } else {
+            nawBox.innerHTML = '';
+            nawBox.style.borderColor = '#FFF';
+        }
     });
 
     const editDateBtn = document.querySelector('.editBasketDate');
