@@ -125,7 +125,6 @@ class OrderController extends Controller
         $order = Order::findOr($request->id, function () {
             return abort(404);
         });
-dd($order);
         if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         if($request->type == 'confirmReservation') {
             $order->is_reservation = 0;
