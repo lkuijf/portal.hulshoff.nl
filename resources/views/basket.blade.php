@@ -12,7 +12,7 @@
         $totalOrderSum = 0;
     @endphp
     <h1>{{ __('Basket') }}</h1>
-    @if (count($basket))
+    {{-- @if (count($basket)) --}}
         <table>
             <thead>
                 <tr>
@@ -52,9 +52,10 @@
         <select name="address">
             <option value="">-geen-</option>
             @foreach ($addresses as $address)
-                <option value="{{ $address->klantCode }}">{{ $address->naam }} - {{ $address->straat }} {{ $address->huisnummer }}, {{ $address->postcode }} {{ $address->plaats }} ({{ $address->contactpersoon }} {{ $address->telefoon }} {{ $address->eMailadres }})</option>
+                <option value="{{ $address->klantCode }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
             @endforeach
         </select>
+        <div class="deliveryNaw"></div>
         <h2>{{ __('Delivery date') }}</h2>
         <form action="{{ url('order') }}" method="post">
             @csrf
@@ -119,9 +120,9 @@
             @endif
 
         </form>
-    @else
+    {{-- @else
         <p>Basket is empty.</p>
-    @endif
+    @endif --}}
 </div>
 @endsection
 @section('extra_head')
@@ -136,6 +137,13 @@
     // const datepicker = new Datepicker(delDate, {
     //     format: 'dd-mm-yyyy'
     // });
+    const addressSelect = document.querySelector('select[name="address"]');
+    const nawBox = document.querySelector('.deliveryNaw');
+    addressSelect.addEventListener('change', () => {
+        // console.log(addressSelect.options[addressSelect.selectedIndex].dataset.naw);
+        let selectedNawInfo = addressSelect.options[addressSelect.selectedIndex].dataset.naw
+        nawBox.innerHTML = selectedNawInfo.replaceAll('\\n', '<br>');
+    });
 
     const editDateBtn = document.querySelector('.editBasketDate');
     if(editDateBtn) { // basket is empty, not button present
