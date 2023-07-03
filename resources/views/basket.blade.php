@@ -48,6 +48,13 @@
             </tbody>
         </table>
         <p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
+        <h2>{{ __('Delivery address') }}</h2>
+        <select name="address">
+            <option value="">-geen-</option>
+            @foreach ($addresses as $address)
+                <option value="{{ $address->klantCode }}">{{ $address->naam }} ({{ $address->klantCode }})</option>
+            @endforeach
+        </select>
         <h2>{{ __('Delivery date') }}</h2>
         <form action="{{ url('order') }}" method="post">
             @csrf

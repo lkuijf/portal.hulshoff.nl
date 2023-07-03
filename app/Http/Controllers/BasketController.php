@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Validator;
 
 class BasketController extends Controller
 {
     public function showBasket(Request $request) {
         $basketData = [];
+        $addressesData = [];
+        
+        if($request->session()->has('selectedClient')) {
+            $activeClient = session('selectedClient');
+            $client = Customer::find($activeClient);
+            $addressesData = $client->addresses;
+        }
+
+
         if($request->session()->has('basket')) { // $currentBasket = \Session::get('basket');
             foreach(session('basket') as $id => $count) {
                 $data = [];
@@ -19,7 +29,7 @@ class BasketController extends Controller
                 $basketData[] = $data;
             }
         }
-        return view('basket')->with('basket', $basketData);
+        return view('basket')->with('basket', $basketData)->with('addresses', $addressesData);
     }
 
     public function addToBasket(Request $request) {
