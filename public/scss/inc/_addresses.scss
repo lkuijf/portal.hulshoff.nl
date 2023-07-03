@@ -1,0 +1,22 @@
+.addressesContent {
+    table {
+        border: 1px solid #666;
+        border-collapse: collapse;
+        th {
+            color: #444;
+            padding: 7px;
+            background: #DDD;
+            border: 1px solid #666;
+        }
+        td {
+            padding: 7px;
+            border: 1px solid #666;
+        }
+    }
+    > form {
+        padding: 20px 0;
+    }
+    form {
+        display: inline-block;
+    }
+}

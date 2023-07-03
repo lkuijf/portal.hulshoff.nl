@@ -4,6 +4,7 @@
     $tilesBtnActive = false;
     $reportsBtnActive = false;
     $manualsBtnActive = false;
+    $addressesBtnActive = false;
     $productsBtnActive = false;
     $ordersBtnActive = false;
     $reservationsBtnActive = false;
@@ -23,6 +24,9 @@
             break;
         case 'manuals':
             $manualsBtnActive = true;
+            break;
+        case 'addresses':
+            $addressesBtnActive = true;
             break;
         case 'products': case 'product_detail':
             $productsBtnActive = true;
@@ -128,6 +132,7 @@
                             <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>{{ __('Tiles') }}</a></li>
                             <li><a href="{{ route('reports') }}" @if($reportsBtnActive)class="active"@endif>{{ __('Reports') }}</a></li>
                             <li><a href="{{ route('manuals') }}" @if($manualsBtnActive)class="active"@endif>{{ __('Manuals') }}</a></li>
+                            <li><a href="{{ route('addresses') }}" @if($addressesBtnActive)class="active"@endif>{{ __('Addresses') }}</a></li>
                         @endif
                         @php
                             $productPageRoute = 'products';

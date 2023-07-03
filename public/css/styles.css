@@ -740,6 +740,27 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   display: inline-block;
 }
 
+.addressesContent table {
+  border: 1px solid #666;
+  border-collapse: collapse;
+}
+.addressesContent table th {
+  color: #444;
+  padding: 7px;
+  background: #DDD;
+  border: 1px solid #666;
+}
+.addressesContent table td {
+  padding: 7px;
+  border: 1px solid #666;
+}
+.addressesContent > form {
+  padding: 20px 0;
+}
+.addressesContent form {
+  display: inline-block;
+}
+
 html, body {
   margin: 0;
   padding: 0;

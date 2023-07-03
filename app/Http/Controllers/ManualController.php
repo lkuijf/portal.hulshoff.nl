@@ -31,8 +31,6 @@ class ManualController extends Controller
     }
 
     public function storeManual(Request $request) {
-// dd($request);
-
         $toValidate = array(
             'url' => 'required',
             'text' => 'required',

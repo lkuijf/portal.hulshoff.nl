@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TilesController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ManualController;
+use App\Http\Controllers\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,9 @@ Route::get('/reports', [ReportController::class, 'reportsPage'])->name('reports'
 Route::get('/manuals', [ManualController::class, 'manualsPage'])->name('manuals')->middleware('auth:h_users');
 Route::get('/manuals/new', [ManualController::class, 'showNewManual'])->name('new_manual')->middleware('auth:h_users');
 Route::get('/manuals/{id}', [ManualController::class, 'showManual'])->name('manual_detail')->middleware('auth:h_users');
+Route::get('/addresses', [AddressController::class, 'addressesPage'])->name('addresses')->middleware('auth:h_users');
+Route::get('/addresses/new', [AddressController::class, 'showNewAddress'])->name('new_address')->middleware('auth:h_users');
+Route::get('/addresses/{id}', [AddressController::class, 'showAddress'])->name('address_detail')->middleware('auth:h_users');
 Route::post('/validate-report', [ReportController::class, 'validateReport'])->name('validate_report')->middleware('auth:h_users');
 
 Route::post('/user', [UserController::class, 'addUser']);
@@ -72,6 +76,10 @@ Route::delete('/user', [UserController::class, 'deleteUser']);
 Route::post('/manual', [ManualController::class, 'storeManual']);
 Route::put('/manual', [ManualController::class, 'storeManual']);
 Route::delete('/manual', [ManualController::class, 'deleteManual']);
+
+Route::post('/address', [AddressController::class, 'storeAddress']);
+Route::put('/address', [AddressController::class, 'storeAddress']);
+Route::delete('/address', [AddressController::class, 'deleteAddress']);
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
 Route::get('/products#tiles', [ProductController::class, 'showProducts'])->name('products_tiles')->middleware('auth:h_users');
