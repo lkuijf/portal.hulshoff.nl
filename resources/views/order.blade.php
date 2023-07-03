@@ -98,11 +98,11 @@
         {
             id: 1,
             naam: 'deze'
-        }
+        },
         {
             id: 3,
             naam: 'ccc'
-        }
+        },
         {
             id: 4,
             naam: 'ddd'
