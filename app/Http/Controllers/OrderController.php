@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderArticle;
 use App\Models\Product;
-use App\Models\Addresses;
+use App\Models\Address;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPromoted;
 use App\Mail\OrderPlaced;
@@ -53,7 +53,7 @@ class OrderController extends Controller
         if($order->is_reservation && $type != 'reserved') return abort(404); // reserved or confirmed order
         if(!$order->is_reservation && $type == 'reserved') return abort(404); // reserved or confirmed order
 
-        $addresses = Addresses::where('klantCode', $order->klantCode)->get();
+        $addresses = Address::where('klantCode', $order->klantCode)->get();
         dd($addresses);
 
         return view('order')->with('order', $order);
