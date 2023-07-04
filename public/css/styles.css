@@ -668,7 +668,7 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 .orderContent .orderMetaData {
   border: 1px dashed #999;
   padding: 10px;
-  display: inline-block;
+  width: 300px;
 }
 .orderContent .orderMetaData p {
   margin: 0;
