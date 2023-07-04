@@ -95,6 +95,7 @@
         @foreach ($addresses as $address)
             var add = {};
             add['id'] = {{ $address->id }};
+            add['naam'] = '{{ $address->naam }}';
             add['straat'] = '{{ $address->straat }}';
             add['huisnummer'] = '{{ $address->huisnummer }}';
             add['postcode'] = '{{ $address->postcode }}';
