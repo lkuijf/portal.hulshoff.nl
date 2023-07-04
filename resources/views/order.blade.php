@@ -11,7 +11,7 @@
         <p>Order Code Klant: <strong>{{ $order->orderCodeKlant }}</strong></p>
         <p>Is {{ Str::lower(__('Reservation')) }}: <strong>{{ ($order->is_reservation?__('Yes'):__('No')) }}</strong></p>
         <p>{{ __('Delivery date') }}: <strong><span>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}{!! ($order->is_reservation?' <a class="editBasketDate editBtn" data-order-id="' . $order->id . '" data-order-date="' . date("d-m-Y", strtotime($order->afleverDatum)) . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
-        <p>{{ __('Delivery address') }}: <strong><span>{{ ($order->address_id?$order->address->naam:'-geen-') }}{!! ($order->is_reservation?' <a class="editBasketAddress editBtn" data-order-id="' . $order->id . '" data-address-id="' . $order->address_id . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
+        <p>{{ __('Delivery address') }}: <strong><span>{{ ($order->address_id?$order->address->naam:'-verwijderd-') }}{!! ($order->is_reservation?' <a class="editBasketAddress editBtn" data-order-id="' . $order->id . '" data-address-id="' . $order->address_id . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
         {{-- <p>Aflever tijd: {{ $order->afleverTijd }}</p> --}}
         <p>Order {{ Str::lower(__('Created at')) }}: <strong>{{ date("d-m-Y", strtotime($order->created_at)) }} om {{ date("H:i", strtotime($order->created_at)) }} uur</strong></p>
     </div>
