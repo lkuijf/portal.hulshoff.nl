@@ -101,24 +101,24 @@
 
     console.log(clientAddresses);
 
-    const allAddresses = [
-        {
-            id: 2,
-            naam: 'aaa'
-        },
-        {
-            id: 1,
-            naam: 'deze'
-        },
-        {
-            id: 3,
-            naam: 'ccc'
-        },
-        {
-            id: 4,
-            naam: 'ddd'
-        }
-    ]
+    // const allAddresses = [
+    //     {
+    //         id: 2,
+    //         naam: 'aaa'
+    //     },
+    //     {
+    //         id: 1,
+    //         naam: 'deze'
+    //     },
+    //     {
+    //         id: 3,
+    //         naam: 'ccc'
+    //     },
+    //     {
+    //         id: 4,
+    //         naam: 'ddd'
+    //     }
+    // ]
 
     if(editAddressBtn) {
         editAddressBtn.addEventListener('click', (e) => {
