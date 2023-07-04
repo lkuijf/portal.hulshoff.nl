@@ -21,7 +21,7 @@
                 @foreach ($data['addresses'] as $address)
                 <tr>
                     <td>{{ $address->naam }}</td>
-                    <td>{{ $address->customer->naam }}</td>
+                    <td>{{ ($address->klantCode?$address->customer->naam:'-verwijderd-') }}</td>
                     <td>{{ $address->straat }} {{ $address->huisnummer }}</td>
                     <td>{{ $address->postcode }} {{ $address->plaats }}</td>
                     <td>{{ $address->contactpersoon }}</td>
