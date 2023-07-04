@@ -95,6 +95,14 @@
         @foreach ($addresses as $address)
             var add = {};
             add['id'] = {{ $address->id }};
+            add['straat'] = {{ $address->straat }};
+            add['huisnummer'] = {{ $address->huisnummer }};
+            add['postcode'] = {{ $address->postcode }};
+            add['plaats'] = {{ $address->plaats }};
+            add['landCode'] = {{ $address->landCode }};
+            add['contactpersoon'] = {{ $address->contactpersoon }};
+            add['telefoon'] = {{ $address->telefoon }};
+            add['eMailadres'] = {{ $address->eMailadres }};
             clientAddresses.push(add);
         @endforeach
     @endif
@@ -124,17 +132,17 @@
             editForm.setAttribute('method', 'post');
             editSelect.setAttribute('name', 'address');
 
-            // let selectedI = 0;
-            // let i = 0;
-            // allAddresses.forEach(addr => {
-            //     let option = document.createElement("option");
-            //     option.value = addr.id;
-            //     option.text = addr.naam;
-            //     editSelect.add(option);
-            //     if(addr.id == oaId) selectedI = i;
-            //     i++;
-            // });
-            // editSelect.selectedIndex = selectedI;
+            let selectedI = 0;
+            let i = 0;
+            clientAddresses.forEach(addr => {
+                let option = document.createElement("option");
+                option.value = addr.id;
+                option.text = addr.naam;
+                editSelect.add(option);
+                if(addr.id == oaId) selectedI = i;
+                i++;
+            });
+            editSelect.selectedIndex = selectedI;
 
             editHiddenMethod.setAttribute('type', 'hidden');
             editHiddenMethod.setAttribute('name', '_method');
