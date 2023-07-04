@@ -52,11 +52,8 @@ class OrderController extends Controller
         if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
         if($order->is_reservation && $type != 'reserved') return abort(404); // reserved or confirmed order
         if(!$order->is_reservation && $type == 'reserved') return abort(404); // reserved or confirmed order
-
         $addresses = Address::where('klantCode', $order->klantCode)->get();
-        dd($addresses);
-
-        return view('order')->with('order', $order);
+        return view('order')->with('order', $order)->with('addresses', $addresses);
     }
 
     public function newOrder(Request $request) {

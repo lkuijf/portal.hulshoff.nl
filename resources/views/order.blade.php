@@ -90,6 +90,17 @@
     const editDateBtn = document.querySelector('.editBasketDate');
     const editAddressBtn = document.querySelector('.editBasketAddress');
 
+    const clientAddresses = [];
+    @if ($addresses && count($addresses))
+        @foreach ($addresses as $address)
+            let add = {};
+            add['id'] = {{ $address->id }};
+            clientAddresses.push(add);
+        @endforeach
+    @endif
+
+    console.log(clientAddresses);
+
     const allAddresses = [
         {
             id: 2,
