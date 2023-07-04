@@ -53,7 +53,7 @@ class OrderController extends Controller
         if($order->is_reservation && $type != 'reserved') return abort(404); // reserved or confirmed order
         if(!$order->is_reservation && $type == 'reserved') return abort(404); // reserved or confirmed order
 
-        $addresses = Adresses::where('klantCode', $order->klantCode)->get();
+        $addresses = Addresses::where('klantCode', $order->klantCode)->get();
         dd($addresses);
 
         return view('order')->with('order', $order);
