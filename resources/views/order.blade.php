@@ -95,14 +95,14 @@
         @foreach ($addresses as $address)
             var add = {};
             add['id'] = {{ $address->id }};
-            add['straat'] = {{ $address->straat }};
-            add['huisnummer'] = {{ $address->huisnummer }};
-            add['postcode'] = {{ $address->postcode }};
-            add['plaats'] = {{ $address->plaats }};
-            add['landCode'] = {{ $address->landCode }};
-            add['contactpersoon'] = {{ $address->contactpersoon }};
-            add['telefoon'] = {{ $address->telefoon }};
-            add['eMailadres'] = {{ $address->eMailadres }};
+            add['straat'] = '{{ $address->straat }}';
+            add['huisnummer'] = '{{ $address->huisnummer }}';
+            add['postcode'] = '{{ $address->postcode }}';
+            add['plaats'] = '{{ $address->plaats }}';
+            add['landCode'] = '{{ $address->landCode }}';
+            add['contactpersoon'] = '{{ $address->contactpersoon }}';
+            add['telefoon'] = '{{ $address->telefoon }}';
+            add['eMailadres'] = '{{ $address->eMailadres }}';
             clientAddresses.push(add);
         @endforeach
     @endif
