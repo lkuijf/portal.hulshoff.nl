@@ -43,19 +43,19 @@ class Order extends Model
         $order->addChild('ord-eta-afleveren-tijd', $this->afleverTijd);
         $adressen = $order->addChild('adressen');
 
-        if($this->customer) { // when the order is connected to a customer
+        if($this->address_id) { // when the order is connected to an address
             $aAdressen[0] = $adressen->addChild('adres');
             if($this->customer->naam) {
                 $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
-                $aAdressen[0]->addChild('afa-naam', $this->customer->naam);
-                $aAdressen[0]->addChild('afa-straat', $this->customer->straat);
-                $aAdressen[0]->addChild('afa-huisnummer', $this->customer->huisnummer);
-                $aAdressen[0]->addChild('afa-postcode', $this->customer->postcode);
-                $aAdressen[0]->addChild('afa-plaats', $this->customer->plaats);
-                $aAdressen[0]->addChild('afa-land-code', $this->customer->landCode);
-                $aAdressen[0]->addChild('afa-contactpersoon', $this->customer->contactpersoon);
-                $aAdressen[0]->addChild('afa-telefoon', $this->customer->telefoon);
-                $aAdressen[0]->addChild('afa-e-mailadres', $this->customer->eMailadres);
+                $aAdressen[0]->addChild('afa-naam', $this->address->naam);
+                $aAdressen[0]->addChild('afa-straat', $this->address->straat);
+                $aAdressen[0]->addChild('afa-huisnummer', $this->address->huisnummer);
+                $aAdressen[0]->addChild('afa-postcode', $this->address->postcode);
+                $aAdressen[0]->addChild('afa-plaats', $this->address->plaats);
+                $aAdressen[0]->addChild('afa-land-code', $this->address->landCode);
+                $aAdressen[0]->addChild('afa-contactpersoon', $this->address->contactpersoon);
+                $aAdressen[0]->addChild('afa-telefoon', $this->address->telefoon);
+                $aAdressen[0]->addChild('afa-e-mailadres', $this->address->eMailadres);
             } else {
                 $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
                 $aAdressen[0]->addChild('afa-naam', '-niet bekend-');
