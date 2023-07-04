@@ -142,17 +142,18 @@
             editForm.setAttribute('action', '/order');
             editForm.setAttribute('method', 'post');
             editSelect.setAttribute('name', 'address');
-            let selectedI = 0;
-            let i = 0;
-            allAddresses.forEach(addr => {
-                let option = document.createElement("option");
-                option.value = addr.id;
-                option.text = addr.naam;
-                editSelect.add(option);
-                if(addr.id == oaId) selectedI = i;
-                i++;
-            });
-            editSelect.selectedIndex = selectedI;
+
+            // let selectedI = 0;
+            // let i = 0;
+            // allAddresses.forEach(addr => {
+            //     let option = document.createElement("option");
+            //     option.value = addr.id;
+            //     option.text = addr.naam;
+            //     editSelect.add(option);
+            //     if(addr.id == oaId) selectedI = i;
+            //     i++;
+            // });
+            // editSelect.selectedIndex = selectedI;
 
             editHiddenMethod.setAttribute('type', 'hidden');
             editHiddenMethod.setAttribute('name', '_method');
