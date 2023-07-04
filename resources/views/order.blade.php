@@ -93,7 +93,7 @@
     const clientAddresses = [];
     @if ($addresses && count($addresses))
         @foreach ($addresses as $address)
-            let add = {};
+            var add = {};
             add['id'] = {{ $address->id }};
             clientAddresses.push(add);
         @endforeach
