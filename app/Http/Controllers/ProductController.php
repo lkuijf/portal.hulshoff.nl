@@ -101,10 +101,14 @@ class ProductController extends Controller
 
 // dd(Storage::disk('product_images')->url('/50246/00044.jpg'));
         foreach($res as &$product) {
-            $productImageUrl = 'https://via.placeholder.com/800x600?text=Geen+afbeelding+gevonden';
-            $imgUrlPart = $product['klantCode'] . '/' . $product['artikelCode'];
-            if(Storage::disk('product_images')->exists($imgUrlPart . '.jpg')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.jpg');
-            if(Storage::disk('product_images')->exists($imgUrlPart . '.JPG')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.JPG');
+            if(env('APP_ENV') == 'production') {
+                $productImageUrl = 'https://via.placeholder.com/800x600?text=Geen+afbeelding+gevonden';
+                $imgUrlPart = $product['klantCode'] . '/' . $product['artikelCode'];
+                if(Storage::disk('product_images')->exists($imgUrlPart . '.jpg')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.jpg');
+                if(Storage::disk('product_images')->exists($imgUrlPart . '.JPG')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.JPG');
+            } else {
+                $productImageUrl = 'https://via.placeholder.com/800x600?text=No+production+environment';
+            }
             $product['imageUrl'] = $productImageUrl;
         }
         
@@ -134,10 +138,14 @@ class ProductController extends Controller
         $product = Product::findOr($id, function () {
             return abort(404);
         });
-        $productImageUrl = 'https://via.placeholder.com/800x600?text=Geen+afbeelding+gevonden';
-        $imgUrlPart = $product->klantCode . '/' . $product->artikelCode;
-        if(Storage::disk('product_images')->exists($imgUrlPart . '.jpg')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.jpg');
-        if(Storage::disk('product_images')->exists($imgUrlPart . '.JPG')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.JPG');
+        if(env('APP_ENV') == 'production') {
+            $productImageUrl = 'https://via.placeholder.com/800x600?text=Geen+afbeelding+gevonden';
+            $imgUrlPart = $product->klantCode . '/' . $product->artikelCode;
+            if(Storage::disk('product_images')->exists($imgUrlPart . '.jpg')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.jpg');
+            if(Storage::disk('product_images')->exists($imgUrlPart . '.JPG')) $productImageUrl = Storage::disk('product_images')->url($imgUrlPart . '.JPG');
+        } else {
+            $productImageUrl = 'https://via.placeholder.com/800x600?text=No+production+environment';
+        }
         $product->imageUrl = $productImageUrl;
 
 
