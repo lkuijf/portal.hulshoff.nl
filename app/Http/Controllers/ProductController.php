@@ -124,9 +124,10 @@ class ProductController extends Controller
 
     public function getSpecs($spec, $klantCode = false) {
         $resQry = DB::table('product' . $spec . 's')
-            ->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id')
+            // ->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id')
             ->select('product' . $spec . 's.*')
             ->distinct();
+        if($klantCode) $resQry->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id');
         if($klantCode) $resQry->where('products.klantCode', '=', $klantCode);
         $results = $resQry->get();
         return $results;
