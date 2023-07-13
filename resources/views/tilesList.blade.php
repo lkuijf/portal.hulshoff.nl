@@ -27,7 +27,7 @@
                     <td>
                         @if (isset($data['all_tiles_by_group'][$group->group]))
                             <div class="imageIsSet">
-                                <p><img src="{{ asset('tiles') }}/{{ $data['all_tiles_by_group'][$group->group] }}" alt="tile" class="tileImg"></p>
+                                <p><img src="{{ asset('tile_images') }}/{{ $data['all_tiles_by_group'][$group->group] }}" alt="tile" class="tileImg"></p>
                                 <form action="/tile" method="post">
                                     @method('delete')
                                     @csrf

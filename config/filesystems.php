@@ -104,7 +104,7 @@ return [
         'tiles' => [
             'driver' => 'local',
             'root' => storage_path('app/tiles'),
-            'url' => env('APP_URL').'/tiles',
+            'url' => env('APP_URL').'/tile_images',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -178,7 +178,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('tiles') => storage_path('app/tiles'),
+        public_path('tile_images') => storage_path('app/tiles'),
         public_path('pdf') => storage_path('app/pdf'),
         public_path('csv') => storage_path('app/csv'),
         public_path('product_images') => 'M:/',
