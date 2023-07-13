@@ -7,7 +7,7 @@
         @foreach ($data['filters']['group']['items'] as $group)
         <div>
             <a href="" data-group="{{ $group }}">
-                @if (isset($data['tiles'][$group]))<img src="{{ asset('storage/tiles') }}/{{ $data['tiles'][$group] }}" alt="">@endif
+                @if (isset($data['tiles'][$group]))<img src="{{ asset('tile_images') }}/{{ $data['tiles'][$group] }}" alt="">@endif
                 <p>{{ $group }}</p>
             </a>
         </div>
