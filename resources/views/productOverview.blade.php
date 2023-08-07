@@ -70,6 +70,8 @@
     const searchInputField = document.querySelector('.searchInputWrap input');
 
     const contentCell = document.querySelector('.contentCell');
+    const tileGrid = document.querySelector('.tileGrid');
+    
 
     displayProducts();
 
@@ -86,10 +88,13 @@
 
     if(tilesWrapper) {
 
-console.log('tilesWrapper: ' + tilesWrapper.offsetHeight);
+console.log('tileGrid: ' + tileGrid.offsetHeight);
 console.log('contentCell: ' + contentCell.offsetHeight);
 
-        // if(tilesWrapper.offsetHeight > contentCell.offsetHeight) contentCell.offsetHeight = tilesWrapper.offsetHeight;
+        if(tileGrid.offsetHeight > contentCell.offsetHeight) contentCell.offsetHeight = tileGrid.offsetHeight;
+
+console.log('tileGrid: ' + tileGrid.offsetHeight);
+console.log('contentCell: ' + contentCell.offsetHeight);
 
         const tileLinks = tilesWrapper.querySelectorAll('.tileGrid a');
         tileLinks.forEach(tLink => {
