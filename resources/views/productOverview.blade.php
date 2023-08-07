@@ -91,7 +91,7 @@
 console.log('tileGrid: ' + tileGrid.offsetHeight);
 console.log('contentCell: ' + contentCell.offsetHeight);
 
-        if(tileGrid.offsetHeight > contentCell.offsetHeight) contentCell.offsetHeight = tileGrid.offsetHeight;
+        if(tileGrid.offsetHeight > contentCell.offsetHeight) contentCell.style.height = tileGrid.offsetHeight + 'px';
 
 console.log('tileGrid: ' + tileGrid.offsetHeight);
 console.log('contentCell: ' + contentCell.offsetHeight);
