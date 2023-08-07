@@ -87,14 +87,8 @@
     }
 
     if(tilesWrapper) {
-
-console.log('tileGrid: ' + tileGrid.offsetHeight);
-console.log('contentCell: ' + contentCell.offsetHeight);
-
         setTimeout(function() {
             if(tileGrid.offsetHeight > contentCell.offsetHeight) contentCell.style.height = (tileGrid.offsetHeight + 100) + 'px'; // setting new heigt, + some extra spacing
-            console.log('tileGrid: ' + tileGrid.offsetHeight);
-            console.log('contentCell: ' + contentCell.offsetHeight);
         }, 1000);
 
         const tileLinks = tilesWrapper.querySelectorAll('.tileGrid a');
