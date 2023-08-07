@@ -31,6 +31,7 @@ class UserController extends Controller
             $usrQry->orWhere('email', 'like', '%' . $search . '%');
             $usrQry->orWhere('extra_email', 'like', '%' . $search . '%');
         }
+        $usrQry->orderBy('name', 'asc');
         $users = $usrQry->get();
         $data = [
             'users' => $users,
@@ -43,7 +44,7 @@ class UserController extends Controller
         if(!auth()->user()->is_admin) return view('no-access');
         $user = HulshoffUser::find($id);
         if(!$user) return abort(404);
-        $customers = Customer::get(['klantCode', 'naam']);
+        $customers = Customer::select('klantCode', 'naam')->orderBy('naam', 'asc')->get();
         $userCustomers = HulshoffUserKlantcode::where('hulshoff_user_id', $id)->get('klantCode');
         return view('user')->with('data', ['user' => $user, 'customers' => $customers, 'userCustomers' => $userCustomers]);
     }
@@ -183,6 +184,7 @@ class UserController extends Controller
     public function getClientProducts(Request $req) {
         $resQry = DB::table('products')
             ->where('klantCode', $req->klantCode)
+            ->orderBy('omschrijving', 'asc')
             ;
         $results = $resQry->get();
         echo json_encode($results);
@@ -192,6 +194,7 @@ class UserController extends Controller
         $resQry = DB::table('hulshoff_users')
             ->join('hulshoff_user_klantcodes', 'hulshoff_user_klantcodes.hulshoff_user_id', '=', 'hulshoff_users.id')
             ->where('hulshoff_user_klantcodes.klantCode', $req->klantCode)
+            ->orderBy('name', 'asc')
             ;
         $results = $resQry->get();
         echo json_encode($results);

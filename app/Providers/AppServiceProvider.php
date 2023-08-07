@@ -46,8 +46,9 @@ class AppServiceProvider extends ServiceProvider
                 $customers = [];
                 foreach($klantCodes as $kcode) {
                     $customer = Customer::find($kcode->klantCode);
-                    $customers[] = $customer;
+                    $customers[$kcode->klantCode] = $customer->naam;
                 }
+                asort($customers);
                 $view->with('customers', $customers);
 
                 $bShowTiles = false;

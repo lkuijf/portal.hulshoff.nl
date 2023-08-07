@@ -12,7 +12,7 @@ class TilesController extends Controller
     public function showTiles() {
         if(!auth()->user()->is_admin || !auth()->user()->email_verified_at) return view('no-access');
 
-        $allGroups = DB::table('productgroups')->get();
+        $allGroups = DB::table('productgroups')->orderBy('group', 'asc')->get();
         $allTiles = DB::table('tiles')->get();
         $aTilesByGroup = [];
         foreach($allTiles as $tile) {

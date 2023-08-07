@@ -96,7 +96,7 @@ class ProductController extends Controller
         if(isset($filters->onlyinstock) && $filters->onlyinstock == true) {
             $resQry->where('voorraad', '>', 0);
         }
-        
+        $resQry->orderBy('omschrijving', 'asc');
         $res = $resQry->paginate(10);
 
 // dd(Storage::disk('product_images')->url('/50246/00044.jpg'));
@@ -129,6 +129,10 @@ class ProductController extends Controller
             ->distinct();
         if($klantCode) $resQry->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id');
         if($klantCode) $resQry->where('products.klantCode', '=', $klantCode);
+        if($spec == 'brand') $resQry->orderBy('brand', 'asc');
+        if($spec == 'group') $resQry->orderBy('group', 'asc');
+        if($spec == 'type') $resQry->orderBy('type', 'asc');
+        if($spec == 'color') $resQry->orderBy('color', 'asc');
         $results = $resQry->get();
         return $results;
     }

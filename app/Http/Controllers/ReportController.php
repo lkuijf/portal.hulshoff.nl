@@ -15,7 +15,7 @@ class ReportController extends Controller
 {
     public function reportsPage() {
         if(!auth()->user()->is_admin || !auth()->user()->email_verified_at) return view('no-access');
-        $customers = Customer::all();
+        $customers = Customer::select('*')->orderBy('naam', 'asc')->get();
         $data = [
             'clients' => $customers,
         ];

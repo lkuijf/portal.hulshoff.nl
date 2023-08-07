@@ -88,8 +88,8 @@
             <div class="accClientSelect">
                 <select name="customerCode" data-filter-reference="c_code">
                     <option value="" @if('' == $selectedCustomer){{ 'selected' }}@endif>- {{ __('Please select') }} -</option>
-                @foreach ($customers as $client)
-                    <option value="{{ $client->klantCode }}" @if($client->klantCode == $selectedCustomer){{ 'selected' }}@endif>{{ ($client->naam?$client->naam:'klantCode: ' . $client->klantCode) }}</option>
+                @foreach ($customers as $kcode => $clientName)
+                    <option value="{{ $kcode }}" @if($kcode == $selectedCustomer){{ 'selected' }}@endif>{{ ($clientName?$clientName:'klantCode: ' . $kcode) }}</option>
                 @endforeach
                 </select>
             </div>

@@ -9,7 +9,7 @@ class ManualController extends Controller
 {
     public function manualsPage() {
         if(!auth()->user()->is_admin || !auth()->user()->email_verified_at) return view('no-access');
-        $manuals = Manual::all();
+        $manuals = Manual::select('*')->orderBy('url', 'asc')->get();
         $data = [
             'manuals' => $manuals,
         ];

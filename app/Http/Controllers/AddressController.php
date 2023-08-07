@@ -10,7 +10,7 @@ class AddressController extends Controller
 {
     public function AddressesPage() {
         if(!auth()->user()->is_admin || !auth()->user()->email_verified_at) return view('no-access');
-        $addresses = Address::all();
+        $addresses = Address::select('*')->orderBy('naam', 'asc')->get();
         $data = [
             'addresses' => $addresses,
         ];
