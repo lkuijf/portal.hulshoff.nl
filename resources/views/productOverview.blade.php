@@ -117,6 +117,7 @@
                     filterBtn.dispatchEvent(event);
                 }
                 tilesWrapper.style.display = 'none';
+                window.scrollTo(0, 0);
 
                 const state = {};
                 history.pushState(state, '', "/products");
