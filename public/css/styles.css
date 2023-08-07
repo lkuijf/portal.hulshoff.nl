@@ -60,6 +60,8 @@
 }
 .selectTileOverlay .tileGrid div a p {
   width: 150px;
+  overflow-wrap: break-word;
+  font-size: 0.9em;
 }
 
 .productList .products {
