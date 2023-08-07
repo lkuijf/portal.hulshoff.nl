@@ -87,11 +87,17 @@ class ProductController extends Controller
                 $resQry
                 ->where('omschrijving', 'like', '%' . $filters->search['value'] . '%')
                 ->orWhere('bijzonderheden', 'like', '%' . $filters->search['value'] . '%')
-                ->orWhere('artikelCode', 'like', '%' . $filters->search['value'] . '%')
-                ->orWhere('artikelCodeKlant', 'like', '%' . $filters->search['value'] . '%')
-                ->orWhere('verpakkingBundel', 'like', '%' . $filters->search['value'] . '%')
+                // ->orWhere('artikelCode', 'like', '%' . $filters->search['value'] . '%')
+                // ->orWhere('artikelCodeKlant', 'like', '%' . $filters->search['value'] . '%')
+                // ->orWhere('verpakkingBundel', 'like', '%' . $filters->search['value'] . '%')
                 ;
             });
+        }
+        if(isset($filters->aCode) && $filters->aCode['value']) {
+            $resQry->where('artikelCode', $filters->aCode['value']);
+        }
+        if(isset($filters->aCodeClient) && $filters->aCodeClient['value']) {
+            $resQry->where('artikelCodeKlant', $filters->aCodeClient['value']);
         }
         if(isset($filters->onlyinstock) && $filters->onlyinstock == true) {
             $resQry->where('voorraad', '>', 0);

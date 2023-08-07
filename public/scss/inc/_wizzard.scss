@@ -18,4 +18,27 @@
             }
         }
     }
+    .wizTextFields {
+        display: flex;
+        @media (max-width: $screenBreakpoint) {
+            flex-direction: column;
+        }
+        padding: 10px 0;
+        gap: 20px;
+        div {
+            // display: block;
+            // width: 384px;
+            // outline: 1px solid red;
+            flex: 0 1 24%;
+            // &:last-child {
+            //     flex-basis: 34%;
+            // }
+            input {
+                width: 100%;
+            }
+        }
+    }
+    .wizShowStockProds {
+        padding-bottom: 10px;
+    }
 }

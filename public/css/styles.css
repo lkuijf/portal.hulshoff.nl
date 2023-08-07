@@ -701,6 +701,25 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 .wizzardWrap .wizzard .wizSelectWrap select {
   width: 100%;
 }
+.wizzardWrap .wizTextFields {
+  display: flex;
+  padding: 10px 0;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .wizzardWrap .wizTextFields {
+    flex-direction: column;
+  }
+}
+.wizzardWrap .wizTextFields div {
+  flex: 0 1 24%;
+}
+.wizzardWrap .wizTextFields div input {
+  width: 100%;
+}
+.wizzardWrap .wizShowStockProds {
+  padding-bottom: 10px;
+}
 
 .resetPasswordContent {
   max-width: 500px;
