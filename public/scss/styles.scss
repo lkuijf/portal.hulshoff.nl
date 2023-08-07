@@ -150,7 +150,7 @@ form {
     }
 }
 table {
-    border: 1px solid #000;
+    border: 2px solid #CCC;
     border-collapse: collapse;
     @media (max-width: $screenBreakpointExtra) {font-size: 0.8em;}
     @media (max-width: $screenBreakpointMobile) {font-size: 0.7em;}
