@@ -86,7 +86,10 @@
 
     if(tilesWrapper) {
 
-        if(tilesWrapper.offsetHeight > contentCell.offsetHeight) contentCell.offsetHeight = tilesWrapper.offsetHeight;
+console.log('tilesWrapper: ' + tilesWrapper.offsetHeight);
+console.log('contentCell: ' + contentCell.offsetHeight);
+
+        // if(tilesWrapper.offsetHeight > contentCell.offsetHeight) contentCell.offsetHeight = tilesWrapper.offsetHeight;
 
         const tileLinks = tilesWrapper.querySelectorAll('.tileGrid a');
         tileLinks.forEach(tLink => {
