@@ -69,6 +69,8 @@
 
     const searchInputField = document.querySelector('.searchInputWrap input');
 
+    const contentCell = document.querySelector('.contentCell');
+
     displayProducts();
 
     document.addEventListener('keydown', (e) => {
@@ -83,6 +85,9 @@
     }
 
     if(tilesWrapper) {
+
+        if(tilesWrapper.offsetHeight > contentCell.offsetHeight) contentCell.offsetHeight = tilesWrapper.offsetHeight;
+
         const tileLinks = tilesWrapper.querySelectorAll('.tileGrid a');
         tileLinks.forEach(tLink => {
             tLink.addEventListener('click', (e) => {
