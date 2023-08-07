@@ -94,13 +94,19 @@
                 </select>
             </div>
             @endif
+            @php
+                $productPageRoute = 'products';
+                if(isset($tilesDisplay) && $tilesDisplay) {
+                    $productPageRoute = 'products_tiles';
+                }          
+            @endphp
             <div class="accButtons">
                 @if(Route::currentRouteName() == 'front')
                 <a href="#" class="accBtnHome">Home</a>
                 <a href="#" class="accBtnProfile">Profile</a>
                 <a href="#" class="accBtnLogout">Logout</a>
                 @else
-                <a href="{{ route('products') }}" class="accBtnHome">Home</a>
+                <a href="{{ route($productPageRoute) }}" class="accBtnHome">Home</a>
                 <a href="{{ route('account') }}" class="accBtnProfile">Profile</a>
                 @include('auth_hulshoff.logout', ['buttonInside' => ''])
                 @endif
@@ -134,12 +140,6 @@
                             <li><a href="{{ route('manuals') }}" @if($manualsBtnActive)class="active"@endif>{{ __('Manuals') }}</a></li>
                             <li><a href="{{ route('addresses') }}" @if($addressesBtnActive)class="active"@endif>{{ __('Addresses') }}</a></li>
                         @endif
-                        @php
-                            $productPageRoute = 'products';
-                            if(isset($tilesDisplay) && $tilesDisplay) {
-                                $productPageRoute = 'products_tiles';
-                            }          
-                        @endphp
                         <li><a href="{{ route($productPageRoute) }}" @if($productsBtnActive)class="active"@endif>{{ __('Products') }}</a></li>
                         <li><a href="{{ route('orders') }}" @if($ordersBtnActive)class="active"@endif>{{ __('Orders') }}</a></li>
                         @if(auth()->user()->can_reserve || auth()->user()->is_admin)<li><a href="{{ route('reservations') }}" @if($reservationsBtnActive)class="active"@endif>{{ __('Reservations') }}</a></li>@endif
