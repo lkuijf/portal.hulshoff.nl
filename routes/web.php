@@ -120,3 +120,11 @@ Route::get('/post/xml/klantUit', function () { return abort(404); });
 Route::get('/post/xml/artikelUit', function () { return abort(404); });
 Route::get('/post/xml/orderUit', function () { return abort(404); });
 Route::get('/post/xml/vrdstandUit', function () { return abort(404); });
+
+Route::get('/after_authentication', function () {
+    $privileges = json_decode(auth()->user()->privileges);
+    if($privileges) {
+        if(in_array('show_tiles', $privileges)) return redirect()->route('products_tiles');
+        else return redirect()->route('products');
+    }
+})->middleware('auth:h_users');
