@@ -37,7 +37,7 @@ class ProductController extends Controller
         $customerTypes = $this->getSpecs('type', $selectedKlantCode);
         $customerColors = $this->getSpecs('color', $selectedKlantCode);
         
-        $tiles = DB::table('tiles')->get();      
+        $tiles = DB::table('tiles')->get();
 
         $aBrands = [];
         $aGroups = [];
@@ -133,7 +133,8 @@ class ProductController extends Controller
             // ->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id')
             ->select('product' . $spec . 's.*')
             ->distinct();
-        if($klantCode) $resQry->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id');
+        // if($klantCode) $resQry->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id');
+        $resQry->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id');
         if($klantCode) $resQry->where('products.klantCode', '=', $klantCode);
         if($spec == 'brand') $resQry->orderBy('brand', 'asc');
         if($spec == 'group') $resQry->orderBy('group', 'asc');
