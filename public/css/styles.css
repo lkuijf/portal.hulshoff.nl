@@ -51,17 +51,12 @@
   font-weight: bold;
 }
 .selectTileOverlay .tileGrid div a img {
-  width: 160px;
   aspect-ratio: 1/1;
   border: 2px solid #000;
   -o-object-fit: contain;
      object-fit: contain;
   padding: 10px;
 }
-.selectTileOverlay .tileGrid div a p {
-  width: 160px;
-}
-
 .productList .products {
   display: flex;
   flex-wrap: wrap;
