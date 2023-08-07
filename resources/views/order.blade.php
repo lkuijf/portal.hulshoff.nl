@@ -54,6 +54,11 @@
                         </td>
                         @endif
                     </tr>
+                    @if ($order->is_reservation && (auth()->user()->id == $order->hulshoff_user_id))
+                    <tr>
+                        <td colspan="6"><p class="addArticleBtnHolder"><a href="">Voeg een artikel toe</a></p></td>
+                    </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

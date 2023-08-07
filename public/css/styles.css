@@ -686,6 +686,14 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
 .orderContent .confirmReservation > :first-child {
   margin-top: 0;
 }
+.orderContent .addArticleBtnHolder {
+  text-align: center;
+  margin: 0;
+}
+.orderContent .addArticleBtnHolder a:before {
+  font-family: "hulshoff";
+  content: "\e901 ";
+}
 
 .wizzardWrap {
   background-color: #EEE;
