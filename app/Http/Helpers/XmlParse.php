@@ -255,7 +255,7 @@ echo "\r" . $x++ . '/' . $totalFiles;
                 'klantCode' => $prod->{'art-klant-code'}
             ]);
             $product = Product::updateOrCreate(
-                ['klantCode' => $prod->{'art-klant-code'}, 'artikelCode' => $prod->{'art-artikel-code'}],
+                ['klantCode' => $prod->{'art-klant-code'}, 'artikelCode' => str_pad($prod->{'art-artikel-code'}, 5, '0', STR_PAD_LEFT)],
                 [
                     'artikelCodeKlant' => $prod->{'art-artikel-code-klant'},
                     'omschrijving' => $prod->{'art-omschrijving'},
