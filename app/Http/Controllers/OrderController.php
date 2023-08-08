@@ -209,6 +209,7 @@ class OrderController extends Controller
             $orderArticle->product_id = $product->id;
             $orderArticle->amount = 1;
             $orderArticle->save();
+            session()->forget('addingToReservationId');
             $request->session()->flash('message', '<p>' . __('Product added to reservation') . '</p>');
             return redirect()->route('reservation_detail', $order->id);
         } else {
