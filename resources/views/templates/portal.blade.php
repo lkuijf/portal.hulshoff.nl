@@ -89,7 +89,7 @@
                 <select name="customerCode" data-filter-reference="c_code">
                     <option value="" @if('' == $selectedCustomer){{ 'selected' }}@endif>- {{ __('Please select') }} -</option>
                 @foreach ($customers as $kcode => $clientName)
-                    <option value="{{ $kcode }}" @if($kcode == $selectedCustomer){{ 'selected' }}@endif>{{ ($clientName?$clientName:'klantCode: ' . $kcode) }}</option>
+                    <option value="{{ $kcode }}" @if($kcode == $selectedCustomer){{ 'selected' }}@endif>{{ ($clientName?$clientName . ' (' . $kcode . ')':'klantCode: ' . $kcode) }}</option>
                 @endforeach
                 </select>
             </div>
