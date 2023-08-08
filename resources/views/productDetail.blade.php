@@ -34,6 +34,18 @@
                         {{ __('Total reserved') }}: {{ $product->reservedAmount() }}<br />
                         {{ __('Total available') }}: {{ $product->availableAmount() }}
                     </p>
+                    @if (session()->has('addingToReservationId') && ($product->voorraad - $product->orderedAmount() > 0))
+                        <form action="{{ url('order-article') }}" method="POST">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="o_id" value="{{ session('addingToReservationId') }}">
+                            <input type="hidden" name="type" value="addToReservation">
+                            <input type="hidden" name="p_id" value="{{ $product->id }}">
+                            <button>
+                                {{ __('Add to reservation') }}
+                            </button>
+                        </form>
+                    @endif
                     @if (session()->has('selectedClient'))
                     <form action="{{ url('basket') }}" method="POST">
                         @csrf

@@ -38,7 +38,7 @@
                     <tr>
                         {{-- <td>{{ $orderArt->id }}</td> --}}
                         {{-- <td>{{ $orderArt->product_id }}</td> --}}
-                        <td><a href="{{ route('product_detail', $orderArt->product_id) }}">{{ $orderArt->product->artikelCode }}</a></td>
+                        <td><a href="{{ route('product_detail', $orderArt->product_id) }}" data-product-klant-code="{{ $orderArt->product->klantCode }}">{{ $orderArt->product->artikelCode }}</a></td>
                         <td>{{ $orderArt->product->omschrijving }}</td>
                         <td><span>{{ $orderArt->amount }}@if ($order->is_reservation) <a href="" class="editBasketCount editBtn" data-order-id="{{ $order->id }}" data-product-id="{{ $orderArt->product_id }}" data-product-count="{{ $orderArt->amount }}">{{ __('Edit') }}</a>@endif</span></td>
                         <td>&euro;{{ number_format($orderArt->product->prijs, 2, ',', '.') }}</td>
@@ -54,13 +54,13 @@
                         </td>
                         @endif
                     </tr>
-                    @if ($order->is_reservation && (auth()->user()->id == $order->hulshoff_user_id))
-                    <tr>
-                        <td colspan="6"><p class="addArticleBtnHolder"><a href="">Voeg een artikel toe</a></p></td>
-                    </tr>
-                    @endif
                 @endforeach
-            </tbody>
+            @if ($order->is_reservation && (auth()->user()->id == $order->hulshoff_user_id))
+            <tr>
+                <td colspan="6"><p class="addArticleBtnHolder"><a href="" data-res-id="{{ $order->id }}">Voeg een artikel toe</a></p></td>
+            </tr>
+            @endif
+        </tbody>
         </table>
         <p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
     @endif
@@ -94,6 +94,9 @@
     const editCountBtns = document.querySelectorAll('.editBasketCount');
     const editDateBtn = document.querySelector('.editBasketDate');
     const editAddressBtn = document.querySelector('.editBasketAddress');
+    const addArticleBtn = document.querySelector('.addArticleBtnHolder a');
+    const productKlantCodes = document.querySelectorAll('[data-product-klant-code]');
+    const custSelectDropDown = document.querySelector('select[name=customerCode]'); // also declared in portal.blade.php
 
     const clientAddresses = [];
     @if ($addresses && count($addresses))
@@ -113,7 +116,25 @@
         @endforeach
     @endif
 
-    console.log(clientAddresses);
+// console.log(clientAddresses);
+
+    if(addArticleBtn) {
+        addArticleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // console.log(productKlantCodes[0].dataset.productKlantCode);
+            allOptions = custSelectDropDown.querySelectorAll('option');
+            let indexToSelect = 0;
+            let t = 0;
+            allOptions.forEach(option => {
+                if(option.value == productKlantCodes[0].dataset.productKlantCode) indexToSelect = t;
+                t++;
+            });
+// console.log(addArticleBtn.dataset.resId);
+            custSelectDropDown.dataset.reservationId = addArticleBtn.dataset.resId;
+            custSelectDropDown.selectedIndex = indexToSelect;
+            custSelectDropDown.dispatchEvent(new Event('change'));
+        });
+    }
 
     if(editAddressBtn) {
         editAddressBtn.addEventListener('click', (e) => {

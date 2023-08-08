@@ -106,6 +106,8 @@ class BasketController extends Controller
         session(['basket' => []]);
         if($request->newClientCode) session(['selectedClient' => $request->newClientCode]);
         else session()->forget('selectedClient');
+        if($request->addProductToReservation) session(['addingToReservationId' => $request->addProductToReservation]);
+        else session()->forget('addingToReservationId');
         $res = new \stdClass();
         $res->success = true;
         echo json_encode($res);

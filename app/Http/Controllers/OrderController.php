@@ -141,6 +141,9 @@ class OrderController extends Controller
         if($request->type == 'updateDeliveryAddress') {
             $order->address_id = $request->address;
         }
+        // if($request->type == 'addToReservation') {
+            
+        // }
         $order->save();
 
         if($request->type == 'confirmReservation') {
@@ -186,24 +189,38 @@ class OrderController extends Controller
             return abort(404);
         });
         if(($order->hulshoff_user_id != auth()->user()->id) && !auth()->user()->is_admin) return abort(404); // check if order is of the current user when user is not an admin
-        $toValidate = array(
-            'count' => 'required|numeric',
-        );
-        $validationMessages = array(
-            'count.required'=> 'Please fill in a value',
-            'count.numeric'=> 'Only a number is allowed',
-        );
-        $validated = $request->validate($toValidate,$validationMessages);
+
+        if(!isset($request->type)) {
+            $toValidate = array(
+                'count' => 'required|numeric',
+            );
+            $validationMessages = array(
+                'count.required'=> 'Please fill in a value',
+                'count.numeric'=> 'Only a number is allowed',
+            );
+            $validated = $request->validate($toValidate,$validationMessages);
+        }
 
         $product = Product::find($request->p_id);
-        $orderArticle = OrderArticle::where('order_id', $order->id)->where('product_id', $product->id)->first();
-        if($request->count > ($product->availableAmount() + $orderArticle->amount)) { // currently reserved amount for this order must be added to the availableAmount
-            return redirect()->back()->withErrors(['Cannot change to ' . $request->count . ', only ' . ($product->availableAmount() + $orderArticle->amount) . ' are available.']);
+
+        if(isset($request->type) && $request->type == 'addToReservation') {
+            $orderArticle = new OrderArticle;
+            $orderArticle->order_id = $order->id;
+            $orderArticle->product_id = $product->id;
+            $orderArticle->amount = 1;
+            $orderArticle->save();
+            $request->session()->flash('message', '<p>' . __('Product added to reservation') . '</p>');
+            return redirect()->route('reservation_detail', $order->id);
+        } else {
+            $orderArticle = OrderArticle::where('order_id', $order->id)->where('product_id', $product->id)->first();
+            if($request->count > ($product->availableAmount() + $orderArticle->amount)) { // currently reserved amount for this order must be added to the availableAmount
+                return redirect()->back()->withErrors(['Cannot change to ' . $request->count . ', only ' . ($product->availableAmount() + $orderArticle->amount) . ' are available.']);
+            }
+            $orderArticle->amount = $request->count;
+            $orderArticle->save();
+            $request->session()->flash('message', '<p>' . __('Reservation updated') . '</p>');
+            return redirect()->back();
         }
-        $orderArticle->amount = $request->count;
-        $orderArticle->save();
-        $request->session()->flash('message', '<p>' . __('Reservation updated') . '</p>');
-        return redirect()->back();
     }
 
     public function deleteOrderArticle(Request $request) {
