@@ -5,7 +5,7 @@
     <h1>{{ $product->omschrijving }}</h1>
     @if (count($product->reservations()) && auth()->user()->is_admin)
     <div class="prodDetReservations">
-        <p>Er zijn reserveringen actief voor dit product:</p>
+        <p>Er zijn reserveringen actief voor dit product. <a href="" class="toggleReservationList">Bekijk reserveringen</a></p>
         <ul>
         @foreach ($product->reservations() as $reservationInfo)
             <li>{{ $reservationInfo->amount }}x gereserveerd door {{ $reservationInfo->orderUserName }} ({{ $reservationInfo->orderUserEmail }}), reservering nummer <a href="{{ route('reservation_detail', ['id' => $reservationInfo->orderId]) }}">{{ $reservationInfo->orderId }}</a></li>
@@ -136,18 +136,16 @@
     </div>
 </div>
 @endsection
-{{-- @section('before_closing_body_tag')
-@if ($errors->any())
-    @php
-        $errMsg = '<p>' . implode('</p><p>', $errors->all()) . '</p>';
-    @endphp
-    <script>
-        showMessage('error','{!! $errMsg !!}');
-    </script>
-@endif
-@if(session('message'))
-    <script>
-        showMessage('success','{!! session('message') !!}');
-    </script>
-@endif
-@endsection --}}
+@section('before_closing_body_tag')
+<script>
+    const toggleResBtn = document.querySelector('.toggleReservationList');
+    const resList = document.querySelector('.prodDetReservations ul');
+    if(toggleResBtn) {
+        toggleResBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!resList.style.height || resList.style.height == '0px') resList.style.height = 'auto';
+            else resList.style.height = '0';
+        });
+    }
+</script>
+@endsection

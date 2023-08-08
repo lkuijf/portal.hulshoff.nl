@@ -149,6 +149,10 @@
 .productDetailContent .prodDetReservations > :last-child {
   margin-bottom: 0;
 }
+.productDetailContent .prodDetReservations ul {
+  height: 0px;
+  overflow: hidden;
+}
 .productDetailContent .prodDetTopWrap {
   display: flex;
   gap: 20px;
