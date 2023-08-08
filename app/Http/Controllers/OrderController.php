@@ -147,12 +147,20 @@ class OrderController extends Controller
         $order->save();
 
         if($request->type == 'confirmReservation') {
+            //confirmation to user
             Mail::to(auth()->user()->email)->send(new OrderPromoted($order));
+
+            //copy of confirmation to extra emails
             $extraEmails = json_decode(auth()->user()->extra_email);
             if($extraEmails && count($extraEmails)) {
                 foreach($extraEmails as $e_email) {
                     Mail::to($e_email)->send(new OrderPromoted($order));
                 }
+            }
+
+            //copy of confirmation to hulshoff users
+            foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
+                Mail::to($copyEmailAddress)->send(new OrderPromoted($order));
             }
         }
 
