@@ -166,7 +166,7 @@ class OrderController extends Controller
             ];
 
             // if(!Storage::exists('pdf')) Storage::makeDirectory('pdf', 0777, true); //creates directory
-            $pdf = Pdf::loadView('reports.orders-pdf', $pdfData);
+            $pdf = Pdf::loadView('werkbon.werkbon-pdf', $pdfData);
             // $file = $req->klantCode . '-' . $req->reportType . '-' . date('U') . '.pdf';
             // $pdf->save(storage_path('app/pdf/' . $file));
             // $results->export_file = '/pdf/' . $file;
