@@ -33,7 +33,8 @@
 </head>
 <body>
     <header>
-        <img src="{{ asset('statics/hulshoff-logo.png') }}" alt="Hulshoff">
+        {{-- <img src="{{ asset('statics/hulshoff-logo.png') }}" alt="Hulshoff"> --}}
+        <h1>WERKBON</h1>
     </header>
 @yield('pdf_content')
 </body>
