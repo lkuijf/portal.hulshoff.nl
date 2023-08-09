@@ -1,7 +1,7 @@
 <h2>Order gegevens</h2>
 <p>
     Order nummer: <strong>{{ $order->id }}</strong><br>
-    Gewenste leverdatum: <strong>{{ date('m-d-Y', strtotime($order->afleverDatum)) }}</strong><br>
+    Gewenste leverdatum: <strong>{{ date('d-m-Y', strtotime($order->afleverDatum)) }}</strong><br>
 </p>
 <h2>Melder gegevens</h2>
 <p>
@@ -28,11 +28,21 @@
 @if ($products && count($products))
     <table>
         <tr>
+            <th>Artikelnr.</th>
+            <th>Aantal</th>
+            <th>Brand</th>
+            <th>Group</th>
+            <th>Type</th>
             <th>Omschrijving</th>
         </tr>
     @foreach ($products as $prodInfo)
     <tr>
-        <td>{{ $prodInfo }}</td>
+        <td>{{ $prodInfo->artikelCode }}</td>
+        <td>{{ $prodInfo->amount }}</td>
+        <td>{{ $prodInfo->brand }}</td>
+        <td>{{ $prodInfo->group }}</td>
+        <td>{{ $prodInfo->type }}</td>
+        <td>{{ $prodInfo->omschrijving }}</td>
     </tr>
     @endforeach
     </table>

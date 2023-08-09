@@ -164,8 +164,16 @@ class OrderController extends Controller
             $aProds = [];
             if(count($order->orderArticles)) {
                 foreach($order->orderArticles as $ordArt) {
+                    $singleProd = new stdClass();
                     $product = Product::find($ordArt->product_id);
-                    $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
+                    // $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
+                    $singleProd->amount = $ordArt->amount;
+                    $singleProd->artikelCode = $product->artikelCode;
+                    $singleProd->omschrijving = $product->omschrijving;
+                    $singleProd->brand = $product->brand->brand;
+                    $singleProd->group = $product->group->group;
+                    $singleProd->type = $product->type->type;
+                    $aProds[] = $singleProd;
                 }
             }
             $pdfData = [
