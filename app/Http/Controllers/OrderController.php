@@ -170,6 +170,7 @@ class OrderController extends Controller
             }
             $pdfData = [
                 'products' => $aProds,
+                'order' => $order,
                 'hulshoffUser' => $order->hulshoffUser,
                 'customer' => $order->customer,
                 'address' => $order->address,

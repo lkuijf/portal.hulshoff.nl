@@ -1,3 +1,8 @@
+<h2>Order gegevens</h2>
+<p>
+    Order nummer: <strong>{{ $order->id }}</strong><br>
+    Gewenste leverdatum: <strong>{{ date('m-d-Y', strtotime($order->afleverDatum)) }}</strong><br>
+</p>
 <h2>Melder gegevens</h2>
 <p>
     Naam melder: <strong>{{ $hulshoffUser->name }}</strong><br>
@@ -6,7 +11,7 @@
 <h2>Klant gegevens</h2>
 <p>
     KlantCode: <strong>{{ $customer->klantCode }}</strong><br>
-    Klant naam: <strong>{{ $customer->naam }}</strong><br>
+    Klant naam: <strong>{{ $customer->naam }}</strong>
 </p>
 <h2>Afleveradres</h2>
 <p>
@@ -18,7 +23,7 @@
     Landcode: <strong>{{ $address->landCode }}</strong><br>
     Contactpersoon: <strong>{{ $address->contactpersoon }}</strong><br>
     Telefoonnummer: <strong>{{ $address->telefoon }}</strong><br>
-    E-mail adres: <strong>{{ $address->eMailadres }}</strong><br>
+    E-mail adres: <strong>{{ $address->eMailadres }}</strong>
 </p>
 @if ($products && count($products))
     <table>
