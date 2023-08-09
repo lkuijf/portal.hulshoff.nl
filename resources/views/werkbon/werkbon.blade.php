@@ -1,4 +1,4 @@
-@if ($data && count($data))
+{{-- @if ($data && count($data)) --}}
     <table>
         <tr>
             <th>Naam</th>
@@ -6,11 +6,11 @@
         </tr>
     @foreach ($data as $info)
     <tr>
-        <td>{{ $info->name }}</td>
-        <td>{{ $info->address }}</td>
+        <td>{{ $name }}</td>
+        <td>{{ $address }}</td>
     </tr>
     @endforeach
     </table>
-@else
-<p>{{ __('No data found') }}</p>
-@endif
+{{-- @else --}}
+{{-- <p>{{ __('No data found') }}</p> --}}
+{{-- @endif --}}
