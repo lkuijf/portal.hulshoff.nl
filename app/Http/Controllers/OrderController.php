@@ -164,7 +164,7 @@ class OrderController extends Controller
             $aProds = [];
             if(count($order->orderArticles)) {
                 foreach($order->orderArticles as $ordArt) {
-                    $singleProd = new stdClass();
+                    $singleProd = new \stdClass();
                     $product = Product::find($ordArt->product_id);
                     // $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
                     $singleProd->amount = $ordArt->amount;
