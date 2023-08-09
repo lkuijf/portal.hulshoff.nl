@@ -10,6 +10,8 @@ use App\Models\Address;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPromoted;
 use App\Mail\OrderPlaced;
+use App\Mail\WerkbonPdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -158,9 +160,22 @@ class OrderController extends Controller
                 }
             }
 
+            $pdfData = [
+                'name' => 'L',
+                'address' => 'mr.',
+            ];
+
+            // if(!Storage::exists('pdf')) Storage::makeDirectory('pdf', 0777, true); //creates directory
+            $pdf = Pdf::loadView('reports.orders-pdf', $pdfData);
+            // $file = $req->klantCode . '-' . $req->reportType . '-' . date('U') . '.pdf';
+            // $pdf->save(storage_path('app/pdf/' . $file));
+            // $results->export_file = '/pdf/' . $file;
+
+            $pdfContent = $pdf->output();
+
             //copy of confirmation to hulshoff users
             foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
-                Mail::to($copyEmailAddress)->send(new OrderPromoted($order));
+                Mail::to($copyEmailAddress)->send(new WerkbonPdf($pdfContent));
             }
         }
 
