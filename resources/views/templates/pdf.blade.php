@@ -35,7 +35,7 @@
     <header>
         {{-- <img src="{{ asset('statics/hulshoff-logo.png') }}" alt="Hulshoff"> --}}
         {{-- <img src="https://opslag2.hulshoff.nl/statics/hulshoff-logo.png" alt="Hulshoff"> --}}
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('statics/hulshoff-logo.png'))) }}" alt="Hulshoff">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents('https://opslag2.hulshoff.nl/statics/hulshoff-logo.png')) }}" alt="Hulshoff">
         <div>
             <p>
                 Periode: {{ $period }}<br />
