@@ -33,7 +33,8 @@
 </head>
 <body>
     <header>
-        <img src="{{ asset('statics/hulshoff-logo.png') }}" alt="Hulshoff">
+        {{-- <img src="{{ asset('statics/hulshoff-logo.png') }}" alt="Hulshoff"> --}}
+        <img src="https://opslag2.hulshoff.nl/statics/hulshoff-logo.png" alt="Hulshoff">
         <div>
             <p>
                 Periode: {{ $period }}<br />
