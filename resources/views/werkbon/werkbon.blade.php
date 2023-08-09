@@ -1,16 +1,14 @@
-{{-- @if ($data && count($data)) --}}
+@if ($products && count($products))
     <table>
         <tr>
-            <th>Naam</th>
-            <th>Adres</th>
+            <th>Omschrijving</th>
         </tr>
-    {{-- @foreach ($data as $info) --}}
+    @foreach ($products as $prodInfo)
     <tr>
-        <td>{{ $name }}</td>
-        <td>{{ $address }}</td>
+        <td>{{ $prodInfo }}</td>
     </tr>
-    {{-- @endforeach --}}
+    @endforeach
     </table>
-{{-- @else --}}
-{{-- <p>{{ __('No data found') }}</p> --}}
-{{-- @endif --}}
+@else
+<p>{{ __('No products found') }}</p>
+@endif

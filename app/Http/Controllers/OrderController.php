@@ -160,9 +160,17 @@ class OrderController extends Controller
                 }
             }
 
+
+            $aProds = [];
+            if(count($order->orderArticles)) {
+                foreach($order->orderArticles as $ordArt) {
+                    $product = Product::find($ordArt->product_id);
+                    $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
+                }
+            }
             $pdfData = [
-                'name' => 'L',
-                'address' => 'mr.',
+                'products' => $aProds,
+                // 'address' => 'mr.',
             ];
 
             // if(!Storage::exists('pdf')) Storage::makeDirectory('pdf', 0777, true); //creates directory
