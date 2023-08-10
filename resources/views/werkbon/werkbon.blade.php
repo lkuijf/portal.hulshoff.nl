@@ -24,6 +24,7 @@
     Contactpersoon: <strong>{{ $address->contactpersoon }}</strong><br>
     Telefoonnummer: <strong>{{ $address->telefoon }}</strong><br>
     @if($address->eMailadres)E-mail adres: <strong>{{ $address->eMailadres }}</strong>@endif
+    @if($address->informatie)Extra informatie: <strong>{{ $address->informatie }}</strong>@endif
 </p>
 @if ($products && count($products))
     <table>
