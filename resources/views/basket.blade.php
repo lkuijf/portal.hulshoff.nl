@@ -102,12 +102,49 @@
                 </select>
             </p> --}}
             <h2>{{ __('Delivery address') }}</h2>
+            <p>Selecteer standaard adres of voer deze handmatig in.</p>
             <select name="address">
-                <option value="">-geen-</option>
+                <option value="">- Selecteer een adres -</option>
                 @foreach ($addresses as $address)
                     <option value="{{ $address->id }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
                 @endforeach
             </select>
+
+            <p><input type="checkbox" name="customAddressCheckbox"><a href="" class="customAddress">Voer handmatig een adres in</a></p>
+
+            <table class="manualAddress">
+                <tr>
+                    <td>{{ __('Street') }}</td>
+                    <td><input type="text" name="straat" size="40" value="{{ old('straat') }}"></td>
+                </tr>
+                <tr>
+                    <td>{{ __('House number') }}</td>
+                    <td><input type="text" name="huisnummer" size="5" value="{{ old('huisnummer') }}"></td>
+                </tr>
+                <tr>
+                    <td>{{ __('Zipp code') }}</td>
+                    <td><input type="text" name="postcode" size="10" value="{{ old('postcode') }}"></td>
+                </tr>
+                <tr>
+                    <td>{{ __('City') }}</td>
+                    <td><input type="text" name="plaats" size="40" value="{{ old('plaats') }}"></td>
+                </tr>
+                <tr>
+                    <td>{{ __('Contact person') }}</td>
+                    <td><input type="text" name="contactpersoon" size="40" value="{{ old('contactpersoon') }}"></td>
+                </tr>
+                <tr>
+                    <td>{{ __('Phone') }}</td>
+                    <td><input type="text" name="telefoon" size="20" value="{{ old('telefoon') }}"></td>
+                </tr>
+                <tr>
+                    <td>{{ __('Additional information') }}</td>
+                    <td>
+                        <textarea name="information" cols="40" rows="5" placeholder="Bijvoorbeeld informatie over openingstijden / etage / aanwezigheid lift / gebouwcode etc." value="{{ old('information') }}"></textarea>
+                    </td>
+                </tr>
+            </table>
+
             <div>
                 <div class="deliveryNaw"></div>
             </div>
@@ -141,17 +178,55 @@
     // });
     const addressSelect = document.querySelector('select[name="address"]');
     const nawBox = document.querySelector('.deliveryNaw');
+    const customAddressBtn = document.querySelector('.customAddress');
+    const manualAddressTable = document.querySelector('.manualAddress');
+    const customAddressCheckbox = document.querySelector('input[name=customAddressCheckbox]');
+
+    customAddressBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(customAddressCheckbox.checked) customAddressCheckbox.checked = false;
+        else customAddressCheckbox.checked = true;
+        customAddressCheckbox.dispatchEvent(new Event('click'));
+    });
+
+    customAddressCheckbox.addEventListener('click', () => {
+        if(customAddressCheckbox.checked) {
+            if(!manualAddressTable.style.display || manualAddressTable.style.display == 'none') {
+                manualAddressTable.style.display = 'block';
+                addressSelect.selectedIndex = 0;
+                addressSelect.dispatchEvent(new Event('change'));
+            }
+        } else {
+            manualAddressTable.style.display = 'none';
+            removeCustomAddressValues(manualAddressTable);
+        }
+    });
+
     if(addressSelect) {
         addressSelect.addEventListener('change', () => {
             if(addressSelect.value) {
                 let selectedNawInfo = addressSelect.options[addressSelect.selectedIndex].dataset.naw
                 nawBox.innerHTML = selectedNawInfo.replaceAll('\\n', '<br>');
                 nawBox.style.borderColor = '#CCC';
+
+                manualAddressTable.style.display = 'none';
+                removeCustomAddressValues(manualAddressTable);
+                if(customAddressCheckbox.checked) customAddressCheckbox.checked = false;
+
             } else {
                 nawBox.innerHTML = '';
                 nawBox.style.borderColor = '#FFF';
             }
         });
+    }
+
+    function removeCustomAddressValues(addressTable) {
+        manualInputs = addressTable.querySelectorAll('input');
+        manualTextarea = addressTable.querySelector('textarea');
+        manualInputs.forEach(input => {
+            input.value = '';
+        });
+        manualTextarea.value = '';
     }
 
     const editDateBtn = document.querySelector('.editBasketDate');

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderArticle;
 use App\Models\Product;
 use App\Models\Address;
+use App\Models\CustomAddress;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPromoted;
 use App\Mail\OrderPlaced;
@@ -59,12 +60,27 @@ class OrderController extends Controller
     }
 
     public function newOrder(Request $request) {
+// dd($request);
         $toValidate = array(
-            'address' => 'required',
+            // 'address' => 'required',
+            'straat' => 'required_if:customAddressCheckbox,on',
+            'huisnummer' => 'required_if:customAddressCheckbox,on',
+            'postcode' => 'required_if:customAddressCheckbox,on',
+            'plaats' => 'required_if:customAddressCheckbox,on',
         );
         $validationMessages = array(
-            'address.required'=> 'Please select an address',
+            // 'address.required'=> 'Please select an address',
+            'straat.required_if'=> 'Please enter a straat',
+            'huisnummer.required_if'=> 'Please enter a housenumber',
+            'postcode.required_if'=> 'Please enter a zipp code',
+            'plaats.required_if'=> 'Please enter a city',
         );
+
+        if(!isset($request->customAddressCheckbox)) {
+            $toValidate['address'] = 'required';
+            $validationMessages['address.required'] = 'Please select an address';
+        }
+
         $validated = $request->validate($toValidate,$validationMessages);
 
         $basket = [];
@@ -90,7 +106,26 @@ class OrderController extends Controller
         $order->afleverDatum = date("Ymd", strtotime($deliveryDate));
         // $order->afleverTijd = str_pad($request->deliveryHour, 2, '0', STR_PAD_LEFT) . str_pad($request->deliveryMinute, 2, '0', STR_PAD_LEFT);
         $order->afleverTijd = '0000'; // edit 15-12-2022. Delivery TIME can't be selected by customer.
-        $order->address_id = $request->address;
+        $order->save(); // to set the id
+        if(!isset($request->customAddressCheckbox)) {
+            $order->address_id = $request->address;
+            $order->custom_address_id = null;
+        } else {
+            $order->address_id = null;
+
+            $cAddr = new CustomAddress;
+            $cAddr->order_id = $order->id;
+            $cAddr->straat = $request->straat;
+            $cAddr->huisnummer = $request->huisnummer;
+            $cAddr->postcode = $request->postcode;
+            $cAddr->plaats = $request->plaats;
+            $cAddr->contactpersoon = $request->contactpersoon;
+            $cAddr->telefoon = $request->telefoon;
+            $cAddr->informatie = $request->information;
+            $cAddr->save();
+
+            $order->custom_address_id = $cAddr->id;
+        }
         $order->save();
 
         foreach($basket as $id => $count) {

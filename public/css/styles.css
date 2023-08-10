@@ -394,6 +394,14 @@ ul.crumbs li:first-of-type:before {
   border: 1px solid #FFF;
   font-weight: bold;
 }
+.basketContent .customAddress:before {
+  font-family: hulshoff;
+  font-size: 24px;
+  content: "\e805 ";
+}
+.basketContent .manualAddress {
+  display: none;
+}
 
 #burger-check, .burger-label {
   display: none;

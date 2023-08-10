@@ -48,4 +48,15 @@
         border: 1px solid #FFF;
         font-weight: bold;
     }
+    .customAddress {
+        &:before {
+            font-family: hulshoff;
+            font-size: 24px;
+            content: '\e805\00a0';
+            // color: #000;
+        }
+    }
+    .manualAddress {
+        display: none;
+    }
 }
