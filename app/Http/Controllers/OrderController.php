@@ -148,6 +148,7 @@ class OrderController extends Controller
                 $product->aantal_besteld_onverwerkt += $count;
                 $product->save();
             }
+            $this->generateWerkbon($order);
         }
         Mail::to(auth()->user()->email)->send(new OrderPlaced($order));
         $extraEmails = json_decode(auth()->user()->extra_email);
@@ -156,6 +157,7 @@ class OrderController extends Controller
                 Mail::to($e_email)->send(new OrderPlaced($order));
             }
         }
+
         $request->session()->flash('message', $orderMsg);
         return redirect()->route($redirect);
     }
@@ -196,44 +198,44 @@ class OrderController extends Controller
             }
 
 
-            $aProds = [];
-            if(count($order->orderArticles)) {
-                foreach($order->orderArticles as $ordArt) {
-                    $singleProd = new \stdClass();
-                    $product = Product::find($ordArt->product_id);
-                    // $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
-                    $singleProd->amount = $ordArt->amount;
-                    $singleProd->artikelCode = $product->artikelCode;
-                    $singleProd->omschrijving = $product->omschrijving;
-                    $singleProd->brand = $product->brand->brand;
-                    $singleProd->group = $product->group->group;
-                    $singleProd->type = $product->type->type;
-                    $aProds[] = $singleProd;
-                }
-            }
-            if($order->address_id) $werkbonAddress = $order->address;
-            if($order->custom_address_id) $werkbonAddress = $order->custom_address;
-            $pdfData = [
-                'products' => $aProds,
-                'order' => $order,
-                'hulshoffUser' => $order->hulshoffUser,
-                'customer' => $order->customer,
-                'address' => $werkbonAddress,
-                // 'address' => 'mr.',
-            ];
 
-            // if(!Storage::exists('pdf')) Storage::makeDirectory('pdf', 0777, true); //creates directory
-            $pdf = Pdf::loadView('werkbon.werkbon-pdf', $pdfData);
-            // $file = $req->klantCode . '-' . $req->reportType . '-' . date('U') . '.pdf';
-            // $pdf->save(storage_path('app/pdf/' . $file));
-            // $results->export_file = '/pdf/' . $file;
 
-            $pdfContent = $pdf->output();
+            // $aProds = [];
+            // if(count($order->orderArticles)) {
+            //     foreach($order->orderArticles as $ordArt) {
+            //         $singleProd = new \stdClass();
+            //         $product = Product::find($ordArt->product_id);
+            //         $singleProd->amount = $ordArt->amount;
+            //         $singleProd->artikelCode = $product->artikelCode;
+            //         $singleProd->omschrijving = $product->omschrijving;
+            //         $singleProd->brand = $product->brand->brand;
+            //         $singleProd->group = $product->group->group;
+            //         $singleProd->type = $product->type->type;
+            //         $aProds[] = $singleProd;
+            //     }
+            // }
+            // if($order->address_id) $werkbonAddress = $order->address;
+            // if($order->custom_address_id) $werkbonAddress = $order->custom_address;
+            // $pdfData = [
+            //     'products' => $aProds,
+            //     'order' => $order,
+            //     'hulshoffUser' => $order->hulshoffUser,
+            //     'customer' => $order->customer,
+            //     'address' => $werkbonAddress,
+            //     // 'address' => 'mr.',
+            // ];
 
-            //copy of confirmation to hulshoff users
-            foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
-                Mail::to($copyEmailAddress)->send(new WerkbonPdf($pdfContent));
-            }
+            // $pdf = Pdf::loadView('werkbon.werkbon-pdf', $pdfData);
+            // $pdfContent = $pdf->output();
+
+            // //copy of confirmation to hulshoff users
+            // foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
+            //     Mail::to($copyEmailAddress)->send(new WerkbonPdf($pdfContent));
+            // }
+
+            $this->generateWerkbon($order);
+
+
         }
 
         if($request->type == 'confirmReservation') $request->session()->flash('message', '<p>' . __('Your order has been placed') . '!</p>');
@@ -242,6 +244,42 @@ class OrderController extends Controller
         if($request->type == 'confirmReservation') return redirect()->route('orders');
         if($request->type == 'updateDeliveryDate') return redirect()->back();
         if($request->type == 'updateDeliveryAddress') return redirect()->back();
+    }
+
+    public function generateWerkbon($finalOrder) {
+        $aProds = [];
+        if(count($finalOrder->orderArticles)) {
+            foreach($finalOrder->orderArticles as $ordArt) {
+                $singleProd = new \stdClass();
+                $product = Product::find($ordArt->product_id);
+                $singleProd->amount = $ordArt->amount;
+                $singleProd->artikelCode = $product->artikelCode;
+                $singleProd->omschrijving = $product->omschrijving;
+                $singleProd->brand = $product->brand->brand;
+                $singleProd->group = $product->group->group;
+                $singleProd->type = $product->type->type;
+                $aProds[] = $singleProd;
+            }
+        }
+        if($finalOrder->address_id) $werkbonAddress = $finalOrder->address;
+        if($finalOrder->custom_address_id) $werkbonAddress = $finalOrder->custom_address;
+        $pdfData = [
+            'products' => $aProds,
+            'order' => $finalOrder,
+            'hulshoffUser' => $finalOrder->hulshoffUser,
+            'customer' => $finalOrder->customer,
+            'address' => $werkbonAddress,
+            // 'address' => 'mr.',
+        ];
+
+        $pdf = Pdf::loadView('werkbon.werkbon-pdf', $pdfData);
+        $pdfContent = $pdf->output();
+
+        //copy of confirmation to hulshoff users
+        foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
+            Mail::to($copyEmailAddress)->send(new WerkbonPdf($pdfContent));
+        }
+
     }
 
     public function updateProductsOrderedValue($orderArticles) {
