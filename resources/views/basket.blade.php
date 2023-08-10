@@ -110,6 +110,8 @@
                 @endforeach
             </select>
 
+            {{-- @if (old('customAddressCheckbox')){{ ' checked' }}@endif --}}
+
             <p><input type="checkbox" name="customAddressCheckbox"><a href="" class="customAddress">Voer handmatig een adres in</a></p>
 
             <table class="manualAddress">
@@ -140,7 +142,7 @@
                 <tr>
                     <td>{{ __('Additional information') }}</td>
                     <td>
-                        <textarea name="information" cols="40" rows="5" placeholder="Bijvoorbeeld informatie over openingstijden / etage / aanwezigheid lift / gebouwcode etc." value="{{ old('information') }}"></textarea>
+                        <textarea name="information" cols="40" rows="5" placeholder="Bijvoorbeeld informatie over openingstijden / etage / aanwezigheid lift / gebouwcode etc.">{{ old('information') }}</textarea>
                     </td>
                 </tr>
             </table>
@@ -172,10 +174,6 @@
 @endsection
 @section('before_closing_body_tag')
 <script>
-    // const delDate = document.querySelector('input[name="deliveryDate"]');
-    // const datepicker = new Datepicker(delDate, {
-    //     format: 'dd-mm-yyyy'
-    // });
     const addressSelect = document.querySelector('select[name="address"]');
     const nawBox = document.querySelector('.deliveryNaw');
     const customAddressBtn = document.querySelector('.customAddress');
@@ -184,9 +182,7 @@
 
     customAddressBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if(customAddressCheckbox.checked) customAddressCheckbox.checked = false;
-        else customAddressCheckbox.checked = true;
-        customAddressCheckbox.dispatchEvent(new Event('click'));
+        toggleCheckboxState()
     });
 
     customAddressCheckbox.addEventListener('click', () => {
@@ -201,6 +197,16 @@
             removeCustomAddressValues(manualAddressTable);
         }
     });
+
+    @if (old('customAddressCheckbox'))
+    toggleCheckboxState()
+    @endif
+
+    function toggleCheckboxState() {
+        if(customAddressCheckbox.checked) customAddressCheckbox.checked = false;
+        else customAddressCheckbox.checked = true;
+        customAddressCheckbox.dispatchEvent(new Event('click'));
+    }
 
     if(addressSelect) {
         addressSelect.addEventListener('change', () => {

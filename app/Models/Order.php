@@ -26,6 +26,10 @@ class Order extends Model
         return $this->hasOne(Address::class, 'id', 'address_id');
     }
 
+    public function custom_address() {
+        return $this->hasOne(CustomAddress::class, 'id', 'custom_address_id');
+    }
+
     public function generateXml() {
         $aAdressen = [];
         $aDetails = [];
@@ -43,31 +47,42 @@ class Order extends Model
         $order->addChild('ord-eta-afleveren-tijd', $this->afleverTijd);
         $adressen = $order->addChild('adressen');
 
+        $aAdressen[0] = $adressen->addChild('adres');
+
         if($this->address_id) { // when the order is connected to an address
-            $aAdressen[0] = $adressen->addChild('adres');
-            if($this->customer->naam) {
-                $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
-                $aAdressen[0]->addChild('afa-naam', $this->address->naam);
-                $aAdressen[0]->addChild('afa-straat', $this->address->straat);
-                $aAdressen[0]->addChild('afa-huisnummer', $this->address->huisnummer);
-                $aAdressen[0]->addChild('afa-postcode', $this->address->postcode);
-                $aAdressen[0]->addChild('afa-plaats', $this->address->plaats);
-                $aAdressen[0]->addChild('afa-land-code', $this->address->landCode);
-                $aAdressen[0]->addChild('afa-contactpersoon', $this->address->contactpersoon);
-                $aAdressen[0]->addChild('afa-telefoon', $this->address->telefoon);
-                $aAdressen[0]->addChild('afa-e-mailadres', $this->address->eMailadres);
-            } else {
-                $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
-                $aAdressen[0]->addChild('afa-naam', '-niet bekend-');
-                $aAdressen[0]->addChild('afa-straat', '-niet bekend-');
-                $aAdressen[0]->addChild('afa-huisnummer', '00');
-                $aAdressen[0]->addChild('afa-postcode', '9999XX');
-                $aAdressen[0]->addChild('afa-plaats', '-niet bekend-');
-                $aAdressen[0]->addChild('afa-land-code', 'NL');
-                $aAdressen[0]->addChild('afa-contactpersoon', '-niet bekend-');
-                $aAdressen[0]->addChild('afa-telefoon', '0600112233');
-                $aAdressen[0]->addChild('afa-e-mailadres', '-niet bekend-');
-            }
+            $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
+            $aAdressen[0]->addChild('afa-naam', $this->address->naam);
+            $aAdressen[0]->addChild('afa-straat', $this->address->straat);
+            $aAdressen[0]->addChild('afa-huisnummer', $this->address->huisnummer);
+            $aAdressen[0]->addChild('afa-postcode', $this->address->postcode);
+            $aAdressen[0]->addChild('afa-plaats', $this->address->plaats);
+            $aAdressen[0]->addChild('afa-land-code', $this->address->landCode);
+            $aAdressen[0]->addChild('afa-contactpersoon', $this->address->contactpersoon);
+            $aAdressen[0]->addChild('afa-telefoon', $this->address->telefoon);
+            $aAdressen[0]->addChild('afa-e-mailadres', $this->address->eMailadres);
+        } elseif($this->custom_address_id) {
+            $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
+            $aAdressen[0]->addChild('afa-naam', 'HANDMATIG');
+            $aAdressen[0]->addChild('afa-straat', $this->custom_address->straat);
+            $aAdressen[0]->addChild('afa-huisnummer', $this->custom_address->huisnummer);
+            $aAdressen[0]->addChild('afa-postcode', $this->custom_address->postcode);
+            $aAdressen[0]->addChild('afa-plaats', $this->custom_address->plaats);
+            $aAdressen[0]->addChild('afa-land-code', 'NL');
+            $aAdressen[0]->addChild('afa-contactpersoon', $this->custom_address->contactpersoon);
+            $aAdressen[0]->addChild('afa-telefoon', $this->custom_address->telefoon);
+            $aAdressen[0]->addChild('afa-e-mailadres', 'planning@hulshoff.nl');
+        } else {
+            $aAdressen[0]->addChild('afa-afleveradres-code', 'ALGEMEEN'); // ??
+            $aAdressen[0]->addChild('afa-naam', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-straat', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-huisnummer', '00');
+            $aAdressen[0]->addChild('afa-postcode', '9999XX');
+            $aAdressen[0]->addChild('afa-plaats', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-land-code', 'NL');
+            $aAdressen[0]->addChild('afa-contactpersoon', '-niet bekend-');
+            $aAdressen[0]->addChild('afa-telefoon', '0600112233');
+            $aAdressen[0]->addChild('afa-e-mailadres', '-niet bekend-');
+
         }
 
         $details = $order->addChild('details');
