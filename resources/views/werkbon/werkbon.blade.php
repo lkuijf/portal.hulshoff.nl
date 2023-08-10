@@ -15,15 +15,15 @@
 </p>
 <h2>Afleveradres</h2>
 <p>
-    Naam: <strong>{{ $address->naam }}</strong><br>
+    @if($address->naam)Naam: <strong>{{ $address->naam }}</strong><br>@endif
     Straat: <strong>{{ $address->straat }}</strong><br>
     Huisnummer: <strong>{{ $address->huisnummer }}</strong><br>
     Postcode: <strong>{{ $address->postcode }}</strong><br>
     Plaats: <strong>{{ $address->plaats }}</strong><br>
-    Landcode: <strong>{{ $address->landCode }}</strong><br>
+    @if($address->landCode)Landcode: <strong>{{ $address->landCode }}</strong><br>@endif
     Contactpersoon: <strong>{{ $address->contactpersoon }}</strong><br>
     Telefoonnummer: <strong>{{ $address->telefoon }}</strong><br>
-    E-mail adres: <strong>{{ $address->eMailadres }}</strong>
+    @if($address->eMailadres)E-mail adres: <strong>{{ $address->eMailadres }}</strong>@endif
 </p>
 @if ($products && count($products))
     <table>

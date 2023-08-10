@@ -211,12 +211,14 @@ class OrderController extends Controller
                     $aProds[] = $singleProd;
                 }
             }
+            if($order->address_id) $werkbonAddress = $order->address;
+            if($order->custom_address_id) $werkbonAddress = $order->custom_address;
             $pdfData = [
                 'products' => $aProds,
                 'order' => $order,
                 'hulshoffUser' => $order->hulshoffUser,
                 'customer' => $order->customer,
-                'address' => $order->address,
+                'address' => $werkbonAddress,
                 // 'address' => 'mr.',
             ];
 
