@@ -68,10 +68,10 @@ class AppServiceProvider extends ServiceProvider
             
         });
         //
-        DB::listen(function ($query) {
-            echo '<p>' . $query->sql . ' (' . \implode(' _ ', $query->bindings) . ')</p>';
-            $query->bindings;
-            $query->time;
-        });
+        // DB::listen(function ($query) {
+        //     echo '<p>' . $query->sql . ' (' . \implode(' _ ', $query->bindings) . ')</p>';
+        //     $query->bindings;
+        //     $query->time;
+        // });
     }
 }
