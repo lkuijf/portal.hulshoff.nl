@@ -14,10 +14,10 @@
             </p>
             <table>
                 <tr>
-                    <th>Minimale voorraad</th>
-                    <th>Actuele voorraad</th>
-                    <th>Aantal gereserveerd</th>
-                    <th>Aantal besteld</th>
+                    <th>Minimale<br>voorraad</th>
+                    <th>Actuele<br>voorraad</th>
+                    <th>Aantal<br>gereserveerd</th>
+                    <th>Aantal<br>besteld</th>
                 </tr>
                 <tr>
                     <td>{{ $prod->minimaleVoorraad }}</td>
