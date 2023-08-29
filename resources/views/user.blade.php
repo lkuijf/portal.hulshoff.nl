@@ -14,6 +14,7 @@
     $privileges = '[]';
     $canReserve = 0;
     $isAdmin = 0;
+    $notifyOnMinStock = 0;
     $backUrl = route('users');
     if(Route::currentRouteName() == 'new_admin') {
         $title = 'New admin';
@@ -33,6 +34,7 @@
         $extra_email = ($data['user']->extra_email?$data['user']->extra_email:'[]');
         $privileges = ($data['user']->privileges?$data['user']->privileges:'[]');
         $canReserve = $data['user']->can_reserve;
+        $notifyOnMinStock = $data['user']->notify_min_stock;
         $isAdmin = $data['user']->is_admin;
         if($isAdmin) {
             $backUrl = route('admins');
@@ -163,6 +165,12 @@
         <td>{{ __('Is admin') }}?</td>
         <td>
             <input type="checkbox" name="is_admin" id="isadmin" @if($isAdmin) checked @endif><label for="isadmin">{{ __('Yes') }}</label>
+        </td>
+    </tr>
+    <tr>
+        <td>{{ __('Ontvang e-mail bij bereiken product minimale voorraad') }}?</td>
+        <td>
+            <input type="checkbox" name="notify_min_stock" id="reach_prod_min_stock" @if($notifyOnMinStock) checked @endif><label for="reach_prod_min_stock">{{ __('Yes') }}</label>
         </td>
     </tr>
     <tr>

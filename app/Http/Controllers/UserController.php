@@ -177,6 +177,7 @@ class UserController extends Controller
 
         $usr->privileges = ($req->privileges?json_encode($req->privileges):null);
         $usr->can_reserve = ($req->can_reserve?1:0);
+        $usr->notify_min_stock = ($req->notify_min_stock?1:0);
         $usr->is_admin = ($req->is_admin?1:0);
         return $usr;
     }
