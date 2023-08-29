@@ -5,6 +5,7 @@
     @if (count($products))
         <h2>{{ __('Products') }}:</h2>
         @foreach ($products as $prod)
+            <hr>
             <p>
                 klantCode: <strong>{{ $prod->klantCode }}</strong><br>
                 artikelCode: <strong>{{ $prod->artikelCode }}</strong><br>
@@ -25,7 +26,6 @@
                     <td>{{ $prod->orderedAmount() }}</td>
                 </tr>
             </table>
-            <hr>
         @endforeach
     @endif
 @endsection
