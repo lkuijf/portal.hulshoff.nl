@@ -194,9 +194,15 @@
     const filterSide = document.querySelector('#filter_at_side');
     // const clients = document.querySelectorAll('[name="klantCode[]"]');
     const klantCodeSelectsWrap = document.querySelector('.klantCode_td');
-    const customers = {};
+    const customers = [];
     @foreach ($data['customers'] as $customer)
-        customers['{{ $customer->klantCode }}'] = '{{ $customer->naam }}';
+        // customers['{{ $customer->klantCode }}'] = '{{ $customer->naam }}';
+        var cust = {
+            'klantCode': '{{ $customer->klantCode }}',
+            'naam': '{{ $customer->naam }}'
+        };
+        customers.push(cust);
+
     @endforeach
     
     checkSelectSlots();
@@ -227,14 +233,17 @@
         emptyOption.value = '';
         select.appendChild(emptyOption);
         div.appendChild(select);
-        
+
+
         Object.keys(customers).forEach(key => {
             let option = document.createElement('option');
-            let text = document.createTextNode(customers[key] + ' (' + key + ')');
+            let text = document.createTextNode(customers[key]['naam'] + ' (' + customers[key]['klantCode'] + ')');
             option.appendChild(text);
-            option.value = key;
+            option.value = customers[key]['klantCode'];
             select.appendChild(option);
         });
+
+
         select.addEventListener('change', () => {
             checkSelectSlots();
         });
