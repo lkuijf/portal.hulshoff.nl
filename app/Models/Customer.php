@@ -14,5 +14,8 @@ class Customer extends Model
     public function addresses() {
         return $this->hasMany(Address::class, 'klantCode', 'klantCode');
     }
+    // public function hulshoffUserKlantcodes() {
+    //     return $this->hasMany(HulshoffUserKlantcode::class, 'klantCode', 'klantCode');
+    // }
 
 }

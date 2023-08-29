@@ -35,6 +35,9 @@ class Product extends Model
     public function type() {
         return $this->hasOne(Producttype::class, 'id', 'producttype_id');
     }
+    // public function customer() {
+    //     return $this->hasOne(Customer::class, 'klantCode', 'klantCode');
+    // }
 
     public function availableAmount() {
         $totalOrdered = 0;
@@ -86,5 +89,11 @@ class Product extends Model
             }
         }
         return $reservations;
+    }
+    public function isBelowMinStock() {
+        if(($this->voorraad - $this->aantal_besteld_onverwerkt) < $this->minimaleVoorraad) {
+            return true;
+        }
+        return false;
     }
 }

@@ -7,15 +7,22 @@ use App\Models\Order;
 use App\Models\OrderArticle;
 use App\Models\Product;
 use App\Models\Address;
+use App\Models\Customer;
 use App\Models\CustomAddress;
+use App\Models\HulshoffUserKlantcode;
+use App\Models\HulshoffUser;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPromoted;
 use App\Mail\OrderPlaced;
 use App\Mail\WerkbonPdf;
+use App\Mail\NotifyMinimumStock;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
+
+    public $productsBelowMinStock = [];
+
     public function showOrders(Request $request, $type) {
         if(!auth()->user()->email_verified_at) return view('no-access');
 
@@ -147,6 +154,10 @@ class OrderController extends Controller
                 $product = Product::find($id);
                 $product->aantal_besteld_onverwerkt += $count;
                 $product->save();
+                if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
+            }
+            if(count($this->productsBelowMinStock)) {
+                $this->notifyUsersForMinimumStock();
             }
             $this->generateWerkbon($order);
         }
@@ -162,6 +173,20 @@ class OrderController extends Controller
         return redirect()->route($redirect);
     }
 
+    public function notifyUsersForMinimumStock() {
+        $hhUsersToNotify = [];
+        $productsToDisplay = [];
+        foreach($this->productsBelowMinStock as $productId) {
+            $product = Product::find($productId);
+            $productsToDisplay[] = $product;
+            $hulshoffUserKlantcodes = HulshoffUserKlantcode::where('klantCode', $product->klantCode)->get();
+            foreach($hulshoffUserKlantcodes as $hhuKlantcodes) {
+                $hhUsersToNotify[] = HulshoffUser::find($hhuKlantcodes->hulshoff_user_id);
+            }
+        }
+        Mail::to($hhUsersToNotify)->send(new NotifyMinimumStock($productsToDisplay));
+    }
+
     public function updateOrder(Request $request) {
         $order = Order::findOr($request->id, function () {
             return abort(404);
@@ -173,6 +198,9 @@ class OrderController extends Controller
 
             $this->updateProductsOrderedValue($order->orderArticles);
 
+            if(count($this->productsBelowMinStock)) {
+                $this->notifyUsersForMinimumStock();
+            }
         }
         if($request->type == 'updateDeliveryDate') {
             $order->afleverDatum = date("Ymd", strtotime($request->deliveryDate));
@@ -288,6 +316,7 @@ class OrderController extends Controller
                 $product = Product::find($ordArt->product_id);
                 $product->aantal_besteld_onverwerkt += $ordArt->amount;
                 $product->save();
+                if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
             }
         }
     }
