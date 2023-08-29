@@ -154,13 +154,22 @@ class OrderController extends Controller
                 $product = Product::find($id);
                 $product->aantal_besteld_onverwerkt += $count;
                 $product->save();
-                if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
+                // if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
             }
-            if(count($this->productsBelowMinStock)) {
-                $this->notifyUsersForMinimumStock();
-            }
+            // if(count($this->productsBelowMinStock)) {
+            //     $this->notifyUsersForMinimumStock();
+            // }
             $this->generateWerkbon($order);
         }
+
+        foreach($basket as $id => $count) {
+            $product = Product::find($id);
+            if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
+        }
+        if(count($this->productsBelowMinStock)) {
+            $this->notifyUsersForMinimumStock();
+        }
+
         Mail::to(auth()->user()->email)->send(new OrderPlaced($order));
         $extraEmails = json_decode(auth()->user()->extra_email);
         if($extraEmails && count($extraEmails)) {
