@@ -181,7 +181,8 @@ class OrderController extends Controller
             $productsToDisplay[] = $product;
             $hulshoffUserKlantcodes = HulshoffUserKlantcode::where('klantCode', $product->klantCode)->get();
             foreach($hulshoffUserKlantcodes as $hhuKlantcodes) {
-                $hhUsersToNotify[] = HulshoffUser::find($hhuKlantcodes->hulshoff_user_id);
+                $hhUser = HulshoffUser::find($hhuKlantcodes->hulshoff_user_id);
+                if($hhUser->notify_min_stock) $hhUsersToNotify[] = $hhUser;
             }
         }
         Mail::to($hhUsersToNotify)->send(new NotifyMinimumStock($productsToDisplay));
