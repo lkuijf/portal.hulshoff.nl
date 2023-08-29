@@ -185,7 +185,7 @@ class OrderController extends Controller
                 if($hhUser->notify_min_stock) $hhUsersToNotify[] = $hhUser;
             }
         }
-        Mail::to($hhUsersToNotify)->send(new NotifyMinimumStock($productsToDisplay));
+        if(count($hhUsersToNotify)) Mail::to($hhUsersToNotify)->send(new NotifyMinimumStock($productsToDisplay));
     }
 
     public function updateOrder(Request $request) {
