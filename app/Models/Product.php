@@ -91,7 +91,8 @@ class Product extends Model
         return $reservations;
     }
     public function isBelowMinStock() {
-        if(($this->voorraad - $this->aantal_besteld_onverwerkt) < $this->minimaleVoorraad) {
+        // if(($this->voorraad - $this->aantal_besteld_onverwerkt) < $this->minimaleVoorraad) {
+        if($this->availableAmount() < $this->minimaleVoorraad) {
             return true;
         }
         return false;
