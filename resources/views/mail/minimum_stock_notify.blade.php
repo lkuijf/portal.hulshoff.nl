@@ -12,12 +12,12 @@
                 artikelCodeKlant: <strong>{{ $prod->artikelCodeKlant }}</strong><br>
                 Omschrijving: <strong>{{ $prod->omschrijving }}</strong><br>
             </p>
-            <table>
+            <table cellpadding="5px">
                 <tr>
-                    <th>Minimale<br>voorraad</th>
-                    <th>Actuele<br>voorraad</th>
-                    <th>Aantal<br>gereserveerd</th>
-                    <th>Aantal<br>besteld</th>
+                    <th style="text-align:left;">Minimale<br>voorraad</th>
+                    <th style="text-align:left;">Actuele<br>voorraad</th>
+                    <th style="text-align:left;">Aantal<br>gereserveerd</th>
+                    <th style="text-align:left;">Aantal<br>besteld</th>
                 </tr>
                 <tr>
                     <td>{{ $prod->minimaleVoorraad }}</td>
