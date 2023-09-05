@@ -46,7 +46,7 @@
 {{-- Subcopy --}}
 @isset($actionText)
 <x-slot:subcopy>
-{{ __('If you are having trouble clicking the') . ' "' . $actionText . '" ' . __('button') . ', ' . __('copy and paste the following URL into your web browser') . ': ' }}<span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+{{-- {{ __('If you are having trouble clicking the') . ' "' . $actionText . '" ' . __('button') . ', ' . __('copy and paste the following URL into your web browser') . ': ' }}<span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span> --}}
 {{-- @lang(
     "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
     'into your web browser:',
