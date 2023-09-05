@@ -1,18 +1,18 @@
 <div class="resetPasswordContent">
-    <h1>Reset password</h1>
+    <h1>{{ __('Reset password') }}</h1>
     {{-- <p>Please provide your e-mail address</p> --}}
     <form action="/reset-password" method="POST">
         @csrf
         <div>
-            <label for="enterEmail">E-mail adres</label>
+            <label for="enterEmail">E-mail {{ __('address') }}</label>
             <input type="text" name="email" id="enterEmail">
         </div>
         <div>
-            <label for="enterPassword">Password</label>
+            <label for="enterPassword">{{ __('Password') }}</label>
             <input type="password" name="password" id="enterPassword">
         </div>
         <div>
-            <label for="enterPasswordConfirmation">Confirm password</label>
+            <label for="enterPasswordConfirmation">{{ __('Confirm password') }}</label>
             <input type="password" name="password_confirmation" id="enterPasswordConfirmation">
         </div>
         <input type="hidden" name="token" value="{{ request()->route('token') }}">
