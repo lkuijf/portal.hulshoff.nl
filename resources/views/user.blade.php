@@ -151,7 +151,13 @@
         <td>
             {{-- @foreach (['show_tiles', 'free_search', 'lotcode_search'] as $privilege) --}}
             @foreach (config('hulshoff.privileges') as $privilege)
-                <div><input type="checkbox" name="privileges[]" value="{{ $privilege }}" id="{{ $privilege }}" @if((old('privileges') && in_array($privilege, old('privileges'))) || (in_array($privilege, json_decode($privileges,true)) && !$errors->any())) checked @endif><label for="{{ $privilege }}">{{ $privilege }}</label></div>
+                @php
+                    $privText = $privilege;
+                    if($privilege == 'show_tiles') $privText = 'Show tiles';
+                    if($privilege == 'filter_on_top') $privText = 'Filter on top';
+                    if($privilege == 'filter_at_side') $privText = 'Filter at side';
+                @endphp
+                <div><input type="checkbox" name="privileges[]" value="{{ $privilege }}" id="{{ $privilege }}" @if((old('privileges') && in_array($privilege, old('privileges'))) || (in_array($privilege, json_decode($privileges,true)) && !$errors->any())) checked @endif><label for="{{ $privilege }}">{{ __($privText) }}</label></div>
             @endforeach
         </td>
     </tr>
