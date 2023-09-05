@@ -126,5 +126,7 @@ Route::get('/after_authentication', function () {
     if($privileges) {
         if(in_array('show_tiles', $privileges)) return redirect()->route('products_tiles');
         else return redirect()->route('products');
+    } else {
+        return redirect()->route('products');
     }
 })->middleware('auth:h_users');
