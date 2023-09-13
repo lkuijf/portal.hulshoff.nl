@@ -39,26 +39,22 @@ class RemindReservations implements ShouldQueue
             $reservations = Order::where('is_reservation', 1)->get();
 // dd($reservations);
             if(count($reservations)) {
-// echo "\n";
                 foreach($reservations as $reservation) {
-// echo $reservation->created_at . "\n";
                     $reservationAgeSeconds = date('U') - strtotime($reservation->created_at);
                     $reservationAgeDays = (int)($reservationAgeSeconds / 3600 / 24);
-// echo $reservationAgeDays . "\n";
-// echo $reservationAgeDays % 7 . "\n";
 
                     if($reservationAgeDays > 0 && $reservationAgeDays % 7 == 0) { // exactly 1, 2, 3 etc... weeks old.
-// echo "mailen!\n";
                         $hhUser = HulshoffUser::find($reservation->hulshoff_user_id);
-
-                        Mail::to($hhUser->email)->send(new ReservationReminder($reservation));
-                        $extraEmails = json_decode($hhUser->extra_email);
-                        if($extraEmails && count($extraEmails)) {
-                            foreach($extraEmails as $e_email) {
-                                Mail::to($e_email)->send(new ReservationReminder($reservation));
+                        
+                        if($hhUser) { // 19-9-2023: User can be deleted
+                            Mail::to($hhUser->email)->send(new ReservationReminder($reservation));
+                            $extraEmails = json_decode($hhUser->extra_email);
+                            if($extraEmails && count($extraEmails)) {
+                                foreach($extraEmails as $e_email) {
+                                    Mail::to($e_email)->send(new ReservationReminder($reservation));
+                                }
                             }
                         }
-
                         
 
                     }
