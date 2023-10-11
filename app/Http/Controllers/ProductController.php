@@ -49,7 +49,7 @@ class ProductController extends Controller
         foreach($customerTypes as $type) $aTypes[$type->id] = $type->type;
         foreach($customerColors as $color) $aColors[$color->id] = $color->color;
         foreach($tiles as $tile) $aTiles[$tile->group] = $tile->file;
-dd($aTiles);
+
         $data = [
             // 'tilesDisplay' => $bShowTiles,
             'filterDisplay' => $filterToShow,
