@@ -137,7 +137,10 @@ class ProductController extends Controller
         $resQry->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id');
         if($klantCode) $resQry->where('products.klantCode', '=', $klantCode);
         if($spec == 'brand') $resQry->orderBy('brand', 'asc');
-        if($spec == 'group') $resQry->orderBy('group', 'asc');
+        if($spec == 'group') {
+            $resQry->where('products.voorraad', '>', 0);
+            $resQry->orderBy('group', 'asc');
+        }
         if($spec == 'type') $resQry->orderBy('type', 'asc');
         if($spec == 'color') $resQry->orderBy('color', 'asc');
         $results = $resQry->get();
