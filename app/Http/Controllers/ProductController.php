@@ -61,6 +61,7 @@ class ProductController extends Controller
                 'color' => ['name' => __('Color'), 'items' => $aColors],
             ],
         ];
+dd($data);
         return view('productOverview')->with('data', $data);
     }
 
