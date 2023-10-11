@@ -102,6 +102,8 @@ Route::post('/ajax/types', [ProductController::class, 'getTypes'])->name('get_ty
 Route::post('/ajax/brands', [ProductController::class, 'getBrands'])->name('get_brands')->middleware('auth:h_users');
 Route::post('/ajax/colors', [ProductController::class, 'getColors'])->name('get_colors')->middleware('auth:h_users');
 Route::post('/ajax/setClient', [BasketController::class, 'resetClientBasket'])->name('set_client')->middleware('auth:h_users');
+Route::post('/ajax/setBasketAddress', [BasketController::class, 'saveBasketAddress'])->name('set_basket_address')->middleware('auth:h_users');
+Route::post('/ajax/getBasketAddress', [BasketController::class, 'obtainBasketAddress'])->name('get_basket_address')->middleware('auth:h_users');
 Route::get('/ajax/products/{klantCode}', [UserController::class, 'getClientProducts'])->name('get_client_products')->where(['klantCode' => '[0-9]+'])->middleware('auth:h_users');
 Route::get('/ajax/users/{klantCode}', [UserController::class, 'getClientUsers'])->name('get_client_users')->where(['klantCode' => '[0-9]+'])->middleware('auth:h_users');
 Route::post('/ajax/generate-report', [ReportController::class, 'generateReport'])->name('generate_report')->middleware('auth:h_users');

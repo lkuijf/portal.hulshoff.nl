@@ -120,6 +120,9 @@ class OrderController extends Controller
         } else {
             $order->address_id = null;
 
+            $addressInformation = ''; // 'informatie cannot be null' should be a migration, but this is a quick fix.
+            if($request->information) $addressInformation = $request->information;
+
             $cAddr = new CustomAddress;
             $cAddr->order_id = $order->id;
             $cAddr->straat = $request->straat;
@@ -128,7 +131,7 @@ class OrderController extends Controller
             $cAddr->plaats = $request->plaats;
             $cAddr->contactpersoon = $request->contactpersoon;
             $cAddr->telefoon = $request->telefoon;
-            $cAddr->informatie = $request->information;
+            $cAddr->informatie = $addressInformation; 
             $cAddr->save();
 
             $order->custom_address_id = $cAddr->id;

@@ -113,4 +113,19 @@ class BasketController extends Controller
         echo json_encode($res);
     }
 
+    public function saveBasketAddress(Request $request) {
+        session(['basket_address' => $request->address_info]);
+        $res = new \stdClass();
+        $res->success = true;
+        echo json_encode($res);
+    }
+
+    public function obtainBasketAddress() {
+        $address = session('basket_address');
+        $res = new \stdClass();
+        $res->address = $address;
+        $res->success = true;
+        echo json_encode($res);
+    }
+
 }

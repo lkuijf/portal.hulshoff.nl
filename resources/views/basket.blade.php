@@ -180,6 +180,8 @@
     const manualAddressTable = document.querySelector('.manualAddress');
     const customAddressCheckbox = document.querySelector('input[name=customAddressCheckbox]');
 
+    getPreservedAddress();
+
     customAddressBtn.addEventListener('click', (e) => {
         e.preventDefault();
         toggleCheckboxState()
@@ -235,8 +237,88 @@
         manualTextarea.value = '';
     }
 
+    function preserveAddress() {
+        let info = {};
+        info['addressSelectValue'] = false;
+        info['customAddressCheckboxValue'] = false;
+        info['customAddress'] = false;
+        if(addressSelect.value) {
+            //save value
+            info['addressSelectValue'] = addressSelect.value;
+        }
+        if(customAddressCheckbox.checked) {
+            //save checked
+            info['customAddressCheckboxValue'] = customAddressCheckbox.checked;
+
+            $address = {};
+            $address['straat'] = manualAddressTable.querySelector('input[name="straat"]').value
+            $address['huisnummer'] = manualAddressTable.querySelector('input[name="huisnummer"]').value
+            $address['postcode'] = manualAddressTable.querySelector('input[name="postcode"]').value
+            $address['plaats'] = manualAddressTable.querySelector('input[name="plaats"]').value
+            $address['contactpersoon'] = manualAddressTable.querySelector('input[name="contactpersoon"]').value
+            $address['telefoon'] = manualAddressTable.querySelector('input[name="telefoon"]').value
+            $address['information'] = manualAddressTable.querySelector('textarea[name="information"]').value
+
+            info['customAddress'] = $address
+        }
+
+        axios.post('{{ url('/ajax/setBasketAddress') }}', {address_info:info})
+            .then(function (response) {
+                // handle success
+                if(response.data.success == true) {
+                    // console.log('OK!');
+                }
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+    }
+    function getPreservedAddress() {
+        axios.post('{{ url('/ajax/getBasketAddress') }}')
+            .then(function (response) {
+                // handle success
+                if(response.data.success == true) {
+                    // console.log(response.data.address);
+                    // preservedAddress = response.data.address;
+                    populatePreservedAddress(response.data.address);
+                    // return preservedAddress;
+                }
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+    }
+    function populatePreservedAddress(addr) {
+        console.log(addr);
+        if(addr.addressSelectValue) {
+            addressSelect.value = addr.addressSelectValue;
+            addressSelect.dispatchEvent(new Event('change'));
+        }
+        if(addr.customAddressCheckboxValue) {
+            customAddressCheckbox.checked = true;
+            customAddressCheckbox.dispatchEvent(new Event('click'));
+
+            manualAddressTable.querySelector('input[name="straat"]').value = addr.customAddress.straat;
+            manualAddressTable.querySelector('input[name="huisnummer"]').value = addr.customAddress.huisnummer;
+            manualAddressTable.querySelector('input[name="postcode"]').value = addr.customAddress.postcode;
+            manualAddressTable.querySelector('input[name="plaats"]').value = addr.customAddress.plaats;
+            manualAddressTable.querySelector('input[name="contactpersoon"]').value = addr.customAddress.contactpersoon;
+            manualAddressTable.querySelector('input[name="telefoon"]').value = addr.customAddress.telefoon;
+            manualAddressTable.querySelector('textarea[name="information"]').value = addr.customAddress.information;
+
+        }
+    }
+
     const editDateBtn = document.querySelector('.editBasketDate');
-    if(editDateBtn) { // basket is empty, not button present
+    if(editDateBtn) { // basket is empty, no button present
         editDateBtn.addEventListener('click', (e) => {
             e.preventDefault();
             let parentNode = editDateBtn.parentNode.parentNode;
@@ -249,6 +331,15 @@
             let editHiddenMethod = document.createElement('input');
             let editHiddenToken = document.createElement('input');
             let editSave = document.createElement('button');
+
+            editSave.addEventListener('click', (e) => {
+                e.preventDefault();
+                preserveAddress();
+                setTimeout(() => {
+                    editForm.submit();
+                }, 300);
+            });
+
             let editCancel = document.createElement('a');
             editForm.setAttribute('action', '/basket');
             editForm.setAttribute('method', 'post');
@@ -336,6 +427,15 @@
             let editHiddenId = document.createElement('input');
             // let editHiddenDeliveryDate = document.createElement('input');
             let editSave = document.createElement('button');
+
+            editSave.addEventListener('click', (e) => {
+                e.preventDefault();
+                preserveAddress();
+                setTimeout(() => {
+                    editForm.submit();
+                }, 300);
+            });
+
             let editCancel = document.createElement('a');
             editForm.setAttribute('action', '/basket');
             editForm.setAttribute('method', 'post');
