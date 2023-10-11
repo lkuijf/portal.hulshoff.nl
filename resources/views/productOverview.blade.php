@@ -74,7 +74,7 @@
     
     setTimeout(() => {
         displayProducts();
-    }, 200);
+    }, 100);
 
     document.addEventListener('keydown', (e) => {
         // if(event.keyCode === 13 && searchInputField == document.activeElement) {
