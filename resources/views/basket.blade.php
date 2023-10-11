@@ -337,7 +337,7 @@
                 preserveAddress();
                 setTimeout(() => {
                     editForm.submit();
-                }, 300);
+                }, 500);
             });
 
             let editCancel = document.createElement('a');
@@ -433,7 +433,7 @@
                 preserveAddress();
                 setTimeout(() => {
                     editForm.submit();
-                }, 300);
+                }, 500);
             });
 
             let editCancel = document.createElement('a');
