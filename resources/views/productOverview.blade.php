@@ -72,8 +72,9 @@
     const contentCell = document.querySelector('.contentCell');
     const tileGrid = document.querySelector('.tileGrid');
     
-
-    displayProducts();
+    setTimeout(() => {
+        displayProducts();
+    }, 200);
 
     document.addEventListener('keydown', (e) => {
         // if(event.keyCode === 13 && searchInputField == document.activeElement) {
