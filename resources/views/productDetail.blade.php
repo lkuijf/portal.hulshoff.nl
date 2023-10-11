@@ -34,16 +34,21 @@
                         {{ __('Total reserved') }}: {{ $product->reservedAmount() }}<br />
                         {{ __('Total available') }}: {{ $product->availableAmount() }}
                     </p>
-                    @if (session()->has('addingToReservationId') && ($product->voorraad - $product->orderedAmount() > 0))
+                    {{-- @if (session()->has('addingToReservationId') && ($product->voorraad - $product->orderedAmount() > 0)) --}}
+                    @if (session()->has('addingToReservationId'))
                         <form action="{{ url('order-article') }}" method="POST">
                             @csrf
                             @method('put')
                             <input type="hidden" name="o_id" value="{{ session('addingToReservationId') }}">
                             <input type="hidden" name="type" value="addToReservation">
                             <input type="hidden" name="p_id" value="{{ $product->id }}">
-                            <button>
-                                {{ __('Add to reservation') }}
-                            </button>
+                            @if ($product->availableAmount() > 0)
+                                <button>
+                                    {{ __('Add to reservation') }}
+                                </button>
+                            @else
+                                <p><em>{{ __('Cannot add to reservation, none available') }}</em></p>
+                            @endif
                         </form>
                     @endif
                     @if (session()->has('selectedClient'))

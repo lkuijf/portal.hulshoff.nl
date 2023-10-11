@@ -76,7 +76,8 @@
     displayProducts();
 
     document.addEventListener('keydown', (e) => {
-        if(event.keyCode === 13 && searchInputField == document.activeElement) {
+        // if(event.keyCode === 13 && searchInputField == document.activeElement) {
+        if(event.keyCode === 13) {
             displayProducts();
         }
     });
