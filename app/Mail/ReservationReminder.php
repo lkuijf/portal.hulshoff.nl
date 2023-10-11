@@ -36,7 +36,7 @@ class ReservationReminder extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: __('Reminder of your reservation at Hulshoff'),
+            subject: 'Herinnering van je reservering bij Hulshoff',
         );
     }
 

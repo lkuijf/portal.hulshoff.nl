@@ -34,7 +34,7 @@ class NotifyMinimumStock extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: __('Products below minimum stock'),
+            subject: 'Producten onder de minimale voorraad',
         );
     }
 

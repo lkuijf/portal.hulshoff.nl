@@ -1,6 +1,6 @@
 @extends('templates.email')
 @section('content')
-    <h1>{{ __('Below mimium stock') }}</h1>
+    <h1>{{ __('Below minimum stock') }}</h1>
     <p>{{ __('The stock of some products has fallen below the minimum stock') }}.</p>
     @if (count($products))
         <h2>{{ __('Products') }}:</h2>
