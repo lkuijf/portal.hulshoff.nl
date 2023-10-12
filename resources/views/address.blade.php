@@ -76,7 +76,7 @@
             </tr>
             <tr>
                 <td>{{ __('Country code') }}</td>
-                <td><input type="text" name="landCode" size="5" placeholder="NL/BE/DE" value="@if(old('landCode')){{ old('landCode') }}@else{{ $landCode }}@endif"></td>
+                <td><input type="text" name="landCode" size="5" value="@if(old('landCode')){{ old('landCode') }}@else{{ $landCode }}@endif">(NL/BE/DE etc.)</td>
             </tr>
             <tr>
                 <td>{{ __('Contact person') }}</td>
