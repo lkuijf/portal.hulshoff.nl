@@ -203,6 +203,12 @@ class OrderController extends Controller
             }
         }
         if(count($hhUsersToNotify)) Mail::to($hhUsersToNotify)->send(new NotifyMinimumStock($productsToDisplay));
+
+        //copy of confirmation to hulshoff users
+        foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
+            Mail::to($copyEmailAddress)->send(new NotifyMinimumStock($productsToDisplay));
+        }
+        
     }
 
     public function updateOrder(Request $request) {
