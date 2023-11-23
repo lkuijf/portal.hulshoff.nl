@@ -11,8 +11,8 @@
         <p>Order Code Klant: <strong>{{ $order->orderCodeKlant }}</strong></p>
         <p>Is {{ Str::lower(__('Reservation')) }}: <strong>{{ ($order->is_reservation?__('Yes'):__('No')) }}</strong></p>
         <p>{{ __('Delivery date') }}: <strong><span>{{ date("d-m-Y", strtotime($order->afleverDatum)) }}{!! ($order->is_reservation?' <a class="editBasketDate editBtn" data-order-id="' . $order->id . '" data-order-date="' . date("d-m-Y", strtotime($order->afleverDatum)) . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
-        <p>{{ __('Delivery address') }}: <strong><span>{{ ($order->address_id !== null?$order->address->naam:'-') }}{!! (($order->is_reservation && !$order->custom_address_id)?' <a class="editBasketAddress editBtn" data-order-id="' . $order->id . '" data-address-id="' . $order->address_id . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
-        <p>{{ __('Custom Delivery address') }}:
+        <p>{{ __('Delivery address') }}: <strong><span>{{ ($order->address_id !== null?$order->address->naam:'-') }}{!! ($order->is_reservation?' <a class="editBasketAddress editBtn" data-order-id="' . $order->id . '" data-address-id="' . $order->address_id . '" href="">' . __('Edit') . '</a>':'') !!}</span></strong></p>
+        <p>{{ __('Custom Delivery address') }}: {!! ($order->is_reservation?' <a class="editBasketCustomAddress editBtn" data-order-id="' . $order->id . '" href="">' . __('Edit') . '</a>':'') !!}
             @if ($order->custom_address_id !== null)
                 <br>
                 Straat: <strong>{{ $order->custom_address->straat }}</strong><br>
@@ -23,7 +23,7 @@
                 Telefoon: <strong>{{ $order->custom_address->telefoon }}</strong><br>
                 Extra informatie: <strong>{{ $order->custom_address->informatie }}</strong><br>
             @else
-            -
+            <br>-
             @endif
         </p>
         {{-- <p>Aflever tijd: {{ $order->afleverTijd }}</p> --}}
@@ -86,12 +86,18 @@
         <li>{{ __('The reservation will be converted to an order') }}.</li>
         <li>{{ __('When your order is placed, it cannot be undone') }}</li>
     </ul>
+        @php
+            $disabled = '';
+            if(!$order->address_id && !$order->custom_address_id) {
+                $disabled = ' disabled';
+            }
+        @endphp
         <form action="/order" method="post">
             @method('put')
             @csrf
             <input type="hidden" name="id" value="{{ $order->id }}">
             <input type="hidden" name="type" value="confirmReservation">
-            <button type="submit">{{ __('Confirm reservation') }}</button>
+            <button type="submit"{{ $disabled }}>{{ __('Confirm reservation') }}</button>@if($disabled != '')&nbsp;<span><em>Order kan niet bevestigd worden, selecteer eerst een adres.</em></span>@endif
         </form>
     </div>
     @endif
@@ -108,6 +114,7 @@
     const editCountBtns = document.querySelectorAll('.editBasketCount');
     const editDateBtn = document.querySelector('.editBasketDate');
     const editAddressBtn = document.querySelector('.editBasketAddress');
+    const editCustomAddressBtn = document.querySelector('.editBasketCustomAddress');
     const addArticleBtn = document.querySelector('.addArticleBtnHolder a');
     const productKlantCodes = document.querySelectorAll('[data-product-klant-code]');
     const custSelectDropDown = document.querySelector('select[name=customerCode]'); // also declared in portal.blade.php
@@ -173,8 +180,13 @@
             editForm.setAttribute('method', 'post');
             editSelect.setAttribute('name', 'address');
 
+            let option = document.createElement("option");
+            option.value = '';
+            option.text = '-';
+            editSelect.add(option);
+
             let selectedI = 0;
-            let i = 0;
+            let i = 1; // there is already 1 option added
             clientAddresses.forEach(addr => {
                 let option = document.createElement("option");
                 option.value = addr.id;
@@ -215,6 +227,124 @@
                 toggleVisibility([editAddressBtn]);
             });
             toggleVisibility([editAddressBtn]);
+        });
+    }
+
+    if(editCustomAddressBtn) {
+        editCustomAddressBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let parentNode = editCustomAddressBtn.parentNode.parentNode;
+            let originalSpan = editCustomAddressBtn.parentNode;
+
+            let csrfToken = document.querySelector('meta[name="_token"]').content;
+
+            let oId = editCustomAddressBtn.dataset.orderId;
+            // let oaId = editCustomAddressBtn.dataset.addressId;
+
+            let editForm = document.createElement('form');
+            // let editSelect = document.createElement('select');
+
+            let streetEl = document.createElement('input');
+            let houseNrEl = document.createElement('input');
+            let zippCodeEl = document.createElement('input');
+            let cityEl = document.createElement('input');
+            let contactPersonEl = document.createElement('input');
+            let phoneEl = document.createElement('input');
+            let extraInfoEl = document.createElement('textarea');
+
+            streetEl.value = '';
+            houseNrEl.value = '';
+            zippCodeEl.value = '';
+            cityEl.value = '';
+            contactPersonEl.value = '';
+            phoneEl.value = '';
+            extraInfoEl.value = '';
+
+            @if ($order->custom_address)
+                streetEl.value = '{{ $order->custom_address->straat }}';
+                houseNrEl.value = '{{ $order->custom_address->huisnummer }}';
+                zippCodeEl.value = '{{ $order->custom_address->postcode }}';
+                cityEl.value = '{{ $order->custom_address->plaats }}';
+                contactPersonEl.value = '{{ $order->custom_address->contactpersoon }}';
+                phoneEl.value = '{{ $order->custom_address->telefoon }}';
+                extraInfoEl.value = '{{ $order->custom_address->informatie }}';
+            @endif
+
+            let streetPara = document.createElement('p');
+            let houseNrPara = document.createElement('p');
+            let zippCodePara = document.createElement('p');
+            let cityPara = document.createElement('p');
+            let contactPersonPara = document.createElement('p');
+            let phonePara = document.createElement('p');
+            let extraInfoPara = document.createElement('p');
+
+            streetPara.appendChild(streetEl);
+            houseNrPara.appendChild(houseNrEl);
+            zippCodePara.appendChild(zippCodeEl);
+            cityPara.appendChild(cityEl);
+            contactPersonPara.appendChild(contactPersonEl);
+            phonePara.appendChild(phoneEl);
+            extraInfoPara.appendChild(extraInfoEl);
+
+            let editHiddenMethod = document.createElement('input');
+            let editHiddenToken = document.createElement('input');
+            let editHiddenOId = document.createElement('input');
+            let editHiddenType = document.createElement('input');
+            let editSave = document.createElement('button');
+            let editCancel = document.createElement('a');
+            editForm.setAttribute('action', '/order');
+            editForm.setAttribute('method', 'post');
+            // editSelect.setAttribute('name', 'address');
+            streetEl.setAttribute('name', 'street');
+            houseNrEl.setAttribute('name', 'housenr');
+            zippCodeEl.setAttribute('name', 'zipp');
+            cityEl.setAttribute('name', 'city');
+            contactPersonEl.setAttribute('name', 'person');
+            phoneEl.setAttribute('name', 'phone');
+            extraInfoEl.setAttribute('name', 'info');
+
+            // let selectedI = 0;
+            // let i = 0;
+            // clientAddresses.forEach(addr => {
+            //     let option = document.createElement("option");
+            //     option.value = addr.id;
+            //     option.text = addr.naam;
+            //     editSelect.add(option);
+            //     if(addr.id == oaId) selectedI = i;
+            //     i++;
+            // });
+            // editSelect.selectedIndex = selectedI;
+
+            editHiddenMethod.setAttribute('type', 'hidden');
+            editHiddenMethod.setAttribute('name', '_method');
+            editHiddenMethod.setAttribute('value', 'put');
+            editHiddenToken.setAttribute('type', 'hidden');
+            editHiddenToken.setAttribute('name', '_token');
+            editHiddenToken.setAttribute('value', csrfToken);
+            editHiddenOId.setAttribute('type', 'hidden');
+            editHiddenOId.setAttribute('name', 'id');
+            editHiddenOId.setAttribute('value', oId);
+            editHiddenType.setAttribute('type', 'hidden');
+            editHiddenType.setAttribute('name', 'type');
+            editHiddenType.setAttribute('value', 'updateDeliveryCustomAddress');
+            editSave.setAttribute('type', 'submit');
+            editCancel.setAttribute('href', '');
+
+            let saveBtnText = document.createTextNode('{{ __('Save') }}');
+            let cancelText = document.createTextNode('{{ __('Cancel') }}');
+            editSave.appendChild(saveBtnText);
+            editCancel.appendChild(cancelText);
+
+            editForm.append(editHiddenMethod, editHiddenToken, editHiddenOId, editHiddenType, streetPara, houseNrPara, zippCodePara, cityPara, contactPersonPara, phonePara, extraInfoPara, editSave, editCancel);
+
+            parentNode.replaceChild(editForm, originalSpan);
+
+            editCancel.addEventListener('click', (e) => {
+                e.preventDefault();
+                parentNode.replaceChild(originalSpan, editForm);
+                toggleVisibility([editCustomAddressBtn]);
+            });
+            toggleVisibility([editCustomAddressBtn]);
         });
     }
 

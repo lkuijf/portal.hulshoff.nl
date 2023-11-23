@@ -212,6 +212,7 @@ class OrderController extends Controller
     }
 
     public function updateOrder(Request $request) {
+// dd($request);
         $order = Order::findOr($request->id, function () {
             return abort(404);
         });
@@ -231,9 +232,44 @@ class OrderController extends Controller
         }
         if($request->type == 'updateDeliveryAddress') {
             $order->address_id = $request->address;
+            if($request->address && $order->custom_address) {
+                $order->custom_address->delete();
+            }
+        }
+
+        if($request->type == 'updateDeliveryCustomAddress') {
+            if(!$order->custom_address) {
+                
+                $custAddr = new CustomAddress;
+                $custAddr->order_id = $order->id;
+                if($request->street) $custAddr->straat = $request->street;
+                if($request->housenr) $custAddr->huisnummer = $request->housenr;
+                if($request->zipp) $custAddr->postcode = $request->zipp;
+                if($request->city) $custAddr->plaats = $request->city;
+                if($request->person) $custAddr->contactpersoon = $request->person;
+                if($request->phone) $custAddr->telefoon = $request->phone;
+                if($request->info) $custAddr->informatie = $request->info;
+                if($request->street != null || $request->housenr != null || $request->zipp != null || $request->city != null || $request->person != null || $request->phone != null || $request->info != null) {
+                    $order->address_id = null;
+                    $custAddr->save();
+                    $order->custom_address_id = $custAddr->id;
+                    $order->save();
+                }
+            } else {
+                $order->custom_address->straat = $request->street;
+                $order->custom_address->huisnummer = $request->housenr;
+                $order->custom_address->postcode = $request->zipp;
+                $order->custom_address->plaats = $request->city;
+                $order->custom_address->contactpersoon = $request->person;
+                $order->custom_address->telefoon = $request->phone;
+                $order->custom_address->informatie = $request->info;
+                $order->custom_address->save();
+                if($request->street == null && $request->housenr == null && $request->zipp == null && $request->city == null && $request->person == null && $request->phone == null && $request->info == null) {
+                    $order->custom_address->delete();
+                }
+            }
         }
         // if($request->type == 'addToReservation') {
-            
         // }
         $order->save();
 
@@ -297,9 +333,11 @@ class OrderController extends Controller
         if($request->type == 'confirmReservation') $request->session()->flash('message', '<p>' . __('Your order has been placed') . '!</p>');
         if($request->type == 'updateDeliveryDate') $request->session()->flash('message', '<p>' . __('Delivery date has been changed') . '</p>');
         if($request->type == 'updateDeliveryAddress') $request->session()->flash('message', '<p>' . __('Delivery address has been changed') . '</p>');
+        if($request->type == 'updateDeliveryCustomAddress') $request->session()->flash('message', '<p>' . __('Custom delivery address has been changed') . '</p>');
         if($request->type == 'confirmReservation') return redirect()->route('orders');
         if($request->type == 'updateDeliveryDate') return redirect()->back();
         if($request->type == 'updateDeliveryAddress') return redirect()->back();
+        if($request->type == 'updateDeliveryCustomAddress') return redirect()->back();
     }
 
     public function generateWerkbon($finalOrder) {
