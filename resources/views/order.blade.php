@@ -252,6 +252,14 @@
             let phoneEl = document.createElement('input');
             let extraInfoEl = document.createElement('textarea');
 
+            streetEl.placeholder = 'Straat';
+            houseNrEl.placeholder = 'Huisnummer';
+            zippCodeEl.placeholder = 'Postcode';
+            cityEl.placeholder = 'Plaats';
+            contactPersonEl.placeholder = 'Contactpersoon';
+            phoneEl.placeholder = 'Telefoonnummer';
+            extraInfoEl.placeholder = 'Extra informatie';
+
             streetEl.value = '';
             houseNrEl.value = '';
             zippCodeEl.value = '';
