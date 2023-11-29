@@ -31,8 +31,8 @@
         <tr>
             <th>Artikelnr.</th>
             <th>Aantal</th>
-            <th>Brand</th>
-            <th>Group</th>
+            <th>Merk</th>
+            <th>Groep</th>
             <th>Type</th>
             <th>Omschrijving</th>
         </tr>
