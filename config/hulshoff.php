@@ -13,5 +13,6 @@ return [
     'privileges' => ['show_tiles', 'filter_on_top', 'filter_at_side'],
     'archiveXmlWhenOlderThanXDays' => 7,
     'OrdersOutEndpoint' => 'https://edi.hulshoff.nl/api/accept/interface-wti/BerichtOrders',
-    'copy_of_order_confirmation' => ['planning2@hulshoff.nl'],
+    // 'copy_of_order_confirmation' => ['planning2@hulshoff.nl'],
+    'copy_of_order_confirmation' => ['leon@wtmedia-events.nl'],
 ];
