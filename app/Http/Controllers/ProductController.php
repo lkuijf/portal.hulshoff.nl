@@ -162,7 +162,7 @@ class ProductController extends Controller
             $productImageUrl = 'https://via.placeholder.com/800x600?text=No+production+environment';
         }
         $product->imageUrl = $productImageUrl;
-dd($product);
+// dd($product);
 
         if(session()->has('selectedClient' ) && (session('selectedClient') != $product->klantCode)) return view('no-data');
 
