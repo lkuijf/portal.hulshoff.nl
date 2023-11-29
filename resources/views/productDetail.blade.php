@@ -107,7 +107,7 @@
         </div>
         <div class="prodDetProp">
             <h3>Kleur</h3>
-            <p>{{ ($product->kleur?$product->kleur:'-') }}</p>
+            <p>{{ ($product->color->color?$product->color->color:'-') }}</p>
         </div>
         <div class="prodDetProp">
             <h3>Afmetingen (mm.)</h3>

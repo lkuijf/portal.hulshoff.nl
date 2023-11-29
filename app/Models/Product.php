@@ -35,6 +35,9 @@ class Product extends Model
     public function type() {
         return $this->hasOne(Producttype::class, 'id', 'producttype_id');
     }
+    public function color() {
+        return $this->hasOne(Productcolor::class, 'id', 'productcolor_id');
+    }
     // public function customer() {
     //     return $this->hasOne(Customer::class, 'klantCode', 'klantCode');
     // }
