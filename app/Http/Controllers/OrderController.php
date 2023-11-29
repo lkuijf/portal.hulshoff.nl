@@ -182,9 +182,9 @@ class OrderController extends Controller
         }
 
         //copy of confirmation to hulshoff users
-        foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
-            Mail::to($copyEmailAddress)->send(new OrderPlaced($order));
-        }
+        // foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
+        //     Mail::to($copyEmailAddress)->send(new OrderPlaced($order));
+        // }
 
         $request->session()->flash('message', $orderMsg);
         return redirect()->route($redirect);
@@ -286,9 +286,9 @@ class OrderController extends Controller
             }
 
             //copy of confirmation to hulshoff users
-            foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
-                Mail::to($copyEmailAddress)->send(new OrderPromoted($order));
-            }
+            // foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
+            //     Mail::to($copyEmailAddress)->send(new OrderPromoted($order));
+            // }
 
 
 
