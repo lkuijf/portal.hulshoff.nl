@@ -31,7 +31,7 @@
             <button type="submit">{{ __('DISABLE') }} {{ __('Two Factor Authentication') }} </button>
         </form>
     @else
-        <p>{{ __('It is advisable to use') }} <em>{{ __('Two Factor Authentication') }}</em></p>
+        <p>{{ __('It is mandatory to use') }} <em>{{ __('Two Factor Authentication') }}</em></p>
         <form action="{{ url('user/two-factor-authentication') }}" method="POST">
             @csrf
             <button type="submit">{{ __('Enable') }} {{ __('Two Factor Authentication') }} </button>
