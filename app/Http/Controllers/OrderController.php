@@ -202,7 +202,10 @@ class OrderController extends Controller
                 if($hhUser->notify_min_stock) $hhUsersToNotify[] = $hhUser;
             }
         }
-        if(count($hhUsersToNotify)) Mail::to($hhUsersToNotify)->send(new NotifyMinimumStock($productsToDisplay));
+        if(count($hhUsersToNotify)) {
+            $firstHhUserEmail = array_shift($hhUsersToNotify);
+            Mail::to($firstHhUserEmail)->bcc($hhUsersToNotify)->send(new NotifyMinimumStock($productsToDisplay));
+        }
 
         //copy of confirmation to hulshoff users
         foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
