@@ -17,5 +17,7 @@
         <li><a href="#"@if($x==$active_page){!! ' class="active"' !!}@endif data-go-to-page-number="{{ $x }}">{{ $x }}</a></li>
     @endfor
     <li><a href="#"@if($active_page==$total_pages){!! ' class="inactive"' !!}@endif data-go-to-page-number="{{ ($active_page+1<=$total_pages?$active_page+1:$total_pages) }}">{{ __('Next') }}</a></li>
-    <li>{{ $total_pages }} {{ __('Total pages') }} @if($total_pages > 7)Ga naar pagina <form action=""><input type="text" size="4" maxlength="4"><button>Gaan</button></form>@endif</li>
+    <li>{{ $total_pages }} {{ __('Total pages') }}
+        {{-- @if($total_pages > 7)Ga naar pagina <form action=""><input type="text" size="4" maxlength="4"><button>Gaan</button></form>@endif --}}
+    </li>
 </ul>
