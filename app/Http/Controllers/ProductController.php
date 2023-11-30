@@ -42,11 +42,13 @@ class ProductController extends Controller
 
         $aBrands = [];
         $aGroups = [];
+        $aGroupsForTiles = [];
         $aTypes = [];
         $aColors = [];
         $aTiles = [];
         foreach($customerBrands as $brand) $aBrands[$brand->id] = $brand->brand;
         foreach($customerGroups as $group) $aGroups[$group->id] = $group->group;
+        foreach($customerGroupsForTiles as $group) $aGroupsForTiles[$group->id] = $group->group;
         foreach($customerTypes as $type) $aTypes[$type->id] = $type->type;
         foreach($customerColors as $color) $aColors[$color->id] = $color->color;
         foreach($tiles as $tile) $aTiles[$tile->group] = $tile->file;
@@ -57,6 +59,7 @@ class ProductController extends Controller
             'tiles' => $aTiles,
             'filters' => [
                 'group' => ['name' => __('Group'), 'items' => $aGroups],
+                'groupForTiles' => ['name' => __('Group'), 'items' => $aGroupsForTiles],
                 'type' => ['name' => 'Type', 'items' => $aTypes],
                 'brand' => ['name' => __('Brand'), 'items' => $aBrands],
                 'color' => ['name' => __('Color'), 'items' => $aColors],

@@ -4,7 +4,7 @@
 {{-- @if (Route::currentRouteName() == 'products_tiles') --}}
 <div class="selectTileOverlay">
     <div class="tileGrid">
-        @foreach ($data['filters']['group']['items'] as $group)
+        @foreach ($data['filters']['groupForTiles']['items'] as $group)
         <div>
             <a href="" data-group="{{ $group }}">
                 @if (isset($data['tiles'][$group]))<img src="{{ asset('tile_images') }}/{{ $data['tiles'][$group] }}" alt="">@endif
