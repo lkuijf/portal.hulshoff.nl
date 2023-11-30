@@ -34,6 +34,7 @@ class ProductController extends Controller
         if(session()->has('selectedClient')) $selectedKlantCode = session('selectedClient');
         $customerBrands = $this->getSpecs('brand', $selectedKlantCode);
         $customerGroups = $this->getSpecs('group', $selectedKlantCode);
+        $customerGroupsForTiles = $this->getSpecs('group', $selectedKlantCode, $forTiles = true);
         $customerTypes = $this->getSpecs('type', $selectedKlantCode);
         $customerColors = $this->getSpecs('color', $selectedKlantCode);
         
@@ -128,7 +129,7 @@ class ProductController extends Controller
         return view('snippets.productList')->with('data', $data);
     }
 
-    public function getSpecs($spec, $klantCode = false) {
+    public function getSpecs($spec, $klantCode = false, $forTiles = false) {
         $resQry = DB::table('product' . $spec . 's')
             // ->join('products', 'products.product' . $spec . '_id', '=', 'product' . $spec . 's.id')
             ->select('product' . $spec . 's.*')
@@ -138,7 +139,7 @@ class ProductController extends Controller
         if($klantCode) $resQry->where('products.klantCode', '=', $klantCode);
         if($spec == 'brand') $resQry->orderBy('brand', 'asc');
         if($spec == 'group') {
-            // $resQry->where('products.voorraad', '>', 0);
+            if($forTiles) $resQry->where('products.voorraad', '>', 0);
             $resQry->orderBy('group', 'asc');
         }
         if($spec == 'type') $resQry->orderBy('type', 'asc');
