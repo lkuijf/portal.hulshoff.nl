@@ -99,9 +99,9 @@ class ProductController extends Controller
         if(isset($filters->aCodeClient) && $filters->aCodeClient['value']) {
             $resQry->where('artikelCodeKlant', $filters->aCodeClient['value']);
         }
-        // if(isset($filters->onlyinstock) && $filters->onlyinstock == true) {
-        //     $resQry->where('voorraad', '>', 0);
-        // }
+        if(isset($filters->onlyinstock) && $filters->onlyinstock == true) {
+            $resQry->where('voorraad', '>', 0);
+        }
         $resQry->orderBy('omschrijving', 'asc');
         $res = $resQry->paginate(10);
 
