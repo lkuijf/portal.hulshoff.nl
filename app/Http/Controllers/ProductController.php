@@ -138,7 +138,7 @@ class ProductController extends Controller
         if($klantCode) $resQry->where('products.klantCode', '=', $klantCode);
         if($spec == 'brand') $resQry->orderBy('brand', 'asc');
         if($spec == 'group') {
-            $resQry->where('products.voorraad', '>', 0);
+            // $resQry->where('products.voorraad', '>', 0);
             $resQry->orderBy('group', 'asc');
         }
         if($spec == 'type') $resQry->orderBy('type', 'asc');
