@@ -20,6 +20,7 @@
                 Postcode: <strong>{{ $order->custom_address->postcode  }}</strong><br>
                 Plaats: <strong>{{ $order->custom_address->plaats }}</strong><br>
                 Contactpersoon: <strong>{{ $order->custom_address->contactpersoon }}</strong><br>
+                PO nummer: <strong>{{ $order->custom_address->po_number }}</strong><br>
                 Telefoon: <strong>{{ $order->custom_address->telefoon }}</strong><br>
                 Extra informatie: <strong>{{ $order->custom_address->informatie }}</strong><br>
             @else

@@ -73,6 +73,7 @@ class AddressController extends Controller
         $address->contactpersoon = $request->contactpersoon;
         $address->telefoon = $request->telefoon;
         $address->eMailadres = $request->eMailadres;
+        $address->po_number = $request->po_number;
         $address->save();
 
         $request->session()->flash('message', '<p>' . __('Address') . ' ' . __('saved') . '</p>');

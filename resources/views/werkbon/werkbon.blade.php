@@ -23,6 +23,7 @@
     @if($address->landCode)Landcode: <strong>{{ $address->landCode }}</strong><br>@endif
     Contactpersoon: <strong>{{ $address->contactpersoon }}</strong><br>
     Telefoonnummer: <strong>{{ $address->telefoon }}</strong><br>
+    PO nummer: <strong>{{ $address->po_number }}</strong><br>
     @if($address->eMailadres)E-mail adres: <strong>{{ $address->eMailadres }}</strong>@endif
     @if($address->informatie)Extra informatie: <strong>{{ $address->informatie }}</strong>@endif
 </p>

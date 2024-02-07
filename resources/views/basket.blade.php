@@ -136,6 +136,10 @@
                     <td><input type="text" name="contactpersoon" size="40" value="{{ old('contactpersoon') }}"></td>
                 </tr>
                 <tr>
+                    <td>{{ __('PO Number') }}</td>
+                    <td><input type="text" name="po_number" size="20" value="{{ old('po_number') }}"></td>
+                </tr>
+                <tr>
                     <td>{{ __('Phone') }}</td>
                     <td><input type="text" name="telefoon" size="20" value="{{ old('telefoon') }}"></td>
                 </tr>
@@ -256,6 +260,7 @@
             $address['postcode'] = manualAddressTable.querySelector('input[name="postcode"]').value
             $address['plaats'] = manualAddressTable.querySelector('input[name="plaats"]').value
             $address['contactpersoon'] = manualAddressTable.querySelector('input[name="contactpersoon"]').value
+            $address['po_number'] = manualAddressTable.querySelector('input[name="po_number"]').value
             $address['telefoon'] = manualAddressTable.querySelector('input[name="telefoon"]').value
             $address['information'] = manualAddressTable.querySelector('textarea[name="information"]').value
 
@@ -311,6 +316,7 @@
             manualAddressTable.querySelector('input[name="postcode"]').value = addr.customAddress.postcode;
             manualAddressTable.querySelector('input[name="plaats"]').value = addr.customAddress.plaats;
             manualAddressTable.querySelector('input[name="contactpersoon"]').value = addr.customAddress.contactpersoon;
+            manualAddressTable.querySelector('input[name="po_number"]').value = addr.customAddress.po_number;
             manualAddressTable.querySelector('input[name="telefoon"]').value = addr.customAddress.telefoon;
             manualAddressTable.querySelector('textarea[name="information"]').value = addr.customAddress.information;
 

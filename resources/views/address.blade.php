@@ -11,6 +11,7 @@
     $telefoon = '';
     $eMailadres = '';
     $klantCode = false;
+    $po_number = '';
 
     $headerTxt = 'New';
     $postType = 'POST';
@@ -27,6 +28,7 @@
         $telefoon = $data['address']->telefoon;
         $eMailadres = $data['address']->eMailadres;
         $klantCode = $data['address']->klantCode;
+        $po_number = $data['address']->po_number;
 
         $headerTxt = 'Edit';
         $postType = 'PUT';
@@ -85,6 +87,10 @@
             <tr>
                 <td>{{ __('Phone') }}</td>
                 <td><input type="text" name="telefoon" size="20" value="@if(old('telefoon')){{ old('telefoon') }}@else{{ $telefoon }}@endif"></td>
+            </tr>
+            <tr>
+                <td>{{ __('PO Number') }}</td>
+                <td><input type="text" name="po_number" size="20" value="@if(old('po_number')){{ old('po_number') }}@else{{ $po_number }}@endif"></td>
             </tr>
             <tr>
                 <td>{{ __('E-mail address') }}</td>

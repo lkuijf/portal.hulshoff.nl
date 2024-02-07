@@ -131,6 +131,7 @@ class OrderController extends Controller
             $cAddr->plaats = $request->plaats;
             $cAddr->contactpersoon = $request->contactpersoon;
             $cAddr->telefoon = $request->telefoon;
+            $cAddr->po_number = $request->po_number;
             $cAddr->informatie = $addressInformation; 
             $cAddr->save();
 
@@ -251,6 +252,7 @@ class OrderController extends Controller
                 if($request->city) $custAddr->plaats = $request->city;
                 if($request->person) $custAddr->contactpersoon = $request->person;
                 if($request->phone) $custAddr->telefoon = $request->phone;
+                if($request->po_number) $custAddr->po_number = $request->po_number;
                 if($request->info) $custAddr->informatie = $request->info;
                 if($request->street != null || $request->housenr != null || $request->zipp != null || $request->city != null || $request->person != null || $request->phone != null || $request->info != null) {
                     $order->address_id = null;
@@ -265,6 +267,7 @@ class OrderController extends Controller
                 $order->custom_address->plaats = $request->city;
                 $order->custom_address->contactpersoon = $request->person;
                 $order->custom_address->telefoon = $request->phone;
+                $order->custom_address->po_number = $request->po_number;
                 $order->custom_address->informatie = $request->info;
                 $order->custom_address->save();
                 if($request->street == null && $request->housenr == null && $request->zipp == null && $request->city == null && $request->person == null && $request->phone == null && $request->info == null) {
