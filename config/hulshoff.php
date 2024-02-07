@@ -14,5 +14,5 @@ return [
     'archiveXmlWhenOlderThanXDays' => 7,
     'OrdersOutEndpoint' => 'https://edi.hulshoff.nl/api/accept/interface-wti/BerichtOrders',
     // 'copy_of_order_confirmation' => ['planning2@hulshoff.nl'],
-    'copy_of_order_confirmation' => ['leon@wtmedia-events.nl'],
+    'copy_of_order_confirmation' => ['leon@wtmedia-events.nl', 'planning2@hulshoff.nl'],
 ];
