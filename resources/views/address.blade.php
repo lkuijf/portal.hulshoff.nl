@@ -78,7 +78,14 @@
             </tr>
             <tr>
                 <td>{{ __('Country code') }}</td>
-                <td><input type="text" name="landCode" size="5" value="@if(old('landCode')){{ old('landCode') }}@else{{ $landCode }}@endif"> (NL/BE/DE etc.)</td>
+                <td>
+                    {{-- <input type="text" name="landCode" size="5" value="@if(old('landCode')){{ old('landCode') }}@else{{ $landCode }}@endif"> (NL/BE/DE etc.) --}}
+                    <select name="landCode" id="cars">
+                        <option value="NL"@if( (old('landCode') && old('landCode') == 'NL') || $landCode == 'NL' ){{ ' selected' }}@endif>NL</option>
+                        <option value="BE"@if( (old('landCode') && old('landCode') == 'BE') || $landCode == 'BE' ){{ ' selected' }}@endif>BE</option>
+                        <option value="DE"@if( (old('landCode') && old('landCode') == 'DE') || $landCode == 'DE' ){{ ' selected' }}@endif>DE</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>{{ __('Contact person') }}</td>
