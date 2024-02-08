@@ -239,45 +239,27 @@
         // console.log('loader should have been removed');
 
 
-        asyncCall();
-    });
+        // asyncCall();
 
 
-    async function asyncCall() {
-        console.log('calling');
-
-
-
-        const result = await resolveAfter2Seconds();
-        console.log(result);
-        // Expected output: "resolved"
-
-        divLoader.remove();
-
-    }
-    function resolveAfter2Seconds() {
-        return new Promise((resolve) => {
-
-            const divLoader = document.createElement('div');
-            divLoader.classList.add('addingAllClientsloader');
-            selectAllWrapper.appendChild(divLoader);
-
-            customers.forEach(cust => {
+        var bar = new Promise((resolve, reject) => {
+            customers.forEach((cust, index, array) => {
+                
                 let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
                 let selectBox = lastSelectBoxWrapper.querySelector('select');
                 selectBox.value = cust.klantCode;
                 let changeEvent = new Event('change');
                 selectBox.dispatchEvent(changeEvent);
+
+                if (index === array.length -1) resolve();
             });
-            resolve('resolved');
-
-            // setTimeout(() => {
-            //     resolve('resolved');
-            // }, 2000);
-
-
         });
-    }
+        bar.then(() => {
+            console.log('All done!');
+        });
+
+    });
+
 
 
 
