@@ -223,21 +223,64 @@
 
     selectAllBtn.addEventListener('click', () => {
 
-        //show loader
+        // const divLoader = document.createElement('div');
+        // divLoader.classList.add('addingAllClientsloader');
+        // selectAllWrapper.appendChild(divLoader);
+
+        // customers.forEach(cust => {
+        //     let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
+        //     let selectBox = lastSelectBoxWrapper.querySelector('select');
+        //     selectBox.value = cust.klantCode;
+        //     let changeEvent = new Event('change');
+        //     selectBox.dispatchEvent(changeEvent);
+        // });
+
+        // divLoader.remove();
+        // console.log('loader should have been removed');
+
+
+        asyncCall();
+    });
+
+
+    async function asyncCall() {
+        console.log('calling');
         const divLoader = document.createElement('div');
         divLoader.classList.add('addingAllClientsloader');
         selectAllWrapper.appendChild(divLoader);
 
-        customers.forEach(cust => {
-            let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
-            let selectBox = lastSelectBoxWrapper.querySelector('select');
-            selectBox.value = cust.klantCode;
-            let changeEvent = new Event('change');
-            selectBox.dispatchEvent(changeEvent);
-        });
-        //remove loader
+
+
+        const result = await resolveAfter2Seconds();
+        console.log(result);
+        // Expected output: "resolved"
+
         divLoader.remove();
-    });
+
+    }
+    function resolveAfter2Seconds() {
+        return new Promise((resolve) => {
+
+            customers.forEach(cust => {
+                let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
+                let selectBox = lastSelectBoxWrapper.querySelector('select');
+                selectBox.value = cust.klantCode;
+                let changeEvent = new Event('change');
+                selectBox.dispatchEvent(changeEvent);
+            });
+            resolve('resolved');
+
+            // setTimeout(() => {
+            //     resolve('resolved');
+            // }, 2000);
+
+
+        });
+    }
+
+
+
+
     
     checkSelectSlots();
 
