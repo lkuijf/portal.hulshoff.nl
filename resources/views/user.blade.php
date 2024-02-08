@@ -241,8 +241,14 @@
 
         // asyncCall();
 
-
+        const divLoader = document.createElement('div');
         var bar = new Promise((resolve, reject) => {
+
+            
+            divLoader.classList.add('addingAllClientsloader');
+            selectAllWrapper.appendChild(divLoader);
+
+
             customers.forEach((cust, index, array) => {
                 
                 let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
@@ -256,7 +262,8 @@
         });
         bar.then(() => {
             console.log('All done!');
-        });
+            divLoader.remove();
+     });
 
     });
 
