@@ -102,8 +102,9 @@
             @endif
 
             @if($isAdmin)
-                {{-- <input type="checkbox" name="all_clients" id="all_clients_checkbox" ><label for="all_clients_checkbox">{{ __('All clients') }}</label> --}}
-                <button class="selectAllBtn" type="button">Selecteer all</button>
+                <div class="selectAllWrapper">
+                    <button class="selectAllBtn" type="button">Selecteer all</button>
+                </div>
             @endif
 
 
@@ -206,6 +207,8 @@
     // const clients = document.querySelectorAll('[name="klantCode[]"]');
     const klantCodeSelectsWrap = document.querySelector('.klantCode_td');
     const selectAllBtn = document.querySelector('.selectAllBtn');
+    const selectAllWrapper = document.querySelector('.selectAllWrapper');
+
     const customers = [];
     @foreach ($data['customers'] as $customer)
         // customers['{{ $customer->klantCode }}'] = '{{ $customer->naam }}';
@@ -219,13 +222,21 @@
 // console.log(customers);
 
     selectAllBtn.addEventListener('click', () => {
+
+        //show loader
+        const divLoader = document.createElement('div');
+        divLoader.classList.add('addingAllClientsloader');
+        selectAllWrapper.appendChild(divLoader);
+
         customers.forEach(cust => {
-            let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('* > div:last-child');
+            let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
             let selectBox = lastSelectBoxWrapper.querySelector('select');
             selectBox.value = cust.klantCode;
             let changeEvent = new Event('change');
             selectBox.dispatchEvent(changeEvent);
         });
+        //remove loader
+        divLoader.remove();
     });
     
     checkSelectSlots();
