@@ -221,51 +221,53 @@
 
 // console.log(customers);
 
-    selectAllBtn.addEventListener('click', () => {
+    if(selectAllBtn) {
+        selectAllBtn.addEventListener('click', () => {
 
-        // const divLoader = document.createElement('div');
-        // divLoader.classList.add('addingAllClientsloader');
-        // selectAllWrapper.appendChild(divLoader);
+            // const divLoader = document.createElement('div');
+            // divLoader.classList.add('addingAllClientsloader');
+            // selectAllWrapper.appendChild(divLoader);
 
-        // customers.forEach(cust => {
-        //     let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
-        //     let selectBox = lastSelectBoxWrapper.querySelector('select');
-        //     selectBox.value = cust.klantCode;
-        //     let changeEvent = new Event('change');
-        //     selectBox.dispatchEvent(changeEvent);
-        // });
+            // customers.forEach(cust => {
+            //     let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
+            //     let selectBox = lastSelectBoxWrapper.querySelector('select');
+            //     selectBox.value = cust.klantCode;
+            //     let changeEvent = new Event('change');
+            //     selectBox.dispatchEvent(changeEvent);
+            // });
 
-        // divLoader.remove();
-        // console.log('loader should have been removed');
-
-
-        // asyncCall();
-
-        const divLoader = document.createElement('div');
-        var bar = new Promise((resolve, reject) => {
-
-            
-            divLoader.classList.add('addingAllClientsloader');
-            selectAllWrapper.appendChild(divLoader);
+            // divLoader.remove();
+            // console.log('loader should have been removed');
 
 
-            customers.forEach((cust, index, array) => {
+            // asyncCall();
+
+            const divLoader = document.createElement('div');
+            var bar = new Promise((resolve, reject) => {
+
                 
-                let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
-                let selectBox = lastSelectBoxWrapper.querySelector('select');
-                selectBox.value = cust.klantCode;
-                let changeEvent = new Event('change');
-                selectBox.dispatchEvent(changeEvent);
+                divLoader.classList.add('addingAllClientsloader');
+                selectAllWrapper.appendChild(divLoader);
 
-                if (index === array.length -1) resolve();
+
+                customers.forEach((cust, index, array) => {
+                    
+                    let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
+                    let selectBox = lastSelectBoxWrapper.querySelector('select');
+                    selectBox.value = cust.klantCode;
+                    let changeEvent = new Event('change');
+                    selectBox.dispatchEvent(changeEvent);
+
+                    if (index === array.length -1) resolve();
+                });
             });
+            bar.then(() => {
+                console.log('All done!');
+                divLoader.remove();
         });
-        bar.then(() => {
-            console.log('All done!');
-            divLoader.remove();
-     });
 
-    });
+        });
+    }
 
 
 
