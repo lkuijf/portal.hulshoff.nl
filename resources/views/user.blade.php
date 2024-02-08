@@ -245,9 +245,6 @@
 
     async function asyncCall() {
         console.log('calling');
-        const divLoader = document.createElement('div');
-        divLoader.classList.add('addingAllClientsloader');
-        selectAllWrapper.appendChild(divLoader);
 
 
 
@@ -260,6 +257,10 @@
     }
     function resolveAfter2Seconds() {
         return new Promise((resolve) => {
+
+            const divLoader = document.createElement('div');
+            divLoader.classList.add('addingAllClientsloader');
+            selectAllWrapper.appendChild(divLoader);
 
             customers.forEach(cust => {
                 let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
