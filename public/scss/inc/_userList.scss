@@ -27,25 +27,25 @@
     .selectAllBtn {
         margin: 10px 0;
     }
-    .addingAllClientsloader {
-        border: 6px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 6px solid #666;
-        width: 30px;
-        height: 30px;
-        -webkit-animation: allClientsSpinner 2s linear infinite; /* Safari */
-        animation: allClientsSpinner 2s linear infinite;
-    }
+    // .addingAllClientsloader {
+    //     border: 6px solid #f3f3f3;
+    //     border-radius: 50%;
+    //     border-top: 6px solid #666;
+    //     width: 30px;
+    //     height: 30px;
+    //     -webkit-animation: allClientsSpinner 2s linear infinite; /* Safari */
+    //     animation: allClientsSpinner 2s linear infinite;
+    // }
 }
 /* Safari */
-@-webkit-keyframes allClientsSpinner {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-}
-@keyframes allClientsSpinner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+// @-webkit-keyframes allClientsSpinner {
+//     0% { -webkit-transform: rotate(0deg); }
+//     100% { -webkit-transform: rotate(360deg); }
+// }
+// @keyframes allClientsSpinner {
+//     0% { transform: rotate(0deg); }
+//     100% { transform: rotate(360deg); }
+// }
 
 .extraEmailSection {
     > div {

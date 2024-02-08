@@ -228,43 +228,39 @@
             // divLoader.classList.add('addingAllClientsloader');
             // selectAllWrapper.appendChild(divLoader);
 
-            // customers.forEach(cust => {
-            //     let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
-            //     let selectBox = lastSelectBoxWrapper.querySelector('select');
-            //     selectBox.value = cust.klantCode;
-            //     let changeEvent = new Event('change');
-            //     selectBox.dispatchEvent(changeEvent);
-            // });
+            customers.forEach(cust => {
+                let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
+                let selectBox = lastSelectBoxWrapper.querySelector('select');
+                selectBox.value = cust.klantCode;
+                let changeEvent = new Event('change');
+                selectBox.dispatchEvent(changeEvent);
+            });
 
             // divLoader.remove();
             // console.log('loader should have been removed');
 
 
-            // asyncCall();
-
-            const divLoader = document.createElement('div');
-            var bar = new Promise((resolve, reject) => {
-
+            // const divLoader = document.createElement('div');
+            // var bar = new Promise((resolve, reject) => {
                 
-                divLoader.classList.add('addingAllClientsloader');
-                selectAllWrapper.appendChild(divLoader);
+            //     divLoader.classList.add('addingAllClientsloader');
+            //     selectAllWrapper.appendChild(divLoader);
 
-
-                customers.forEach((cust, index, array) => {
+            //     customers.forEach((cust, index, array) => {
                     
-                    let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
-                    let selectBox = lastSelectBoxWrapper.querySelector('select');
-                    selectBox.value = cust.klantCode;
-                    let changeEvent = new Event('change');
-                    selectBox.dispatchEvent(changeEvent);
+            //         let lastSelectBoxWrapper = klantCodeSelectsWrap.querySelector('div:last-child:not(.addingAllClientsloader)');
+            //         let selectBox = lastSelectBoxWrapper.querySelector('select');
+            //         selectBox.value = cust.klantCode;
+            //         let changeEvent = new Event('change');
+            //         selectBox.dispatchEvent(changeEvent);
 
-                    if (index === array.length -1) resolve();
-                });
-            });
-            bar.then(() => {
-                console.log('All done!');
-                divLoader.remove();
-        });
+            //         if (index === array.length -1) resolve();
+            //     });
+            // });
+            // bar.then(() => {
+            //     console.log('All done!');
+            //     divLoader.remove();
+            // });
 
         });
     }
