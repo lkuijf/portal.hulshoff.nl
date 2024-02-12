@@ -25,11 +25,11 @@
     
     @if (auth()->user()->two_factor_confirmed_at)
         <p><em>{{ __('Two Factor Authentication') }}</em> {{ __('has been activated') }}.</p>
-        <form action="{{ url('user/two-factor-authentication') }}" method="POST">
+        {{-- <form action="{{ url('user/two-factor-authentication') }}" method="POST">
             @method('DELETE')
             @csrf
             <button type="submit">{{ __('DISABLE') }} {{ __('Two Factor Authentication') }} </button>
-        </form>
+        </form> --}}
     @else
         <p>{{ __('It is mandatory to use') }} <em>{{ __('Two Factor Authentication') }}</em></p>
         <form action="{{ url('user/two-factor-authentication') }}" method="POST">
