@@ -85,7 +85,7 @@ class UserController extends Controller
 
     public function updateUser(Request $request) {
 // dd($request);
-        $customer = Customer::find($request->klantCode);
+        // $customer = Customer::find($request->klantCode);
         $user = HulshoffUser::find($request->id);
         $emailToRemove = false;
         if(isset($request->current_extra_emails)) {
@@ -114,20 +114,30 @@ class UserController extends Controller
             $curEmails[] = $res;
             $user->extra_email = json_encode($curEmails);
         } else {
+            // $validated = $this->validateUserData($request, false);
+            // $user = $this->populateUserModel($user, $request);
+        }
+
+        if($request->reset2fa) {
+            $user->two_factor_secret = null;
+            $user->two_factor_recovery_codes = null;
+            $user->two_factor_confirmed_at = null;
+        } else {
             $validated = $this->validateUserData($request, false);
             $user = $this->populateUserModel($user, $request);
-        }
-        $user->save();
 
-        HulshoffUserKlantcode::where('hulshoff_user_id', $user->id)->delete();
-        foreach($request->klantCode as $kCode) {
-            if($kCode) {
-                $hhUserKlant = HulshoffUserKlantcode::firstOrCreate([
-                    'hulshoff_user_id' => $user->id,
-                    'klantCode' => $kCode
-                ]);
+            HulshoffUserKlantcode::where('hulshoff_user_id', $user->id)->delete();
+            foreach($request->klantCode as $kCode) {
+                if($kCode) {
+                    $hhUserKlant = HulshoffUserKlantcode::firstOrCreate([
+                        'hulshoff_user_id' => $user->id,
+                        'klantCode' => $kCode
+                    ]);
+                }
             }
         }
+
+        $user->save();
 
         $request->session()->flash('message', '<p>' . __('User saved') . '</p>');
         return redirect()->back();
