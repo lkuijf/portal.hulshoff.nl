@@ -32,7 +32,9 @@
         <div class="filters">
             <h4>{{ __('Filter') }}</h4>
             @foreach ($data['filters'] as $ref => $info)
+                @if ($ref != 'groupForTiles')
                 @include('snippets.filter_select', ['filter_name' => $info['name'], 'filter_reference' => $ref, 'filter_options' => $info['items'], 'filter_selected_option' => ''])
+                @endif
             @endforeach
             @include('snippets.filter_input', ['placeholder' => 'Zoek in omschrijving of bijzonderheden', 'name' => 'zoeken', 'reference' => 'search'])
             @include('snippets.filter_input', ['placeholder' => 'Zoek op Artikel code', 'name' => 'artikel_code', 'reference' => 'aCode'])
