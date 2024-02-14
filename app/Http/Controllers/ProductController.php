@@ -107,7 +107,7 @@ class ProductController extends Controller
             $resQry->where('voorraad', '>', 0);
         }
         $resQry->orderBy('omschrijving', 'asc');
-        $res = $resQry->paginate(10);
+        $res = $resQry->paginate(9);
 
 // dd(Storage::disk('product_images')->url('/50246/00044.jpg'));
         foreach($res as &$product) {
