@@ -80,7 +80,7 @@
                     <select name="klantCode[]">
                         <option value="">-geen-</option>
                         @foreach ($data['customers'] as $customer)
-                            <option value="{{ $customer->klantCode }}" @if($customer->klantCode == $oldKCode) selected @endif>{{ $customer->naam }}({{ $customer->klantCode }})</option>
+                            <option value="{{ $customer->klantCode }}" @if($customer->klantCode == $oldKCode) selected @endif>{{ $customer->klantCode }}({{ $customer->naam }})</option>
                         @endforeach
                     </select>
                 </div>
@@ -93,7 +93,7 @@
                         <select name="klantCode[]">
                             <option value="">-geen-</option>
                             @foreach ($data['customers'] as $customer)
-                                <option value="{{ $customer->klantCode }}" @if($customer->klantCode == $oCust->klantCode) selected @endif>{{ $customer->naam }} ({{ $customer->klantCode }})</option>
+                                <option value="{{ $customer->klantCode }}" @if($customer->klantCode == $oCust->klantCode) selected @endif>{{ $customer->klantCode }} ({{ $customer->naam }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -302,7 +302,7 @@
 
         Object.keys(customers).forEach(key => {
             let option = document.createElement('option');
-            let text = document.createTextNode(customers[key]['naam'] + ' (' + customers[key]['klantCode'] + ')');
+            let text = document.createTextNode(customers[key]['klantCode'] + ' (' + customers[key]['naam'] + ')');
             option.appendChild(text);
             option.value = customers[key]['klantCode'];
             select.appendChild(option);
