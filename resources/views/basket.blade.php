@@ -136,7 +136,7 @@
                     <td><input type="text" name="contactpersoon" size="40" value="{{ old('contactpersoon') }}"></td>
                 </tr>
                 <tr>
-                    <td>{{ __('PO Number') }}</td>
+                    <td>Planon / {{ __('PO Number') }}</td>
                     <td><input type="text" name="po_number" size="20" value="{{ old('po_number') }}"></td>
                 </tr>
                 <tr>

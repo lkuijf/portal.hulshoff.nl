@@ -226,7 +226,7 @@ table {
     margin: 0 auto;
     display: grid;
     grid-template-areas:
-        'logo breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket'
+        'logo breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket basket'
         'account content content content content content content content'
         'navigation content content content content content content content'
         'info content content content content content content content'
@@ -275,13 +275,20 @@ table {
     background-color: #F0F2F4;
     min-height: 55px;
 }
+.lanSelect {
+    font-size: 0.8em;
+}
 .basketCell {
     grid-area: basket;
     background-color: #F0F2F4;
     text-align: right;
-    padding-top: 15px;
+    padding-top: 10px;
     padding-right: 25px;
     min-height: 55px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: right;
 }
 .accountCell {
     grid-area: account;

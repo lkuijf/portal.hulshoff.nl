@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 
 use App\Models\Customer;
 use App\Models\Manual;
+use Illuminate\Support\Facades\App;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,8 +29,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
         view()->composer('templates.portal', function ($view) {
+
+
             $total = 0;
             if(session()->has('basket')) {
                 $basket = \Session::get('basket');
@@ -65,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('page_manual', $manual->text);
             }
             
-            
+
         });
         //
         // DB::listen(function ($query) {

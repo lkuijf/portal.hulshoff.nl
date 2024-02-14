@@ -1001,7 +1001,7 @@ table tr:nth-of-type(1) th {
   border: 20px solid #FFF;
   margin: 0 auto;
   display: grid;
-  grid-template-areas: "logo breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket" "account content content content content content content content" "navigation content content content content content content content" "info content content content content content content content" "footer footer footer footer footer footer footer footer";
+  grid-template-areas: "logo breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket basket" "account content content content content content content content" "navigation content content content content content content content" "info content content content content content content content" "footer footer footer footer footer footer footer footer";
   grid-template-rows: auto auto auto 1fr auto;
   grid-template-columns: 200px 1fr 1fr 1fr 1fr 1fr 150px 150px;
 }
@@ -1043,13 +1043,21 @@ table tr:nth-of-type(1) th {
   min-height: 55px;
 }
 
+.lanSelect {
+  font-size: 0.8em;
+}
+
 .basketCell {
   grid-area: basket;
   background-color: #F0F2F4;
   text-align: right;
-  padding-top: 15px;
+  padding-top: 10px;
   padding-right: 25px;
   min-height: 55px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: right;
 }
 
 .accountCell {

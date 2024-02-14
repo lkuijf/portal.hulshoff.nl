@@ -107,6 +107,7 @@ Route::post('/ajax/getBasketAddress', [BasketController::class, 'obtainBasketAdd
 Route::get('/ajax/products/{klantCode}', [UserController::class, 'getClientProducts'])->name('get_client_products')->where(['klantCode' => '[0-9]+'])->middleware('auth:h_users');
 Route::get('/ajax/users/{klantCode}', [UserController::class, 'getClientUsers'])->name('get_client_users')->where(['klantCode' => '[0-9]+'])->middleware('auth:h_users');
 Route::post('/ajax/generate-report', [ReportController::class, 'generateReport'])->name('generate_report')->middleware('auth:h_users');
+Route::post('/ajax/setLanguage', [AuthController::class, 'setLanguage'])->name('set_language')->middleware('auth:h_users');
 
 Route::get('/parsexml/producten', [xmlController::class, 'importXml'])->defaults('type', 'producten')->name('parseXmlProducten')->middleware('auth.basic');
 Route::get('/parsexml/klanten', [xmlController::class, 'importXml'])->defaults('type', 'klanten')->name('parseXmlKlanten')->middleware('auth.basic');

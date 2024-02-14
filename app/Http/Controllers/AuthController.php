@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class AuthController extends Controller
 {
@@ -38,4 +39,14 @@ class AuthController extends Controller
             'not_found' => 'no user found',
         ])->onlyInput('email');
     }
+
+    public function setLanguage(Request $request) {
+        $res = new \stdClass();
+
+        session(['language' => $request->newLang]);
+
+        $res->success = true;
+        echo json_encode($res);
+    }
+
 }

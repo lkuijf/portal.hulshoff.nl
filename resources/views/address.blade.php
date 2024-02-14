@@ -96,7 +96,7 @@
                 <td><input type="text" name="telefoon" size="20" value="@if(old('telefoon')){{ old('telefoon') }}@else{{ $telefoon }}@endif"></td>
             </tr>
             <tr>
-                <td>{{ __('PO Number') }}</td>
+                <td>Planon / {{ __('PO Number') }}</td>
                 <td><input type="text" name="po_number" size="20" value="@if(old('po_number')){{ old('po_number') }}@else{{ $po_number }}@endif"></td>
             </tr>
             <tr>

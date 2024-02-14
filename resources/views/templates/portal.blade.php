@@ -71,6 +71,7 @@
             {{-- @include('snippets.breadcrumbs', ['breadcrumbs' => ['PRODUCTEN' => '#', 'WERKPLEK' => '#', 'TAFEL' => '#']]) --}}
         </div>
         <div class="basketCell">
+            @include('snippets.language')
             @include('snippets.basket')
         </div>
         @if (auth()->user())
@@ -180,6 +181,27 @@
     const helpMe = document.querySelector('.pageHelp');
     const manual = document.querySelector('.pageManual');
     const accountHomeBtn = document.querySelector('.accBtnHome');
+    const languageSelect = document.querySelector('.lanSelect');
+    languageSelect.addEventListener('change', () => {
+        // console.log(languageSelect.value);
+        let info = {};
+        info['newLang'] = languageSelect.value;
+        axios.post('{{ url('/ajax/setLanguage') }}', info)
+            .then(function (response) {
+                // handle success
+                // console.log(response.data);
+                if(response.data.success == true) {
+                    location.reload();
+                }
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+    });
 
     if(helpMe) {
         helpMe.addEventListener('click', () => {
