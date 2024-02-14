@@ -84,6 +84,7 @@
                         <option value="NL"@if( (old('landCode') && old('landCode') == 'NL') || $landCode == 'NL' ){{ ' selected' }}@endif>NL</option>
                         <option value="BE"@if( (old('landCode') && old('landCode') == 'BE') || $landCode == 'BE' ){{ ' selected' }}@endif>BE</option>
                         <option value="DE"@if( (old('landCode') && old('landCode') == 'DE') || $landCode == 'DE' ){{ ' selected' }}@endif>DE</option>
+                        <option value="LU"@if( (old('landCode') && old('landCode') == 'LU') || $landCode == 'LU' ){{ ' selected' }}@endif>LU</option>
                     </select>
                 </td>
             </tr>
