@@ -56,9 +56,9 @@ class RemindReservations implements ShouldQueue
                             }
 
                             //copy of confirmation to hulshoff users
-                            foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
-                                Mail::to($copyEmailAddress)->send(new ReservationReminder($reservation));
-                            }
+                            // foreach(config('hulshoff.copy_of_order_confirmation') as $copyEmailAddress) {
+                            //     Mail::to($copyEmailAddress)->send(new ReservationReminder($reservation));
+                            // }
 
                         }
                         
