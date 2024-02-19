@@ -12,6 +12,7 @@ use App\Http\Controllers\TilesController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ManualController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ProductGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,8 @@ Route::delete('/manual', [ManualController::class, 'deleteManual']);
 Route::post('/address', [AddressController::class, 'storeAddress']);
 Route::put('/address', [AddressController::class, 'storeAddress']);
 Route::delete('/address', [AddressController::class, 'deleteAddress']);
+
+Route::delete('/productgroup', [ProductGroupController::class, 'delete']);
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
 Route::get('/products#tiles', [ProductController::class, 'showProducts'])->name('products_tiles')->middleware('auth:h_users');

@@ -23,7 +23,14 @@
             <tbody>
             @foreach ($data['all_groups'] as $group)
                 <tr>
-                    <td></td>
+                    <td>
+                        <form action="/productgroup" method="post">
+                            @method('delete')
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $group->id }}">
+                            <button type="submit" onclick="return confirm('{{ __('You are about to delete the group') }} {{ $group->group }}\n\n{{ __('All products within will be deleted!') }}\n{{ __('The tile image will be deleted!') }}\n\n{{ __('Are you sure') }}?')" class="deleteBtn"></button>
+                        </form>
+                    </td>
                     <td>{{ $group->id }}</td>
                     <td>{{ $group->group }}<br><span style="font-size:0.8em;">{{ __('Product count') }}: {{ $group->productCount }}</span></td>
                     <td>
