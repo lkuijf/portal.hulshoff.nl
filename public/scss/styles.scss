@@ -233,7 +233,7 @@ table {
         'footer footer footer footer footer footer footer footer'
     ;
     grid-template-rows: auto auto auto 1fr auto;
-    grid-template-columns: 200px 1fr 1fr 1fr 1fr 1fr 150px 150px;
+    grid-template-columns: 225px 1fr 1fr 1fr 1fr 1fr 150px 150px;
     @media (max-width: $screenBreakpoint) {
         grid-template-areas:
             'logo logo logo logo logo logo logo logo'

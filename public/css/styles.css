@@ -476,7 +476,7 @@ nav.mainNav ul li a {
   color: #FFF;
   text-decoration: none;
   border-left: 10px solid #333;
-  padding-left: 40px;
+  padding-left: 30px;
   background-color: #333;
 }
 nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
@@ -1003,7 +1003,7 @@ table tr:nth-of-type(1) th {
   display: grid;
   grid-template-areas: "logo breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs basket basket" "account content content content content content content content" "navigation content content content content content content content" "info content content content content content content content" "footer footer footer footer footer footer footer footer";
   grid-template-rows: auto auto auto 1fr auto;
-  grid-template-columns: 200px 1fr 1fr 1fr 1fr 1fr 150px 150px;
+  grid-template-columns: 225px 1fr 1fr 1fr 1fr 1fr 150px 150px;
 }
 @media (max-width: 768px) {
   .gridContainer {

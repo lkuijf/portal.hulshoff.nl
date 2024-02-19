@@ -136,7 +136,7 @@
                         @if (auth()->user()->is_admin)
                             <li><a href="{{ route('users') }}" @if($usersBtnActive)class="active"@endif>{{ __('Users') }}</a></li>
                             <li><a href="{{ route('admins') }}" @if($adminsBtnActive)class="active"@endif>{{ __('Admins') }}</a></li>
-                            <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>{{ __('Tiles') }}</a></li>
+                            <li><a href="{{ route('tiles') }}" @if($tilesBtnActive)class="active"@endif>{{ __('Tiles') }}/{{ __('Productgroups') }}</a></li>
                             <li><a href="{{ route('reports') }}" @if($reportsBtnActive)class="active"@endif>{{ __('Reports') }}</a></li>
                             <li><a href="{{ route('manuals') }}" @if($manualsBtnActive)class="active"@endif>{{ __('Manuals') }}</a></li>
                             <li><a href="{{ route('addresses') }}" @if($addressesBtnActive)class="active"@endif>{{ __('Addresses') }}</a></li>
