@@ -39,7 +39,8 @@
             @include('snippets.filter_input', ['placeholder' => 'Zoek in omschrijving of bijzonderheden', 'name' => 'zoeken', 'reference' => 'search'])
             @include('snippets.filter_input', ['placeholder' => 'Zoek op Artikel code', 'name' => 'artikel_code', 'reference' => 'aCode'])
             @include('snippets.filter_input', ['placeholder' => 'Zoek op Artikel code klant', 'name' => 'artikel_code_klant', 'reference' => 'aCodeClient'])
-            @include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Only show products in stock')])
+            {{-- @include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Only show products in stock')]) --}}
+            @include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Show "out of stock" products also')])
             <button class="filterProductsBtn">{{ __('Show results') }}</button>
             <h4>{{ __('Active') }} filters</h4>
             <div class="activeFilters"></div>

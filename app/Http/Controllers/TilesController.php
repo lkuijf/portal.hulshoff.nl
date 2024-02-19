@@ -13,6 +13,13 @@ class TilesController extends Controller
         if(!auth()->user()->is_admin || !auth()->user()->email_verified_at) return view('no-access');
 
         $allGroups = DB::table('productgroups')->orderBy('group', 'asc')->get();
+
+        foreach($allGroups as &$group) {
+            $allGroupProducts = DB::table('products')->where('productgroup_id', $group->id)->get();
+            $group->productCount = $allGroupProducts->count();
+        }
+// dd($allGroups);
+
         $allTiles = DB::table('tiles')->get();
         $aTilesByGroup = [];
         foreach($allTiles as $tile) {

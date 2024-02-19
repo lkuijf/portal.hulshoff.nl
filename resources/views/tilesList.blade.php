@@ -14,6 +14,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>&nbsp;</th>
                     <th>id</th>
                     <th>{{ __('Group') }}</th>
                     <th>{{ __('Tile') }}</th>
@@ -22,8 +23,9 @@
             <tbody>
             @foreach ($data['all_groups'] as $group)
                 <tr>
+                    <td></td>
                     <td>{{ $group->id }}</td>
-                    <td>{{ $group->group }}</td>
+                    <td>{{ $group->group }}<br><span style="font-size:0.8em;">{{ __('Product count') }}: {{ $group->productCount }}</span></td>
                     <td>
                         @if (isset($data['all_tiles_by_group'][$group->group]))
                             <div class="imageIsSet">

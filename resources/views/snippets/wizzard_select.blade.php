@@ -34,6 +34,7 @@
         @include('snippets.filter_input', ['placeholder' => 'Zoek op Artikel code', 'name' => 'artikel_code', 'reference' => 'aCode'])
         @include('snippets.filter_input', ['placeholder' => 'Zoek op Artikel code klant', 'name' => 'artikel_code_klant', 'reference' => 'aCodeClient'])
     </div>
-    <div class="wizShowStockProds">@include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Only show products in stock')])</div>
+    {{-- <div class="wizShowStockProds">@include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Only show products in stock')])</div> --}}
+    <div class="wizShowStockProds">@include('snippets.filter_checkbox', ['checkboxName' => 'show_in_stock', 'checkboxLabel' => __('Show "out of stock" products also')])</div>
     <button class="filterProductsBtn">{{ __('Show results') }}</button>
 </div>
