@@ -8,7 +8,13 @@
         <div>
             <a href="" data-group="{{ $group }}">
                 @if (isset($data['tiles'][$group]))<img src="{{ asset('tile_images') }}/{{ $data['tiles'][$group] }}" alt="">@endif
-                <p>{{ $group }}</p>
+                @php
+                    $groupNameDisplay = $group;
+                    if(app()->getLocale() == 'en' && $enTranslation = config('hulshoff.productgroup_translations.' . $groupNameDisplay)) {
+                        $groupNameDisplay = $enTranslation;
+                    }
+                @endphp
+                <p>{{ $groupNameDisplay }}</p>
             </a>
         </div>
         @endforeach
