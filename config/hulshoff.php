@@ -39,5 +39,9 @@ return [
         "VLOERBEDEKKING" => "Flooring",
         "WERKPLEK" => "Work Stations",
         "ZITMEUBILAIR" => "Seating",
+
+        "BEELDSCHERM" => "Monitor",
+
+
     ],
 ];

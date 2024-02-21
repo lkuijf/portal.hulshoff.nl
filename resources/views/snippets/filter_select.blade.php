@@ -7,7 +7,7 @@
             $optionToDisplay = $enTranslation;
         }
     @endphp
-    <option value="{{ $i }}"@if($option == $filter_selected_option && $option){{ ' selected' }}@endif>{{ $optionToDisplay }}</option>
+    <option value="{{ $i }}" data-working-name="{{ $option }}"@if($option == $filter_selected_option && $option){{ ' selected' }}@endif>{{ $optionToDisplay }}</option>
     @endforeach
     {{-- <option value="Gispen" selected>Gispen</option> --}}
 </select>

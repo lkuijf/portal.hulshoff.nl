@@ -7,7 +7,13 @@
             <select name="Groep" id="wiz_gr" data-selecttype="Groep" data-filter-reference="group" size="5">
                 <option value="">- {{ __('All groups') }} -</option>
                 @foreach ($wizInitVals as $id => $initVal)
-                    <option value="{{ $id }}">{{ $initVal }}</option>
+                    @php
+                        $initValToDisplay = $initVal;
+                        if(app()->getLocale() == 'en' && $enTranslation = config('hulshoff.productgroup_translations.' . $initValToDisplay)) {
+                            $initValToDisplay = $enTranslation;
+                        }
+                    @endphp
+                    <option value="{{ $id }}" data-working-name="{{ $initVal }}">{{ $initValToDisplay }}</option>
                 @endforeach
             </select>
         </div>

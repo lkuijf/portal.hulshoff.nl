@@ -108,7 +108,7 @@
                 e.preventDefault();
                 if(wizSelects.length) {
                     for (var i = 0; i < wizGroupSelect.options.length; i++) {
-                        if (wizGroupSelect.options[i].text === tLink.dataset.group) {
+                        if (wizGroupSelect.options[i].dataset.workingName === tLink.dataset.group) {
                             wizGroupSelect.selectedIndex = i;
                             break;
                         }
@@ -119,7 +119,7 @@
                 if(filterBtn) {
                     const groupFilterEl = document.querySelector('[data-filter-reference=group]');
                     for (var i = 0; i < groupFilterEl.options.length; i++) {
-                        if (groupFilterEl.options[i].text === tLink.dataset.group) {
+                        if (groupFilterEl.options[i].dataset.workingName === tLink.dataset.group) {
                             groupFilterEl.selectedIndex = i;
                             break;
                         }
