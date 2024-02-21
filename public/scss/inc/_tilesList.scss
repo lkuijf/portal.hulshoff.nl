@@ -10,6 +10,11 @@
         align-items: center;
         gap: 20px;
     }
+    form.deleteProductgroupForm {
+        button {
+            font-size: 0.8em;
+        }
+    }
 }
 .selectTileOverlay {
     // outline: 1px solid red;

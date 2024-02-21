@@ -60,7 +60,12 @@
             </tbody>
         </table>
         @else
-        <p>No {{ $data['type'] }} found</p>
+        {{-- <p>No {{ $data['type'] }} found</p> --}}
+            @if ($data['type'] == 'reserved')
+                <p>{{ __('No reservations found') }}</p>
+            @else
+                <p>{{ __('No orders found') }}</p>
+            @endif
         @endif
     {{-- </div> --}}
 </div>

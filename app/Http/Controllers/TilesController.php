@@ -51,7 +51,7 @@ class TilesController extends Controller
         $tile->file = $uploadedFile['file'];
         $tile->save();
 
-        $request->session()->flash('message', '<p>Tile added</p>');
+        $request->session()->flash('message', '<p>' . __('Tile') . ' ' . __('added') . '</p>');
         return redirect()->back();
     }
 
@@ -60,7 +60,7 @@ class TilesController extends Controller
         Storage::disk('tiles')->delete($tile->file);
         $tile->delete();
 
-        $request->session()->flash('message', '<p>Tile removed</p>');
+        $request->session()->flash('message', '<p>' . __('Tile') . ' ' . __('removed') . '</p>');
         return redirect()->back();
     }
 

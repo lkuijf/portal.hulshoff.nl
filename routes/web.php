@@ -83,6 +83,7 @@ Route::put('/address', [AddressController::class, 'storeAddress']);
 Route::delete('/address', [AddressController::class, 'deleteAddress']);
 
 Route::delete('/productgroup', [ProductGroupController::class, 'delete']);
+Route::put('/productgroup', [ProductGroupController::class, 'store']);
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
 Route::get('/products#tiles', [ProductController::class, 'showProducts'])->name('products_tiles')->middleware('auth:h_users');

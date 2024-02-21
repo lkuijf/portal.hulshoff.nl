@@ -15,6 +15,9 @@
   align-items: center;
   gap: 20px;
 }
+.tilesListContent form.deleteProductgroupForm button {
+  font-size: 0.8em;
+}
 
 .selectTileOverlay {
   position: absolute;
