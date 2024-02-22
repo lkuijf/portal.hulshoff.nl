@@ -2,12 +2,14 @@
     $manId = '';
     $manUrl = '';
     $manText = '';
+    $manText_en = '';
     $headerTxt = 'New';
     $postType = 'POST';
     if(isset($manual)) {
         $manId = $manual->id;
         $manUrl = $manual->url;
         $manText = $manual->text;
+        $manText_en = $manual->text_en;
         $headerTxt = 'Edit';
         $postType = 'PUT';
     }
@@ -29,7 +31,13 @@
             <tr>
                 <td>{{ __('Text') }}</td>
                 <td>
-                    <textarea id="wysiwyg" name="text" rows="10" cols="100">{!! $manText !!}</textarea>
+                    <textarea id="wysiwyg1" name="text" rows="10" cols="100">{!! $manText !!}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ __('Text (EN)') }}</td>
+                <td>
+                    <textarea id="wysiwyg2" name="text_en" rows="10" cols="100">{!! $manText_en !!}</textarea>
                 </td>
             </tr>
             <tr>
@@ -46,7 +54,14 @@
 @endsection
 @section('before_closing_body_tag')
 <script>
-    const editor = SUNEDITOR.create((document.getElementById('wysiwyg') || 'wysiwyg'),{
+    const editor1 = SUNEDITOR.create((document.getElementById('wysiwyg1') || 'wysiwyg1'),{
+        // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
+        // Insert options
+        // Language global object (default: en)
+        // lang: SUNEDITOR_LANG['ko']
+        defaultStyle: "font-family: Arial, Helvetica, sans-serif; font-size: 18px;"
+    });
+    const editor2 = SUNEDITOR.create((document.getElementById('wysiwyg2') || 'wysiwyg2'),{
         // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
         // Insert options
         // Language global object (default: en)
@@ -56,7 +71,8 @@
     const form = document.querySelector('.manualContent form');
     form.addEventListener('submit', (e) => {
         e.preventDefault(); // wait with submitting
-        editor.save(); // Copies the contents of the suneditor into the <textarea>
+        editor1.save(); // Copies the contents of the suneditor into the <textarea>
+        editor2.save(); // Copies the contents of the suneditor into the <textarea>
         form.submit(); // re-submit
     });
 </script>

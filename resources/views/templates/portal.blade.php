@@ -63,15 +63,10 @@
     @yield('after_body_tag')
 
     
-    {{-- @if (isset($page_manual))
-        <div class="pageHelp">?</div>
-        <div class="pageManual"><div>{!! $page_manual !!}</div></div>
-    @endif --}}
     @if (isset($page_manuals))
         <div class="pageHelp">?</div>
         <div class="pageManual"><div></div></div>
     @endif
-
     
     <div class="gridContainer">
         <header class="logoCell"><img src="{{ asset('statics/hulshoff-logo.png') }}" alt=""></header>
@@ -194,7 +189,12 @@
     let manuals = {};
     @if (isset($page_manuals))
         @foreach ($page_manuals as $pManual)
-            manuals['{{ $pManual->url }}'] = '{!! $pManual->text !!}';
+            @if(app()->getLocale() == 'nl')
+                manuals['{{ $pManual->url }}'] = '{!! $pManual->text !!}';
+            @endif
+            @if(app()->getLocale() == 'en')
+                manuals['{{ $pManual->url }}'] = '{!! $pManual->text_en !!}';
+            @endif
         @endforeach
         let currPath = window.location.pathname;
         if(window.location.hash) currPath += window.location.hash;
@@ -202,7 +202,6 @@
             manualWrap.querySelector('div').innerHTML = manuals[currPath];
         }
     @endif
-
 
     languageSelect.addEventListener('change', () => {
         // console.log(languageSelect.value);

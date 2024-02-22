@@ -34,10 +34,12 @@ class ManualController extends Controller
         $toValidate = array(
             'url' => 'required',
             'text' => 'required',
+            'text_en' => 'required',
         );
         $validationMessages = array(
             'url.required'=> 'Please fill in an URL',
             'text.required'=> 'Please enter text for the manual',
+            'text_en.required'=> 'Please enter English text for the manual',
         );
         $validated = $request->validate($toValidate,$validationMessages);
 
@@ -62,6 +64,7 @@ class ManualController extends Controller
 
         $manual->url = $parsedUrl;
         $manual->text = $request->text;
+        $manual->text_en = $request->text_en;
         $manual->save();
 
         $request->session()->flash('message', '<p>' . __('Manual') . ' ' . __('saved') . '</p>');
