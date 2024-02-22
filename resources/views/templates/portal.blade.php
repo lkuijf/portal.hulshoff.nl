@@ -61,10 +61,18 @@
 <body>
     {{-- {{ session('selectedClient') }} --}}
     @yield('after_body_tag')
-    @if (isset($page_manual))
+
+    
+    {{-- @if (isset($page_manual))
         <div class="pageHelp">?</div>
         <div class="pageManual"><div>{!! $page_manual !!}</div></div>
+    @endif --}}
+    @if (isset($page_manuals))
+        <div class="pageHelp">?</div>
+        <div class="pageManual"><div></div></div>
     @endif
+
+    
     <div class="gridContainer">
         <header class="logoCell"><img src="{{ asset('statics/hulshoff-logo.png') }}" alt=""></header>
         <div class="breadcrumbsCell">
@@ -179,9 +187,23 @@
 <script>
     const custSel = document.querySelector('select[name=customerCode]');
     const helpMe = document.querySelector('.pageHelp');
-    const manual = document.querySelector('.pageManual');
+    const manualWrap = document.querySelector('.pageManual');
     const accountHomeBtn = document.querySelector('.accBtnHome');
     const languageSelect = document.querySelector('.lanSelect');
+
+    let manuals = {};
+    @if (isset($page_manuals))
+        @foreach ($page_manuals as $pManual)
+            manuals['{{ $pManual->url }}'] = '{!! $pManual->text !!}';
+        @endforeach
+        let currPath = window.location.pathname;
+        if(window.location.hash) currPath += window.location.hash;
+        if(manuals.hasOwnProperty(currPath)) {
+            manualWrap.querySelector('div').innerHTML = manuals[currPath];
+        }
+    @endif
+
+
     languageSelect.addEventListener('change', () => {
         // console.log(languageSelect.value);
         let info = {};
@@ -205,10 +227,10 @@
 
     if(helpMe) {
         helpMe.addEventListener('click', () => {
-            if(manual.style.display != "block") {
-                manual.style.display = "block";
+            if(manualWrap.style.display != "block") {
+                manualWrap.style.display = "block";
             } else {
-                manual.style.display = "none";
+                manualWrap.style.display = "none";
             }
         });
     }

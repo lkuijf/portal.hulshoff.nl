@@ -41,10 +41,26 @@ class ManualController extends Controller
         );
         $validated = $request->validate($toValidate,$validationMessages);
 
-        if(strtolower($request->_method) == 'post') $manual = new Manual;
-        if(strtolower($request->_method) == 'put') $manual = Manual::find($request->id);
+        $parsedUrl = parse_url($request->url, PHP_URL_PATH);
+        if($parsedUrl == '/products') {
+            $fragment = parse_url($request->url, PHP_URL_FRAGMENT); // part after #
+            if($fragment) $parsedUrl .= '#' . $fragment;
+        }
 
-        $manual->url = parse_url($request->url, PHP_URL_PATH);
+        $duplicateFound = false;
+        if(strtolower($request->_method) == 'post') {
+            $manual = new Manual;
+            if(Manual::where('url', $parsedUrl)->first()) $duplicateFound = true;
+        }
+        if(strtolower($request->_method) == 'put') {
+            $manual = Manual::find($request->id);
+            if($parsedUrl != $manual->url) { // Url has changed of an existing record, check for duplicate
+                if(Manual::where('url', $parsedUrl)->first()) $duplicateFound = true;
+            }
+        }
+        if($duplicateFound) return redirect()->back()->withErrors(['Url ' . __('already exists')]);
+
+        $manual->url = $parsedUrl;
         $manual->text = $request->text;
         $manual->save();
 

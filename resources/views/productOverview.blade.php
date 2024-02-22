@@ -132,7 +132,7 @@
 
                 const state = {};
                 history.pushState(state, '', "/products");
-
+                manualWrap.querySelector('div').innerHTML = manuals['/products'];
             });
         });
     }
@@ -142,6 +142,7 @@
         // console.log(`location: ${document.location}, state: ${JSON.stringify(event.state)}`)
         if(document.location.hash == '#tiles') {
             tilesWrapper.style.display = 'block';
+            manualWrap.querySelector('div').innerHTML = manuals['/products#tiles'];
         }
     });
 

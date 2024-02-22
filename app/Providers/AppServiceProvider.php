@@ -63,9 +63,15 @@ class AppServiceProvider extends ServiceProvider
             }
             
             $currentUrl = parse_url(url()->current(), PHP_URL_PATH);
-            $manual = Manual::where('url', $currentUrl)->first();
-            if($manual) {
-                $view->with('page_manual', $manual->text);
+            $fragment = parse_url(url()->current(), PHP_URL_FRAGMENT); // part after #
+            if($fragment) $currentUrl .= '#' . $fragment;
+
+            // $manual = Manual::where('url', $currentUrl)->first();
+            $manuals = Manual::where('url', 'like', $currentUrl . '%')->get();
+// dd($manuals);
+            if($manuals) {
+                // $view->with('page_manual', $manual->text);
+                $view->with('page_manuals', $manuals);
             }
             
 
