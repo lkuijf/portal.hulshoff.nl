@@ -50,7 +50,7 @@ class UserController extends Controller
     }
 
     public function newUser() {
-        $customers = Customer::get(['klantCode', 'naam']);
+        $customers = Customer::select(['klantCode', 'naam'])->orderBy('naam', 'asc')->get();
         return view('user')->with('data', ['user' => false, 'customers' => $customers]);
     }
 

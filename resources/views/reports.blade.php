@@ -23,7 +23,7 @@
                     <select name="client">
                         <option value="">- {{ __('Select') }} -</option>
                         @foreach ($data['clients'] as $client)
-                        <option value="{{ $client->klantCode }}" @if(old('client') == $client->klantCode){{ 'selected' }}@endif>{{ $client->naam }} ({{ $client->klantCode }})</option>
+                        <option value="{{ $client->klantCode }}" @if(old('client') == $client->klantCode){{ 'selected' }}@endif>{{ $client->klantCode }} ({{ $client->naam }})</option>
                         @endforeach
                     </select>
                 </td>
