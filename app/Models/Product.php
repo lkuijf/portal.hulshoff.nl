@@ -82,12 +82,14 @@ class Product extends Model
         if($orderArticles) {
             foreach($orderArticles as $orderArt) {
                 if($orderArt->order->is_reservation) {
-                    $resInfo = new \stdClass();
-                    $resInfo->orderId = $orderArt->order->id;
-                    $resInfo->orderUserName = $orderArt->order->hulshoffUser->name;
-                    $resInfo->orderUserEmail = $orderArt->order->hulshoffUser->email;
-                    $resInfo->amount = $orderArt->amount;
-                    $reservations[] = $resInfo;
+                    if($orderArt->order->hulshoffUser) {
+                        $resInfo = new \stdClass();
+                        $resInfo->orderId = $orderArt->order->id;
+                        $resInfo->orderUserName = $orderArt->order->hulshoffUser->name;
+                        $resInfo->orderUserEmail = $orderArt->order->hulshoffUser->email;
+                        $resInfo->amount = $orderArt->amount;
+                        $reservations[] = $resInfo;
+                    }
                 }
             }
         }
