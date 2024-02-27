@@ -85,8 +85,8 @@ class Product extends Model
                     //if($orderArt->order->hulshoffUser) {
                         $resInfo = new \stdClass();
                         $resInfo->orderId = $orderArt->order->id;
-                        $resInfo->orderUserName = ($orderArt->order->hulshoffUser->name?$orderArt->order->hulshoffUser->name:'- gebruiker bestaat niet meer -');
-                        $resInfo->orderUserEmail = ($orderArt->order->hulshoffUser->email?$orderArt->order->hulshoffUser->email:'- gebruiker bestaat niet meer -');
+                        $resInfo->orderUserName = ($orderArt->order->hulshoffUser?$orderArt->order->hulshoffUser->name:'- gebruiker bestaat niet meer -');
+                        $resInfo->orderUserEmail = ($orderArt->order->hulshoffUser?$orderArt->order->hulshoffUser->email:'- gebruiker bestaat niet meer -');
                         $resInfo->amount = $orderArt->amount;
                         $reservations[] = $resInfo;
                    // }
