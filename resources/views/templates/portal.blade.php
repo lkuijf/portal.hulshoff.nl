@@ -190,10 +190,10 @@
     @if (isset($page_manuals))
         @foreach ($page_manuals as $pManual)
             @if(app()->getLocale() == 'nl')
-                manuals['{{ $pManual->url }}'] = '{!! str_replace(array("\r", "\n"), '', $pManual->text) !!}';
+                manuals['{{ $pManual->url }}'] = '{!! str_replace("'", "\'", str_replace(array("\r", "\n"), '', $pManual->text)) !!}';
             @endif
             @if(app()->getLocale() == 'en')
-                manuals['{{ $pManual->url }}'] = '{!! str_replace(array("\r", "\n"), '', $pManual->text_en) !!}';
+                manuals['{{ $pManual->url }}'] = '{!! str_replace("'", "\'", str_replace(array("\r", "\n"), '', $pManual->text_en)) !!}';
             @endif
         @endforeach
         let currPath = window.location.pathname;
