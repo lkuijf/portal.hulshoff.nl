@@ -63,7 +63,7 @@
     @yield('after_body_tag')
 
     
-    @if (isset($page_manuals))
+    @if ((isset($page_manuals) && count($page_manuals)) && !isset($isHomepage))
         <div class="pageHelp">?</div>
         <div class="pageManual"><div></div></div>
     @endif
@@ -199,7 +199,11 @@
         let currPath = window.location.pathname;
         if(window.location.hash) currPath += window.location.hash;
         if(manuals.hasOwnProperty(currPath)) {
-            manualWrap.querySelector('div').innerHTML = manuals[currPath];
+            if(currPath == '/') { // homepage
+                document.querySelector('.homeContent').innerHTML = manuals[currPath];
+            } else {
+                manualWrap.querySelector('div').innerHTML = manuals[currPath];
+            }
         }
     @endif
 

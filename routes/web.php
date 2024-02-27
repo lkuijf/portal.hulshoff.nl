@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\xmlController;
-use App\Http\Controllers\pageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ManualController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProductGroupController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +35,11 @@ use App\Http\Controllers\ProductGroupController;
 //     return view('templates.development')->with(['data' => ['include_view' => 'development.xml']]);
 // })->name('parseXml_Index')->middleware('auth.basic');
 
-Route::get('/', function () {
-    return redirect('login');
-});
+// Route::get('/', function () {
+//     return redirect('login');
+// });
+// Route::get('/home', [PageController::class, 'showHomepage'])->name('home_page')->middleware(['auth:h_users', 'verified']);
+Route::get('/', [PageController::class, 'showHomepage'])->name('home_page')->middleware(['auth:h_users', 'verified']);
 
 // Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 // Route::post('/login/attempt', [AuthController::class, 'attemptLogin'])->name('attempt_login');

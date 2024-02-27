@@ -67,10 +67,16 @@ class AppServiceProvider extends ServiceProvider
             if($fragment) $currentUrl .= '#' . $fragment;
 
             // $manual = Manual::where('url', $currentUrl)->first();
-            $manuals = Manual::where('url', 'like', $currentUrl . '%')->get();
+            // dd('test');
+            if(!$currentUrl) { // the root has been called
+                $manuals = Manual::where('url', '/')->get();
+// dd($manuals);
+                $view->with('isHomepage', true);
+            } else {
+                $manuals = Manual::where('url', 'like', $currentUrl . '%')->get();
+            }
 // dd($manuals);
             if($manuals) {
-                // $view->with('page_manual', $manual->text);
                 $view->with('page_manuals', $manuals);
             }
             
