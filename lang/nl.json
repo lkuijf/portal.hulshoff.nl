@@ -171,7 +171,7 @@
     "Reminder": "Herinnering",
     "Reset Password": "Reset Wachtwoord",
     "You are receiving this email because we received a password reset request for your account": "U krijgt deze e-mail, omdat er een wachtwoord reset aanvraag is gedaan voor uw account",
-    "This password reset link will expire in 60 minutes": "Deze reset wachtwoord link zal over 60 minuten verlopen",
+    "This password reset link will expire in 2 hours (120 minutes)": "Deze reset wachtwoord link zal over 2 uur (120 minuten) verlopen",
     "If you did not request a password reset, no further action is required": "Als u geen wachtwoord reset heeft aangevraagd, dan is er geen verdere handeling nodig",
     "in stock": "op voorraad",
     "Only show products in stock": "Toon alleen producten op voorraad",
