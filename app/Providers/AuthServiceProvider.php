@@ -46,7 +46,8 @@ class AuthServiceProvider extends ServiceProvider
                 ->line(__('You are receiving this email because we received a password reset request for your account') . '.')
                 ->action(__('Reset Password'), 'https://opslag2.hulshoff.nl/reset-password/' . $token. '?email=' . $notifiable->email)
                 ->line(__('This password reset link will expire in 2 hours (120 minutes)') . '.')
-                ->line(__('To request a new password reset, you can fill in your e-mail address at the') . ' ' .  __('<a href="https://opslag2.hulshoff.nl/forgot-password">' . __('Forgot password') . '</a> ') . _('page') . '.')
+                ->line(__('To request a new password reset, please follow this link') . ':')
+                ->action(__('Forgot password'), 'https://opslag2.hulshoff.nl/forgot-password')
                 ->line(__('If you did not request a password reset, no further action is required') . '.')
                 ->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'))
                 ;
