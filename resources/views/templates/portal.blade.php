@@ -110,7 +110,8 @@
                 <a href="#" class="accBtnProfile">Profile</a>
                 <a href="#" class="accBtnLogout">Logout</a>
                 @else
-                <a href="{{ route($productPageRoute) }}" class="accBtnHome">Home</a>
+                {{-- <a href="{{ route($productPageRoute) }}" class="accBtnHome">Home</a> --}}
+                <a href="/" class="accBtnHome">Home</a>
                 <a href="{{ route('account') }}" class="accBtnProfile">Profile</a>
                 @include('auth_hulshoff.logout', ['buttonInside' => ''])
                 @endif
