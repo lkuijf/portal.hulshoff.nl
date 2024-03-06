@@ -181,7 +181,7 @@
             @if (session()->has('selectedClient'))
                 @if ($requestType == 'order')
                     @if (auth()->user()->can_reserve)
-                    <button>{{ __('Confirm reservation') }}Reservering bevestigen</button>
+                    <button>{{ __('Confirm reservation') }}</button>
                     @else
                     <button onclick="return confirm('{{ __('Your order will be delivered on') }} {{ $deliveryDate }}.\n\n{{ __('Are you sure you want to confirm your order') }}?')">Order bevestigen</button>
                     @endif
