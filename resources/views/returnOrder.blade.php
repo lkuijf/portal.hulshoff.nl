@@ -2,9 +2,14 @@
 @section('content')
 @php
     $returnProducts = [
-        'Eerste Product',
-        'Nog een artikel',
+        'Bureau',
+        'Tafel',
+        'Rolbox',
+        'Stoel',
+        'Hoge kast',
         'Lage / Middelhoge kast',
+        'Diversen klein',
+        'Diversen groot',
     ];
 @endphp
 <div class="returnOrderContent">
