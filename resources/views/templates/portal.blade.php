@@ -75,6 +75,7 @@
         </div>
         <div class="basketCell">
             @include('snippets.language')
+            @include('snippets.return-order')
             @include('snippets.basket')
         </div>
         @if (auth()->user())

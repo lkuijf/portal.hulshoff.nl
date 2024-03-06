@@ -11,10 +11,12 @@
     @php
         $totalOrderSum = 0;
     @endphp
-    <h1>{{ __('Basket') }}</h1>
+    @if ($requestType == 'order')<h1>{{ __('Basket') }}</h1>@endif
+    @if ($requestType == 'return-order')<h1>{{ __('Return order') }}</h1>@endif
     @if (count($basket))
         <table>
             <thead>
+                @if ($requestType == 'order')
                 <tr>
                     <th>id</th>
                     <th>Product</th>
@@ -23,8 +25,16 @@
                     <th>{{ __('Total') }} {{ Str::lower(__('Price')) }}</th>
                     <th>&nbsp;</th>
                 </tr>
+                @endif
+                @if ($requestType == 'return-order')
+                <tr>
+                    <th>Product</th>
+                    <th>{{ __('Amount') }}</th>
+                </tr>
+                @endif
             </thead>
             <tbody>
+                @if ($requestType == 'order')
                 @foreach ($basket as $item)
                 @php
                     $totalOrderSum += $item['product']->prijs*$item['count'];
@@ -45,12 +55,25 @@
                     </td>
                 </tr>
                 @endforeach
+                @endif
+                @if ($requestType == 'return-order')
+                @foreach ($basket as $item)
+                <tr>
+                    <td>{{ $item['product'] }}</td>
+                    <td>{{ $item['count'] }}</td>
+                </tr>
+                @endforeach
+                @endif
             </tbody>
         </table>
-        <p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
-        <h2>{{ __('Delivery date') }}</h2>
+        @if ($requestType == 'order')<p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>@endif
+        @if ($requestType == 'order')<h2>{{ __('Delivery date') }}</h2>@endif
+        @if ($requestType == 'return-order')<h2>{{ __('Pickup date') }}</h2>@endif
         <form action="{{ url('order') }}" method="post">
             @csrf
+            @if ($requestType == 'return-order')
+                <input type="hidden" name="type" value="{{ $requestType }}">
+            @endif
             <p>
                 {{-- <span class="deliveryTxt">Afleverdatum</span><input type="input" name="deliveryDate" value="{{ $deliveryDate }}"> --}}
                 {{-- <p>Afleverdatum</p> --}}
@@ -101,10 +124,11 @@
                     <option value="55">55</option>
                 </select>
             </p> --}}
-            <h2>{{ __('Delivery address') }}</h2>
-            <p>Selecteer standaard adres of voer deze handmatig in.</p>
+            @if ($requestType == 'order')<h2>{{ __('Delivery address') }}</h2>@endif
+            @if ($requestType == 'return-order')<h2>{{ __('Pickup address') }}</h2>@endif
+            <p>{{ __('Select a default addres or enter it manually') }}.</p>
             <select name="address">
-                <option value="">- Selecteer een adres -</option>
+                <option value="">- {{ __('Select an address') }} -</option>
                 @foreach ($addresses as $address)
                     <option value="{{ $address->id }}" data-naw="{{ $address->straat }} {{ $address->huisnummer }}\n{{ $address->postcode }} {{ $address->plaats }}\n{{ $address->contactpersoon }}\n{{ $address->telefoon }}\n{{ $address->eMailadres }}">{{ $address->naam }}</option>
                 @endforeach
@@ -112,7 +136,7 @@
 
             {{-- @if (old('customAddressCheckbox')){{ ' checked' }}@endif --}}
 
-            <p><input type="checkbox" name="customAddressCheckbox"><a href="" class="customAddress">Voer handmatig een adres in</a></p>
+            <p><input type="checkbox" name="customAddressCheckbox"><a href="" class="customAddress">{{ __('Enter an address manually') }}</a></p>
 
             <table class="manualAddress">
                 <tr>
@@ -155,10 +179,15 @@
                 <div class="deliveryNaw"></div>
             </div>
             @if (session()->has('selectedClient'))
-                @if (auth()->user()->can_reserve)
-                <button>Reservering bevestigen</button>
-                @else
-                <button onclick="return confirm('{{ __('Your order will be delivered on') }} {{ $deliveryDate }}.\n\n{{ __('Are you sure you want to confirm your order') }}?')">Order bevestigen</button>
+                @if ($requestType == 'order')
+                    @if (auth()->user()->can_reserve)
+                    <button>{{ __('Confirm reservation') }}Reservering bevestigen</button>
+                    @else
+                    <button onclick="return confirm('{{ __('Your order will be delivered on') }} {{ $deliveryDate }}.\n\n{{ __('Are you sure you want to confirm your order') }}?')">Order bevestigen</button>
+                    @endif
+                @endif
+                @if ($requestType == 'return-order')
+                    <button>{{ __('Confirm return order') }}</button>
                 @endif
             @else
                 CANNOT ORDER, NO CLIENT SELECTED

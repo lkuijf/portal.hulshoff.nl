@@ -4,8 +4,12 @@
 <div class="orderContent">
     @php
         $totalOrderSum = 0;
+        $h1Text = ($order->is_reservation?__('Reservation'):'Order');
+        if($order->orderType == 'return-order') {
+            $h1Text = __('Return order');
+        }
     @endphp
-    <h1>{{ ($order->is_reservation?'Reservation':'Order') }} details</h1>
+    <h1>{{ $h1Text }} details</h1>
     <div class="orderMetaData">
         {{-- <p>Id: {{ $order->id }}</p> --}}
         <p>Order Code Klant: <strong>{{ $order->orderCodeKlant }}</strong></p>
@@ -35,8 +39,6 @@
         <table>
             <thead>
                 <tr>
-                    {{-- <th>id</th> --}}
-                    {{-- <th>Product id</th> --}}
                     <th>artikelCode</th>
                     <th>Product {{ __('Name') }}</th>
                     <th>{{ __('Amount') }}</th>
@@ -78,6 +80,25 @@
         </tbody>
         </table>
         <p><strong>{{ __('Total value of your order') }}: &euro;{{ number_format($totalOrderSum, 2, ',', '.') }}</strong></p>
+    @endif
+    @if (count($order->returnOrderArticles))
+    <h2>{{ __('Products') }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product {{ __('Name') }}</th>
+                <th>{{ __('Amount') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($order->returnOrderArticles as $orderArt)
+                <tr>
+                    <td>{{ $orderArt->product }}</td>
+                    <td>{{ $orderArt->amount }}</td>
+                </tr>
+            @endforeach
+    </tbody>
+    </table>
     @endif
     @if ($order->is_reservation)
     <div class="confirmReservation">

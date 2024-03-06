@@ -22,6 +22,7 @@
                     <th>{{ __('Delivery date') }}</th>
                     <th>{{ __('User') }}</th>
                     <th>{{ __('Client') }}</th>
+                    <th>Order type</th>
                     <th>{{ __('Created at') }}</th>
                     {{-- <th>Aflever Tijd</th> --}}
                     <th>&nbsp;</th>
@@ -42,6 +43,7 @@
                         @endif
                     </td>
                     <td>{{ $order->klantCode }}</td>
+                    <td>{{ ucfirst(str_replace('-', ' ', $order->orderType)) }}</td>
                     <td>{{ date("d-m-Y H:m:s", strtotime($order->created_at)) }}</td>
                     {{-- <td>{{ date("H:i", strtotime($order->afleverTijd)) }}</td> --}}
                     <td><a href="{{ url()->current() }}/{{ $order->id }}" class="editBtn">{{ __('View') }}</a></td>

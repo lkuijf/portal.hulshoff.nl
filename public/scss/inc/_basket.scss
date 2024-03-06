@@ -21,6 +21,14 @@
         font-weight: bold;
         text-align: center;
     }
+    &.return {
+        &:before {
+            content: '\e810';
+        }
+        span {
+            background-color: orange;
+        }
+    }
 }
 .basketContent {
     input {

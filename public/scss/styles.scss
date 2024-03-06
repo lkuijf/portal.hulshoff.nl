@@ -39,6 +39,7 @@ $fontFamily: 'Heebo', sans-serif;
 @import 'inc/reportsContent.scss';
 @import 'inc/manuals.scss';
 @import 'inc/addresses.scss';
+@import 'inc/returnOrder.scss';
 
 html, body {
     margin: 0;
@@ -289,6 +290,9 @@ table {
     gap: 10px;
     align-items: center;
     justify-content: right;
+    a:hover {
+        text-decoration: none;
+    }
 }
 .accountCell {
     grid-area: account;

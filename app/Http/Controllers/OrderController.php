@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderArticle;
+use App\Models\ReturnOrderArticle;
 use App\Models\Product;
 use App\Models\Address;
 use App\Models\Customer;
@@ -68,6 +69,11 @@ class OrderController extends Controller
 
     public function newOrder(Request $request) {
 // dd($request);
+        $reqType = 'order';
+        if(isset($request->type)) {
+            $reqType = $request->type;
+        }
+
         $toValidate = array(
             // 'address' => 'required',
             'straat' => 'required_if:customAddressCheckbox,on',
@@ -91,11 +97,16 @@ class OrderController extends Controller
         $validated = $request->validate($toValidate,$validationMessages);
 
         $basket = [];
+        $returnOrderBasket = [];
         $deliveryDate = date("d-m-Y", strtotime('next week'));
         $activeClient = false;
         if($request->session()->has('basket')) {
             $basket = session('basket');
             $request->session()->forget('basket');
+        }
+        if($request->session()->has('basket_return_order')) {
+            $returnOrderBasket = session('basket_return_order');
+            $request->session()->forget('basket_return_order');
         }
         if($request->session()->has('deliveryDate')) {
             $deliveryDate = session('deliveryDate');
@@ -109,6 +120,8 @@ class OrderController extends Controller
         $order->hulshoff_user_id = auth()->user()->id;
         $order->klantCode = $activeClient;
         $order->is_reservation = auth()->user()->can_reserve;
+        if($reqType == 'return-order') $order->is_reservation = 0;
+        $order->orderType = $reqType;
         $order->orderCodeKlant = 'HUL' . date('U') - strtotime('1-1-2022') . $order->id;
         $order->afleverDatum = date("Ymd", strtotime($deliveryDate));
         // $order->afleverTijd = str_pad($request->deliveryHour, 2, '0', STR_PAD_LEFT) . str_pad($request->deliveryMinute, 2, '0', STR_PAD_LEFT);
@@ -139,39 +152,56 @@ class OrderController extends Controller
         }
         $order->save();
 
-        foreach($basket as $id => $count) {
-            $orderItem = new OrderArticle;
-            $orderItem->order_id = $order->id;
-            $orderItem->product_id = $id;
-            $orderItem->amount = $count;
-            $orderItem->save();
+        if($reqType == 'order') {
+            foreach($basket as $id => $count) {
+                $orderItem = new OrderArticle;
+                $orderItem->order_id = $order->id;
+                $orderItem->product_id = $id;
+                $orderItem->amount = $count;
+                $orderItem->save();
+            }
+        }
+        if($reqType == 'return-order') {
+            foreach($returnOrderBasket as $product => $count) {
+                $orderItem = new ReturnOrderArticle;
+                $orderItem->order_id = $order->id;
+                $orderItem->product = $product;
+                $orderItem->amount = $count;
+                $orderItem->save();
+            }
         }
         
-        $orderMsg = '<p>' . __('Your order has been placed') . '</p>';
-        $redirect = 'orders';
-        if(auth()->user()->can_reserve) {
-            $orderMsg = '<p>' . __('Your reservation has been placed') . '</p>';
-            $redirect = 'reservations';
-        } else {
-            $order->generateXml();
+        if($reqType == 'order') {
+            $orderMsg = '<p>' . __('Your order has been placed') . '</p>';
+            $redirect = 'orders';
+            if(auth()->user()->can_reserve) {
+                $orderMsg = '<p>' . __('Your reservation has been placed') . '</p>';
+                $redirect = 'reservations';
+            } else {
+                $order->generateXml();
+                foreach($basket as $id => $count) {
+                    $product = Product::find($id);
+                    $product->aantal_besteld_onverwerkt += $count;
+                    $product->save();
+                    // if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
+                }
+                // if(count($this->productsBelowMinStock)) {
+                //     $this->notifyUsersForMinimumStock();
+                // }
+                $this->generateWerkbon($order);
+            }
+    
             foreach($basket as $id => $count) {
                 $product = Product::find($id);
-                $product->aantal_besteld_onverwerkt += $count;
-                $product->save();
-                // if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
+                if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
             }
-            // if(count($this->productsBelowMinStock)) {
-            //     $this->notifyUsersForMinimumStock();
-            // }
-            $this->generateWerkbon($order);
+            if(count($this->productsBelowMinStock)) {
+                $this->notifyUsersForMinimumStock();
+            }
         }
-
-        foreach($basket as $id => $count) {
-            $product = Product::find($id);
-            if($product->isBelowMinStock()) $this->productsBelowMinStock[] = $product->id;
-        }
-        if(count($this->productsBelowMinStock)) {
-            $this->notifyUsersForMinimumStock();
+        if($reqType == 'return-order') {
+            $orderMsg = '<p>' . __('Your return order has been placed') . '</p>';
+            $redirect = 'orders';
         }
 
         Mail::to(auth()->user()->email)->send(new OrderPlaced($order));
@@ -456,4 +486,60 @@ class OrderController extends Controller
         $request->session()->flash('message', '<p>' . __('Product removed from reservation') . '</p>');
         return redirect()->back();
     }
+
+
+
+
+    public function returnOrder(Request $request) {
+
+        $returnOrderData = [];
+        if($request->session()->has('basket_return_order')) { // $currentBasket = \Session::get('basket');
+            foreach(session('basket_return_order') as $product => $count) {
+                $data = [];
+                $data['product'] = $product;
+                $data['count'] = $count;
+                $returnOrderData[] = $data;
+            }
+        }
+        // return view('basket')->with('basket', $basketData)->with('addresses', $addressesData);
+
+
+        return view('returnOrder')->with('returnOrderBasket', $returnOrderData);
+    }
+
+    public function addToReturnOrder(Request $request) {
+// dd($request);
+        $toValidate = array(
+            'return_product' => 'required',
+            'amount' => 'required|numeric',
+        );
+        $validationMessages = array(
+            'return_product.required'=> 'Please select a product',
+            'amount.required'=> 'Please fill in an amount',
+            'amount.numeric'=> 'Only a number is allowed',
+        );
+        $validated = $request->validate($toValidate,$validationMessages);
+
+        $returnOrderBasket = [];
+        if($request->session()->has('basket_return_order')) {
+            $returnOrderBasket = session('basket_return_order');
+        }
+        $returnOrderBasket[$request->return_product] = $request->amount;
+        session(['basket_return_order' => $returnOrderBasket]);
+
+        $request->session()->flash('message', '<p>' . __('Product added to return order') . '</p>');
+        return redirect()->back();
+    }
+
+    public function deleteFromReturnOrder(Request $request) {
+        $returnOrderBasket = session('basket_return_order');
+        unset($returnOrderBasket[$request->product_name]);
+        session(['basket_return_order' => $returnOrderBasket]);
+        // if(count($returnOrderBasket) == 0) { // basket is empty
+        //     $request->session()->forget('deliveryDate'); // forget the delivery date
+        // }
+        $request->session()->flash('message', '<p>' . __('Product removed from return order') . '</p>');
+        return redirect()->back();
+    }
+
 }

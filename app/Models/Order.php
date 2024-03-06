@@ -14,6 +14,10 @@ class Order extends Model
         return $this->hasMany(OrderArticle::class);
     }
 
+    public function returnOrderArticles() {
+        return $this->hasMany(ReturnOrderArticle::class);
+    }
+
     public function hulshoffUser() {
         return $this->hasOne(HulshoffUser::class, 'id', 'hulshoff_user_id');
     }

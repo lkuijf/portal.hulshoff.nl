@@ -380,6 +380,12 @@ ul.crumbs li:first-of-type:before {
   font-weight: bold;
   text-align: center;
 }
+.basket.return:before {
+  content: "\e810";
+}
+.basket.return span {
+  background-color: orange;
+}
 
 .basketContent input {
   margin-right: 5px;
@@ -825,6 +831,13 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   display: inline-block;
 }
 
+.returnOrderContent form {
+  margin: 10px 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -1061,6 +1074,9 @@ table tr:nth-of-type(1) th {
   gap: 10px;
   align-items: center;
   justify-content: right;
+}
+.basketCell a:hover {
+  text-decoration: none;
 }
 
 .accountCell {

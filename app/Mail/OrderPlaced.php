@@ -37,8 +37,12 @@ class OrderPlaced extends Mailable
      */
     public function envelope()
     {
+        $subject = ($this->order->is_reservation?__('Reservation'):'Order');
+        if($this->order->orderType == 'return-order') {
+            $subject = __('Return order');
+        }
         return new Envelope(
-            subject: ($this->order->is_reservation?__('Reservation'):'Order') . ' ' . __('placed'),
+            subject: $subject . ' ' . __('placed'),
         );
     }
 
@@ -54,6 +58,12 @@ class OrderPlaced extends Mailable
             foreach($this->order->orderArticles as $ordArt) {
                 $product = Product::find($ordArt->product_id);
                 $aProds[] = $ordArt->amount . 'x ' . $product->omschrijving;
+            }
+        }
+        if(count($this->order->returnOrderArticles)) {
+            foreach($this->order->returnOrderArticles as $retOrdArt) {
+                // $product = Product::find($ordArt->product_id);
+                $aProds[] = $retOrdArt->amount . 'x ' . $retOrdArt->product;
             }
         }
         return new Content(

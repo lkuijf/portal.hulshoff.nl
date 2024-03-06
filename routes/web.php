@@ -59,6 +59,10 @@ Route::get('/reservations', [OrderController::class, 'showOrders'])->defaults('t
 Route::post('/reservations', [OrderController::class, 'showOrders'])->defaults('type', 'reserved')->middleware('auth:h_users');
 Route::get('/reservations/{id}', [OrderController::class, 'showOrder'])->defaults('type', 'reserved')->name('reservation_detail')->where('id', '[0-9]+')->middleware('auth:h_users');
 
+Route::get('/return-order', [OrderController::class, 'returnOrder'])->name('return_order')->middleware('auth:h_users');
+Route::post('/return-order', [OrderController::class, 'addToReturnOrder'])->name('add_to_return_order')->middleware('auth:h_users');
+Route::delete('/return-order', [OrderController::class, 'deleteFromReturnOrder'])->name('delete_from_return_order')->middleware('auth:h_users');
+
 Route::get('/tiles', [TilesController::class, 'showTiles'])->name('tiles')->middleware('auth:h_users');
 Route::post('/tile', [TilesController::class, 'uploadTile'])->name('tile_upload')->middleware('auth:h_users');
 Route::delete('/tile', [TilesController::class, 'deleteTile'])->name('tile_delete')->middleware('auth:h_users');
@@ -92,11 +96,13 @@ Route::get('/products#tiles', [ProductController::class, 'showProducts'])->name(
 Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->name('product_detail')->where(['id' => '[0-9]+'])->middleware('auth:h_users');
 
 Route::get('/basket', [BasketController::class, 'showBasket'])->name('basket')->middleware('auth:h_users');
+Route::get('/return-order-basket', [BasketController::class, 'showBasket'])->name('return_order_basket')->defaults('type', 'return-order')->middleware('auth:h_users');
 Route::post('/basket', [BasketController::class, 'addToBasket'])->middleware('auth:h_users');
 Route::put('/basket', [BasketController::class, 'updateBasket'])->middleware('auth:h_users');
 Route::delete('/basket', [BasketController::class, 'deleteFromBasket'])->middleware('auth:h_users');
 
 Route::post('/order', [OrderController::class, 'newOrder'])->middleware('auth:h_users');
+Route::post('/confirm-return-order', [OrderController::class, 'newOrder'])->defaults('type', 'return-order')->middleware('auth:h_users');
 Route::put('/order', [OrderController::class, 'updateOrder'])->middleware('auth:h_users');
 Route::delete('/order', [OrderController::class, 'deleteOrder'])->middleware('auth:h_users');
 

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Validator;
 class BasketController extends Controller
 {
     public function showBasket(Request $request) {
+        $reqType = 'order';
+        if(isset($request->type)) {
+            $reqType = $request->type;
+        }
+// dd($request->type); // return-order
         $basketData = [];
         $addressesData = [];
         
@@ -20,16 +25,38 @@ class BasketController extends Controller
         }
 
 
-        if($request->session()->has('basket')) { // $currentBasket = \Session::get('basket');
-            foreach(session('basket') as $id => $count) {
-                $data = [];
-                $product = Product::find($id);
-                $data['product'] = $product;
-                $data['count'] = $count;
-                $basketData[] = $data;
+        if($reqType == 'order') {
+            if($request->session()->has('basket')) { // $currentBasket = \Session::get('basket');
+                foreach(session('basket') as $id => $count) {
+                    $data = [];
+                    $product = Product::find($id);
+                    $data['product'] = $product;
+                    $data['count'] = $count;
+                    $basketData[] = $data;
+                }
+            }
+        } elseif($reqType == 'return-order') {
+            // $request->type == return-order
+            // basket_return_order
+            if($request->session()->has('basket_return_order')) {
+                foreach(session('basket_return_order') as $product => $count) {
+                    $data = [];
+                    $data['product'] = $product;
+                    $data['count'] = $count;
+                    $basketData[] = $data;
+                }
+                // foreach(session('basket_return_order') as $id => $count) {
+                //     $data = [];
+                //     $product = Product::find($id);
+                //     $data['product'] = $product;
+                //     $data['count'] = $count;
+                //     $basketData[] = $data;
+                // }
             }
         }
-        return view('basket')->with('basket', $basketData)->with('addresses', $addressesData);
+
+
+        return view('basket')->with('basket', $basketData)->with('addresses', $addressesData)->with('requestType', $reqType);
     }
 
     public function addToBasket(Request $request) {
