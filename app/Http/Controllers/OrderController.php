@@ -420,6 +420,10 @@ class OrderController extends Controller
             Mail::to($copyEmailAddress)->send(new WerkbonPdf($pdfContent));
         }
 
+        //save it
+        $filename = $finalOrder->klantCode . '-werkbon-' . date('U') . '.pdf';
+        $pdf->save(storage_path('app/pdf/' . $filename));
+
     }
 
     public function updateProductsOrderedValue($orderArticles) {
