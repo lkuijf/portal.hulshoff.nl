@@ -1,7 +1,18 @@
-<h2>Order gegevens</h2>
+@php
+    if($order->orderType == 'return-order') {
+        $header = 'Retour order gegevens';
+        $datumTxt = 'leverdatum';
+        $adresTxt = 'Afleveradres';
+    } else { // normal order
+        $header = 'Order gegevens';
+        $datumTxt = 'ophaaldatum';
+        $adresTxt = 'Ophaaladres';
+    }
+@endphp
+<h2>{{ $header }}</h2>
 <p>
     Order nummer: <strong>{{ $order->id }}</strong><br>
-    Gewenste leverdatum: <strong>{{ date('d-m-Y', strtotime($order->afleverDatum)) }}</strong><br>
+    Gewenste {{ $datumTxt }}: <strong>{{ date('d-m-Y', strtotime($order->afleverDatum)) }}</strong><br>
 </p>
 <h2>Melder gegevens</h2>
 <p>
@@ -13,7 +24,7 @@
     KlantCode: <strong>{{ $customer->klantCode }}</strong><br>
     Klant naam: <strong>{{ $customer->naam }}</strong>
 </p>
-<h2>Afleveradres</h2>
+<h2>{{ $adresTxt }}</h2>
 <p>
     @if($address->naam)Naam: <strong>{{ $address->naam }}</strong><br>@endif
     Straat: <strong>{{ $address->straat }}</strong><br>
@@ -39,11 +50,11 @@
         </tr>
     @foreach ($products as $prodInfo)
     <tr>
-        <td>{{ $prodInfo->artikelCode }}</td>
+        <td>{{ ($prodInfo->artikelCode?$prodInfo->artikelCode:'') }}</td>
         <td>{{ $prodInfo->amount }}</td>
-        <td>{{ $prodInfo->brand }}</td>
-        <td>{{ $prodInfo->group }}</td>
-        <td>{{ $prodInfo->type }}</td>
+        <td>{{ ($prodInfo->brand?$prodInfo->brand:'') }}</td>
+        <td>{{ ($prodInfo->group?$prodInfo->group:'') }}</td>
+        <td>{{ ($prodInfo->type?$prodInfo->type:'') }}</td>
         <td>{{ $prodInfo->omschrijving }}</td>
     </tr>
     @endforeach

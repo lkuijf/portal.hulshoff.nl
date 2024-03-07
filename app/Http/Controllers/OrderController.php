@@ -202,6 +202,7 @@ class OrderController extends Controller
         if($reqType == 'return-order') {
             $orderMsg = '<p>' . __('Your return order has been placed') . '</p>';
             $redirect = 'orders';
+            $this->generateWerkbon($order);
         }
 
         Mail::to(auth()->user()->email)->send(new OrderPlaced($order));
@@ -390,6 +391,15 @@ class OrderController extends Controller
                 $singleProd->type = $product->type->type;
                 $aProds[] = $singleProd;
             }
+        }
+        if(count($finalOrder->returnOrderArticles)) {
+            foreach($finalOrder->returnOrderArticles as $retOrdArt) {
+                $singleProd = new \stdClass();
+                $singleProd->amount = $retOrdArt->amount;
+                $singleProd->omschrijving = $retOrdArt->product;
+                $aProds[] = $singleProd;
+            }
+            
         }
         if($finalOrder->address_id) $werkbonAddress = $finalOrder->address;
         if($finalOrder->custom_address_id) $werkbonAddress = $finalOrder->custom_address;
