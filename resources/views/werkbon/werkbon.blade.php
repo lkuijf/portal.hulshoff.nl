@@ -50,11 +50,11 @@
         </tr>
     @foreach ($products as $prodInfo)
     <tr>
-        <td>{{ ($prodInfo->artikelCode?$prodInfo->artikelCode:'') }}</td>
+        <td>{{ (isset($prodInfo->artikelCode)?$prodInfo->artikelCode:'') }}</td>
         <td>{{ $prodInfo->amount }}</td>
-        <td>{{ ($prodInfo->brand?$prodInfo->brand:'') }}</td>
-        <td>{{ ($prodInfo->group?$prodInfo->group:'') }}</td>
-        <td>{{ ($prodInfo->type?$prodInfo->type:'') }}</td>
+        <td>{{ (isset($prodInfo->brand)?$prodInfo->brand:'') }}</td>
+        <td>{{ (isset($prodInfo->group)?$prodInfo->group:'') }}</td>
+        <td>{{ (isset($prodInfo->type)?$prodInfo->type:'') }}</td>
         <td>{{ $prodInfo->omschrijving }}</td>
     </tr>
     @endforeach
