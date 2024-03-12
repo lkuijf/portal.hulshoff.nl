@@ -51,7 +51,8 @@ class SendOTP extends Notification
                     ->line(__('Your security code is') . ' ' . $this->getTwoFactorCode($notifiable))
                     ->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'))
                     // ->action('Notification Action', url('/'))
-                    // ->line('Thank you for using our application!');
+                    // ->line('Thank you for using our application!')
+                    ;
     }
 
     /**
