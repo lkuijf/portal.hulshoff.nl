@@ -53,29 +53,10 @@ class AuthController extends Controller
     }
 
     public function send2FaCodeViaEmail(Request $request) {
-        // auth()->user()
-        // $event->user->notify(app(SendOTP::class));
-        // dd(Auth::id());
-        // dd($request);
-        // dd($request->user());
-
-        // dd(auth()->guard('h_users'));
-        // dd(auth());
-        // dd(session('login')['id']);
-        // $req = $request->session();
-        // dd($req);
-        // dd($request);
-        // dd($request->user()->id);
-        // dd(auth()->user());
-
-        // dd($user);
-
-        //$event->user->notify(app(SendOTP::class));
         $user = HulshoffUser::find(session('login')['id']);
-        // echo $user->email;
         $user->notify(app(SendOTP::class));
-        echo 'Code send';
-
+        $request->session()->flash('message', '<p>An e-mail has been sent, inside you will find the code</p>');
+        return redirect()->back();
     }
 
 }
