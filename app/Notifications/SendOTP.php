@@ -46,9 +46,12 @@ class SendOTP extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification. code : ' . $this->getTwoFactorCode($notifiable))
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->greeting(__('Hello') . '!')
+                    ->subject(__('Security code'))
+                    ->line(__('Your security code is') . ' ' . $this->getTwoFactorCode($notifiable))
+                    ->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'))
+                    // ->action('Notification Action', url('/'))
+                    // ->line('Thank you for using our application!');
     }
 
     /**
