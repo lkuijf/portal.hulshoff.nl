@@ -50,7 +50,7 @@ class SendOTP extends Notification
                     ->greeting(__('Hello') . '!')
                     ->subject(__('Security code'))
                     ->line(__('Your security code is') . ' ' . $this->getTwoFactorCode($notifiable))
-                    ->line(__('Please note: this code is valid for 3 minutes from the moment of sending' . '.'))
+                    ->line(__('Please note: this code is valid for 3 minutes from the moment of sending') . '.')
                     ->salutation(new HtmlString(__('Regards') . ',<br>Hulshoff'))
                     // ->action('Notification Action', url('/'))
                     // ->line('Thank you for using our application!')
