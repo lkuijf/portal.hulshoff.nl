@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notification;
 use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
 use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
 use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
+use Illuminate\Support\HtmlString;
 
 class SendOTP extends Notification
 {
