@@ -61,6 +61,7 @@ class AuthController extends Controller
 
         // dd(auth()->guard('h_users'));
         // dd(auth());
+        // dd(session('login')['id']);
         // $req = $request->session();
         // dd($req);
         // dd($request);
@@ -70,9 +71,10 @@ class AuthController extends Controller
         // dd($user);
 
         //$event->user->notify(app(SendOTP::class));
-        $user = HulshoffUser::find(26);
+        $user = HulshoffUser::find(session('login')['id']);
         // echo $user->email;
         $user->notify(app(SendOTP::class));
+        echo 'Code send';
 
     }
 
