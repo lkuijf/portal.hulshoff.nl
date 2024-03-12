@@ -16,12 +16,12 @@
             <button type="submit">{{ __('Check recovery code') }}</button>
         </form>
         <hr>
-        <p>U kunt ook gebruik maken van onderstaande knop om de code naar uw e-mail adres te laten versturen.</p>
+        <p>{{ __('You can also use the button below to send the code to your e-mail address') }}.</p>
         <form action="/send-2fa-code-to-email" method="POST">
             @csrf
-            <button type="submit">Verstuur code via e-mail</button>
+            <button type="submit">{{ __('Send the code via e-mail') }}</button>
         </form>
-        <p>Check uw spambox voor de zekerheid.</p>
+        <p>{{ __('Check your spam folder to be sure') }}.</p>
     </div>
     {{-- @if ($errors->any())
         <ul>
