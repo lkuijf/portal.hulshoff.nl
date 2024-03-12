@@ -620,6 +620,29 @@ nav.mainNav ul li a:hover, nav.mainNav ul li a.active {
   margin-top: 0;
 }
 
+.login2FaChallengeContent .noAccessToTheApp {
+  background-color: #EFEFEF;
+  padding: 20px;
+  margin-top: 40px;
+}
+.login2FaChallengeContent .noAccessToTheApp :first-child {
+  margin-top: 0;
+}
+.login2FaChallengeContent .noAccessToTheApp :last-child {
+  margin-bottom: 0;
+}
+.login2FaChallengeContent hr {
+  border: 0;
+  border-bottom: 1px solid #CCC;
+  margin: 30px 0;
+}
+.login2FaChallengeContent .recoveryCodeForm {
+  display: none;
+}
+.login2FaChallengeContent a {
+  padding: 0;
+}
+
 .userListContent table {
   border: 1px solid #666;
   border-collapse: collapse;
