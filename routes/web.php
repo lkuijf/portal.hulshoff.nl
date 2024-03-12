@@ -91,7 +91,7 @@ Route::delete('/address', [AddressController::class, 'deleteAddress']);
 Route::delete('/productgroup', [ProductGroupController::class, 'delete']);
 Route::put('/productgroup', [ProductGroupController::class, 'store']);
 
-
+Route::post('/send-2fa-code-to-email', [AuthController::class, 'send2FaCodeViaEmail']);
 
 
 // $emailTheCodeSelected = false;

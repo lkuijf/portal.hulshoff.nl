@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 
+use App\Models\HulshoffUser;
+use App\Notifications\SendOTP;
+
 class AuthController extends Controller
 {
     public function showLogin() {
@@ -47,6 +50,30 @@ class AuthController extends Controller
 
         $res->success = true;
         echo json_encode($res);
+    }
+
+    public function send2FaCodeViaEmail(Request $request) {
+        // auth()->user()
+        // $event->user->notify(app(SendOTP::class));
+        // dd(Auth::id());
+        // dd($request);
+        // dd($request->user());
+
+        // dd(auth()->guard('h_users'));
+        // dd(auth());
+        // $req = $request->session();
+        // dd($req);
+        // dd($request);
+        // dd($request->user()->id);
+        // dd(auth()->user());
+
+        // dd($user);
+
+        //$event->user->notify(app(SendOTP::class));
+        $user = HulshoffUser::find(26);
+        // echo $user->email;
+        $user->notify(app(SendOTP::class));
+
     }
 
 }

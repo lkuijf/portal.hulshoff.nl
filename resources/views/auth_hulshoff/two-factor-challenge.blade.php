@@ -13,6 +13,11 @@
         <input type="input" name="recovery_code">
         <button type="submit">Controleer herstel code</button>
     </form>
+    <p>U kunt ook gebruik maken van onderstaande knop om de code naar uw e-mail adres te laten versturen. Check uw spambox voor de zekerheid.</p>
+    <form action="/send-2fa-code-to-email" method="POST">
+        @csrf
+        <button type="submit">Verstuur code via e-mail</button>
+    </form>
     {{-- @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
