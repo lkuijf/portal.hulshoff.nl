@@ -32,6 +32,20 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('templates.portal', function ($view) {
 
+            // \Session::put('fortify.2fa_disabled', true);
+            // \Session::put('status', 'two-factor-authentication-confirmed');
+
+            // if(auth()->user()) {
+            //     // auth()->user()->forceFill([
+            //     //     'two_factor_secret' => null,
+            //     //     'two_factor_recovery_codes' => null,
+            //     // ])->save();
+
+            //     dd(auth()->user());
+
+            // }
+
+
 
             $total = 0;
             if(session()->has('basket')) {

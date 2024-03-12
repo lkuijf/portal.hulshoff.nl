@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 use App\Http\Controllers\AuthController;
+use Laravel\Fortify\Contracts\LoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,12 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+        //     public function toResponse($request)
+        //     {
+        //         return redirect('/wtf');
+        //     }
+        // });
     }
 
     /**
@@ -50,6 +56,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function () {
             // return view('auth_hulshoff.login');
             return view('auth_login');
+
         });
         Fortify::twoFactorChallengeView(function () {
             // return view('auth_hulshoff.two-factor-challenge');

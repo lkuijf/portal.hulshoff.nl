@@ -91,7 +91,20 @@ Route::delete('/address', [AddressController::class, 'deleteAddress']);
 Route::delete('/productgroup', [ProductGroupController::class, 'delete']);
 Route::put('/productgroup', [ProductGroupController::class, 'store']);
 
+
+
+
+// $emailTheCodeSelected = false;
+// if($emailTheCodeSelected) {
+//     Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
+// } else {
+//     Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
+// }
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('auth:h_users');
+// Route::get('/products', [ProductController::class, 'showProducts'])->name('products')->middleware('hulshoffMiddleware');
+
+
+
 Route::get('/products#tiles', [ProductController::class, 'showProducts'])->name('products_tiles')->middleware('auth:h_users');
 Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->name('product_detail')->where(['id' => '[0-9]+'])->middleware('auth:h_users');
 
